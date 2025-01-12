@@ -16,7 +16,7 @@
     <message>
         <location filename="../AboutDialog.ui" line="90"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite is an open source, freeware visual tool used to create, design and edit SQLite database files.&lt;/p&gt;&lt;p&gt;It is bi-licensed under the Mozilla Public License Version 2, as well as the GNU General Public License Version 3 or later. You can modify or redistribute it under the conditions of these licenses.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; for details.&lt;/p&gt;&lt;p&gt;For more information on this program please visit our website at: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;This software uses the GPL/LGPL Qt Toolkit from &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for licensing terms and information.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;We use the nalgeon/sqlean library for SQLite extensions support.&lt;br/&gt;This library is licensed under the MIT license, see the following for more information:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;It also uses the Pastel SVG icon set by Michael Buckley under a Creative Commons Attribution Share Alike 4.0 license.&lt;br/&gt;See &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; for details.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;DB Browser for SQLite это свободно распространяемая утилита для визуализации разработки, создания и редактирования баз данных SQLite с открытым исходным кодом.&lt;/p&gt;&lt;p&gt;Он распространяется под двойной лицензией Mozilla Public License версии 2, а также под лицензией GNU General Public License версии 3 или более поздней. Вы можете изменять или распространять его в соответствии с условиями этих лицензий.&lt;/p&gt;&lt;p&gt;Посетите &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.gnu.org/licenses/gpl.html&lt;/span&gt;&lt;/a&gt; и &lt;a href=&quot;https://www.mozilla.org/MPL/2.0/index.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.mozilla.org/MPL/2.0/index.txt&lt;/span&gt;&lt;/a&gt; для получения подробностей.&lt;/p&gt;&lt;p&gt;Больше информации об этой программе можно получить, посетив нашу страницу: &lt;a href=&quot;https://sqlitebrowser.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sqlitebrowser.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Эта программа использует GPL/LGPL Qt Toolkit от &lt;/span&gt;&lt;a href=&quot;https://qt-project.org/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://qt-project.org/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&lt;br/&gt;Смотри &lt;/span&gt;&lt;a href=&quot;https://doc.qt.io/qt-5/licensing.html&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://doc.qt.io/qt-5/licensing.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; с требованиями лицензии и информацией.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Мы используем библиотеку nalgeon/sqlean для поддержки расширений SQLite.&lt;br/&gt;Эта библиотека лицензирована по лицензии MIT, для получения дополнительной информации смотри:&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://github.com/nalgeon/sqlean&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/nalgeon/sqlean&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;Программа также использует набор иконок Pastel SVG, созданный Michael Buckley по лицензии Creative Commons Attribution Share Alike 4.0.&lt;br/&gt;Смотри: &lt;/span&gt;&lt;a href=&quot;https://codefisher.org/pastel-svg/&quot;&gt;&lt;span style=&quot; font-size:small; text-decoration: underline; color:#0000ff;&quot;&gt;https://codefisher.org/pastel-svg/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:small;&quot;&gt; для подробностей.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation>Добавить Новую Запись</translation>
+        <translation>Добавить новую запись</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation>Когда вы редактируете значения в верхнем фрейме, здесь отображается запрос SQL для вставки этой новой записи. Вы можете вручную отредактировать запрос перед сохранением.</translation>
+        <translation>Когда вы редактируете значения в верхнем окне, здесь отображается запрос SQL для вставки этой новой записи. Вы можете вручную отредактировать запрос перед сохранением.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
@@ -70,7 +70,7 @@
         <location filename="../AddRecordDialog.cpp" line="239"/>
         <source>Auto-increment
 </source>
-        <translation>Авто-увеличение
+        <translation>Автоинкремент
 </translation>
     </message>
     <message>
@@ -121,202 +121,202 @@
     <message>
         <location filename="../Application.cpp" line="184"/>
         <source>Possible command line arguments:</source>
-        <translation></translation>
+        <translation>Возможные аргументы коммандной строки:</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="98"/>
         <source>The user settings file location is replaced with the argument value instead of the environment variable value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение файла настроек пользователя заменяется значением аргумента вместо значения переменной среды.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="99"/>
         <source>Ignored environment variable (DB4S_SETTINGS_FILE) value: </source>
-        <translation type="unfinished"></translation>
+        <translation>Игнорируемое значение переменной среды (DB4S_SETTINGS_FILE): </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="220"/>
         <location filename="../Application.cpp" line="232"/>
         <source>The file %1 does not exist</source>
-        <translation></translation>
+        <translation>Файл %1 не существует</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="180"/>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Использование</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="181"/>
         <source>options</source>
-        <translation type="unfinished"></translation>
+        <translation>опции</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="181"/>
         <location filename="../Application.cpp" line="205"/>
         <source>database</source>
-        <translation type="unfinished"></translation>
+        <translation>база данных</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="181"/>
         <location filename="../Application.cpp" line="207"/>
         <source>project</source>
-        <translation type="unfinished"></translation>
+        <translation>проект</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="182"/>
         <location filename="../Application.cpp" line="209"/>
         <source>csv-file</source>
-        <translation type="unfinished"></translation>
+        <translation>csv-файл</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="186"/>
         <source>Show command line options</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать опции коммандной строки</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="188"/>
         <source>Exit application after running scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход из приложения после выполнения скрипта</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="189"/>
         <location filename="../Application.cpp" line="191"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="190"/>
         <source>Execute this SQL file after opening the DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить этот SQL файл после открытия БД</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="192"/>
         <source>Import this CSV file into the passed DB or into a new DB</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт этого CSV-файла в существующую БД или в новую БД</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="193"/>
         <source>table</source>
-        <translation type="unfinished"></translation>
+        <translation>таблица</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="194"/>
         <source>Browse this table, or use it as target of a data import</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр таблицы или ипользование ее как получателя импортируемых данных</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="196"/>
         <source>Open database in read-only mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть базу данных только для чтения</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="197"/>
         <source>settings_file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл_настроек</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="198"/>
         <source>Run application based on this settings file</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск на основе этого файла настоек</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <location filename="../Application.cpp" line="201"/>
         <source>group</source>
-        <translation type="unfinished"></translation>
+        <translation>группа</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <location filename="../Application.cpp" line="201"/>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>установки</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="199"/>
         <location filename="../Application.cpp" line="201"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>значение</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="200"/>
         <source>Run application with this setting temporarily set to value</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск приложения, с временным значением этого параметра</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="202"/>
         <source>Run application saving this value for this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить приложение, сохранив это значение для этого параметра</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="204"/>
         <source>Display the current version</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать текущую версию</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="206"/>
         <source>Open this SQLite database</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть эту SQLite базу данных</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="208"/>
         <source>Open this project file (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть этот файл проекта (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="210"/>
         <source>Import this CSV file into an in-memory database</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт этот CSV файл в базу данных в памяти</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="218"/>
         <location filename="../Application.cpp" line="225"/>
         <location filename="../Application.cpp" line="230"/>
         <source>The %1 option requires an argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Для опции %1 требуется аргумент</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="243"/>
         <source>The -S/--settings option requires an argument. The option is ignored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметр -S/--settings требует аргумента. Параметр игнорируется.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="246"/>
         <source>The -o/--option and -O/--save-option options require an argument in the form group/setting=value</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры -o/--option и -O/--save-option требуют аргумент в форме группа/настройка=значение</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="274"/>
         <source>Invalid option/non-existent file: %1</source>
-        <translation></translation>
+        <translation>Неверная настройка/несуществующий файл: %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="365"/>
         <source>SQLite Version </source>
-        <translation type="unfinished">Версия SQLite </translation>
+        <translation>Версия SQLite </translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="367"/>
         <source>SQLCipher Version %1 (based on SQLite %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher версия %1 (на основе SQLite %2)</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="370"/>
         <source>DB Browser for SQLite Version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite Версия %1.</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="371"/>
         <source>Last commit hash when built: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Последний хэш коммита при сборке: %1</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="372"/>
         <source>Built for %1, running on %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Создано для %1, работает на %2</translation>
     </message>
     <message>
         <location filename="../Application.cpp" line="373"/>
         <source>Qt Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt Версия %1</translation>
     </message>
 </context>
 <context>
@@ -339,22 +339,22 @@
     <message>
         <location filename="../CipherDialog.ui" line="98"/>
         <source>Encr&amp;yption settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки &amp;шифрования</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="110"/>
         <source>SQLCipher &amp;3 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher &amp;3</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="117"/>
         <source>SQLCipher &amp;4 defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLCipher &amp;4</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="124"/>
         <source>Custo&amp;m</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Другой</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="133"/>
@@ -364,22 +364,22 @@
     <message>
         <location filename="../CipherDialog.ui" line="146"/>
         <source>&amp;KDF iterations</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KDF итераций</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="166"/>
         <source>HMAC algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>HMAC алгоритм</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="195"/>
         <source>KDF algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>KDF алгоритм</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="224"/>
         <source>Plaintext Header Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер открытого заголовка</translation>
     </message>
     <message>
         <location filename="../CipherDialog.ui" line="66"/>
@@ -400,14 +400,14 @@ The encryption process might take some time and you should have a backup copy of
         <translation>Пожалуйста укажите ключ шифрования.
 Если вы измените какую-либо опциональную настройку, то ее нужно будет вводить при каждом открытии этого файла базы данных.
 Оставьте пароль пустым если шифрование не требуется.
-Процесс может занять некоторое время и настоятельно рекомендуем создать резервную копию перед продолжением! Не сохраненные изменения автоматически будут сохранены.</translation>
+Процесс может занять некоторое время и настоятельно рекомендуем создать резервную копию перед продолжением! Не сохраненные изменения будут применены перед изменением шифрования.</translation>
     </message>
     <message>
         <location filename="../CipherDialog.cpp" line="42"/>
         <source>Please enter the key used to encrypt the database.
 If any of the other settings were altered for this database file you need to provide this information as well.</source>
         <translation>Пожалуйста введите ключ для шифрования базы данных.
-Если любые другие настройки были изменены для данной базы данный то нужно так же предоставить данную информацию.</translation>
+Если любые другие настройки были изменены для данной базы данных то нужно так же предоставить данную информацию.</translation>
     </message>
 </context>
 <context>
@@ -465,7 +465,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="30"/>
         <source>.NET DateTime.Ticks to date</source>
-        <translation type="unfinished"></translation>
+        <translation>.NET DateTime.Ticks дата</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="31"/>
@@ -475,17 +475,17 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="33"/>
         <source>Unix epoch to local time</source>
-        <translation>Unix-время</translation>
+        <translation>Unix-локальное время</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="34"/>
         <source>WebKit / Chromium epoch to date</source>
-        <translation type="unfinished"></translation>
+        <translation>WebKit / Chromium epoch дата</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="35"/>
         <source>WebKit / Chromium epoch to local time</source>
-        <translation type="unfinished"></translation>
+        <translation>WebKit / Chromium epoch локальное время</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="37"/>
@@ -500,29 +500,31 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="42"/>
         <source>Binary GUID to text</source>
-        <translation type="unfinished"></translation>
+        <translation>Двоичный GUID в текст</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="43"/>
         <source>SpatiaLite Geometry to SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>SpatiaLite Geometry в SVG</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="147"/>
         <source>Custom display format must contain a function call applied to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользовательский формат должен содержать вызов функции, примененный к %1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="159"/>
         <source>Error in custom display format. Message from database engine:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка в пользовательском формате. Сообщение от ядра базы данных:
+
+%1</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="161"/>
         <source>Custom display format must return only one column but it returned %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользовательский формат должен возвращать только один столбец, но он вернул %1.</translation>
     </message>
     <message>
         <location filename="../ColumnDisplayFormatDialog.cpp" line="25"/>
@@ -560,118 +562,118 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../CondFormatManager.ui" line="14"/>
         <source>Conditional Format Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Менеджер форматирования</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="20"/>
         <source>This dialog allows creating and editing conditional formats. Each cell style will be selected by the first accomplished condition for that cell data. Conditional formats can be moved up and down, where those at higher rows take precedence over those at lower. Syntax for conditions is the same as for filters and an empty condition applies to all values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот диалог позволяет задавать формат содержимого. Стиль каждой ячейки будет выбран в соответствии с содержимым. Условия форматирования можно перемещать вверх и вниз, те, что находятся выше, имеют приоритет над теми, что находятся ниже. Синтаксис для содержимого такой же, как и для фильтров, а пустое условие применяется ко всем значениям.</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="32"/>
         <source>Add new conditional format</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить новый формат</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="35"/>
         <source>&amp;Add</source>
-        <translation type="unfinished">&amp;Добавить</translation>
+        <translation>&amp;Добавить</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="52"/>
         <source>Remove selected conditional format</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить формат</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="55"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Удалить</translation>
+        <translation>&amp;Удалить</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="72"/>
         <source>Move selected conditional format up</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить вверх</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="75"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>Вверх</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="92"/>
         <source>Move selected conditional format down</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить вниз</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="95"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>Вниз</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="158"/>
         <source>Foreground</source>
-        <translation type="unfinished">Передний план</translation>
+        <translation>Передний план</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="161"/>
         <source>Text color</source>
-        <translation type="unfinished">Цвет текста</translation>
+        <translation>Цвет текста</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="166"/>
         <source>Background</source>
-        <translation type="unfinished">Фон</translation>
+        <translation>Фон</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="169"/>
         <source>Background color</source>
-        <translation type="unfinished">Цвет фона</translation>
+        <translation>Цвет фона</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="174"/>
         <source>Font</source>
-        <translation type="unfinished">Шрифт</translation>
+        <translation>Шрифт</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="179"/>
         <source>Size</source>
-        <translation type="unfinished">Размер</translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="187"/>
         <source>Bold</source>
-        <translation type="unfinished">Жирный</translation>
+        <translation>Жирный</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="199"/>
         <source>Italic</source>
-        <translation type="unfinished">Курсив</translation>
+        <translation>Курсив</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="211"/>
         <source>Underline</source>
-        <translation type="unfinished">Подчёркивание</translation>
+        <translation>Подчёркнутый</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="220"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравнивание</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.ui" line="225"/>
         <source>Condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержимое</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.cpp" line="101"/>
         <location filename="../CondFormatManager.cpp" line="102"/>
         <source>Click to select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор цвета</translation>
     </message>
     <message>
         <location filename="../CondFormatManager.cpp" line="250"/>
         <source>Are you sure you want to clear all the conditional formats of this field?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите очистить форматирование этого поля?</translation>
     </message>
 </context>
 <context>
@@ -679,7 +681,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="325"/>
         <source>Please specify the database name under which you want to access the attached database</source>
-        <translation></translation>
+        <translation>Укажите имя базы данных, под которым вы хотите получить доступ к прикрепленной базе данных</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="401"/>
@@ -705,7 +707,7 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="1118"/>
         <source>Executing SQL...</source>
-        <translation>Выполнить код SQL...</translation>
+        <translation>Выполнить SQL...</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1148"/>
@@ -720,18 +722,18 @@ If any of the other settings were altered for this database file you need to pro
     <message>
         <location filename="../sqlitedb.cpp" line="735"/>
         <source>Database didn&apos;t close correctly, probably still busy</source>
-        <translation type="unfinished"></translation>
+        <translation>База данных не закрылась корректно, возможно, она все еще занята</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="760"/>
         <source>Cannot open destination file: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть целевой файл: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="777"/>
         <location filename="../sqlitedb.cpp" line="795"/>
         <source>Cannot backup to file: &apos;%1&apos;. Message: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно сохранить резервную копию в файл: &apos;%1&apos;. Сообщение: %2</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="835"/>
@@ -755,23 +757,23 @@ If any of the other settings were altered for this database file you need to pro
         <source>Error in statement #%1: %2.
 Aborting execution%3.</source>
         <translation>Ошибка в выражении #%1: %2.
-Прерываем выполнение%3.</translation>
+Выполнение прервано %3.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1221"/>
         <location filename="../sqlitedb.cpp" line="1234"/>
         <source> and rolling back</source>
-        <translation> и отменяем</translation>
+        <translation> и выполняется откат</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1280"/>
         <source>didn&apos;t receive any output from %1</source>
-        <translation type="unfinished"></translation>
+        <translation>не получил никаких выходных данных от %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1286"/>
         <source>could not execute command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>не удалось выполнить команду: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1464"/>
@@ -781,7 +783,7 @@ Aborting execution%3.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="1507"/>
         <source>Cannot set data on this object</source>
-        <translation>Невозможно назначить данные для этого объекта</translation>
+        <translation>Невозможно установить данные по этому объекту</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1616"/>
@@ -792,58 +794,61 @@ Aborting execution%3.</source>
     <message>
         <location filename="../sqlitedb.cpp" line="1632"/>
         <source>No table with name &apos;%1&apos; exists in schema &apos;%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>В схеме &apos;%2&apos; нет таблицы с именем &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1642"/>
         <location filename="../sqlitedb.cpp" line="1663"/>
         <source>Cannot find column %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не найден столбец %1.</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1676"/>
         <source>Creating savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось создать точку сохранения. Сообщение БД: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1739"/>
         <source>Renaming the column failed. DB says:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименование колонки не удалось. Сообщение БД:
+%1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1767"/>
         <location filename="../sqlitedb.cpp" line="1929"/>
         <source>Releasing savepoint failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Реализовать точку сохранения не удалось. Сообщение БД: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1786"/>
         <source>Creating new table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Создание новой таблицы не удалось. Сообщение БД: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1823"/>
         <source>Copying data to new table failed. DB says:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирование данных в новую таблицу не удалось. Сообщение БД: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1895"/>
         <source>Deleting old table failed. DB says: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаление старой таблицы не удалось. Сообщение БД: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1965"/>
         <source>Error renaming table &apos;%1&apos; to &apos;%2&apos;.
 Message from database engine:
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка переименования таблицы &apos;%1&apos; в &apos;%2&apos;.
+Сообщение БД:
+%3</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2061"/>
         <source>could not get list of db objects: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>не удалось получить список объектов базы данных: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="1920"/>
@@ -867,7 +872,7 @@ Message from database engine:
     <message>
         <location filename="../sqlitedb.cpp" line="2188"/>
         <source>Error loading built-in extension: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка загрузки встроенного расширения: %1</translation>
     </message>
     <message>
         <location filename="../sqlitedb.cpp" line="2214"/>
@@ -999,27 +1004,27 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="71"/>
         <source>RTL Text</source>
-        <translation type="unfinished"></translation>
+        <translation>RTL текст</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="76"/>
         <source>Binary</source>
-        <translation>Двоичные данные</translation>
+        <translation>Бинарный</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="86"/>
         <source>JSON</source>
-        <translation></translation>
+        <translation>JSON</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="91"/>
         <source>XML</source>
-        <translation></translation>
+        <translation>XML</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="96"/>
         <source>Evaluation</source>
-        <translation type="unfinished"></translation>
+        <translation>Оценочный</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="104"/>
@@ -1030,7 +1035,7 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="110"/>
         <source>This checkable button enables or disables the automatic switching of the editor mode. When a new cell is selected or new data is imported and the automatic switching is enabled, the mode adjusts to the detected data type. You can then change the editor mode manually. If you want to keep this manually switched mode while moving through the cells, switch the button off.</source>
-        <translation>Эта кнопка позволяет включать или отключать автоматическое переключение режима редактора. Когда выбрана новая ячейка или импортированы новые данные, а автоматическое переключение включено, режим настраивается на обнаруженный тип данных. Вы можете вручную изменить режим редактора. Если вы хотите сохранить этот режим ручного переключения при перемещении по ячейкам, выключите кнопку.</translation>
+        <translation>Позволяет включать или отключать автоматическое переключение режима редактора. Когда выбрана новая ячейка или импортированы новые данные, а автоматическое переключение включено, режим настраивается на обнаруженный тип данных. Вы можете вручную изменить режим редактора. Если вы хотите сохранить этот режим ручного переключения при перемещении по ячейкам, выключите кнопку.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="113"/>
@@ -1040,74 +1045,74 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="176"/>
         <source>This Qt editor is used for right-to-left scripts, which are not supported by the default Text editor. The presence of right-to-left characters is detected and this editor mode is automatically selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот редактор Qt используется для скриптов справа налево, которые не поддерживаются текстовым редактором по умолчанию. Присутствие символов справа налево обнаруживается, и этот режим редактора выбирается автоматически.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="203"/>
         <source>Identification of the cell currently in the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификация ячейки, находящейся в данный момент в редакторе</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="225"/>
         <source>Type and size of data currently in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип и размер данных, находящихся в таблице в данный момент</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="274"/>
         <source>Open preview dialog for printing the data currently stored in the cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть диалоговое окно предварительного просмотра для печати данных, которые в данный момент хранятся в ячейке</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="310"/>
         <source>Auto-format: pretty print on loading, compact on saving.</source>
-        <translation>Автоматическое форматирование: стилистическое форматирование при загрузке, компактность - при сохранении.</translation>
+        <translation>Автоматическое форматирование: стилистическое форматирование при загрузке, компактность при сохранении.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="313"/>
         <source>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</source>
-        <translation>Когда включено, функция автоматического форматирования форматирует данные по загрузке, разбивая текст в строках и отступы для максимальной читаемости. При сохранении данных функция автоматического форматирования объединяет данные, удаляющие конец строк, и ненужные пробелы.</translation>
+        <translation>Когда включено, автоматически форматирует данные по мере загрузки, разбивая текст в строках и отступы для максимальной читаемости. При сохранении данных функция автоматического форматирования объединяет данные, удаляющие конец строк, и ненужные пробелы.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="370"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>Перенос слов</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="373"/>
         <source>Wrap lines on word boundaries</source>
-        <translation type="unfinished"></translation>
+        <translation>Перенос строк по границам слов</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="382"/>
         <location filename="../EditDialog.ui" line="388"/>
         <source>Open in default application or browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть в приложении по умолчанию или браузере</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="385"/>
         <source>Open in application</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть в приложении</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="391"/>
         <source>The value is interpreted as a file or URL and opened in the default application or web browser.</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение интерпретируется как файл или URL-адрес и открывается в приложении по умолчанию или веб-браузере.</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="400"/>
         <source>Save file reference...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить ссылку на файл...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="403"/>
         <source>Save reference to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить ссылку в файл</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="427"/>
         <location filename="../EditDialog.ui" line="430"/>
         <source>Open in external application</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть во внешнем приложении</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="307"/>
@@ -1117,13 +1122,13 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="322"/>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Экспорт...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="337"/>
         <location filename="../EditDialog.ui" line="412"/>
         <source>&amp;Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Импорт...</translation>
     </message>
     <message>
         <location filename="../EditDialog.ui" line="340"/>
@@ -1185,7 +1190,7 @@ Message from database engine:
     <message>
         <location filename="../EditDialog.ui" line="295"/>
         <source>Ctrl+Shift+C</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="515"/>
@@ -1202,7 +1207,7 @@ Message from database engine:
         <location filename="../EditDialog.cpp" line="302"/>
         <location filename="../EditDialog.cpp" line="311"/>
         <source>Try switching to Image or Binary mode.</source>
-        <translation>Попробуйте переключиться в Бинарный режим или режим Изображения.</translation>
+        <translation>Попробуйте переключиться в Двоичный режим или режим Изображения.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="369"/>
@@ -1220,50 +1225,50 @@ Message from database engine:
         <location filename="../EditDialog.cpp" line="925"/>
         <location filename="../EditDialog.cpp" line="1105"/>
         <source>Type: NULL; Size: 0 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип: NULL; Размер: 0 байт</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="927"/>
         <location filename="../EditDialog.cpp" line="1117"/>
         <source>Type: Text / Numeric; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Тип: Text / Numeric; Размер: %n символ</numerusform>
+            <numerusform>Тип: Text / Numeric; Размер: %n символа</numerusform>
+            <numerusform>Тип: Text / Numeric; Размер: %n символов</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1091"/>
         <source>Type: %1 Image; Size: %2x%3 pixel(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип: %1 изображение; Размер: %2x%3 pixel(s)</translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1124"/>
         <source>Type: Valid JSON; Size: %n character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Тип: Действительный JSON; Размер: %n символ</numerusform>
+            <numerusform>Тип: Действительный JSON; Размер: %n символа</numerusform>
+            <numerusform>Тип: Действительный JSON; Размер: %n символов</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../EditDialog.cpp" line="1132"/>
         <source>Type: Binary; Size: %n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Тип: Binary; Размер: %n байт</numerusform>
+            <numerusform>Тип: Binary; Размер: %n байта</numerusform>
+            <numerusform>Тип: Binary; Размер: %n байт</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1275"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished">Не удалось сохранить файл:%1.</translation>
+        <translation>Не удалось сохранить файл:%1.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="1300"/>
         <source>The data has been saved to a temporary file and has been opened with the default application. You can now edit the file and, when you are ready, apply the saved new data to the cell or cancel any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные были сохранены во временном файле и открыты с помощью приложения по умолчанию. Теперь вы можете редактировать файл и, когда будете готовы, применить сохраненные новые данные к ячейке или отменить любые изменения.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="406"/>
@@ -1288,28 +1293,33 @@ Message from database engine:
 Errors are indicated with a red squiggle underline.
 
 In the Evaluation mode, entered SQLite expressions are evaluated and the result applied to the cell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Режимы текстового редактора позволяют редактировать обычный текст, а также данные JSON или XML с подсветкой синтаксиса, автоматическим форматированием и проверкой перед сохранением.
+
+Ошибки обозначаются красным волнистым подчеркиванием.
+
+В режиме оценки введенные выражения SQLite оцениваются, а результат применяется к ячейке.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="122"/>
         <source>Unsaved data in the cell editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Несохраненные данные в редакторе ячеек</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="123"/>
         <source>The cell editor contains data not yet applied to the database.
 Do you want to apply the edited data to row=%1, column=%2?</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор ячеек содержит данные, которые еще не применены к базе данных.
+Хотите применить отредактированные данные к строке=%1, столбцу=%2?</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="148"/>
         <source>Editing row=%1, column=%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактирование строки=%1, столбца=%2</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="151"/>
         <source>No cell active.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ни одна ячейка не активна.</translation>
     </message>
     <message>
         <location filename="../EditDialog.cpp" line="477"/>
@@ -1347,7 +1357,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="14"/>
         <source>Edit Index Schema</source>
-        <translation>Редактирование Индекса</translation>
+        <translation>Редактирование индекса</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="52"/>
@@ -1357,7 +1367,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="69"/>
         <source>For restricting the index to only a part of the table you can specify a WHERE clause here that selects the part of the table that should be indexed</source>
-        <translation>Для ограничения индекса только частью таблицы вы можете указать здесь выражение WHERE, которое выбирает часть таблицы, которая должна быть проиндексирована</translation>
+        <translation>Для ограничения индексом только части таблицы вы можете указать здесь выражение WHERE, которое выбирает часть таблицы, которая должна быть проиндексирована</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="72"/>
@@ -1372,7 +1382,8 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="130"/>
         <source>Table column</source>
-        <translation>Колонка таблицы</translation>
+        <translation>Колонка
+таблицы</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.ui" line="135"/>
@@ -1387,7 +1398,8 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditIndexDialog.ui" line="232"/>
         <source>Index column</source>
-        <translation>Колонка индекса</translation>
+        <translation>Колонка
+индекса</translation>
     </message>
     <message>
         <location filename="../EditIndexDialog.cpp" line="270"/>
@@ -1424,32 +1436,32 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="75"/>
         <source>Without Rowid</source>
-        <translation>Без rowid</translation>
+        <translation>Без Rowid</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="62"/>
         <source>Database sche&amp;ma</source>
-        <translation type="unfinished"></translation>
+        <translation>Схе&amp;ма БД</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="85"/>
         <source>Make this a &apos;WITHOUT ROWID&apos; table. Setting this flag requires specifying a PRIMARY KEY (which can be of any type, and can be composite), and forbids the AUTOINCREMENT flag.</source>
-        <translation type="unfinished"></translation>
+        <translation>Делает эту таблицу «БЕЗ ROWID». Установка этого флага требует указания ПЕРВИЧНОГО КЛЮЧА (который может быть любого типа и может быть составным) и запрещает флаг АВТОИНКРЕМЕНТ.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="92"/>
         <source>On Conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>При конфликте</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="133"/>
         <source>Strict</source>
-        <translation type="unfinished"></translation>
+        <translation>Строго</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="143"/>
         <source>When the strict option is enabled SQLite enforces the data types of each column when updating or inserting data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если включена строгая опция, SQLite применяет типы данных каждого столбца при обновлении или вставке данных.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="164"/>
@@ -1461,34 +1473,34 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.ui" line="509"/>
         <location filename="../EditTableDialog.ui" line="603"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="192"/>
         <location filename="../EditTableDialog.ui" line="532"/>
         <location filename="../EditTableDialog.ui" line="622"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="212"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>Вверх</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="235"/>
         <source>Move up</source>
-        <translation type="unfinished"></translation>
+        <translation>Выше</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="255"/>
         <source>Move down</source>
-        <translation type="unfinished"></translation>
+        <translation>Ниже</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="275"/>
         <source>Move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Вниз</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="332"/>
@@ -1507,12 +1519,12 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="342"/>
         <source>NN</source>
-        <translation>НП</translation>
+        <translation>Не null</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="345"/>
         <source>Not null</source>
-        <translation>Не пустое (null)</translation>
+        <translation>Не пустое (not null)</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="350"/>
@@ -1522,7 +1534,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="353"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_key&quot;/&gt; Primary key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_key&quot;/&gt; Первичный ключ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="358"/>
@@ -1537,7 +1549,7 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="366"/>
         <source>U</source>
-        <translation>У</translation>
+        <translation>Уникальное</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="369"/>
@@ -1560,17 +1572,17 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.ui" line="382"/>
         <location filename="../EditTableDialog.ui" line="657"/>
         <source>Check</source>
-        <translation>Проверить</translation>
+        <translation>Проверка</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="385"/>
         <source>Check constraint</source>
-        <translation>Проверить ограничение</translation>
+        <translation>Ограничение проверкой</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="390"/>
         <source>Collation</source>
-        <translation type="unfinished"></translation>
+        <translation>Collation</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="395"/>
@@ -1580,50 +1592,50 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
     <message>
         <location filename="../EditTableDialog.ui" line="398"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_fk&quot;/&gt; Foreign Key&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/icons/field_fk&quot;/&gt; Внешний ключ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="407"/>
         <source>Index Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="415"/>
         <source>Add constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить ограничение</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="438"/>
         <source>Remove constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить ограничение</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="477"/>
         <location filename="../EditTableDialog.ui" line="571"/>
         <source>Columns</source>
-        <translation type="unfinished">Столбцы</translation>
+        <translation>Столбцы</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="492"/>
         <location filename="../EditTableDialog.ui" line="586"/>
         <location filename="../EditTableDialog.ui" line="667"/>
         <source>SQL</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="501"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний ключ</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="581"/>
         <source>References</source>
-        <translation type="unfinished"></translation>
+        <translation>Ссылки</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="595"/>
         <source>Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Ограничения проверкой</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="685"/>
@@ -1634,23 +1646,24 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.ui" line="709"/>
         <location filename="../EditTableDialog.cpp" line="287"/>
         <source>Primary Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Первичный ключ</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="712"/>
         <source>Add a primary key constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить ограничение первичного ключа</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.ui" line="720"/>
         <source>Add a unique constraint</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить ограничение уникальности</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="433"/>
         <source>Error creating table. Message from database engine:
 %1</source>
-        <translation>Ошибка создания таблицы. Сообщение от движка базы данных: %1</translation>
+        <translation>Ошибка создания таблицы. Сообщение от движка базы данных:
+%1</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="560"/>
@@ -1661,12 +1674,12 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.cpp" line="296"/>
         <location filename="../EditTableDialog.cpp" line="1262"/>
         <source>There can only be one primary key for each table. Please modify the existing primary key instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для каждой таблицы может быть только один первичный ключ. Вместо этого измените существующий первичный ключ.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="585"/>
         <source>This column is referenced in a foreign key in table %1 and thus its name cannot be changed.</source>
-        <translation>На данную колонку ссылается внешний ключ в таблице %1, поэтому ее имя не может быть изменено.</translation>
+        <translation>На эту колонку ссылается внешний ключ в таблице %1, поэтому ее имя не может быть изменено.</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="677"/>
@@ -1682,12 +1695,13 @@ Do you want to apply the edited data to row=%1, column=%2?</source>
         <location filename="../EditTableDialog.cpp" line="766"/>
         <source>Column &apos;%1&apos; has duplicate data.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Столбец &apos;%1&apos; содержит повторяющиеся данные.
+</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="767"/>
         <source>This makes it impossible to enable the &apos;Unique&apos; flag. Please remove the duplicate data, which will allow the &apos;Unique&apos; flag to then be enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это делает невозможным включение флага «Уникальный». Пожалуйста, удалите дублирующиеся данные, что позволит включить флаг «Уникальный».</translation>
     </message>
     <message>
         <location filename="../EditTableDialog.cpp" line="1029"/>
@@ -1709,7 +1723,8 @@ All data currently stored in this field will be lost.</source>
         <location filename="../EditTableDialog.cpp" line="1223"/>
         <source>Please add a field which meets the following criteria before setting the on conflict action:
  - Primary key flag set</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, добавьте поле, которое соответствует следующим критериям, прежде чем устанавливать действие при конфликте:
+- Установлен флаг первичного ключа</translation>
     </message>
 </context>
 <context>
@@ -1784,7 +1799,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.ui" line="244"/>
         <source>Windows: CR+LF (\r\n)</source>
-        <translation></translation>
+        <translation>Windows: CR+LF (\r\n)</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.ui" line="249"/>
@@ -1822,7 +1837,7 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExportDataDialog.cpp" line="195"/>
         <location filename="../ExportDataDialog.cpp" line="300"/>
         <source>Error while writing the file &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при записи файла &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../ExportDataDialog.cpp" line="215"/>
@@ -1847,7 +1862,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportDataDialog.cpp" line="420"/>
         <source>Export finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт завершен с ошибками.</translation>
     </message>
 </context>
 <context>
@@ -1880,7 +1895,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="85"/>
         <source>Keep column names in INSERT INTO</source>
-        <translation>Имя столбцов в выражении INSERT INTO</translation>
+        <translation>Сохранить названия столбцов в выражении INSERT INTO</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="122"/>
@@ -1900,12 +1915,12 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExportSqlDialog.ui" line="148"/>
         <source>Keep original CREATE statements</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить оригинальные инструкции CREATE</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="109"/>
         <source>Keep old schema (CREATE TABLE IF NOT EXISTS)</source>
-        <translation>Проверять существование таблицы (CREATE TABLE IF NOT EXISTS)</translation>
+        <translation>Сохранять схему (CREATE TABLE IF NOT EXISTS)</translation>
     </message>
     <message>
         <location filename="../ExportSqlDialog.ui" line="114"/>
@@ -1944,23 +1959,23 @@ All data currently stored in this field will be lost.</source>
         <location filename="../ExtendedScintilla.cpp" line="63"/>
         <location filename="../ExtendedScintilla.cpp" line="299"/>
         <source>Ctrl+H</source>
-        <translation></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="65"/>
         <source>Ctrl+F</source>
-        <translation></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="78"/>
         <location filename="../ExtendedScintilla.cpp" line="303"/>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="293"/>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../ExtendedScintilla.cpp" line="298"/>
@@ -1978,7 +1993,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="278"/>
         <source>Use as Exact Filter</source>
-        <translation>Использовать как Точный Фильтр</translation>
+        <translation>Использовать как точный фильтр</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="279"/>
@@ -1988,7 +2003,7 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="280"/>
         <source>Not containing</source>
-        <translation type="unfinished"></translation>
+        <translation>Не содержит</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="281"/>
@@ -2023,22 +2038,22 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="287"/>
         <source>Regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Регулярное выражение</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="288"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать формат...</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="290"/>
         <source>Set to NULL</source>
-        <translation>Сбросить в NULL</translation>
+        <translation>Установить в NULL</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="291"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Вырезать</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="292"/>
@@ -2068,22 +2083,22 @@ All data currently stored in this field will be lost.</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="299"/>
         <source>Use in Filter Expression</source>
-        <translation>Использовать в Выражении Фильтра</translation>
+        <translation>Использовать в выражении фильтра</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="330"/>
         <source>Alt+Del</source>
-        <translation></translation>
+        <translation>Alt+Del</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="333"/>
         <source>Ctrl+Shift+C</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="334"/>
         <source>Ctrl+Alt+C</source>
-        <translation></translation>
+        <translation>Ctrl+Alt+C</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="849"/>
@@ -2095,12 +2110,12 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1214"/>
         <source>&lt;p&gt;Not all data has been loaded. &lt;b&gt;Do you want to load all data before selecting all the rows?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Answering &lt;b&gt;No&lt;/b&gt; means that no more data will be loaded and the selection will not be performed.&lt;br/&gt;Answering &lt;b&gt;Yes&lt;/b&gt; might take some time while the data is loaded but the selection will be complete.&lt;/p&gt;Warning: Loading all the data might require a great amount of memory for big tables.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Не все данные загружены. &lt;b&gt;Хотите ли вы загрузить все данные перед выбором всех строк?&lt;/b&gt;&lt;p&gt;&lt;p&gt;Ответ&lt;b&gt;Нет&lt;/b&gt; означает, что больше данные загружены не будут и выбор не будет выполнен.&lt;br/&gt;Ответ &lt;b&gt;Да&lt;/b&gt; Загрузка данных может занять некоторое время, но выборка будет завершена.&lt;/p&gt;Предупреждение: загрузка всех данных может потребовать большого объема памяти для больших таблиц.</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="1292"/>
         <source>Cannot set selection to NULL. Column %1 has a NOT NULL constraint.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно установить выборку в NULL. Столбец %1 имеет ограничение NOT NULL.</translation>
     </message>
 </context>
 <context>
@@ -2144,7 +2159,7 @@ Do you want to insert it anyway?</source>
     <message>
         <location filename="../FileExtensionManager.cpp" line="44"/>
         <source>*.extension</source>
-        <translation></translation>
+        <translation>*.extension</translation>
     </message>
 </context>
 <context>
@@ -2168,57 +2183,68 @@ The following operators are also supported:
 &lt;&gt;	Unequal: exact inverse match
 x~y	Range: values between x and y
 /regexp/	Values matching the regular expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Эти поля ввода позволяют выполнять быстрые фильтры в текущей выбранной таблице.
+По умолчанию строки, содержащие введенный текст, отфильтровываются.
+Поддерживаются следующие операторы:
+%	Подстановочный знак
+&gt;	Больше
+&lt;	Меньше
+&gt;=	Равно или больше
+&lt;=	Равно или меньше
+=	Равно: точное совпадение
+&lt;&gt;	Неравно: точное обратное совпадение
+x~y	Диапазон: значения между x и y
+/regexp/	Значения, соответствующие регулярному выражению</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="205"/>
         <source>Clear All Conditional Formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить все форматирование</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="210"/>
         <source>Use for Conditional Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать формат</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="215"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать форматы...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="134"/>
         <source>Set Filter Expression</source>
-        <translation>Установить Выражение Фильтра</translation>
+        <translation>Установить выражение фильтра</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="136"/>
         <source>What&apos;s This?</source>
-        <translation>Что Это?</translation>
+        <translation>Что это?</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="142"/>
         <source>Is NULL</source>
-        <translation>NULL</translation>
+        <translation>Is NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="147"/>
         <source>Is not NULL</source>
-        <translation>не NULL</translation>
+        <translation>Не NULL</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="152"/>
         <source>Is empty</source>
-        <translation>пусто</translation>
+        <translation>Пусто</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="157"/>
         <source>Is not empty</source>
-        <translation>не пусто</translation>
+        <translation>Не пусто</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="162"/>
         <source>Not containing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Не содержит...</translation>
     </message>
     <message>
         <location filename="../FilterLineEdit.cpp" line="166"/>
@@ -2258,7 +2284,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../FilterLineEdit.cpp" line="195"/>
         <source>Regular expression...</source>
-        <translation type="unfinished"></translation>
+        <translation>Регулярное выражение...</translation>
     </message>
 </context>
 <context>
@@ -2266,7 +2292,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../FindReplaceDialog.ui" line="14"/>
         <source>Find and Replace</source>
-        <translation>Поиск и Замена</translation>
+        <translation>Поиск и замена</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="43"/>
@@ -2311,12 +2337,12 @@ x~y	Range: values between x and y
     <message>
         <location filename="../FindReplaceDialog.ui" line="106"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is searched only in the current selection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если этот флажок установлен, поиск по искомому шаблону выполняется только в текущем выделенном фрагменте.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="109"/>
         <source>&amp;Selection only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только в в&amp;ыделенном</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="116"/>
@@ -2341,7 +2367,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../FindReplaceDialog.ui" line="145"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../FindReplaceDialog.ui" line="152"/>
@@ -2409,7 +2435,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../ForeignKeyEditorDelegate.cpp" line="24"/>
         <source>Foreign key clauses (ON UPDATE, ON DELETE etc.)</source>
-        <translation>Условия (ON UPDATE, ON DELETE и т.д.)</translation>
+        <translation>Действия внешнего ключа (ON UPDATE, ON DELETE и т.д.)</translation>
     </message>
 </context>
 <context>
@@ -2417,32 +2443,32 @@ x~y	Range: values between x and y
     <message>
         <location filename="../ImageViewer.ui" line="14"/>
         <source>Image Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр графики</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="95"/>
         <source>Reset the scaling to match the original size of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сброс масштаба до исходного размера изображения.</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="106"/>
         <source>Set the scaling to match the size of the viewport.</source>
-        <translation type="unfinished"></translation>
+        <translation>Подогнать масштаб к размеру окна.</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="126"/>
         <source>Print...</source>
-        <translation type="unfinished">Печать...</translation>
+        <translation>Печать...</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="129"/>
         <source>Open preview dialog for printing displayed image</source>
-        <translation type="unfinished">Открыть диалоговое окно предварительного просмотра для печати отображаемого изображения</translation>
+        <translation>Открыть диалоговое окно предварительного просмотра для печати отображаемого изображения</translation>
     </message>
     <message>
         <location filename="../ImageViewer.ui" line="132"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
 </context>
 <context>
@@ -2450,7 +2476,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../ImportCsvDialog.ui" line="14"/>
         <source>Import CSV file</source>
-        <translation>Импортировать файл в формате CSV</translation>
+        <translation>Импортировать CSV файл</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="25"/>
@@ -2502,13 +2528,13 @@ x~y	Range: values between x and y
         <location filename="../ImportCsvDialog.ui" line="88"/>
         <location filename="../ImportCsvDialog.ui" line="158"/>
         <source>Other (printable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Другой (для печати)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="93"/>
         <location filename="../ImportCsvDialog.ui" line="163"/>
         <source>Other (code)</source>
-        <translation type="unfinished"></translation>
+        <translation>Другой (код)</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="143"/>
@@ -2588,48 +2614,48 @@ x~y	Range: values between x and y
     <message>
         <location filename="../ImportCsvDialog.ui" line="356"/>
         <source>Use local number conventions</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать местные правила нумерации</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="366"/>
         <source>Use decimal and thousands separators according to the system locale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используйте десятичные разделители и разделители тысяч в соответствии с языковыми настройками системы.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="373"/>
         <source>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</source>
-        <translation type="unfinished"></translation>
+        <translation>При импорте в существующую таблицу с первичным ключом, уникальными ограничениями или уникальным индексом существует вероятность конфликта. Эта опция позволяет выбрать стратегию для этого случая: по умолчанию импорт прерывается и откатывается, но вы также можете выбрать игнорирование и не импортировать конфликтующие строки или замену существующей строки в таблице.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="377"/>
         <source>Abort import</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервать импорт</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="382"/>
         <source>Ignore row</source>
-        <translation type="unfinished"></translation>
+        <translation>Игнорировать строку</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="387"/>
         <source>Replace existing row</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить существующую строку</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="395"/>
         <source>Conflict strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>Действия при конфликте</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="446"/>
         <location filename="../ImportCsvDialog.cpp" line="357"/>
         <source>Deselect All</source>
-        <translation>Отменить Выбор</translation>
+        <translation>Снять выделение</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.ui" line="462"/>
         <source>Match Similar</source>
-        <translation>Найти Совпадения</translation>
+        <translation>Найти совпадения</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="357"/>
@@ -2664,12 +2690,12 @@ x~y	Range: values between x and y
     <message>
         <location filename="../ImportCsvDialog.cpp" line="642"/>
         <source>Could not prepare INSERT statement: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось подготовить оператор INSERT: %1</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="732"/>
         <source>Unexpected end of file. Please make sure that you have configured the correct quote characters and the file is not malformed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неожиданный конец файла. Убедитесь, что вы настроили правильные символы кавычек и файл не имеет неправильного формата.</translation>
     </message>
     <message>
         <location filename="../ImportCsvDialog.cpp" line="746"/>
@@ -2687,12 +2713,12 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="14"/>
         <source>DB Browser for SQLite</source>
-        <translation>Обозреватель для SQLite</translation>
+        <translation>DB Browser for SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1246"/>
         <source>toolBar1</source>
-        <translation>панельИнструментов1</translation>
+        <translation>ПанельИнструментов1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1156"/>
@@ -2702,161 +2728,161 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="206"/>
         <source>Temp Store</source>
-        <translation type="unfinished"></translation>
+        <translation>Temp Store (Временное хранилище)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="222"/>
         <source>Secure Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Secure Delete (Безопасное удаление)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="264"/>
         <source>Case Sensitive Like</source>
-        <translation type="unfinished"></translation>
+        <translation>Case Sensitive Like (Регистрозависимый Like)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="358"/>
         <source>Journal Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal Mode (Режим журнала)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="374"/>
         <source>Journal Size Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal Size Limit (Лимит размера журнала)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="390"/>
         <source>Recursive Triggers</source>
-        <translation type="unfinished"></translation>
+        <translation>Recursive Triggers (Рекурсивные триггеры)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="492"/>
         <source>Page Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Page Size (Размер страницы)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Foreign Keys (Внешние ключи)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="791"/>
         <source>Auto Vacuum</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto Vacuum (Автовакуум)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="814"/>
         <source>Max Page Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Max Page Count (Макс число страниц)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="870"/>
         <source>Checkpoint Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Checkpoint Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="429"/>
         <location filename="../MainWindow.ui" line="910"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Откл</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="854"/>
         <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="920"/>
         <location filename="../MainWindow.ui" line="1178"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="929"/>
         <source>Default</source>
-        <translation type="unfinished">По умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
-        <translation type="unfinished">Файл</translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="419"/>
         <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Память</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаление</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished"></translation>
+        <translation>Усекать</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished"></translation>
+        <translation>Persist</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translation>Эксклюзив</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatic Index (Автоиндексирование)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1025"/>
         <source>Ignore Check Constraints</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignore Check Constraints (Игнорировать Check Constraints)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1041"/>
         <source>Full FSYNC</source>
-        <translation type="unfinished"></translation>
+        <translation>Full FSYNC</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1057"/>
         <source>WAL Auto Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>WAL Auto Checkpoint</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1083"/>
         <source>User Version</source>
-        <translation type="unfinished"></translation>
+        <translation>User Version (Версия пользователя)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronous (Синхронизация)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Инкремент</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1194"/>
         <source>Locking Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Locking Mode (Режим блокировки)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1382"/>
@@ -2866,7 +2892,7 @@ x~y	Range: values between x and y
     <message>
         <location filename="../MainWindow.ui" line="1490"/>
         <source>Error Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Журнал ошибок</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1517"/>
@@ -2885,7 +2911,7 @@ You can drag multiple object names from the Name column and drop them into the S
 You can drag SQL statements from the Schema column and drop them into the SQL editor or into other applications.
 </source>
         <translation>Это структура открытой БД.
-Вы можете перетащить несколько имен объектов из столбца &quot;Имя&quot; и отбросить их в редактор SQL, и вы можете настроить свойства сброшенных имен с помощью контекстного меню. Это поможет вам при составлении SQL-инструкций.
+Вы можете перетащить несколько имен объектов из столбца &quot;Имя&quot; в редактор SQL, и вы можете настроить свойства перемещенных имен с помощью контекстного меню. Это поможет вам при составлении SQL-инструкций.
 Вы можете перетаскивать операторы SQL из столбца &quot;Схема&quot; и переносить их в редактор SQL или в другие приложения.
 </translation>
     </message>
@@ -2893,12 +2919,12 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.ui" line="1658"/>
         <location filename="../MainWindow.ui" line="2518"/>
         <source>Project Toolbar</source>
-        <translation>Панель Инструментов Проекта</translation>
+        <translation>Панель инструментов проекта</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1677"/>
         <source>Extra DB toolbar</source>
-        <translation>Дополнительная Панель Инструментов БД</translation>
+        <translation>Дополнительная панель инструментов БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1680"/>
@@ -2910,34 +2936,34 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Новая БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1766"/>
         <location filename="../MainWindow.cpp" line="482"/>
         <source>Ctrl+F4</source>
-        <translation></translation>
+        <translation>Ctrl+F4</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Отменить</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1808"/>
         <location filename="../MainWindow.ui" line="1811"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить последнее изменение в БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1814"/>
         <source>This action undoes the last change performed to the database in the Database Browser or in Execute SQL. Redoing is not possible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это действие отменяет последнее изменение, выполненное в базе данных в Database Browser или в Execute SQL. Повтор невозможен.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1985"/>
         <source>Open the Modify Table wizard, where it is possible to rename an existing table. It is also possible to add or delete fields from a table, as well as modify field names and types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывает мастер изменения таблицы, где можно переименовать существующую таблицу. Также можно добавлять или удалять поля из таблицы, а также изменять имена и типы полей.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2062"/>
@@ -2947,7 +2973,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2079"/>
         <source>New &amp;tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая вкладка редактора SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2082"/>
@@ -2967,7 +2993,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2118"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2139"/>
@@ -2977,7 +3003,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2154"/>
         <source>Execute line</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить строку</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2160"/>
@@ -2992,7 +3018,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2186"/>
         <source>F1</source>
-        <translation></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2198"/>
@@ -3017,7 +3043,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2249"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить проект</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2270"/>
@@ -3027,7 +3053,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2273"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть проект</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2297"/>
@@ -3058,7 +3084,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2378"/>
         <source>SQLCipher &amp;FAQ</source>
-        <translation></translation>
+        <translation>SQLCipher &amp;FAQ</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2386"/>
@@ -3073,7 +3099,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2413"/>
         <source>Ctrl+Shift+O</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2425"/>
@@ -3099,7 +3125,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2446"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2452"/>
@@ -3109,7 +3135,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2455"/>
         <source>Ctrl+F</source>
-        <translation></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2470"/>
@@ -3120,7 +3146,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2473"/>
         <source>Find or replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти или заменить</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2479"/>
@@ -3130,7 +3156,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2482"/>
         <source>Ctrl+H</source>
-        <translation></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2490"/>
@@ -3140,7 +3166,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2495"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в JSON</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2500"/>
@@ -3155,127 +3181,127 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2521"/>
         <source>Shows or hides the Project toolbar.</source>
-        <translation>Показывает или скрывает панель инструментов Проекта.</translation>
+        <translation>Показывает или скрывает панель инструментов проекта.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2536"/>
         <source>Extra DB Toolbar</source>
-        <translation>Дополнительная Панель Инструментов БД</translation>
+        <translation>Дополнительная панель инструментов БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2797"/>
         <location filename="../MainWindow.cpp" line="483"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2826"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица из CSV данных в буфере обмена...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2829"/>
         <source>This treats the current clipboard contents as a CSV file and opens the same import wizard that is used for importing CSV data from a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>При этом текущее содержимое буфера обмена обрабатывается как CSV-файл и открывается тот же мастер импорта, который используется для импорта CSV-данных из файла.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2834"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать счетчик строк</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2837"/>
         <source>This shows the number of rows for each table and view in the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Здесь отображается количество строк для каждой таблицы и представления в базе данных.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2849"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить БД как...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2852"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить текущую БД как другой файл</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2861"/>
         <source>Refresh</source>
-        <translation type="unfinished">Обновить</translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2864"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезагрузить структуру базы данных</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2112"/>
         <source>Open SQL file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть SQL файл(ы)</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="50"/>
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Структура БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр данных</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <location filename="../MainWindow.ui" line="158"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Прагмы</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1222"/>
         <location filename="../MainWindow.ui" line="1225"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Редактор SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1315"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Недавние &amp;файлы</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2115"/>
         <source>This button opens files containing SQL statements and loads them in new editor tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка открывает файлы, содержащие SQL инструкции и загружает их в новую вкладку редактора</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2282"/>
         <source>This button lets you open a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка позволяет открыть браузер БД для файла проекта SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2548"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Открыть БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2565"/>
         <source>New In-&amp;Memory Database</source>
-        <translation>Новая БД в &amp;Памяти</translation>
+        <translation>Новая БД в па&amp;мяти</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2573"/>
         <source>Drag &amp;&amp; Drop SELECT Query</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетаскивание запроса SELECT</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2576"/>
         <location filename="../MainWindow.ui" line="2579"/>
         <source>When dragging fields from the same table or a single table, drop a SELECT query into the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>При перетаскивании полей из той же таблицы или из одной таблицы, перетащите запрос SELECT в редактор</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2587"/>
@@ -3378,104 +3404,104 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2705"/>
         <source>Un/comment block of SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Рас/комментировать блок SQL кода</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2708"/>
         <source>Un/comment block</source>
-        <translation type="unfinished"></translation>
+        <translation>Рас/комментировать блок</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2711"/>
         <source>Comment or uncomment current line or selected block of code</source>
-        <translation type="unfinished"></translation>
+        <translation>Рас/комментировать текущую строку выбранного блока кода</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2714"/>
         <source>Comment or uncomment the selected lines or the current line, when there is no selection. All the block is toggled according to the first line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Комментировать или раскомментировать выделенные строки или текущую строку, если нет выделения. Весь блок переключается в соответствии с первой строкой.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2717"/>
         <source>Ctrl+/</source>
-        <translation></translation>
+        <translation>Ctrl+/</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2729"/>
         <source>Stop SQL execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить выполнение SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2732"/>
         <source>Stop execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить выполнение</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2735"/>
         <source>Stop the currently running SQL script</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить выполняемый SQL скрипт</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2783"/>
         <source>Browse Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр таблицы</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2788"/>
         <source>Close Pro&amp;ject</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть проект</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2791"/>
         <location filename="../MainWindow.ui" line="2794"/>
         <source>Close project and database files and return to the initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть проект и БД файлы и вернуться в исходное состояние</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="483"/>
         <source>Ctrl+Shift+F4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+F4</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2806"/>
         <location filename="../MainWindow.ui" line="2818"/>
         <source>Detach Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсоединить БД</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2809"/>
         <location filename="../MainWindow.ui" line="2821"/>
         <source>Detach database file attached to the current database connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсоединить файл базы данных, прикрепленный к текущему подключению</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2744"/>
         <source>&amp;Save Project As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить проект как...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2747"/>
         <location filename="../MainWindow.ui" line="2750"/>
         <location filename="../MainWindow.ui" line="2753"/>
         <source>Save the project in a file selected in a dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохраните проект в файле, выбранном в диалоговом окне</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2762"/>
         <source>Save A&amp;ll</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить все</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2765"/>
         <location filename="../MainWindow.ui" line="2768"/>
         <location filename="../MainWindow.ui" line="2771"/>
         <source>Save DB file, project file and opened SQL files</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить файл базы данных, файл проекта и открытые файлы SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2774"/>
         <source>Ctrl+Shift+S</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1295"/>
@@ -3536,7 +3562,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2163"/>
         <source>Shift+F5</source>
-        <translation></translation>
+        <translation>Shift+F5</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2246"/>
@@ -3603,7 +3629,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1715"/>
         <source>Ctrl+N</source>
-        <translation></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1727"/>
@@ -3630,7 +3656,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1739"/>
         <source>Ctrl+O</source>
-        <translation></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1754"/>
@@ -3646,7 +3672,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
         <location filename="../MainWindow.cpp" line="197"/>
         <location filename="../MainWindow.cpp" line="3809"/>
         <source>Ctrl+W</source>
-        <translation></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1784"/>
@@ -3673,7 +3699,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1841"/>
         <source>Ctrl+S</source>
-        <translation></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1852"/>
@@ -3699,7 +3725,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1872"/>
         <source>Ctrl+Q</source>
-        <translation></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1883"/>
@@ -3724,7 +3750,7 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="1911"/>
         <source>Export a database to a .sql dump text file.</source>
-        <translation>Экспортировать базу данных в текстовый файл .sql.</translation>
+        <translation>Экспортировать базу данных в текстовый дамп файл .sql.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1914"/>
@@ -3780,17 +3806,17 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     <message>
         <location filename="../MainWindow.ui" line="2054"/>
         <source>Shift+F1</source>
-        <translation></translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2070"/>
         <source>&amp;Recently opened</source>
-        <translation>&amp;Недавно открываемые</translation>
+        <translation>&amp;Недавние файлы</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
         <source>Ctrl+T</source>
-        <translation></translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="95"/>
@@ -3859,7 +3885,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="1982"/>
         <source>&amp;Modify Table...</source>
-        <translation>&amp;Изменить таблицу...</translation>
+        <translation>&amp;Модифицировать таблицу...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2000"/>
@@ -3874,7 +3900,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2094"/>
         <source>&amp;Execute SQL</source>
-        <translation>В&amp;ыполнить код SQL</translation>
+        <translation>В&amp;ыполнить SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2127"/>
@@ -3886,7 +3912,7 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.cpp" line="297"/>
         <source>Ctrl+E</source>
-        <translation></translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2171"/>
@@ -3902,12 +3928,12 @@ You can drag SQL statements from an object row and drop them into other applicat
         <location filename="../MainWindow.ui" line="2252"/>
         <location filename="../MainWindow.ui" line="2255"/>
         <source>Save the current session to a file</source>
-        <translation>Сохранить текущее состояние в файл </translation>
+        <translation>Сохранить текущее состояние в файл</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
         <source>This button lets you save all the settings associated to the open DB to a DB Browser for SQLite project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка позволяет сохранить все настройки, связанные с открытой базой данных, в файле проекта браузера баз данных для SQLite</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2276"/>
@@ -3928,43 +3954,43 @@ You can drag SQL statements from an object row and drop them into other applicat
     <message>
         <location filename="../MainWindow.ui" line="2103"/>
         <source>Ctrl+Return</source>
-        <translation></translation>
+        <translation>Ctrl+Return</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="282"/>
         <source>Ctrl+L</source>
-        <translation></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2666"/>
         <location filename="../MainWindow.ui" line="2693"/>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="287"/>
         <source>Ctrl+D</source>
-        <translation></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="292"/>
         <source>Ctrl+I</source>
-        <translation></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="337"/>
         <source>Reset Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить структуру окна</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="378"/>
         <source>The database is currently busy.</source>
-        <translation type="unfinished"></translation>
+        <translation>База данных сейчас занята.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="384"/>
         <source>Click here to interrupt the currently running query.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите здесь, чтобы прервать текущий выполняемый запрос.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="392"/>
@@ -4014,7 +4040,7 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="2478"/>
         <source>A new DB Browser for SQLite version is available (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Please download at &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</source>
-        <translation>Вышла новая версия Обозревателя для SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Она доступна для скачивания по адресу &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
+        <translation>Вышла новая версия DB Browser for SQLite (%1.%2.%3).&lt;br/&gt;&lt;br/&gt;Она доступна для скачивания по адресу &lt;a href=&apos;%4&apos;&gt;%4&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2709"/>
@@ -4055,87 +4081,87 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="205"/>
         <source>Ctrl+Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Tab</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="214"/>
         <source>Ctrl+Shift+Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="240"/>
         <source>Clear List</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить список</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="334"/>
         <source>Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение окон</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="338"/>
         <source>Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Упорядочить окна</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="347"/>
         <source>Alt+Shift+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+0</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="356"/>
         <source>Dock Windows at Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрепить окна снизу</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="360"/>
         <source>Dock Windows at Left Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрепить окна слева</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="364"/>
         <source>Dock Windows at Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрепить окна сверху</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="482"/>
         <source>Alt+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+W</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="702"/>
         <source>Choose a database file to save under</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл БД для сохранения</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="713"/>
         <source>Error while saving the database to the new file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при сохранении БД в новый файл.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="727"/>
         <source>You are still executing SQL statements. Closing the database now will stop their execution, possibly leaving the database in an inconsistent state. Are you sure you want to close the database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы все еще выполняете SQL-выражения. Закрытие базы данных сейчас остановит их выполнение, возможно, оставив базу данных в несогласованном состоянии. Вы уверены, что хотите закрыть базу данных?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="823"/>
         <source>Do you want to save the changes made to the project file &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите сохранить изменения, внесенные в файл проекта «%1»?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1005"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать представление %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1011"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать триггер %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1563"/>
@@ -4180,52 +4206,52 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="1737"/>
         <source>Opened &apos;%1&apos; in read-only mode from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыт &apos;%1&apos; в режиме только для чтения из списка последних файлов</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1739"/>
         <source>Opened &apos;%1&apos; from recent file list</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыт &apos;%1&apos; из списка последних файлов</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1778"/>
         <source>&amp;%1 %2%3</source>
-        <translation type="unfinished">&amp;%1 %2%3</translation>
+        <translation>&amp;%1 %2%3</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1778"/>
         <source> (read only)</source>
-        <translation type="unfinished"></translation>
+        <translation> (только для чтения)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1865"/>
         <source>Open Database or Project</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1866"/>
         <source>Attach Database...</source>
-        <translation type="unfinished"></translation>
+        <translation>Присоединить БД...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1867"/>
         <source>Import CSV file(s)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт CSV файла(ов)...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2062"/>
         <source>Do you want to save the changes made to SQL tabs in a new project file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите ли вы сохранить изменения, внесенные во вкладки SQL, в новом файле проекта?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2083"/>
         <source>Do you want to save the changes made to the SQL file %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите сохранить изменения, внесенные в файл SQL %1?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2378"/>
         <source>Could not find resource file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Could not find resource file: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2708"/>
@@ -4235,28 +4261,29 @@ If you answer no we will attempt to import the data in the SQL file to the curre
     <message>
         <location filename="../MainWindow.cpp" line="2755"/>
         <source>DB file &apos;%1&apos; could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл базы данных &apos;%1&apos; не может быть открыт</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2909"/>
         <source>Table &apos;%1&apos; not found; settings ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица &apos;%1&apos; не найдена; настройки игнорируются</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3125"/>
         <source>Could not open project file for writing.
 Reason: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть файл проекта для записи.
+Причина: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3243"/>
         <source>-- Reference to file &quot;%1&quot; (not supported by this version) --</source>
-        <translation type="unfinished"></translation>
+        <translation>-- Ссылка на файл &quot;%1&quot; (не поддерживается этой версией) --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3688"/>
         <source>Busy (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Занят (%1)</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="978"/>
@@ -4271,12 +4298,12 @@ Reason: %1</source>
     <message>
         <location filename="../MainWindow.cpp" line="1331"/>
         <source>Execution finished with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнено с ошибками.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1333"/>
         <source>Execution finished without errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнено без ошибок.</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1964"/>
@@ -4298,7 +4325,7 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="237"/>
         <source>Automatically load the last opened DB file at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически загружать последнюю БД при запуске</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="906"/>
@@ -4346,7 +4373,7 @@ All data associated with the table will be lost.</source>
         <location filename="../MainWindow.cpp" line="931"/>
         <source>Message from database engine:
 %1</source>
-        <translation>Сообщение от СУБД:
+        <translation>Сообщение от DB-engine:
 %1</translation>
     </message>
     <message>
@@ -4359,7 +4386,7 @@ Are you sure you want to save the database?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1117"/>
         <source>You are already executing SQL statements. Do you want to stop them in order to execute the current statements instead? Note that this might leave the database in an inconsistent state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уже выполняете SQL-выражения. Хотите остановить их, чтобы вместо этого выполнить текущие выражения? Обратите внимание, что это может привести базу данных в несогласованное состояние.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1166"/>
@@ -4379,24 +4406,24 @@ Are you sure you want to save the database?</source>
         <location filename="../MainWindow.cpp" line="1199"/>
         <source>-- EXECUTING ALL IN &apos;%1&apos;
 --</source>
-        <translation>-- ВЫПОЛНЕНИЕ ВСЕ В &apos;%1&apos;
+        <translation>-- ВЫПОЛНЕНИЕ ВСЕГО В &apos;%1&apos;
 --</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1234"/>
         <location filename="../MainWindow.cpp" line="1238"/>
         <source>At line %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>На строке %1:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1234"/>
         <source>Result: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Результат: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1238"/>
         <source>Result: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Результат: %2</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1303"/>
@@ -4409,7 +4436,7 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="1870"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
-        <translation type="unfinished">
+        <translation>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4418,52 +4445,52 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="2106"/>
         <source>The statements in the tab &apos;%1&apos; are still executing. Closing the tab will stop the execution. This might leave the database in an inconsistent state. Are you sure you want to close the tab?</source>
-        <translation type="unfinished"></translation>
+        <translation>Операторы на вкладке &apos;%1&apos; все еще выполняются. Закрытие вкладки остановит выполнение. Это может привести к тому, что база данных окажется в несогласованном состоянии. Вы уверены, что хотите закрыть вкладку?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2890"/>
         <source>This project file is using an old file format because it was created using DB Browser for SQLite version 3.10 or lower. Loading this file format is no longer fully supported. If you want to load it completely, please use DB Browser for SQLite version 3.12 to convert it to the new file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот файл проекта использует старый формат файла, поскольку он был создан с помощью DB Browser for SQLite версии 3.10 или ниже. Загрузка этого формата файла больше не поддерживается полностью. Если вы хотите загрузить его полностью, используйте DB Browser for SQLite версии 3.12, чтобы преобразовать его в новый формат файла.</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3461"/>
         <source>Yes. Don&apos;t ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Да. Не спрашивать снова</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3566"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Это действие откроет новую вкладку SQL со следующими операторами, которые вы можете редактировать и выполнять:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3772"/>
         <source>Rename Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать вкладку</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3778"/>
         <source>Duplicate Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Дублировать вкладку</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3808"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть вкладку</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3827"/>
         <source>Opening &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывается &apos;%1&apos;...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3829"/>
         <source>There was an error opening &apos;%1&apos;...</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла ошибка при открытии &apos;%1&apos;...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3832"/>
         <source>Value is not a valid URL or filename: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение не является допустимым URL-адресом или именем файла: %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1297"/>
@@ -4483,17 +4510,17 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="1683"/>
         <source>Modify Index</source>
-        <translation>Модифицировать Индекс</translation>
+        <translation>Модифицировать индекс</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1686"/>
         <source>Modify Table</source>
-        <translation>Модифицировать Таблицу</translation>
+        <translation>Модифицировать таблицу</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2063"/>
         <source>Do you want to save the changes made to SQL tabs in the project file &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите сохранить изменения, внесенные во вкладки SQL в файле проекта «%1»?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="2221"/>
@@ -4534,26 +4561,26 @@ Are you sure?</source>
     <message>
         <location filename="../MainWindow.cpp" line="3259"/>
         <source>Project saved to file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект сохранен в файл &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3465"/>
         <source>Collation needed! Proceed?</source>
-        <translation>Нужно выполнить сопоставление! Продолжить?</translation>
+        <translation>Нужно Collation! Продолжить?</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3466"/>
         <source>A table in this database requires a special collation function &apos;%1&apos; that this application can&apos;t provide without further knowledge.
 If you choose to proceed, be aware bad things can happen to your database.
 Create a backup!</source>
-        <translation>Таблица в базе данных требует выполнения специальной функции сопоставления &apos;%1&apos;.
+        <translation>Таблица в базе данных требует наличия функции сопоставления (Collation)&apos;%1&apos;.чего это приложение не может предоставить без дополнительных знаний
 Если вы продолжите, то возможна порча вашей базы данных.
 Создайте резервную копию!</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3483"/>
         <source>creating collation</source>
-        <translation type="unfinished"></translation>
+        <translation>создание Collation</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3491"/>
@@ -4601,7 +4628,7 @@ Create a backup!</source>
     <message>
         <location filename="../AddRecordDialog.cpp" line="46"/>
         <source>Alt+Del</source>
-        <translation></translation>
+        <translation>Alt+Del</translation>
     </message>
 </context>
 <context>
@@ -4629,17 +4656,17 @@ Create a backup!</source>
     <message>
         <location filename="../PlotDock.ui" line="68"/>
         <source>Y1</source>
-        <translation type="unfinished"></translation>
+        <translation>Y1</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="73"/>
         <source>Y2</source>
-        <translation type="unfinished"></translation>
+        <translation>Y2</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="78"/>
         <source>Axis Type</source>
-        <translation>Ось</translation>
+        <translation>Тип оси</translation>
     </message>
     <message>
         <location filename="../PlotDock.ui" line="90"/>
@@ -4805,7 +4832,7 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="103"/>
@@ -4815,12 +4842,12 @@ Select the axes or axes labels to drag and zoom only in that orientation.</sourc
     <message>
         <location filename="../PlotDock.cpp" line="109"/>
         <source>Stacked bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Сложенные панели</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="115"/>
         <source>Fixed number format</source>
-        <translation type="unfinished"></translation>
+        <translation>Фиксированный формат чисел</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="206"/>
@@ -4878,12 +4905,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PlotDock.cpp" line="743"/>
         <source>There are curves in this plot and the selected line style can only be applied to graphs sorted by X. Either sort the table or query by X to remove curves or select one of the styles supported by curves: None or Line.</source>
-        <translation>На этом графике есть кривые, и выбранный стиль линии может применяться только к графикам, отсортированным по X. Либо сортируйте таблицу или запрос по X, чтобы удалить кривые, либо выберите один из стилей, поддерживаемых кривыми: None или Line.</translation>
+        <translation>На этом графике есть кривые, и выбранный стиль линии может применяться только к графикам, отсортированным по X. Либо сортируйте таблицу или запрос по X, чтобы удалить кривые, либо выберите один из стилей, поддерживаемых кривыми: Нет или Обычная.</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="861"/>
         <source>Loading all remaining data for this table took %1ms.</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка всех оставшихся данных для этой таблицы заняла %1мс.</translation>
     </message>
 </context>
 <context>
@@ -4901,12 +4928,12 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="632"/>
         <source>Database &amp;encoding</source>
-        <translation>&amp;Кодировка базы данных</translation>
+        <translation>&amp;Кодировка текста БД</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="642"/>
         <source>Open databases with foreign keys enabled.</source>
-        <translation>Открывать базы данных с включенными внешними ключами.</translation>
+        <translation>Открывать базы данных с поддержкой внешних ключей.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="645"/>
@@ -4974,7 +5001,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="746"/>
         <source>SQ&amp;L to execute after opening database</source>
-        <translation></translation>
+        <translation>SQL для выполнения после открытия базы данных</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="775"/>
@@ -5049,17 +5076,17 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="1195"/>
         <source>Threshold for completion and calculation on selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Порог для завершения и расчета по выделенному</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1205"/>
         <source>Show images in cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать изображения в ячейке</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1245"/>
         <source>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</source>
-        <translation type="unfinished"></translation>
+        <translation>Включите эту опцию, чтобы отобразить предварительный просмотр BLOB-объектов, содержащих данные изображений в ячейках. Однако это может повлиять на производительность браузера данных.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1290"/>
@@ -5206,7 +5233,7 @@ Warning: not all data has been fetched from the table yet due to the partial fet
         <location filename="../PreferencesDialog.ui" line="320"/>
         <location filename="../PreferencesDialog.ui" line="476"/>
         <source>The text appears beside the icon</source>
-        <translation>Текст над иконкой</translation>
+        <translation>Текст рядом с иконкой</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="175"/>
@@ -5239,73 +5266,74 @@ Warning: not all data has been fetched from the table yet due to the partial fet
     <message>
         <location filename="../PreferencesDialog.ui" line="392"/>
         <source>Main Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Главное окно</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="405"/>
         <source>Database Structure</source>
-        <translation type="unfinished">Структура БД</translation>
+        <translation>Структура БД</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="418"/>
         <source>Browse Data</source>
-        <translation type="unfinished">Данные</translation>
+        <translation>Просмотр данных</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="431"/>
         <source>Execute SQL</source>
-        <translation type="unfinished">SQL</translation>
+        <translation>Редактор SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="494"/>
         <source>Edit Database Cell</source>
-        <translation type="unfinished">Редактирование ячейки БД</translation>
+        <translation>Правка ячейки БД</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="513"/>
         <source>When this value is changed, all the other color preferences are also set to matching colors.</source>
-        <translation type="unfinished"></translation>
+        <translation>При изменении этого значения все остальные цветовые настройки также устанавливаются на соответствующие цвета.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="532"/>
         <source>Follow the desktop style</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль рабочего стола</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="537"/>
         <source>Dark style</source>
-        <translation type="unfinished"></translation>
+        <translation>Темный</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="550"/>
         <source>Application style</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль приложения</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="560"/>
         <source>This sets the font size for all UI elements which do not have their own font size option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер шрифта для всех элементов пользовательского интерфейса, которые не имеют собственной опции размера шрифта.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="563"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размет шрифта</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="576"/>
         <source>Max Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Кол. недавних файлов</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="596"/>
         <source>Prompt to save SQL tabs
 in new project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Предлагать сохранение вкладок SQL
+в новом файле проекта</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="607"/>
         <source>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если эта опция включена, то изменения в редакторе SQL при закрытии вкладки редактора SQL будут приводить к появлению диалогового окна подтверждения сохранения проекта.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="698"/>
@@ -5315,7 +5343,7 @@ in new project file</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="729"/>
         <source>Database structure font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Рзмер шрифта во вкладке структуры БД</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="821"/>
@@ -5328,7 +5356,10 @@ in new project file</source>
 Maximum number of rows in a table for enabling the value completion based on current values in the column.
 Maximum number of indexes in a selection for calculating sum and average.
 Can be set to 0 for disabling the functionalities.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это максимальное количество элементов, разрешенное для включения некоторых вычислительно затратных функций:
+Максимальное количество строк в таблице для включения автодополнения значений на основе текущих значений в столбце.
+Максимальное количество индексов в выборке для расчета суммы и среднего.
+Можно установить на 0 для отключения функций.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1231"/>
@@ -5345,7 +5376,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="542"/>
         <source>Light style</source>
-        <translation type="unfinished"></translation>
+        <translation>Светлый</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="852"/>
@@ -5355,7 +5386,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="885"/>
         <source>Formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>Отформатированный</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="908"/>
@@ -5367,7 +5398,7 @@ Can be set to 0 for disabling completion.</source>
         <location filename="../PreferencesDialog.ui" line="1054"/>
         <location filename="../PreferencesDialog.ui" line="1073"/>
         <source>Click to set this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Клик для выбора цвета</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="949"/>
@@ -5383,7 +5414,7 @@ Can be set to 0 for disabling completion.</source>
         <location filename="../PreferencesDialog.ui" line="1118"/>
         <location filename="../PreferencesDialog.ui" line="1139"/>
         <source>Preview only (N/A)</source>
-        <translation>Предв. просмотр</translation>
+        <translation>Только просмотр</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1483"/>
@@ -5393,32 +5424,32 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1491"/>
         <source>Selection background</source>
-        <translation type="unfinished"></translation>
+        <translation>Фон выделения</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1499"/>
         <source>Selection foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделение на переднем плане</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1507"/>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделение</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1554"/>
         <source>SQL &amp;results font size</source>
-        <translation>&amp;Размер шрифта</translation>
+        <translation>&amp;Размер шрифта в окне результата SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1594"/>
         <source>Use tabs for indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Табуляции для отступов</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1604"/>
         <source>When set, the Tab key will insert tab and space characters for indentation. Otherwise, just spaces will be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>При установке, клавишей Tab будут вставляться символы табуляции и пробела для отступа. В противном случае будут использоваться только пробелы.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1614"/>
@@ -5488,12 +5519,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1760"/>
         <source>Close button on tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Кнопка закрытия на вкладках</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1770"/>
         <source>If enabled, SQL editor tabs will have a close button. In any case, you can use the contextual menu or the keyboard shortcut to close them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если включено, вкладки редактора SQL будут иметь кнопку закрытия. В любом случае, вы можете использовать контекстное меню или сочетание клавиш, чтобы закрыть их.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1783"/>
@@ -5518,7 +5549,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1852"/>
         <source>Select built-in extensions to load for every database:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать встроенные расширения для загрузки для каждой базы данных:</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1866"/>
@@ -5533,12 +5564,12 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1876"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite provides an SQL function for loading extensions from a shared library file. Activate this if you want to use the &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; function from SQL code.&lt;/p&gt;&lt;p&gt;For security reasons, extension loading is turned off by default and must be enabled through this setting. You can always load extensions through the GUI, even though this option is disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SQLite предоставляет функцию SQL для загрузки расширений из файла общей библиотеки. Активируйте ее, если хотите использовать функцию &lt;span style=&quot; font-style:italic;&quot;&gt;load_extension()&lt;/span&gt; из кода SQL.&lt;/p&gt;&lt;p&gt;В целях безопасности загрузка расширений по умолчанию отключена и должна быть включена с помощью этого параметра. Вы всегда можете загружать расширения через графический интерфейс, даже если эта опция отключена.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1879"/>
         <source>Allow loading extensions from SQL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешить загрузку расширений из кода SQL</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1887"/>
@@ -5553,61 +5584,61 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="2103"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокси</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2113"/>
         <source>Configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Настроить</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2128"/>
         <source>Export Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт настроек</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2135"/>
         <source>Import Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт настроек</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1927"/>
         <location filename="../PreferencesDialog.ui" line="2023"/>
         <source>Subject CN</source>
-        <translation type="unfinished"></translation>
+        <translation>Субъект</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2026"/>
         <source>Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Общепринятое имя</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2031"/>
         <source>Subject O</source>
-        <translation type="unfinished"></translation>
+        <translation>Организация</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2034"/>
         <source>Organization</source>
-        <translation type="unfinished"></translation>
+        <translation>Организация</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1943"/>
         <location filename="../PreferencesDialog.ui" line="2039"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Действует с</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1948"/>
         <location filename="../PreferencesDialog.ui" line="2044"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation>Действует по</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1953"/>
         <location filename="../PreferencesDialog.ui" line="2049"/>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Серийный №</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1897"/>
@@ -5622,17 +5653,17 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.ui" line="1930"/>
         <source>Subject Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Общепринятое имя Субъекта</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1935"/>
         <source>Issuer CN</source>
-        <translation type="unfinished"></translation>
+        <translation>Издатель</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="1938"/>
         <source>Issuer Common Name</source>
-        <translation type="unfinished"></translation>
+        <translation>общепринятое имя издателя</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.ui" line="2063"/>
@@ -5659,7 +5690,7 @@ Can be set to 0 for disabling completion.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="438"/>
         <source>Extensions(*.so *.dylib *.dll);;All files(*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Расширения(*.so *.dylib *.dll);;All files(*)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="666"/>
@@ -5686,35 +5717,37 @@ All your preferences will be lost and default values will be used.</source>
     <message>
         <location filename="../PreferencesDialog.cpp" line="795"/>
         <source>Save Settings File</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить файл настроек</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="795"/>
         <location filename="../PreferencesDialog.cpp" line="805"/>
         <source>Initialization File (*.ini)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл инициализации(*.ini)</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="799"/>
         <source>The settings file has been saved in location :
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Файл настроек сохранен в:
+</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="805"/>
         <source>Open Settings File</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть файл настроек</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="812"/>
         <source>The settings file was loaded properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл настроек загружен корректно.</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="819"/>
         <source>The selected settings file is not a normal settings file.
 Please check again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранный файл настроек не является обычным файлом настроек.
+Проверьте еще раз.</translation>
     </message>
 </context>
 <context>
@@ -5722,57 +5755,57 @@ Please check again.</source>
     <message>
         <location filename="../ProxyDialog.ui" line="14"/>
         <source>Proxy Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурация прокси-сервера</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="22"/>
         <source>Pro&amp;xy Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип прокси</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="35"/>
         <source>Host Na&amp;me</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя хоста</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="48"/>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Порт</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="68"/>
         <source>Authentication Re&amp;quired</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется аутентификация</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="81"/>
         <source>&amp;User Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользователь</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.ui" line="94"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="12"/>
         <source>None</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="13"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Системные настройки</translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="14"/>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ProxyDialog.cpp" line="15"/>
         <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5816,102 +5849,103 @@ Please check again.</source>
     <message>
         <location filename="../CondFormat.h" line="25"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Влево</translation>
     </message>
     <message>
         <location filename="../CondFormat.h" line="25"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Вправо</translation>
     </message>
     <message>
         <location filename="../CondFormat.h" line="25"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>По центру</translation>
     </message>
     <message>
         <location filename="../CondFormat.h" line="25"/>
         <source>Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="13"/>
         <source>SQLite Database Files (*.db *.sqlite *.sqlite3 *.db3)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQLite Database файлы (*.db *.sqlite *.sqlite3 *.db3)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="16"/>
         <source>DB Browser for SQLite Project Files (*.sqbpro)</source>
-        <translation type="unfinished"></translation>
+        <translation>DB Browser for SQLite Project файлы (*.sqbpro)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="20"/>
         <source>SQL Files (*.sql)</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL файлы (*.sql)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="24"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все файлы (*)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="27"/>
         <source>Text Files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="31"/>
         <source>Comma-Separated Values Files (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы с разделителями запятой (*.csv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="33"/>
         <source>Tab-Separated Values Files (*.tsv)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы с разделением табуляцией (*.tsv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="34"/>
         <source>Delimiter-Separated Values Files (*.dsv)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Файлы с разделителями значений</translatorcomment>
+        <translation>Delimiter-Separated Values Files (*.dsv)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="35"/>
         <source>Concordance DAT files (*.dat)</source>
-        <translation type="unfinished"></translation>
+        <translation>DAT файлы (*.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="38"/>
         <source>JSON Files (*.json *.js)</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON файлы (*.json *.js)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="42"/>
         <source>XML Files (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>XML файлы (*.xml)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="46"/>
         <source>Binary Files (*.bin *.dat)</source>
-        <translation type="unfinished"></translation>
+        <translation>Двоичные файлы (*.bin *.dat)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="50"/>
         <source>SVG Files (*.svg)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG файлы (*.svg)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="54"/>
         <source>Hex Dump Files (*.dat *.bin)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы шестнадцатиричных дампов</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="57"/>
         <source>Extensions (*.so *.dylib *.dll)</source>
-        <translation type="unfinished"></translation>
+        <translation>Расширения (*.so *.dylib *.dll)</translation>
     </message>
     <message>
         <location filename="../FileDialog.h" line="60"/>
         <source>Initialization File (*.ini)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл инициализации (*.ini)</translation>
     </message>
 </context>
 <context>
@@ -5994,37 +6028,37 @@ Please check again.</source>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Commit ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Коммит ID</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Комментарий</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Date</source>
-        <translation type="unfinished">Дата</translation>
+        <translation>Дата</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Автор</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="13"/>
         <source>Size</source>
-        <translation type="unfinished">Размер</translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="65"/>
         <source>Authored and committed by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Автор и коммит %1</translation>
     </message>
     <message>
         <location filename="../RemoteCommitsModel.cpp" line="67"/>
         <source>Authored by %1, committed by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Автор %1, коммит %2</translation>
     </message>
 </context>
 <context>
@@ -6054,7 +6088,7 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="53"/>
         <source>Identity</source>
-        <translation>ID</translation>
+        <translation>Удостоверение</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="83"/>
@@ -6064,172 +6098,172 @@ Please check again.</source>
     <message>
         <location filename="../RemoteDock.ui" line="86"/>
         <source>Upload</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="106"/>
         <source>DBHub.io</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="139"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In this pane, remote databases from dbhub.io website can be added to DB Browser for SQLite. First you need an identity:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Login to the dbhub.io website (use your GitHub credentials or whatever you want)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the button to &amp;quot;Generate client certificate&amp;quot; (that&apos;s your identity). That&apos;ll give you a certificate file (save it to your local disk).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Go to the Remote tab in DB Browser for SQLite Preferences. Click the button to add a new certificate to DB Browser for SQLite and choose the just downloaded certificate file.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Now the Remote panel shows your identity and you can add remote databases.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;На этой панели БД с dbhub.io может быть добавлена в DB Browser for SQLite. Сначала вам нужно удостоверение:&lt;/p&gt;&lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Авторизоваться на dbhub.io (используйте ваши учетные данные GitHub или что-то еще, если угодно)&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Нажмите кнопку &amp;quot;Generate client certificate&amp;quot; (это ваше удостоверение). Вы получите файл сертификата (сохраните его на локальный диск).&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Перейдите на вкладку Удаленный сервер настроек DB Browser for SQLite. Добавьтесертификат в DB Browser for SQLite и выберите скачанный файл.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Теперь на панели «Удалённый сервер» отображается ваше удостоверение, и вы можете добавлять удалённые базы данных.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="147"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Локальный</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="173"/>
         <source>Current Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущая БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="231"/>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation>Клонировать</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="274"/>
         <source>Branch</source>
-        <translation type="unfinished">Ветка</translation>
+        <translation>Ветка</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="294"/>
         <source>Commits</source>
-        <translation type="unfinished"></translation>
+        <translation>Коммиты</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="314"/>
         <source>Commits for</source>
-        <translation type="unfinished"></translation>
+        <translation>Коммиты для</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="445"/>
         <source>Delete Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="448"/>
         <source>Delete the local clone of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить локальный клон этой БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="457"/>
         <source>Open in Web Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть в Web браузере</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="460"/>
         <source>Open the web page for the current database in your browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть веб-страницу текущей базы данных в вашем браузере</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="469"/>
         <source>Clone from Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Клонировать из ссылки</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="472"/>
         <source>Use this to download a remote database for local editing using a URL as provided on the web page of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используйте это для загрузки удаленной базы данных для локального редактирования с использованием URL-адреса, указанного на веб-странице базы данных.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="481"/>
         <source>Refresh</source>
-        <translation type="unfinished">Обновить</translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="484"/>
         <source>Reload all data and update the views</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезагрузите все данные и обновите представления</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="493"/>
         <source>Clone Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Клонировать БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="508"/>
         <source>Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="511"/>
         <source>Open the local copy of this database</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть локально копию этой БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="522"/>
         <source>Check out Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверить коммит</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="525"/>
         <source>Download and open this specific commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить и открыть этот коммит</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="540"/>
         <source>Check out Latest Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверить последний коммит</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="543"/>
         <source>Check out the latest commit of the current branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверить последний коммит текущей ветки</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="548"/>
         <source>Save Revision to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить версию в файл</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="551"/>
         <source>Saves the selected revision of the database to another file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить выбранную версию БД в другой файл</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="560"/>
         <source>Upload Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить БД</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="563"/>
         <source>Upload this database as a new commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить эту БД как новый коммит</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="390"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are currently using a built-in, read-only identity. For uploading your database, you need to configure and use your DBHub.io account.&lt;/p&gt;&lt;p&gt;No DBHub.io account yet? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Create one now&lt;/span&gt;&lt;/a&gt; and import your certificate &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; to share your databases.&lt;/p&gt;&lt;p&gt;For online help visit &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы используете встроенное удостоверение.Для загрузки БД, нужно настроить аккаунт на DBHub.io.&lt;/p&gt;&lt;p&gt;Нет аккаунта на DBHub.io? &lt;a href=&quot;https://dbhub.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Создайте сейчас&lt;/span&gt;&lt;/a&gt; и импортируйте ваш сертификат &lt;a href=&quot;#preferences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;сюда&lt;/span&gt;&lt;/a&gt; для доступа к вашим базам данных.&lt;/p&gt;&lt;p&gt;Инструкции можно посмотреть здесь &lt;a href=&quot;https://dbhub.io/about&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="240"/>
         <source>&amp;User</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользователь</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="257"/>
         <source>&amp;Database</source>
-        <translation type="unfinished">&amp;База данных</translation>
+        <translation>&amp;База данных</translation>
     </message>
     <message>
         <location filename="../RemoteDock.ui" line="400"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="151"/>
         <source>Select an identity to connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать удостоверение для подключения</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="163"/>
         <source>Public</source>
-        <translation type="unfinished">Публичный</translation>
+        <translation>Публичный</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="216"/>
@@ -6237,43 +6271,47 @@ Please check again.</source>
 Please enter the URL to clone from. You can generate this URL by
 clicking the &apos;Clone Database in DB4S&apos; button on the web page
 of the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка базы данных с удаленного сервера для локального редактирования.
+Введите URL для клонирования. Вы можете сгенерировать этот URL,
+нажав кнопку «Клонировать базу данных в DB4S» на веб-странице
+базы данных.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="231"/>
         <source>Invalid URL: The host name does not match the host name of the current identity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный URL: имя хоста не совпадает с именем хоста текущего удостоверения.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="236"/>
         <source>Invalid URL: No branch name specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный URL: не указано имя ветки.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="241"/>
         <source>Invalid URL: No commit ID specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный URL: не указан идентификатор фиксации.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="289"/>
         <source>You have modified the local clone of the database. Fetching this commit overrides these local changes.
 Are you sure you want to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы изменили локальный клон базы данных. Извлечение этого коммита переопределит эти локальные изменения.
+Вы уверены, что хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="333"/>
         <source>The database has unsaved changes. Are you sure you want to push it before saving?</source>
-        <translation type="unfinished"></translation>
+        <translation>В базе данных есть несохраненные изменения. Вы уверены, что хотите отправить их перед сохранением?</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="543"/>
         <source>The database you are trying to delete is currently opened. Please close it before deleting.</source>
-        <translation type="unfinished"></translation>
+        <translation>База данных, которую вы пытаетесь удалить, в данный момент открыта. Пожалуйста, закройте ее перед удалением.</translation>
     </message>
     <message>
         <location filename="../RemoteDock.cpp" line="549"/>
         <source>This deletes the local version of this database with all the changes you have not committed yet. Are you sure you want to delete this database?</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие удалит локальную версию этой базы данных со всеми изменениями, которые вы еще не зафиксировали. Вы уверены, что хотите удалить эту базу данных?</translation>
     </message>
 </context>
 <context>
@@ -6281,32 +6319,32 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Branch</source>
-        <translation type="unfinished">Ветка</translation>
+        <translation>Ветка</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Last modified</source>
-        <translation type="unfinished">Изменен</translation>
+        <translation>Изменен</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Size</source>
-        <translation type="unfinished">Размер</translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>Commit</source>
-        <translation type="unfinished">Коммит</translation>
+        <translation>Коммит</translation>
     </message>
     <message>
         <location filename="../RemoteLocalFilesModel.cpp" line="20"/>
         <source>File</source>
-        <translation type="unfinished">Файл</translation>
+        <translation>Файл</translation>
     </message>
 </context>
 <context>
@@ -6334,22 +6372,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteModel.cpp" line="231"/>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="232"/>
         <source>Last Modified: </source>
-        <translation type="unfinished"></translation>
+        <translation>Изменен: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="233"/>
         <source>Licence: </source>
-        <translation type="unfinished"></translation>
+        <translation>Лицензия: </translation>
     </message>
     <message>
         <location filename="../RemoteModel.cpp" line="234"/>
         <source>Default Branch: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ветка по умолчанию: </translation>
     </message>
 </context>
 <context>
@@ -6357,48 +6395,48 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemoteNetwork.cpp" line="210"/>
         <source>Choose a location to save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать месторасположение для сохранения файла</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="244"/>
         <source>Error opening remote file at %1.
 %2</source>
-        <translation type="unfinished">Ошибка открытия файла %1.
+        <translation>Ошибка открытия файла %1.
 %2</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="323"/>
         <source>Error: Invalid client certificate specified.</source>
-        <translation type="unfinished">Ошибка: Указан неверный сертификат клиента.</translation>
+        <translation>Ошибка: Указан неверный сертификат клиента.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="335"/>
         <source>Please enter the passphrase for this client certificate in order to authenticate.</source>
-        <translation type="unfinished">Пожалуйста введите ключевую фразу для этого сертификата клиента.</translation>
+        <translation>Пожалуйста введите ключевую фразу для этого сертификата клиента.</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="362"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="367"/>
         <source>Uploading remote database to
 %1</source>
-        <translation type="unfinished">Загружается удаленная БД в
+        <translation>Загружается удаленная БД в
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="369"/>
         <source>Downloading remote database from
 %1</source>
-        <translation type="unfinished">Скачивается удаленная БД из
+        <translation>Скачивается удаленная БД из
 %1</translation>
     </message>
     <message>
         <location filename="../RemoteNetwork.cpp" line="450"/>
         <source>Error: Cannot open the file for sending.</source>
-        <translation type="unfinished">Ошибка: не удается открыть файл для отправки.</translation>
+        <translation>Ошибка: не удается открыть файл для отправки.</translation>
     </message>
 </context>
 <context>
@@ -6441,7 +6479,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RemotePushDialog.ui" line="129"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользователь</translation>
     </message>
     <message>
         <location filename="../RemotePushDialog.cpp" line="73"/>
@@ -6464,22 +6502,22 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../RunSql.cpp" line="139"/>
         <source>Execution aborted by user</source>
-        <translation type="unfinished">Выполнение прервано пользователем</translation>
+        <translation>Выполнение прервано пользователем</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="220"/>
         <source>, %1 rows affected</source>
-        <translation type="unfinished">, %1 строк изменено</translation>
+        <translation>, %1 строк затронуто</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="234"/>
         <source>query executed successfully. Took %1ms%2</source>
-        <translation type="unfinished">запрос успешно выполнен. Заняло %1мс%2</translation>
+        <translation>запрос успешно выполнен. Заняло %1мс%2</translation>
     </message>
     <message>
         <location filename="../RunSql.cpp" line="320"/>
         <source>executing query</source>
-        <translation type="unfinished"></translation>
+        <translation>выполнение запроса</translation>
     </message>
 </context>
 <context>
@@ -6487,12 +6525,12 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SelectItemsPopup.ui" line="34"/>
         <source>A&amp;vailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступные</translation>
     </message>
     <message>
         <location filename="../SelectItemsPopup.ui" line="105"/>
         <source>Sele&amp;cted</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранные</translation>
     </message>
 </context>
 <context>
@@ -6515,7 +6553,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="91"/>
         <source>Shift+F3</source>
-        <translation></translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="105"/>
@@ -6545,7 +6583,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="134"/>
         <source>Case Sensitive</source>
-        <translation>Учитывать Регистр</translation>
+        <translation>Учитывать регистр</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="141"/>
@@ -6560,7 +6598,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="151"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="158"/>
@@ -6586,7 +6624,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Results of the last executed statements.&lt;/p&gt;&lt;p&gt;You may want to collapse this panel and use the &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; dock with &lt;span style=&quot; font-style:italic;&quot;&gt;User&lt;/span&gt; selection instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Результаты выполнения последних инструкций.&lt;/p&gt;&lt;p&gt;Вы можете свернуть эту панель и использовать &lt;span style=&quot; font-style:italic;&quot;&gt;SQL Log&lt;/span&gt; на &lt;span style=&quot; font-style:italic;&quot;&gt;Ваш&lt;/span&gt; выбор.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.ui" line="253"/>
@@ -6601,48 +6639,48 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="37"/>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+PgUp</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="42"/>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+PgDown</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="256"/>
         <source>Couldn&apos;t read file &quot;%1&quot;: %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось прочитать файл &quot;%1&quot;: %2.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="286"/>
         <location filename="../SqlExecutionArea.cpp" line="304"/>
         <source>Couldn&apos;t save file: %1.</source>
-        <translation type="unfinished">Не удалось сохранить файл:%1.</translation>
+        <translation>Не удалось сохранить файл:%1.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="327"/>
         <source>Your changes will be lost when reloading it!</source>
-        <translation type="unfinished"></translation>
+        <translation>При повторной загрузке ваши изменения будут потеряны!</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="333"/>
         <source>The file &quot;%1&quot; was modified by another program. Do you want to reload it?%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл &quot;%1&quot; был изменен другой программой. Хотите перезагрузить его?%2</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="335"/>
         <source>Answer &quot;Yes to All&quot; to reload the file on any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ответ «Да для всех», чтобы перезагрузить файл при любом внешнем обновлении без дополнительных запросов.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="337"/>
         <source>Answer &quot;No to All&quot; to ignore any external update without further prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ответ «Нет для всех», чтобы игнорировать любые внешние обновления без дальнейших запросов.</translation>
     </message>
     <message>
         <location filename="../SqlExecutionArea.cpp" line="339"/>
         <source>Modifying and saving the file will restore prompting.</source>
-        <translation type="unfinished"></translation>
+        <translation>При изменении и сохранении файла появится запрос на восстановление.</translation>
     </message>
 </context>
 <context>
@@ -6650,7 +6688,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../sqltextedit.cpp" line="53"/>
         <source>Ctrl+/</source>
-        <translation></translation>
+        <translation>Ctrl+/</translation>
     </message>
 </context>
 <context>
@@ -6698,7 +6736,7 @@ Are you sure you want to proceed?</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="87"/>
         <source>(X,Y,Z) The iif(X,Y,Z) function returns the value Y if X is true, and Z otherwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y,Z) iif(условие, значение_1, значение_2) возвращает значение_1 если условие верно, и значение_2 в противном случае.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="88"/>
@@ -6724,13 +6762,15 @@ Are you sure you want to proceed?</source>
         <location filename="../SqlUiLexer.cpp" line="92"/>
         <source>(X) The load_extension(X) function loads SQLite extensions out of the shared library file named X.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Функция load_extension(X) загружает расширения SQLite из файла общей библиотеки с именем X.
+Использование этой функции должно быть разрешено в настройках.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="93"/>
         <source>(X,Y) The load_extension(X) function loads SQLite extensions out of the shared library file named X using the entry point Y.
 Use of this function must be authorized from Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Функция load_extension(X) загружает расширения SQLite из файла общей библиотеки с именем X, используя точку входа Y.
+Использование этой функции должно быть разрешено в настройках.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="94"/>
@@ -6981,140 +7021,140 @@ Use of this function must be authorized from Preferences.</source>
     <message>
         <location filename="../SqlUiLexer.cpp" line="155"/>
         <source>(X) Return the arccosine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает арккосинус X. Результат выражается в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="156"/>
         <source>(X) Return the hyperbolic arccosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический арккосинус X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="157"/>
         <source>(X) Return the arcsine of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает арксинус числа X. Результат выражается в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="158"/>
         <source>(X) Return the hyperbolic arcsine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический арксинус X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="159"/>
         <source>(X) Return the arctangent of X. The result is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает арктангенс числа X. Результат выражается в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="160"/>
         <source>(X,Y) Return the arctangent of Y/X. The result is in radians. The result is placed into correct quadrant depending on the signs of X and Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Возвращает арктангенс Y/X. Результат в радианах. Результат помещается в правильный квадрант в зависимости от знаков X и Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="161"/>
         <source>(X) Return the hyperbolic arctangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический арктангенс X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="162"/>
         <location filename="../SqlUiLexer.cpp" line="163"/>
         <source>(X) Return the first representable integer value greater than or equal to X. For positive values of X, this routine rounds away from zero. For negative values of X, this routine rounds toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает первое представимое целое значение, большее или равное X. Для положительных значений X эта процедура округляет от нуля. Для отрицательных значений X эта процедура округляет в сторону нуля.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="164"/>
         <source>(X) Return the cosine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает косинус числа X. X измеряется в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="165"/>
         <source>(X) Return the hyperbolic cosine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический косинус X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="166"/>
         <source>(X) Convert value X from radians into degrees.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Преобразует значение X из радиан в градусы.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="167"/>
         <source>(X) Compute e (Euler&apos;s number, approximately 2.71828182845905) raised to the power X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Вычисляет e (число Эйлера, приблизительно 2,71828182845905), возведенное в степень X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="168"/>
         <source>(X) Return the first representable integer value less than or equal to X. For positive numbers, this function rounds toward zero. For negative numbers, this function rounds away from zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает первое представимое целое число, меньшее или равное X. Для положительных чисел эта функция округляет в сторону нуля. Для отрицательных чисел эта функция округляет от нуля.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="169"/>
         <source>(X) Return the natural logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает натуральный логарифм X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="170"/>
         <source>(B,X) Return the base-B logarithm of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(B,X) Возвращает логарифм X по основанию B.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="171"/>
         <location filename="../SqlUiLexer.cpp" line="172"/>
         <source>(X) Return the base-10 logarithm for X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает логарифм по основанию 10 для X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="173"/>
         <source>(X) Return the logarithm base-2 for the number X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает логарифм по основанию 2 для числа X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="174"/>
         <source>(X,Y) Return the remainder after dividing X by Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Возвращает остаток после деления X на Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="175"/>
         <source>() Return an approximation for π.</source>
-        <translation type="unfinished"></translation>
+        <translation>() Возвращает приближенное значение для π.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="176"/>
         <location filename="../SqlUiLexer.cpp" line="177"/>
         <source>(X,Y) Compute X raised to the power Y.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X,Y) Вычислить X, возведенное в степень Y.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="178"/>
         <source>(X) Convert X from degrees into radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Преобразовать X из градусов в радианы.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="179"/>
         <source>(X) Return the sine of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает синус числа X. X измеряется в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="180"/>
         <source>(X) Return the hyperbolic sine of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический синус X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="181"/>
         <source>(X) Return the square root of X. NULL is returned if X is negative.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает квадратный корень из X. Возвращается NULL, если X отрицательно.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="182"/>
         <source>(X) Return the tangent of X. X is in radians.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает тангенс числа X. X измеряется в радианах.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="183"/>
         <source>(X) Return the hyperbolic tangent of X.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает гиперболический тангенс X.</translation>
     </message>
     <message>
         <location filename="../SqlUiLexer.cpp" line="184"/>
         <source>(X) Return the representable integer in between X and 0 (inclusive) that is furthest away from zero. Or, in other words, return the integer part of X, rounding toward zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>(X) Возвращает представимое целое число между X и 0 (включительно), которое находится дальше всего от нуля. Или, другими словами, возвращает целую часть X, округляя ее в сторону нуля.</translation>
     </message>
 </context>
 <context>
@@ -7165,22 +7205,22 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="14"/>
         <source>Browse Data</source>
-        <translation type="unfinished">Данные</translation>
+        <translation>Просмотр данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="43"/>
         <source>&amp;Table:</source>
-        <translation type="unfinished">&amp;Таблица:</translation>
+        <translation>&amp;Таблица:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="59"/>
         <source>Select a table to browse data</source>
-        <translation type="unfinished">Выберите таблицу для просмотра данных</translation>
+        <translation>Выберите таблицу для просмотра данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="62"/>
         <source>Use this list to select a table to be displayed in the database view</source>
-        <translation type="unfinished">Используйте этот список, чтобы выбрать таблицу, которая должна быть отображена в представлении базы данных</translation>
+        <translation>Используйте этот список, чтобы выбрать таблицу, которая должна быть отображена в представлении базы данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="178"/>
@@ -7191,7 +7231,7 @@ Hold %3Shift and click to jump there</source>
  - Ctrl+&quot; for duplicating the current record.
  - Ctrl+&apos; for copying the value from the cell above.
  - Standard selection and copy/paste operations.</source>
-        <translation type="unfinished">Это представление таблицы БД. Вы можете выполнить следующие действия:
+        <translation>Это представление таблицы БД. Вы можете выполнить следующие действия:
   - Начните писать для редактирования, введя значение.
   - Дважды щелкните любую запись, чтобы отредактировать ее содержимое в окне редактора ячеек.
   - Alt + Del для обнуления содержимого ячейки в NULL.
@@ -7202,615 +7242,615 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="254"/>
         <source>Text pattern to find considering the checks in this frame</source>
-        <translation type="unfinished">Шаблон для поиска, учитывая все проверки</translation>
+        <translation>Шаблон для поиска, учитывая все проверки</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="257"/>
         <source>Find in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск в таблице</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="267"/>
         <source>Find previous match [Shift+F3]</source>
-        <translation type="unfinished">Найти предыдущее совпадение [Shift+F3]</translation>
+        <translation>Найти предыдущее совпадение [Shift+F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="270"/>
         <source>Find previous match with wrapping</source>
-        <translation type="unfinished">Найти предыдущее совпадение, закольцевав поиск</translation>
+        <translation>Найти предыдущее совпадение, закольцевав поиск</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="277"/>
         <source>Shift+F3</source>
-        <translation></translation>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="284"/>
         <source>Find next match [Enter, F3]</source>
-        <translation type="unfinished">Найти следующее совпадение [Enter, F3]</translation>
+        <translation>Найти следующее совпадение [Enter, F3]</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="287"/>
         <source>Find next match with wrapping</source>
-        <translation type="unfinished">Найти следующее совпадение, закольцевав поиск</translation>
+        <translation>Найти следующее совпадение, закольцевав поиск</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="294"/>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="301"/>
         <source>The found pattern must match in letter case</source>
-        <translation type="unfinished">У найденного шаблона должен совпадать регистр</translation>
+        <translation>У шаблона должен совпадать регистр</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="304"/>
         <source>Case Sensitive</source>
-        <translation type="unfinished">Учитывать Регистр</translation>
+        <translation>Учитывать регистр</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="311"/>
         <source>The found pattern must be a whole word</source>
-        <translation type="unfinished">Найденный шаблон должен быть целым словом</translation>
+        <translation>Шаблон должен быть целым словом</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="314"/>
         <source>Whole Cell</source>
-        <translation type="unfinished"></translation>
+        <translation>Ячейка целиком</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="321"/>
         <source>Interpret search pattern as a regular expression</source>
-        <translation type="unfinished">Интерпретировать шаблон поиска как регулярное выражение</translation>
+        <translation>Интерпретировать шаблон поиска как регулярное выражение</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="324"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, the pattern to find is interpreted as a UNIX regular expression. See &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Regular Expression in Wikibooks&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При проверке шаблон для поиска интерпретируется как регулярное выражение UNIX. &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Узнать больше о Регулярных выражениях на Wikibooks.org&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При проверке шаблон для поиска интерпретируется как регулярное выражение UNIX. &lt;a href=&quot;https://en.wikibooks.org/wiki/Regular_Expressions&quot;&gt;Узнать больше о Регулярных выражениях на Wikibooks.org&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="327"/>
         <source>Regular Expression</source>
-        <translation type="unfinished">Регулярное выражение</translation>
+        <translation>Регулярное выражение</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="347"/>
         <location filename="../TableBrowser.ui" line="350"/>
         <source>Close Find Bar</source>
-        <translation type="unfinished">Закрыть Поисковую Панель</translation>
+        <translation>Закрыть панель поиска</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="388"/>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Замена текста</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="391"/>
         <source>Replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить на</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="401"/>
         <source>Replace next match</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить следуещее совпадение</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="404"/>
         <location filename="../TableBrowser.ui" line="1080"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="411"/>
         <source>Replace all matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить все совпадения</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="414"/>
         <source>Replace all</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить все</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="679"/>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>Export the filtered data to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать отфильтрованные данные в JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a JSON file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка экспортирует данные просматриваемой таблицы в том виде, в котором они отображаются в данный момент (после фильтров, форматов отображения и столбца порядка), в виде файла JSON.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
         <source>Copy column name</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать имя столбца</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="757"/>
         <source>Copy the database table column name to your clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать имя столбца таблицы БД в буфер обмена</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="826"/>
         <source>New Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая вкладка</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть новую вкладку обозревателя данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка добавляет новую вкладку просмотрщика данных.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll to the beginning&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутить к началу&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Прокрутить к началу&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="457"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates to the beginning in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки переводит к началу в таблице выше.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки переводит к началу в таблице выше.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="460"/>
         <source>|&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="471"/>
         <source>Scroll one page upwards</source>
-        <translation type="unfinished">Страница вверх</translation>
+        <translation>Страница вверх</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="474"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records upwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки перемещает одну страницу записей вверх в виде таблицы выше.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки перемещает по записям на одну страницу вверх.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="477"/>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="488"/>
         <source>0 - 0 of 0</source>
-        <translation type="unfinished">0 - 0 из 0</translation>
+        <translation>0 - 0 из 0</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="495"/>
         <source>Scroll one page downwards</source>
-        <translation type="unfinished">Страница вниз</translation>
+        <translation>На страницу вниз</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="498"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates one page of records downwards in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки перемещает одну страницу записей вниз в виде таблицы выше.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки перемещает на одну страницу записей вниз.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="501"/>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="512"/>
         <source>Scroll to the end</source>
-        <translation type="unfinished">Прокрутить к концу</translation>
+        <translation>Прокрутить к концу</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="515"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicking this button navigates up to the end in the table view above.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажатие этой кнопки позволяет перейти к концу таблицы.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="518"/>
         <source>&gt;|</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="542"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to jump to the specified record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажмите здесь, чтобы перейти к указанной записи&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нажмите здесь, чтобы перейти к указанной записи&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="545"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button is used to navigate to the record number specified in the Go to area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка используется, чтобы переместиться к записи, номер которой указан в области Перейти к&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка используется, чтобы переместиться к записи, номер которой указан в области Перейти к&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="548"/>
         <source>Go to:</source>
-        <translation type="unfinished">Перейти к:</translation>
+        <translation>Перейти к:</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="555"/>
         <source>Enter record number to browse</source>
-        <translation type="unfinished">Введите номер записи для просмотра</translation>
+        <translation>Введите номер записи для просмотра</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="558"/>
         <source>Type a record number in this area and click the Go to: button to display the record in the database view</source>
-        <translation type="unfinished">Напечатайте номер записи в этой области и нажмите кнопку Перейти к:, чтобы отобразить запись в представлении базы данных</translation>
+        <translation>Напечатайте номер записи в этой области и нажмите кнопку Перейти к:, чтобы отобразить запись в представлении базы данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="561"/>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="573"/>
         <source>Show rowid column</source>
-        <translation type="unfinished">Отображать колонку rowid</translation>
+        <translation>Отображать колонку rowid</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="576"/>
         <source>Toggle the visibility of the rowid column</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключить видимость столбца rowid</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="584"/>
         <source>Unlock view editing</source>
-        <translation type="unfinished">Разблокировать возможность редактирования</translation>
+        <translation>Разблокировать возможность редактирования</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="587"/>
         <source>This unlocks the current view for editing. However, you will need appropriate triggers for editing.</source>
-        <translation type="unfinished">Разблокировать текущий вид для редактирования. Однако для редактирования вам понадобятся соответствующие триггеры.</translation>
+        <translation>Разблокировать текущий вид для редактирования. Однако для редактирования вам понадобятся соответствующие триггеры.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="592"/>
         <source>Edit display format</source>
-        <translation type="unfinished">Формат отображения</translation>
+        <translation>Изменить формат отображения</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="595"/>
         <source>Edit the display format of the data in this column</source>
-        <translation type="unfinished">Редактирование формата отображения для данных из этой колонки</translation>
+        <translation>Редактирование формата отображения для данных из этой колонки</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="604"/>
         <location filename="../TableBrowser.ui" line="640"/>
         <source>New Record</source>
-        <translation type="unfinished">Добавить запись</translation>
+        <translation>Добавить запись</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="607"/>
         <location filename="../TableBrowser.ui" line="610"/>
         <source>Insert a new record in the current table</source>
-        <translation type="unfinished">Добавить новую запись в текущую таблицу</translation>
+        <translation>Вставить новую запись в текущую таблицу</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="613"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This button creates a new record in the database. Hold the mouse button to open a pop-up menu of different options:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt;: insert a new record with default values in the database.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Insert Values...&lt;/span&gt;: open a dialog for entering values before they are inserted in the database. This allows to enter values accomplishing the different constraints. This dialog is also open if the &lt;span style=&quot; font-weight:600;&quot;&gt;New Record&lt;/span&gt; option fails due to these constraints.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка создает новую запись в базе данных. Удерживайте кнопку мыши, чтобы открыть всплывающее меню различных параметров:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt;: вставляет новую запись со значениями по умолчанию.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Вставить Значения...&lt;/span&gt;: открывает диалог для ввода значений перед тем, как они будут вставлены в БД. Это позволяет вводить значения, назначая различные ограничения. Этот диалог также открывается, если &lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt; опция не срабатывает из-за этих ограничений.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Эта кнопка создает новую запись в базе данных. Удерживайте кнопку мыши, чтобы открыть всплывающее меню различных параметров:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt;: вставляет новую запись со значениями по умолчанию.&lt;/li&gt;&lt;li&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Вставить Значения...&lt;/span&gt;: открывает диалог для ввода значений перед тем, как они будут вставлены в БД. Это позволяет вводить значения, назначая различные ограничения. Этот диалог также открывается, если &lt;span style=&quot; font-weight:600;&quot;&gt;Новая Запись&lt;/span&gt; опция не срабатывает из-за этих ограничений.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="622"/>
         <location filename="../TableBrowser.cpp" line="1153"/>
         <source>Delete Record</source>
-        <translation type="unfinished">Удалить запись</translation>
+        <translation>Удалить запись</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="625"/>
         <source>Delete the current record</source>
-        <translation type="unfinished">Удалить текущую запись</translation>
+        <translation>Удалить текущую запись</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="628"/>
         <location filename="../TableBrowser.ui" line="631"/>
         <source>This button deletes the record or records currently selected in the table</source>
-        <translation type="unfinished">Эта кнопка удаляет запись или записи, выбранные в настоящее время в таблице</translation>
+        <translation>Эта кнопка удаляет запись или записи, выбранные в настоящее время в таблице</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="643"/>
         <location filename="../TableBrowser.ui" line="646"/>
         <source>Insert new record using default values in browsed table</source>
-        <translation type="unfinished">Вставляет новую запись, используя значения по умолчанию в просматриваемой таблице</translation>
+        <translation>Вставляет новую запись, используя значения по умолчанию в просматриваемой таблице</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="651"/>
         <source>Insert Values...</source>
-        <translation type="unfinished">Вставить Значения...</translation>
+        <translation>Вставить значения...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="654"/>
         <location filename="../TableBrowser.ui" line="657"/>
         <source>Open a dialog for inserting values in a new record</source>
-        <translation type="unfinished">Открывает диалоговое окно для вставки значений в новую запись</translation>
+        <translation>Открывает диалоговое окно для вставки значений в новую запись</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="662"/>
         <source>Export to &amp;CSV</source>
-        <translation type="unfinished">Экспортировать в &amp;CSV</translation>
+        <translation>Экспортировать в &amp;CSV</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="665"/>
         <location filename="../TableBrowser.ui" line="668"/>
         <source>Export the filtered data to CSV</source>
-        <translation type="unfinished">Экспортировать отфильтрованные данные в CSV</translation>
+        <translation>Экспортировать отфильтрованные данные в CSV</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="671"/>
         <source>This button exports the data of the browsed table as currently displayed (after filters, display formats and order column) as a CSV file.</source>
-        <translation type="unfinished">Эта кнопка экспортирует данные просматриваемой таблицы так как отображается (после обработки фильтрами, форматами отображения и т.д.) в виде файла CSV.</translation>
+        <translation>Эта кнопка экспортирует данные просматриваемой таблицы так как отображается (после обработки фильтрами, форматами отображения и т.д.) в виде файла CSV.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="690"/>
         <source>Save as &amp;view</source>
-        <translation type="unfinished">Сохранить как &amp;представление</translation>
+        <translation>Сохранить как &amp;представление</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="693"/>
         <location filename="../TableBrowser.ui" line="696"/>
         <source>Save the current filter, sort column and display formats as a view</source>
-        <translation type="unfinished">Сохранить текущие фильтры, столбцы сортировки и форматы отображения в виде представления</translation>
+        <translation>Сохранить текущие фильтры, столбцы сортировки и форматы отображения в виде представления</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="699"/>
         <source>This button saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.</source>
-        <translation type="unfinished">Эта кнопка сохраняет текущие настройки просматриваемой таблицы (фильтры, форматы отображения и столбец сортировки) в виде представления SQL, которое вы можете впоследствии просмотреть или использовать в операторах SQL.</translation>
+        <translation>Эта кнопка сохраняет текущие настройки просматриваемой таблицы (фильтры, форматы отображения и столбец сортировки) в виде представления SQL, которое вы можете впоследствии просмотреть или использовать в операторах SQL.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="708"/>
         <source>Save Table As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить таблицу как...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="711"/>
         <location filename="../TableBrowser.ui" line="714"/>
         <source>Save the table as currently displayed</source>
-        <translation type="unfinished">Сохранить таблицу так как сейчас отображается</translation>
+        <translation>Сохранить таблицу так как сейчас отображается</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="717"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This pop-up menu provides the following options applying to the currently browsed and filtered table:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Export to CSV: this option exports the data of the browsed table as currently displayed (after filters, display formats and order column) to a CSV file.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Save as view: this option saves the current setting of the browsed table (filters, display formats and order column) as an SQL view that you can later browse or use in SQL statements.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это всплывающее меню предоставляет следующие параметры, применяемые к текущей просматриваемой и отфильтрованной таблице:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Экспортировать в виде CSV: данные просматриваемой таблицы сохраняется так как отображается (после применения фильтров, форматов отображения и порядка колонок) в CSV файл.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сохранить как вид: эта опция сохраняет настройки текущей отображаемой таблицы (фильтры, форматы отображения и порядок колонок) как SQL вид, который вы позже можете просматривать или использовать в SQL выражениях.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это всплывающее меню предоставляет следующие параметры, применяемые к текущей просматриваемой и отфильтрованной таблице:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Экспортировать в виде CSV: данные просматриваемой таблицы сохраняется так как отображается (после применения фильтров, форматов отображения и порядка колонок) в CSV файл.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Сохранить как вид: эта опция сохраняет настройки текущей отображаемой таблицы (фильтры, форматы отображения и порядок колонок) как SQL вид, который вы позже можете просматривать или использовать в SQL выражениях.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="722"/>
         <source>Hide column(s)</source>
-        <translation type="unfinished">Скрыть колонки</translation>
+        <translation>Скрыть колонку(и)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="725"/>
         <source>Hide selected column(s)</source>
-        <translation type="unfinished">Скрыть выбранные колонки</translation>
+        <translation>Скрыть выбранные колонки</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="730"/>
         <source>Show all columns</source>
-        <translation type="unfinished">Показать все колонки</translation>
+        <translation>Показать все колонки</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="733"/>
         <source>Show all columns that were hidden</source>
-        <translation type="unfinished">Показать все колонки, которые были скрыты</translation>
+        <translation>Показать все колонки, которые были скрыты</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="738"/>
         <location filename="../TableBrowser.cpp" line="1506"/>
         <source>Set encoding</source>
-        <translation type="unfinished">Кодировка</translation>
+        <translation>Кодировка</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="741"/>
         <source>Change the encoding of the text in the table cells</source>
-        <translation type="unfinished">Изменение кодировки текста в данной таблице</translation>
+        <translation>Изменение кодировки текста в данной таблице</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="746"/>
         <source>Set encoding for all tables</source>
-        <translation type="unfinished">Установить кодировку для всех таблиц</translation>
+        <translation>Установить кодировку для всех таблиц</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="749"/>
         <source>Change the default encoding assumed for all tables in the database</source>
-        <translation type="unfinished">Изменить кодировку по умолчанию для всех таблиц в базе данных</translation>
+        <translation>Изменить кодировку по умолчанию для всех таблиц в базе данных</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="766"/>
         <source>Clear Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить фильтры</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="769"/>
         <source>Clear all filters</source>
-        <translation type="unfinished">Очистить все фильтры</translation>
+        <translation>Очистить все фильтры</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="772"/>
         <location filename="../TableBrowser.ui" line="775"/>
         <source>This button clears all the filters set in the header input fields for the currently browsed table.</source>
-        <translation type="unfinished">Эта кнопка очищает все фильтры, установленные в полях ввода заголовка для текущей просматриваемой таблицы.</translation>
+        <translation>Эта кнопка очищает все фильтры, установленные в полях ввода заголовка для текущей просматриваемой таблицы.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="784"/>
         <source>Clear Sorting</source>
-        <translation type="unfinished"></translation>
+        <translation>Убрать сортировку</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="787"/>
         <source>Reset the order of rows to the default</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить порядок строк</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="790"/>
         <location filename="../TableBrowser.ui" line="793"/>
         <source>This button clears the sorting columns specified for the currently browsed table and returns to the default order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка сбрасывает сортировку столбцов в отображаемой таблице.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="802"/>
         <source>Print</source>
-        <translation type="unfinished">Печать</translation>
+        <translation>Печать</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="805"/>
         <source>Print currently browsed table data</source>
-        <translation type="unfinished">Печатать отображаемую таблицу</translation>
+        <translation>Печатать отображаемую таблицу</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="811"/>
         <source>Print currently browsed table data. Print selection if more than one cell is selected.</source>
-        <translation type="unfinished">Распечатывайте текущие данные таблицы. Выбор печати, если выбрано несколько ячеек.</translation>
+        <translation>Печать данных текущей таблицы. Печать выделения, если выбрано несколько ячеек.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="814"/>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="844"/>
         <source>Refresh</source>
-        <translation type="unfinished">Обновить</translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="847"/>
         <source>Refresh the data in the selected table</source>
-        <translation type="unfinished">Обновить данные в выбранной таблице</translation>
+        <translation>Обновить данные в выбранной таблице</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="850"/>
         <source>This button refreshes the data in the currently selected table.</source>
-        <translation type="unfinished">Эта кнопка обновляет данные выбранной в данный момент таблицы.</translation>
+        <translation>Эта кнопка обновляет данные выбранной в данный момент таблицы.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="853"/>
         <source>F5</source>
-        <translation></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="868"/>
         <source>Find in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти в ячейках</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="871"/>
         <source>Open the find tool bar which allows you to search for values in the table view below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть панель инструментов поиска, которая позволяет искать значения в представленной ниже таблице.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="883"/>
         <location filename="../TableBrowser.ui" line="886"/>
         <source>Bold</source>
-        <translation type="unfinished">Жирный</translation>
+        <translation>Жирный</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="889"/>
         <source>Ctrl+B</source>
-        <translation></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="901"/>
         <location filename="../TableBrowser.ui" line="904"/>
         <source>Italic</source>
-        <translation type="unfinished">Курсив</translation>
+        <translation>Курсив</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="916"/>
         <location filename="../TableBrowser.ui" line="919"/>
         <source>Underline</source>
-        <translation type="unfinished">Подчёркивание</translation>
+        <translation>Подчёркнутый</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="922"/>
         <source>Ctrl+U</source>
-        <translation></translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="934"/>
         <location filename="../TableBrowser.ui" line="937"/>
         <source>Align Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять вправо</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="949"/>
         <location filename="../TableBrowser.ui" line="952"/>
         <source>Align Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять влево</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="964"/>
         <location filename="../TableBrowser.ui" line="967"/>
         <source>Center Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Центрировать по горизонтали</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="979"/>
         <location filename="../TableBrowser.ui" line="982"/>
         <source>Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="991"/>
         <location filename="../TableBrowser.ui" line="994"/>
         <source>Edit Conditional Formats...</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить форматирование...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="997"/>
         <source>Edit conditional formats for the current column</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить форматирование для текущего столбца</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1006"/>
         <source>Clear Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить форматирование</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1009"/>
         <source>Clear All Formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить все форматирование</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1012"/>
         <location filename="../TableBrowser.ui" line="1015"/>
         <source>Clear all cell formatting from selected cells and all conditional formats from selected columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить фоматирование в выделенном</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1024"/>
         <location filename="../TableBrowser.ui" line="1027"/>
         <source>Font Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет шрифта</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1036"/>
         <location filename="../TableBrowser.ui" line="1039"/>
         <source>Background Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет фона</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1051"/>
         <source>Toggle Format Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель форматирования</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1054"/>
         <source>Show/hide format toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать/скрыть панель форматирования</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1057"/>
         <location filename="../TableBrowser.ui" line="1060"/>
         <source>This button shows or hides the formatting toolbar of the Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта кнопка показывает/скрывает панель форматирования</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1065"/>
         <source>Select column</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделить столбец</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1068"/>
@@ -7820,143 +7860,143 @@ Hold %3Shift and click to jump there</source>
     <message>
         <location filename="../TableBrowser.ui" line="1083"/>
         <source>Replace text in cells</source>
-        <translation type="unfinished"></translation>
+        <translation>Замена текста в ячейках</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1091"/>
         <source>Freeze columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Заморозить столбец</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="1094"/>
         <source>Make all columns from the first column up to this column not move when scrolling horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Сделать так, чтобы все столбцы, от первого столбца до этого столбца, не перемещались при горизонтальной прокрутке</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="43"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр в столбцах</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="113"/>
         <source>Ctrl+R</source>
-        <translation></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="517"/>
         <source>%n row(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n строка</numerusform>
+            <numerusform>%n строки</numerusform>
+            <numerusform>%n строк</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../TableBrowser.cpp" line="519"/>
         <source>, %n column(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>, %n столбец</numerusform>
+            <numerusform>, %n столбца</numerusform>
+            <numerusform>, %n столбцов</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="532"/>
         <source>. Sum: %1; Average: %2; Min: %3; Max: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>. Сумма: %1; Среднее: %2; Мин: %3; Макс: %4</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="683"/>
         <source>Conditional formats for &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Форматирование для &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="766"/>
         <source>determining row count...</source>
-        <translation type="unfinished">определяем количество строк...</translation>
+        <translation>определяем количество строк...</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="769"/>
         <source>%L1 - %L2 of &gt;= %L3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="772"/>
         <source>%L1 - %L2 of %L3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="774"/>
         <source> (clipped at %L1 rows)</source>
-        <translation type="unfinished"></translation>
+        <translation> (выбрано до %L1 строк)</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1026"/>
         <source>Please enter a pseudo-primary key in order to enable editing on this view. This should be the name of a unique column in the view.</source>
-        <translation type="unfinished">Пожалуйста, введите псевдо-первичный ключ, чтобы разрешить редактирование в этом представлении. Это должно быть имя уникального столбца в представлении.</translation>
+        <translation>Пожалуйста, введите псевдо-первичный ключ, чтобы разрешить редактирование в этом представлении. Это должно быть имя уникального столбца в представлении.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1151"/>
         <source>Delete Records</source>
-        <translation type="unfinished">Удалить Записи</translation>
+        <translation>Удалить записи</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1289"/>
         <source>Duplicate records</source>
-        <translation type="unfinished">Дублированные записи</translation>
+        <translation>Дублированные записи</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1289"/>
         <source>Duplicate record</source>
-        <translation type="unfinished">Дубликат записи</translation>
+        <translation>Дубликат записи</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1293"/>
         <source>Ctrl+&quot;</source>
-        <translation></translation>
+        <translation>Ctrl+&quot;</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1312"/>
         <source>Adjust rows to contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Подогнать по содержимому</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1376"/>
         <source>Error deleting record:
 %1</source>
-        <translation type="unfinished">Ошибка удаления записи: %1</translation>
+        <translation>Ошибка удаления записи: %1</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1381"/>
         <source>Please select a record first</source>
-        <translation type="unfinished">Сначала выберите запись</translation>
+        <translation>Сначала выберите запись</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1502"/>
         <source>Please choose a new encoding for all tables.</source>
-        <translation type="unfinished">Пожалуйста выберите новую кодировку для всех таблиц.</translation>
+        <translation>Пожалуйста выберите новую кодировку для всех таблиц.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1504"/>
         <source>Please choose a new encoding for this table.</source>
-        <translation type="unfinished">Пожалуйста выберите новую кодировку для данной таблицы.</translation>
+        <translation>Пожалуйста выберите новую кодировку для данной таблицы.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1507"/>
         <source>%1
 Leave the field empty for using the database encoding.</source>
-        <translation type="unfinished">%1
+        <translation>%1
 Оставьте это поле пустым если хотите чтобы использовалась кодировка по умолчанию.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1519"/>
         <source>This encoding is either not valid or not supported.</source>
-        <translation type="unfinished">Неверная кодировка либо она не поддерживается.</translation>
+        <translation>Неверная кодировка либо она не поддерживается.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="1709"/>
         <source>%1 replacement(s) made.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 замен(а) произведено(а).</translation>
     </message>
 </context>
 <context>
@@ -7964,22 +8004,22 @@ Leave the field empty for using the database encoding.</source>
     <message>
         <location filename="../TableBrowserDock.cpp" line="72"/>
         <source>New Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая вкладка обозревателя</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="76"/>
         <source>Rename Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать обозреватель данных</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="82"/>
         <source>Close Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть обозреватель данных</translation>
     </message>
     <message>
         <location filename="../TableBrowserDock.cpp" line="99"/>
         <source>Set a new name for the data browser. Use the &apos;&amp;&amp;&apos; character to allow using the following character as a keyboard shortcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>Задайте новое имя для вкладки SQL. Используйте символ &apos;&amp;&amp;&apos;, чтобы разрешить использование следующего символа в качестве сочетания клавиш.</translation>
     </message>
 </context>
 <context>
