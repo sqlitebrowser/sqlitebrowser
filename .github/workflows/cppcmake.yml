@@ -14,7 +14,7 @@ on:
         required: true
         type: boolean
 
-run-name: "${{ (github.event_name == 'schedule' || inputs.NIGHTLY == true) && 'Build and Deploy Nightly Builds' || 'CI' }}"
+run-name: "${{ (github.event_name == 'schedule' || inputs.NIGHTLY == true) && 'Build and Deploy Nightly Builds' || github.event.head_commit.message}}"
 
 jobs:
   check-skippable:
