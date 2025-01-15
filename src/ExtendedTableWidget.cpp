@@ -75,7 +75,7 @@ std::vector<BufferRow> parseClipboard(QString clipboard)
     };
 
     while (offset >= 0) {
-        const QRegularExpressionMatch match = re.match(clipboard, offset);
+        const QRegularExpressionMatch match = re.match(clipboard, offset, QRegularExpression::PartialPreferFirstMatch);
         const int pos = match.capturedStart(0);
         if (pos < 0) {
             // insert everything that left
