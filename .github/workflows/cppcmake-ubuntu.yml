@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         bundle: [SQLCipher, SQLite]
-        os: [ubuntu-20.04]
+        os: [ubuntu-20.04, ubuntu-22.04-arm]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +29,14 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@v1.4.3
         with:
           packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
+
+      # This is required by the operating system version, not the architecture.
+      # Related: https://github.com/AppImage/AppImageKit/wiki/FUSE
+      - if: matrix.os == 'ubuntu-22.04-arm'
+        name: Install and cache 'libfuse2'
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: libfuse2
 
       - if: matrix.bundle == 'SQLCipher'
         name: Build SQLCipher
@@ -73,15 +81,15 @@ jobs:
 
       - name: Build AppImage
         run: |
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppImage"
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-x86_64.AppImage"
-          chmod a+x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-qt-x86_64.AppImage
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-$(uname -m).AppImage"
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-$(uname -m).AppImage"
+          chmod a+x "linuxdeploy-$(uname -m).AppImage" "linuxdeploy-plugin-qt-$(uname -m).AppImage"
           if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
             export VERSION=$(date +%Y%m%d)
           else
             export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           fi
-          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib" ./linuxdeploy-x86_64.AppImage --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
+          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
