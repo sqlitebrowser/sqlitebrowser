@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         bundle: [SQLCipher, SQLite]
-        os: [ubuntu-20.04, ubuntu-22.04-arm]
+        os: [ubuntu-22.04, ubuntu-22.04-arm]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
       - name: Install and cache dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.4.3
         with:
-          packages: libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
+          packages: libfuse2 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
 
       # This is required by the operating system version, not the architecture.
       # Related: https://github.com/AppImage/AppImageKit/wiki/FUSE
