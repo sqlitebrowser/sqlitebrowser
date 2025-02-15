@@ -8,12 +8,15 @@ source /root/.gh_token_secure
 set -ex
 
 echo "$(TZ=UTC date +"%Y-%m-%d %H:%M:%S %Z"): [START]"
+DATE=$(date +%Y%m%d)
 echo "Clear the incoming directory"
 DOWNLOAD_DIR="/tmp/incoming/"
 rm -rfv $DOWNLOAD_DIR
 mkdir -v $DOWNLOAD_DIR
 
-if [ $(ls -l /nightlies/appimage /nightlies/appimage-arm64 /nightlies/win32 /nightlies/win64 /nightlies/macos-universal | grep -c "$(date +%Y%m%d)") ]; then
+if [ $(ls -l /nightlies/appimage /nightlies/appimage-arm64 | grep -c "$DATE") ] &&
+   [ $(ls -l /nightlies/macos-universal | grep -c "$DATE") ] &&
+   [ $(ls -l /nightlies/win32 /nightlies/win64 | grep -c "$DATE") -ne 0 ]; then
     echo "Nightly build already exists"
     exit 1
 fi
@@ -38,7 +41,7 @@ echo "Successfully downloaded the nightly build"
 
 # Check if the downloaded files are as expected
 # This case is occuring when the nightly build is skipped
-if [ $(ls -l $DOWNLOAD_DIR | grep -c "$(date +%Y%m%d)") -ne 10 ]; then
+if [ $(ls -l $DOWNLOAD_DIR | grep -c "$DATE") -ne 10 ]; then
     echo "Last nightly build is skipped"
     exit 1
 fi
@@ -54,11 +57,10 @@ rm -v /nightlies/latest/*.dmg
 rm -v /nightlies/latest/*.msi
 rm -v /nightlies/latest/*.zip
 
-DATE=$(date +%Y%m%d)
-ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$(echo $DATE)-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLCipher-x86.64.AppImage
-ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$(echo $DATE)-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLite-x86.64.AppImage
-ln -sv /nightlies/appimage-arm64/DB.Browser.for.SQLCipher-$(echo $DATE)-aarch64.AppImage /nightlies/latest/DB.Browser.for.SQLCipher-aarch64.AppImage
-ln -sv /nightlies/appimage-arm64/DB.Browser.for.SQLite-$(echo $DATE)-aarch64.AppImage /nightlies/latest/DB.Browser.for.SQLite-aarch64.AppImage
+ln -sv /nightlies/appimage/DB.Browser.for.SQLCipher-$DATE-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLCipher-x86.64.AppImage
+ln -sv /nightlies/appimage/DB.Browser.for.SQLite-$DATE-x86.64.AppImage /nightlies/latest/DB.Browser.for.SQLite-x86.64.AppImage
+ln -sv /nightlies/appimage-arm64/DB.Browser.for.SQLCipher-$DATE-aarch64.AppImage /nightlies/latest/DB.Browser.for.SQLCipher-aarch64.AppImage
+ln -sv /nightlies/appimage-arm64/DB.Browser.for.SQLite-$DATE-aarch64.AppImage /nightlies/latest/DB.Browser.for.SQLite-aarch64.AppImage
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLCipher-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLCipher-universal.dmg
 ln -sv /nightlies/macos-universal/DB.Browser.for.SQLite-universal_$DATE.dmg /nightlies/latest/DB.Browser.for.SQLite-universal.dmg
 ln -sv /nightlies/win32/DB.Browser.for.SQLite-$DATE-x86.msi /nightlies/latest/DB.Browser.for.SQLite-x86.msi
