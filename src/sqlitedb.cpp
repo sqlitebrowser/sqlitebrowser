@@ -871,8 +871,11 @@ bool DBBrowserDB::dump(const QString& filePath,
         std::vector<sqlb::TablePtr> tables;
         for(const auto& it : objMap.tables)
         {
-            // Never export the sqlite_stat1 and the sqlite_sequence tables if they exist. Also only export any tables which are selected for export.
-            if(!it.second->isView() && it.first != "sqlite_stat1" && it.first != "sqlite_sequence" && contains(tablesToDump, it.first))
+            QString tableName = QString::fromStdString(it.first);
+            // Never export the sqlite internal tables. Also only export any tables which are selected for export.
+            if(!it.second->isView()
+                && !tableName.startsWith("sqlite_", Qt::CaseInsensitive)
+                && contains(tablesToDump, it.first))
             {
                 // Get the number of records in this table and remember to export it
                 tables.push_back(it.second);
