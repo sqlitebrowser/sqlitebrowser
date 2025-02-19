@@ -31,14 +31,6 @@ jobs:
           packages: libfuse2 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
           version: ${{ matrix.os }}
 
-      # This is required by the operating system version, not the architecture.
-      # Related: https://github.com/AppImage/AppImageKit/wiki/FUSE
-      - if: matrix.os == 'ubuntu-22.04-arm'
-        name: Install and cache 'libfuse2'
-        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
-        with:
-          packages: libfuse2
-
       - if: matrix.bundle == 'SQLCipher'
         name: Build SQLCipher
         run: |
