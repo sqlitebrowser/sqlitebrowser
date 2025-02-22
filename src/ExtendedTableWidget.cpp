@@ -637,7 +637,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // Disable context help button on Windows
     progress.setWindowFlags(progress.windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
-    progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.end());
+    progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.rbegin());
     progress.setMinimumDuration(2000);
 
     // Iterate over rows x cols checking if the index actually exists when needed, in order
