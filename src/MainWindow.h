@@ -244,6 +244,7 @@ private slots:
     void openUrlOrFile(const QString& urlString);
     void newRowCountsTab();
 
+    void markTabsModified();
     int openSqlTab(bool resetCounter = false);
     void closeSqlTab(int index, bool force = false, bool askSaving = true);
     void changeSqlTab(int index);
