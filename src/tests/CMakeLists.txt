@@ -1,5 +1,9 @@
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" ..)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 find_package(${QT_MAJOR} REQUIRED COMPONENTS Test Widgets)
 if(QT_MAJOR STREQUAL "Qt6")
     find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
