@@ -41,6 +41,7 @@ public:
         CreateStatement,
         AttachStatement,
         DetachStatement,
+        AnalyzeStatement,
         OtherStatement,
     };
 

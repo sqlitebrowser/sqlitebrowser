@@ -117,7 +117,8 @@ bool RunSql::executeNextStatement()
                                   query_type == DropStatement ||
                                   query_type == RollbackStatement ||
                                   query_type == AttachStatement ||
-                                  query_type == DetachStatement))
+                                  query_type == DetachStatement ||
+                                  query_type == AnalyzeStatement))
             structure_updated = true;
 
         // Check whether this is trying to set a pragma or to vacuum the database
@@ -319,6 +320,7 @@ RunSql::StatementType RunSql::getQueryType(const QString& query)
     if(query.startsWith("CREATE", Qt::CaseInsensitive)) return CreateStatement;
     if(query.startsWith("ATTACH", Qt::CaseInsensitive)) return AttachStatement;
     if(query.startsWith("DETACH", Qt::CaseInsensitive)) return DetachStatement;
+    if(query.startsWith("ANALYZE", Qt::CaseInsensitive)) return AnalyzeStatement;
 
     return OtherStatement;
 }
