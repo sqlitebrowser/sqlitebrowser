@@ -1147,7 +1147,7 @@ void MainWindow::executeQuery()
     SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->currentWidget());
     SqlTextEdit* editor = sqlWidget->getEditor();
     auto* current_tab = ui->tabSqlAreas->currentWidget();
-    const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&');
+    const QString tabName = ui->tabSqlAreas->tabText(ui->tabSqlAreas->currentIndex()).remove('&').remove(QRegularExpression("\\*$"));
 
     // Remove any error indicators
     editor->clearErrorIndicators();
@@ -2149,6 +2149,26 @@ void MainWindow::closeSqlTab(int index, bool force, bool askSaving)
     focusSqlEditor();
 }
 
+void MainWindow::markTabsModified()
+{
+    // Add (and remove) an asterisk next to the filename of modified file tabs.
+    for (int i = 0; i < ui->tabSqlAreas->count(); ++i) {
+        SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+        QString currentText = ui->tabSqlAreas->tabText(i);
+        if (!currentText.endsWith("*")) {
+            if (sqlWidget->getEditor()->isModified()) {
+                ui->tabSqlAreas->setTabText(i, currentText + "*");
+            }
+        }
+        else {
+            if (!sqlWidget->getEditor()->isModified()) {
+                currentText.chop(1);
+                ui->tabSqlAreas->setTabText(i, currentText);
+            }
+        }
+    }
+}
+
 int MainWindow::openSqlTab(bool resetCounter)
 {
     static int tabNumber = 0;
@@ -2166,23 +2186,7 @@ int MainWindow::openSqlTab(bool resetCounter)
     w->getEditor()->setEnabledFindDialog(false);
     w->getEditor()->setFocus();
     connect(w, &SqlExecutionArea::findFrameVisibilityChanged, ui->actionSqlFind, &QAction::setChecked);
-    // Add (and remove) an asterisk next to the filename of modified file tabs.
-    connect(w->getEditor(), &SqlTextEdit::modificationChanged, this, [this](bool) {
-        for(int i=0; i < ui->tabSqlAreas->count(); ++i) {
-            SqlExecutionArea* sqlWidget = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
-            QString currentText = ui->tabSqlAreas->tabText(i);
-            if(!currentText.endsWith("*")) {
-                if(sqlWidget->getEditor()->isModified()) {
-                    ui->tabSqlAreas->setTabText(i, currentText + "*");
-                }
-            } else {
-                if(!sqlWidget->getEditor()->isModified()) {
-                    currentText.chop(1);
-                    ui->tabSqlAreas->setTabText(i, currentText);
-                }
-            }
-        }
-    });
+    connect(w->getEditor(), &SqlTextEdit::modificationChanged, this, &MainWindow::markTabsModified);
 
     // Connect now the find shortcut to the editor with widget context, so it isn't ambiguous with other Scintilla Widgets.
     QShortcut* shortcutFind = new QShortcut(ui->actionSqlFind->shortcut(), w->getEditor(), nullptr, nullptr, Qt::WidgetShortcut);
@@ -3282,7 +3286,7 @@ void MainWindow::saveProject(const QString& currentFilename)
             SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
             QString sqlFilename = sqlArea->fileName();
             xml.writeStartElement("sql");
-            xml.writeAttribute("name", ui->tabSqlAreas->tabText(i));
+            xml.writeAttribute("name", ui->tabSqlAreas->tabText(i).remove(QRegularExpression("\\*$")));
             if(sqlFilename.isEmpty()) {
                 xml.writeCharacters(sqlArea->getSql());
                 sqlArea->getEditor()->setModified(false);
@@ -3539,10 +3543,12 @@ void MainWindow::renameSqlTab(int index)
                                              qApp->applicationName(),
                                              tr("Set a new name for the SQL tab. Use the '&&' character to allow using the following character as a keyboard shortcut."),
                                              QLineEdit::EchoMode::Normal,
-                                             ui->tabSqlAreas->tabText(index));
+                                             ui->tabSqlAreas->tabText(index).remove(QRegularExpression("\\*$")));
 
+    
     if(!new_name.isNull())      // Don't do anything if the Cancel button was clicked
         ui->tabSqlAreas->setTabText(index, new_name);
+	markTabsModified();
 }
 
 void MainWindow::setFindFrameVisibility(bool show)
@@ -3826,7 +3832,7 @@ void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
     QAction* actionDuplicate = new QAction(this);
     actionDuplicate->setText(tr("Duplicate Tab"));
     connect(actionDuplicate, &QAction::triggered, this, [this, tab]() {
-        QString tab_name = ui->tabSqlAreas->tabText(tab).remove("&").remove(QRegularExpression(" \\(\\d+\\)$"));
+        QString tab_name = ui->tabSqlAreas->tabText(tab).remove("&").remove(QRegularExpression("\\*$")).remove(QRegularExpression(" \\(\\d+\\)$"));
         QString new_tab_name;
         for(int i=1;;i++)
         {
@@ -3834,7 +3840,7 @@ void MainWindow::showContextMenuSqlTabBar(const QPoint& pos)
             bool name_already_exists = false;
             for(int j=0;j<ui->tabSqlAreas->count();j++)
             {
-                if(ui->tabSqlAreas->tabText(j).remove("&") == new_tab_name)
+                if(ui->tabSqlAreas->tabText(j).remove("&").remove(QRegularExpression("\\*$")) == new_tab_name)
                 {
                     name_already_exists = true;
                     break;
