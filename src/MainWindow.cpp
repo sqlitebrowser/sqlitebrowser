@@ -1574,20 +1574,23 @@ void MainWindow::importDatabaseFromSQL()
     {
         QString basePathName = db.currentFile();
         removeFilenameSuffix(basePathName);
-        newDbFile = FileDialog::getSaveFileName(
-                    CreateDatabaseFile,
-                    this,
-                    tr("Choose a filename to save under"),
-                    FileDialog::getSqlDatabaseFileFilter(),
-                    basePathName);
-        if(QFile::exists(newDbFile))
-        {
-            QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
-            return;
-        } else if(newDbFile.size() == 0) {
-            return;
-        }
-
+		while (true)
+		{
+			newDbFile = FileDialog::getSaveFileName(
+				CreateDatabaseFile,
+				this,
+				tr("Choose a filename to save under"),
+				FileDialog::getSqlDatabaseFileFilter(),
+				basePathName);
+			if (newDbFile.isEmpty()) // canceled
+				return;
+			if (QFile::exists(newDbFile))
+			{
+				QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
+				continue;
+			}
+			break;
+		}
         // Create the new file and open it in the browser
         db.create(newDbFile);
         db.close();
