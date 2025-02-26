@@ -1572,11 +1572,14 @@ void MainWindow::importDatabaseFromSQL()
                                                "If you answer no we will attempt to import the data in the SQL file to the current database."),
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
+        QString basePathName = db.currentFile();
+        removeFilenameSuffix(basePathName);
         newDbFile = FileDialog::getSaveFileName(
                     CreateDatabaseFile,
                     this,
                     tr("Choose a filename to save under"),
-                    FileDialog::getSqlDatabaseFileFilter());
+                    FileDialog::getSqlDatabaseFileFilter(),
+                    basePathName);
         if(QFile::exists(newDbFile))
         {
             QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
@@ -3145,13 +3148,17 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, s
     xml.writeEndElement();
 }
 
+void MainWindow::removeFilenameSuffix(QString& filename) {
+    int dotLen = QFileInfo(filename).suffix().isEmpty() ? 0 : 1;
+    filename.chop(QFileInfo(filename).suffix().size() + dotLen);
+}
+
 void MainWindow::saveProject(const QString& currentFilename)
 {
     QString filename;
     if(currentFilename.isEmpty()) {
         QString basePathName = db.currentFile();
-        // Remove database suffix
-        basePathName.chop(QFileInfo(basePathName).suffix().size()+1);
+        removeFilenameSuffix(basePathName);
         filename = FileDialog::getSaveFileName(
                            CreateProjectFile,
                            this,
