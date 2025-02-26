@@ -1563,13 +1563,15 @@ void MainWindow::importDatabaseFromSQL()
     if(!QFile::exists(fileName))
         return;
 
+	bool doNewDb = true;
+    bool existingDbOpened = false;
     // If there is already a database file opened ask the user whether to import into
     // this one or a new one. If no DB is opened just ask for a DB name directly
     QString newDbFile;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
-                                            tr("Do you want to create a new database file to hold the imported data?\n"
-                                               "If you answer no we will attempt to import the data in the SQL file to the current database."),
+                                            tr("Do you want to create a new database file or opening another database file to hold the imported data?\n"
+                                               "If you answer the No, we will attempt to import the data in the SQL file to the current database."),
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
         QString basePathName = db.currentFile();
@@ -1586,15 +1588,31 @@ void MainWindow::importDatabaseFromSQL()
 				return;
 			if (QFile::exists(newDbFile))
 			{
-				QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
+                if (QMessageBox::question(this,
+                    QApplication::applicationName(),
+                    tr("File %1 already exists.\nDo you want to open the database file to import data?\n"
+                        "If you answer the No, we will re-ask for the path, or you can cancel the import.").arg(newDbFile),
+                    QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                        existingDbOpened = fileOpen(newDbFile);
+						if (!existingDbOpened)
+                        {
+                            // If the file is not a valid database file, we will ask the user to choose another.
+                            QMessageBox::warning(this, QApplication::applicationName(), tr("Database file %1 failed to open! Please try choose a path again.").arg(newDbFile));
+                            continue;
+                        }
+                        doNewDb = false;
+                        break;
+                    }
 				continue;
 			}
 			break;
 		}
         // Create the new file and open it in the browser
-        db.create(newDbFile);
-        db.close();
-        fileOpen(newDbFile);
+        if (!existingDbOpened) {
+            db.create(newDbFile);
+            db.close();
+            fileOpen(newDbFile);
+        }
     }
 
     // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
