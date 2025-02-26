@@ -501,6 +501,23 @@ void MainWindow::init()
     ui->actionCloseProject->setShortcuts({QKeySequence(tr("Ctrl+Shift+W")), QKeySequence(tr("Ctrl+Shift+F4"))});
     addShortcutsTooltip(ui->fileCloseAction);
 
+    // Increase the visibility of some tooltips
+	foreach(QObject* obj, ui->scrollAreaWidgetContents->children()) {
+		QLabel* label = qobject_cast<QLabel*>(obj);
+		if (label) {
+            QString tip1 = label->toolTip();
+            if (tip1.contains("PRAGMA ")) {
+				// label->setCursor(Qt::WhatsThisCursor); // This doesn't work
+                label->setToolTipDuration(3000);
+                label->setStatusTip(tip1);
+            }
+            QString tip2 = label->statusTip();
+            if (!tip2.isEmpty() && label->toolTip().isEmpty()) {
+				label->setToolTip(tip2);
+            }
+		}
+	}
+
     // Load all settings
     reloadSettings();
 
