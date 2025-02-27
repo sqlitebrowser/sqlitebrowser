@@ -1,4 +1,4 @@
-#include "sqlitetablemodel.h"
+﻿#include "sqlitetablemodel.h"
 #include "sqlitedb.h"
 #include "sqlite.h"
 #include "Settings.h"
