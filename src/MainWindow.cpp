@@ -585,9 +585,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
                     // loadProject will init the rest
                     return true;
                 }
-                if(ui->tabSqlAreas->count() == 0)
+                if(ui->tabSqlAreas->count() == 0) // Create a new tab if there isn't one.
                     openSqlTab(true);
-                else if(ui->mainTab->currentWidget() == ui->pragmas)
+                if(ui->mainTab->currentWidget() == ui->pragmas)
                     loadPragmas();
 
                 refreshTableBrowsers();
