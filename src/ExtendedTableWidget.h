@@ -128,7 +128,7 @@ signals:
     void requestUrlOrFileOpen(const QString& urlString);
 
 private:
-    void copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
+    bool copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL);
     void copy(const bool withHeaders, const bool inSQL);
     void paste();
     void cut();

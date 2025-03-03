@@ -513,7 +513,7 @@ void ExtendedTableWidget::reloadSettings()
         m_frozen_table_view->reloadSettings();
 }
 
-void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
+bool ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)
 {
     QModelIndexList indices = fromIndices;
 
@@ -528,7 +528,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
 
     // Abort if there's nothing to copy
     if (indices.isEmpty())
-        return;
+        return false;
 
     SqliteTableModel* m = qobject_cast<SqliteTableModel*>(model());
 
@@ -544,7 +544,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         {
             // If it's an image, copy the image data to the clipboard
             mimeData->setImageData(img);
-            return;
+            return false;
         }
     }
 
@@ -637,7 +637,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
     // Disable context help button on Windows
     progress.setWindowFlags(progress.windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
-    progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.end());
+    progress.setRange(*rowsInIndexes.begin(), *rowsInIndexes.rbegin());
     progress.setMinimumDuration(2000);
 
     // Iterate over rows x cols checking if the index actually exists when needed, in order
@@ -744,7 +744,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         progress.setValue(row);
         // Abort the operation if the user pressed ESC key or Cancel button
         if (progress.wasCanceled()) {
-            return;
+            return false;
         }
     }
 
@@ -757,6 +757,7 @@ void ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMime
         result.resize(result.size() - rowSepText.size());
     }
     mimeData->setText(result);
+    return true;
 }
 
 void ExtendedTableWidget::copy(const bool withHeaders, const bool inSQL )
@@ -1243,7 +1244,12 @@ void ExtendedTableWidget::openPrintDialog()
 
     // Copy the specified indices content to mimeData for getting the HTML representation of
     // the table with headers. We can then print it using an HTML text document.
-    copyMimeData(indices, mimeData, true, false);
+    bool mimeReady = copyMimeData(indices, mimeData, true, false);
+    if (!mimeReady)
+    {
+        delete mimeData;
+        return;
+    }
 
     QPrinter printer;
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(&printer);
