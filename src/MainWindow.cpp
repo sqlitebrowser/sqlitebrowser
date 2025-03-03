@@ -3178,7 +3178,8 @@ void MainWindow::saveProject(const QString& currentFilename)
         currentProjectFilename = filename;
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
-        QXmlStreamWriter xml(&file);
+        QByteArray byteArray;
+        QXmlStreamWriter xml(&byteArray);
         xml.writeStartDocument();
         xml.writeStartElement("sqlb_project");
 
@@ -3285,7 +3286,6 @@ void MainWindow::saveProject(const QString& currentFilename)
             xml.writeAttribute("name", ui->tabSqlAreas->tabText(i));
             if(sqlFilename.isEmpty()) {
                 xml.writeCharacters(sqlArea->getSql());
-                sqlArea->getEditor()->setModified(false);
             } else {
                 xml.writeAttribute("filename", sqlFilename);
                 // Backwards compatibility, so older versions do not break.
@@ -3300,8 +3300,23 @@ void MainWindow::saveProject(const QString& currentFilename)
 
         xml.writeEndElement();
         xml.writeEndDocument();
-        file.commit();
+        QTextStream out(&file);
+		out << byteArray;
+        if (!file.commit())
+        {
+            QMessageBox::warning(this, QApplication::applicationName(), tr("Failed to save project file '%1'!").arg(currentProjectFilename));
+            QApplication::restoreOverrideCursor();
+            return;
+        }
 
+        for (int i = 0; i < ui->tabSqlAreas->count(); i++)
+        {
+            SqlExecutionArea* sqlArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i));
+            QString sqlFilename = sqlArea->fileName();
+            if (sqlFilename.isEmpty()) {
+                sqlArea->getEditor()->setModified(false);
+            }
+        }
         addToRecentFilesMenu(filename);
         setCurrentFile(db.currentFile());
         isProjectModified = false;
