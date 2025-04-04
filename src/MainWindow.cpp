@@ -1439,7 +1439,7 @@ void MainWindow::importTableFromCSV()
     } else if(sender() == ui->actionFileImportCsvClipboard) {
         // Save clipboard content to temporary file
 
-        QTemporaryFile temp("csv_clipboard");
+        QTemporaryFile temp(QDir::tempPath() + QDir::separator() + "csv_clipboard");
         temp.open();
         QClipboard* clipboard = QGuiApplication::clipboard();
         temp.write(clipboard->text().toUtf8());
