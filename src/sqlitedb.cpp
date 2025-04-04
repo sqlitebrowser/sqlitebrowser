@@ -2083,6 +2083,7 @@ QString DBBrowserDB::getPragma(const std::string& pragma) const
 
 bool DBBrowserDB::setPragma(const std::string& pragma, const QString& value)
 {
+    bool res;
     // Set the pragma value
     std::string sql = "PRAGMA " + pragma + " = '" + value.toStdString() + "';";
 
@@ -2093,7 +2094,22 @@ bool DBBrowserDB::setPragma(const std::string& pragma, const QString& value)
     if(pragma != "defer_foreign_keys")
         releaseSavepoint();
 
-    bool res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
+    bool backToWal = false;
+    if (pragma == "page_size")
+	{
+		QString journal_mode = getPragma("journal_mode");
+		if (journal_mode.toLower() == "wal") // change page_size won't work in WAL
+		{
+			backToWal = true;
+            res = executeSQL("PRAGMA journal_mode = DELETE;", false, true);
+            if (!res)
+            {
+                qWarning() << tr("Error setting pragma journal_mode to DELETE for setting page_size: %1").arg(lastErrorMessage);
+				return false;
+            }
+		}
+	}
+    res = executeSQL(sql, false, true); // PRAGMA statements are usually not transaction bound, so we can't revert
     if( !res )
         qWarning() << tr("Error setting pragma %1 to %2: %3").arg(QString::fromStdString(pragma), value, lastErrorMessage);
 
@@ -2101,7 +2117,12 @@ bool DBBrowserDB::setPragma(const std::string& pragma, const QString& value)
     // settings won't be saved.
     if(res && (pragma == "page_size" || pragma == "auto_vacuum"))
         res = executeSQL("VACUUM;", false, true);
-
+	if (res && backToWal)
+	{
+		res = executeSQL("PRAGMA journal_mode = WAL;", false, true);
+		if (!res)
+			qWarning() << tr("Error setting pragma journal_mode back to WAL: %1").arg(lastErrorMessage);
+	}
     return res;
 }
 
