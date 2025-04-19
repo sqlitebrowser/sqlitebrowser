@@ -34,7 +34,8 @@ jobs:
       - if: matrix.bundle == 'SQLCipher'
         name: Build SQLCipher
         run: |
-          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
+          # git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
+          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout v4.6.1
           ./configure --enable-tempstore=yes --with-crypto-lib=openssl --enable-load-extension --disable-tcl CFLAGS="-DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
           make -j2 && sudo make install -j2
 
