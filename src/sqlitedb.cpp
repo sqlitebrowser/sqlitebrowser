@@ -2016,6 +2016,7 @@ void DBBrowserDB::updateSchema()
             if(!val_sql.empty())
             {
                 val_sql.erase(std::remove(val_sql.begin(), val_sql.end(), '\r'), val_sql.end());
+                val_sql += ";";
 
                 if(val_type == "table" || val_type == "view")
                 {
