@@ -1,4 +1,6 @@
 #include "MainWindow.h"
+#include "sql/ObjectIdentifier.h"
+#include "sql/sqlitetypes.h"
 #include "ui_MainWindow.h"
 
 #include "Application.h"
@@ -441,7 +443,7 @@ void MainWindow::init()
     connect(editDock, &EditDialog::recordTextUpdated, this, &MainWindow::updateRecordText);
     connect(editDock, &EditDialog::evaluateText, this, &MainWindow::evaluateText);
     connect(editDock, &EditDialog::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
-    connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::changeTreeSelection);
+    connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::changeObjectSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
     connect(remoteDock, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
     connect(ui->actionDropSelectQueryCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropSelectQuery);
@@ -916,8 +918,9 @@ void MainWindow::compact()
 void MainWindow::deleteObject()
 {
     // Get name and type of object to delete
-    sqlb::ObjectIdentifier obj = dbSelected->object();
-    QString type = dbSelected->objectType();
+    sqlb::ObjectIdentifier obj;
+    QString type;
+    getSelectedObject(type, obj);
 
     // Due to different grammar in languages (e.g. gender or declension), each message must be given separately to translation.
     QString message;
@@ -951,19 +954,45 @@ void MainWindow::deleteObject()
             QMessageBox::warning(this, QApplication::applicationName(), message + " " + error);
         } else {
             refreshTableBrowsers();
-            changeTreeSelection();
+            changeObjectSelection();
+        }
+    }
+}
+
+void MainWindow::getSelectedObject(QString &type, sqlb::ObjectIdentifier& obj) {
+
+    type = "";
+    obj = sqlb::ObjectIdentifier();
+
+    QWidget* currentTab = ui->mainTab->currentWidget();
+    if (currentTab == ui->structure) {
+
+        if(!dbSelected->hasSelection())
+            return;
+
+        // Get name and type of the object to edit
+        obj = dbSelected->object();
+        type = dbSelected->objectType();
+
+    } else if (currentTab == ui->browser) {
+        // Get name of the current table from the Data Browser
+        obj = currentlyBrowsedTableName();
+
+        sqlb::TablePtr tablePtr = db.getTableByName(obj);
+        if (!tablePtr) {
+            return;
+        } else {
+            type = tablePtr->isView()? "view" : "table";
         }
     }
 }
 
 void MainWindow::editObject()
 {
-    if(!dbSelected->hasSelection())
-        return;
-
-    // Get name and type of the object to edit
-    sqlb::ObjectIdentifier obj = dbSelected->object();
-    QString type = dbSelected->objectType();
+    QString type;
+    sqlb::ObjectIdentifier obj;
+    // Get name and type of object to edit
+    getSelectedObject(type, obj);
 
     if(type == "table")
     {
@@ -1113,6 +1142,7 @@ void MainWindow::dataTableSelectionChanged(const QModelIndex& index)
     if (editDock->isVisible()) {
         editDock->setCurrentIndex(index);
     }
+    changeObjectSelection();
 }
 
 /*
@@ -1457,40 +1487,32 @@ void MainWindow::exportTableToCSV()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentWidget() == ui->structure)
-    {
-        QString type = dbSelected->objectType();
-        if(type == "table" || type == "view")
-        {
-            current_table = dbSelected->object();
-        }
-    } else if(ui->mainTab->currentWidget() == ui->browser) {
-        current_table = currentlyBrowsedTableName();
-    }
 
-    // Open dialog
-    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
-    dialog.exec();
+    QString type;
+    // Get name and type of object to export
+    getSelectedObject(type, current_table);
+
+    if(type == "table" || type == "view") {
+        // Open dialog
+        ExportDataDialog dialog(db, ExportDataDialog::ExportFormatCsv, this, "", current_table);
+        dialog.exec();
+    }
 }
 
 void MainWindow::exportTableToJson()
 {
     // Get the current table name if we are in the Browse Data tab
     sqlb::ObjectIdentifier current_table;
-    if(ui->mainTab->currentWidget() == ui->structure)
-    {
-        QString type = dbSelected->objectType();
-        if(type == "table" || type == "view")
-        {
-            current_table = dbSelected->object();
-        }
-    } else if(ui->mainTab->currentWidget() == ui->browser) {
-        current_table = currentlyBrowsedTableName();
-    }
 
-    // Open dialog
-    ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, "", current_table);
-    dialog.exec();
+    QString type;
+    // Get name and type of object to export
+    getSelectedObject(type, current_table);
+
+    if(type == "table" || type == "view") {
+        // Open dialog
+        ExportDataDialog dialog(db, ExportDataDialog::ExportFormatJson, this, "", current_table);
+        dialog.exec();
+    }
 }
 
 void MainWindow::dbState(bool dirty)
@@ -1638,7 +1660,7 @@ void MainWindow::createTreeContextMenu(const QPoint &qPoint)
     if(type == "table" || type == "view" || type == "trigger" || type == "index" || type == "database")
     {
         // needed for first click on treeView as for first time change QItemSelectionModel::currentChanged doesn't fire
-        changeTreeSelection();
+        changeObjectSelection();
         popupTableMenu->exec(ui->dbTreeWidget->mapToGlobal(qPoint));
     }
 }
@@ -1663,7 +1685,7 @@ void MainWindow::createSchemaDockContextMenu(const QPoint &qPoint)
     popupSchemaDockMenu->exec(ui->treeSchemaDock->mapToGlobal(qPoint));
 }
 
-void MainWindow::changeTreeSelection()
+void MainWindow::changeObjectSelection()
 {
     // Just assume first that something's selected that can not be edited at all
     ui->editDeleteObjectAction->setEnabled(false);
@@ -1675,12 +1697,14 @@ void MainWindow::changeTreeSelection()
 
     ui->fileDetachAction->setVisible(false);
 
-    if(!dbSelected->hasSelection())
+    QString type;
+    sqlb::ObjectIdentifier obj;
+    getSelectedObject(type, obj);
+    if(obj.isEmpty())
         return;
 
     // Change the text and tooltips of the actions
-    QString type = dbSelected->objectType();
-    QString schema = dbSelected->schema();
+    QString schema = QString::fromStdString(obj.schema());
 
     if (type.isEmpty())
     {

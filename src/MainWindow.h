@@ -148,6 +148,7 @@ private:
     sqlb::ObjectIdentifier currentlyBrowsedTableName() const;
 
     QList<TableBrowserDock*> allTableBrowserDocks() const;
+    void getSelectedObject(QString &type, sqlb::ObjectIdentifier& obj);
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -172,7 +173,7 @@ public slots:
 private slots:
     void createTreeContextMenu(const QPoint & qPoint);
     void createSchemaDockContextMenu(const QPoint & qPoint);
-    void changeTreeSelection();
+    void changeObjectSelection();
     void fileNew();
     void fileNewInMemoryDatabase(bool open_create_dialog = true);
     // Refresh visible table browsers. When all is true, refresh all browsers.
