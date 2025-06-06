@@ -15,7 +15,7 @@ QStringList FileDialog::getOpenFileNames(const FileDialogTypes dialogType, QWidg
     if(!result.isEmpty())
     {
         QFileInfo path = QFileInfo(result.first());
-        setFileDialogPath(dialogType, path.absolutePath());
+        setFileDialogPath(dialogType, path.absoluteFilePath());
     }
     return result;
 }
@@ -50,7 +50,7 @@ QString FileDialog::getFileDialogPath(const FileDialogTypes dialogType)
 
         return lastLocations[QString::number(static_cast<int>(dialogType))].toString();
     }
-    case 1:     // Always use this locations
+    case 1:     // Always use this location
         return Settings::getValue("db", "defaultlocation").toString();
     default:
         return QString();
