@@ -273,7 +273,7 @@ void MainWindow::init()
     connect(ui->actionCopyInSchema, &QAction::triggered, this, [=]() {
         dbStructureModel->copy(ui->treeSchemaDock->selectionModel()->selectedIndexes());
     });
-    auto copyShortcut = new QShortcut(QKeySequence::Copy, ui->treeSchemaDock);
+    auto copyShortcut = new QShortcut(QKeySequence::Copy, ui->treeSchemaDock, nullptr, nullptr, Qt::WidgetShortcut);
     connect(copyShortcut, &QShortcut::activated, this, [=]() {
         dbStructureModel->copy(ui->treeSchemaDock->selectionModel()->selectedIndexes());
     });
