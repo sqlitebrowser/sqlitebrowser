@@ -42,6 +42,7 @@ ColumnDisplayFormatDialog::ColumnDisplayFormatDialog(DBBrowserDB& db, const sqlb
     ui->comboDisplayFormat->addItem(tr("Binary GUID to text"), "guid");
     ui->comboDisplayFormat->addItem(tr("SpatiaLite Geometry to SVG"), "geomToSVG");
     ui->comboDisplayFormat->insertSeparator(ui->comboDisplayFormat->count());
+    ui->comboDisplayFormat->addItem(tr("JSON"), "json");
     ui->comboDisplayFormat->addItem(tr("Custom"), "custom");
 
     ui->labelDisplayFormat->setText(ui->labelDisplayFormat->text().arg(column_name));
@@ -87,6 +88,7 @@ R"('<svg xmlns="http://www.w3.org/2000/svg">'
    , 1, 5)
 || '" stroke="darkblue" fill="#b5cfed" stroke-width="1"/>'
 || '</svg>')").arg(e_column_name);
+    formatFunctions["json"] = "json(" + e_column_name + ")";
 
     // Set the current format, if it's empty set the default format
     if(current_format.isEmpty())
