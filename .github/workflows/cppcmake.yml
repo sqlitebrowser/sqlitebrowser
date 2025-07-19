@@ -55,17 +55,18 @@ jobs:
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
 
-  build-windows:
-    needs: check-skippable
-    if: needs.check-skippable.outputs.skip != 'true'
-    uses: ./.github/workflows/cppcmake-windows.yml
-    secrets: inherit
-    with:
-      NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+  # build-windows:
+  #   needs: check-skippable
+  #   if: needs.check-skippable.outputs.skip != 'true'
+  #   uses: ./.github/workflows/cppcmake-windows.yml
+  #   secrets: inherit
+  #   with:
+  #     NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
 
   release:
     if: github.event_name != 'pull_request'
-    needs: [build-macos, build-ubuntu, build-windows]
+    needs: [build-macos, build-ubuntu]
+    # needs: [build-macos, build-ubuntu, build-windows]
     name: Release
     runs-on: ubuntu-24.04
     env:
@@ -83,17 +84,18 @@ jobs:
         with:
           path: target
 
-      - name: Remove unsigned Windows build
-        run: rm -rfv target/*unsigned*
+      # - name: Remove unsigned Windows build
+      #   run: rm -rfv target/*unsigned*
 
       - run: find target -type f -exec mv -v {} target \;
 
-      - name: Unarchive Windows's build artifacts
-        run: for f in target/*.zip; do unzip -d target/ "$f" && rm -v "$f"; done
+      # - name: Unarchive Windows's build artifacts
+      #   run: for f in target/*.zip; do unzip -d target/ "$f" && rm -v "$f"; done
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          body: "The Windows build will not be provided for the time being. Note: #3967"
           files: target/*
           prerelease: true
           tag_name: ${{ env.tag_name }}
