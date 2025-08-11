@@ -1,9 +1,0 @@
-This directory contains the SQLite lexer and parser files.
-
-For convenience and to not have extra dependencies in the build process,
-the generated C++ files are included here. Please don't edit them by hand.
-To modify the lexer or parser, edit the sqlite3_lexer.ll or sqlite3_parser.yy
-files and rerun flex or bison like this:
-
-flex sqlite3_lexer.ll
-bison sqlite3_parser.yy
