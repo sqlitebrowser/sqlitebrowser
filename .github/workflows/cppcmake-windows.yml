@@ -23,7 +23,7 @@ jobs:
       QT_VERSION: 5.15.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
