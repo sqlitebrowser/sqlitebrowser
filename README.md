@@ -408,3 +408,8 @@ See the [LICENSE](LICENSE) file for licensing information.
 
   [ghaction-img]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml/badge.svg
   [ghaction]: https://github.com/sqlitebrowser/sqlitebrowser/actions/workflows/cppcmake.yml
+
+---
+
+### Fork Note
+This repository was forked and tested by **Vishal Gumudavelli**
