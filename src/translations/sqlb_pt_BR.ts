@@ -2060,7 +2060,7 @@ Deseja inserir mesmo assim?</translation>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="291"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar</translation>
     </message>
     <message>
         <location filename="../ExtendedTableWidget.cpp" line="293"/>
@@ -2785,7 +2785,7 @@ x~y	Intervalo: valores entre x e y
         <location filename="../MainWindow.ui" line="1727"/>
         <location filename="../MainWindow.ui" line="2545"/>
         <source>&amp;Open Database...</source>
-        <translation>&amp;Abrir banco de dados...</translation>
+        <translation>Abrir &amp;banco de dados...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1730"/>
@@ -2860,7 +2860,7 @@ x~y	Intervalo: valores entre x e y
     <message>
         <location filename="../MainWindow.ui" line="1869"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Sair</translation>
+        <translation>Sai&amp;r</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1872"/>
@@ -2957,7 +2957,7 @@ x~y	Intervalo: valores entre x e y
     <message>
         <location filename="../MainWindow.ui" line="2070"/>
         <source>&amp;Recently opened</source>
-        <translation>&amp;Recentemente aberto</translation>
+        <translation>Re&amp;centemente aberto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2085"/>
@@ -3129,7 +3129,7 @@ Se você disser que não, tentaremos importar os dados do arquivo SQL para o ban
     <message>
         <location filename="../MainWindow.cpp" line="240"/>
         <source>Clear List</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar Lista</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="334"/>
@@ -3144,7 +3144,7 @@ Se você disser que não, tentaremos importar os dados do arquivo SQL para o ban
     <message>
         <location filename="../MainWindow.cpp" line="346"/>
         <source>Simplify Window Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Simplificar layout da janela</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="347"/>
@@ -3341,7 +3341,7 @@ Você tem certeza?</translation>
     <message>
         <location filename="../MainWindow.ui" line="1943"/>
         <source>&amp;Create Table...</source>
-        <translation>&amp;Criar tabela...</translation>
+        <translation>Criar &amp;tabela...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1961"/>
@@ -3533,7 +3533,7 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="541"/>
         <source>Foreign Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaves estrangeiras</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="791"/>
@@ -3560,7 +3560,7 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
         <location filename="../MainWindow.ui" line="854"/>
         <location filename="../MainWindow.ui" line="915"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="920"/>
@@ -3576,13 +3576,13 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="934"/>
         <source>File</source>
-        <translation type="unfinished">Arquivo</translation>
+        <translation>Arquivo</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="419"/>
         <location filename="../MainWindow.ui" line="939"/>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Memória</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="404"/>
@@ -3607,12 +3607,12 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished"></translation>
+        <translation>Exclusivo</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
         <source>Automatic Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice automático</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1025"/>
@@ -3637,7 +3637,7 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="1143"/>
         <source>Synchronous</source>
-        <translation type="unfinished"></translation>
+        <translation>Síncrono</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1156"/>
@@ -3647,12 +3647,12 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="1173"/>
         <source>None</source>
-        <translation type="unfinished">Nenhum</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1183"/>
         <source>Incremental</source>
-        <translation type="unfinished"></translation>
+        <translation>Incremental</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1194"/>
@@ -3662,7 +3662,7 @@ Você pode arrastar comandos SQL de uma linha e soltá-los em outras aplicaçõe
     <message>
         <location filename="../MainWindow.ui" line="1382"/>
         <source>Too&amp;ls</source>
-        <translation>Ferr&amp;amentas</translation>
+        <translation>&amp;Ferramentas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1490"/>
@@ -3711,7 +3711,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="1703"/>
         <source>&amp;New Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Novo banco de dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1763"/>
@@ -3727,13 +3727,13 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="1805"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desfazer</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1808"/>
         <location filename="../MainWindow.ui" line="1811"/>
         <source>Undo last change to the database</source>
-        <translation type="unfinished"></translation>
+        <translation>Desfaz a última mudança feita no banco de dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1814"/>
@@ -3758,7 +3758,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2079"/>
         <source>New &amp;tab</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nova a&amp;ba</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2082"/>
@@ -3828,7 +3828,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2249"/>
         <source>&amp;Save Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvar Projeto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2270"/>
@@ -3838,12 +3838,12 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2273"/>
         <source>Open &amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir &amp;projeto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2297"/>
         <source>&amp;Attach Database...</source>
-        <translation>&amp;Anexar banco de dados...</translation>
+        <translation>A&amp;nexar banco de dados...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2300"/>
@@ -3859,7 +3859,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2318"/>
         <source>&amp;Set Encryption...</source>
-        <translation>Definir en&amp;criptação...</translation>
+        <translation>Definir e&amp;ncriptação...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2348"/>
@@ -3879,7 +3879,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2401"/>
         <source>Open Data&amp;base Read Only...</source>
-        <translation>Abrir &amp;banco de dados somente leitura...</translation>
+        <translation>Abrir banco de dados somente &amp;leitura...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2413"/>
@@ -3982,7 +3982,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2826"/>
         <source>Table from CSV data in Clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabela de dados CSV na área de transferência...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2829"/>
@@ -3992,7 +3992,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2834"/>
         <source>Show &amp;Row Counts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mostrar quantidade de &amp;Linhas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2837"/>
@@ -4002,22 +4002,22 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2849"/>
         <source>Save Database &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sal&amp;var banco de dados como...</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2852"/>
         <source>Save the current database as a different file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar o banco de dados atual em um arquivo diferente</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2861"/>
         <source>Refresh</source>
-        <translation type="unfinished">Atualizar</translation>
+        <translation>Atualizar</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2864"/>
         <source>Reload the database structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarrega a estrutura do banco de dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2258"/>
@@ -4029,33 +4029,33 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
         <location filename="../MainWindow.ui" line="53"/>
         <source>&amp;Database Structure</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Estrutura do banco de dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="120"/>
         <location filename="../MainWindow.ui" line="123"/>
         <source>&amp;Browse Data</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ver dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="155"/>
         <location filename="../MainWindow.ui" line="158"/>
         <source>Edit P&amp;ragmas</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Editar &amp;pragmas</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1222"/>
         <location filename="../MainWindow.ui" line="1225"/>
         <source>E&amp;xecute SQL</source>
         <extracomment>This has to be equal to the tab title in all the main tabs</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>E&amp;xecutar SQL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="1315"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivos &amp;Recentes</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2282"/>
@@ -4065,7 +4065,7 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2548"/>
         <source>&amp;Open Database</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Abrir Banco de dados</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2565"/>
@@ -4258,13 +4258,13 @@ Você pode arrastar comandos SQL da coluna Esquema e largá-los no editor SQL ou
     <message>
         <location filename="../MainWindow.ui" line="2788"/>
         <source>Close Pro&amp;ject</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar pro&amp;jeto</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="2791"/>
         <location filename="../MainWindow.ui" line="2794"/>
         <source>Close project and database files and return to the initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Fecha os arquivos de projeto e banco de dados e retorna para o estado inicial</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="483"/>
@@ -4347,12 +4347,12 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1005"/>
         <source>Edit View %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar Vista %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1011"/>
         <source>Edit Trigger %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar gatilho %1</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1117"/>
@@ -4423,12 +4423,12 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="3461"/>
         <source>Yes. Don&apos;t ask again</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim. Não perguntar novamente</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3566"/>
         <source>This action will open a new SQL tab with the following statements for you to edit and run:</source>
-        <translation type="unfinished"></translation>
+        <translation>Essa ação abrirá uma nova aba de SQL com os seguintes comandos para você editar e executar:</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="3772"/>
@@ -4468,7 +4468,7 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="237"/>
         <source>Automatically load the last opened DB file at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticamente carregar o último BD aberto ao iniciar</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1234"/>
@@ -4504,7 +4504,7 @@ Você tem certeza que quer salvar o banco de dados?</translation>
     <message>
         <location filename="../MainWindow.cpp" line="1866"/>
         <source>Attach Database...</source>
-        <translation>Anexar banco de dados...</translation>
+        <translation>Anexar banco de dad&amp;os...</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="1867"/>
@@ -5122,7 +5122,7 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     <message>
         <location filename="../PreferencesDialog.cpp" line="795"/>
         <source>Save Settings File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar arquivo de configurações</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="795"/>
@@ -5139,7 +5139,7 @@ Aviso: nem todos os dados foram obtidos da tabela ainda devido ao mecanismo de o
     <message>
         <location filename="../PreferencesDialog.cpp" line="805"/>
         <source>Open Settings File</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo de configurações</translation>
     </message>
     <message>
         <location filename="../PreferencesDialog.cpp" line="812"/>
@@ -7333,13 +7333,13 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.ui" line="676"/>
         <source>Export to &amp;JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar para &amp;JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="679"/>
         <location filename="../TableBrowser.ui" line="682"/>
         <source>Export the filtered data to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporta os dados filtrados para JSON</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="685"/>
@@ -7349,7 +7349,7 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.ui" line="754"/>
         <source>Copy column name</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar nome da coluna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="757"/>
@@ -7365,12 +7365,12 @@ Segure %3Shift e clique para ir para lá</translation>
         <location filename="../TableBrowser.ui" line="829"/>
         <location filename="../TableBrowser.ui" line="832"/>
         <source>Add a new docked Data Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar nova aba de ver dados</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="835"/>
         <source>This button adds a new docked Data Browser, which you can detach and arrange in different layouts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este botão adiciona uma nova aba para ver dados, que você pode desacoplar e organizar em layouts diferentes.</translation>
     </message>
     <message>
         <location filename="../TableBrowser.ui" line="454"/>
@@ -7854,7 +7854,7 @@ Segure %3Shift e clique para ir para lá</translation>
     <message>
         <location filename="../TableBrowser.cpp" line="43"/>
         <source>Filter in any column</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrar em qualquer coluna</translation>
     </message>
     <message>
         <location filename="../TableBrowser.cpp" line="113"/>
