@@ -40,7 +40,7 @@
         Visual Studio 2017. The build "ARCH" will be set automatically.
     -->
 
-    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Redist\MSVC\14.29.30133\MergeModules" ?>
+    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.29.30133\MergeModules" ?>
     <?define VCRedistFile="Microsoft_VC142_CRT_$(sys.BUILDARCH).msm" ?>
 
     <!--

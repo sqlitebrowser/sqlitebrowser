@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         arch: [x86, x64]
-        os: [windows-2019]
+        os: [windows-2022]
     env:
       GH_TOKEN: ${{ github.token }}
       OPENSSL_VERSION: 1.1.1.2100
@@ -52,10 +52,14 @@ jobs:
           cache-key-prefix: "cache"
           version: ${{ env.QT_VERSION }}
 
+      - name: Install VS2019
+        run: choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041 --add Microsoft.VisualStudio.Component.VC.Redist.MSM"
+
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch == 'x86' && 'amd64_x86' || matrix.arch == 'x64' && 'amd64'}}
+          vsversion: 2019
 
       - name: Build SQLite
         run: |
@@ -73,7 +77,8 @@ jobs:
       - name: Download SQLean extension
         run: |
           if ("${{ matrix.arch }}" -eq "x86") {
-            gh release download --pattern "sqlean-win-x86.zip" --repo "nalgeon/sqlean"
+            # sqlean has discontinued x86 support starting from v0.28.0
+            gh release download 0.27.4 --pattern "sqlean-win-x86.zip" --repo "nalgeon/sqlean"
             Expand-Archive -Path sqlean-win-x86.zip -DestinationPath .\sqlean
           } else {
             gh release download --pattern "sqlean-win-x64.zip" --repo "nalgeon/sqlean"
