@@ -24,6 +24,7 @@
 #include <json.hpp>
 
 using json = nlohmann::json;
+using ordered_json = nlohmann::ordered_json;
 
 EditDialog::EditDialog(QWidget* parent)
     : QDialog(parent),
@@ -101,6 +102,7 @@ EditDialog::EditDialog(QWidget* parent)
 EditDialog::~EditDialog()
 {
     Settings::setValue("databrowser", "indent_compact",  mustIndentAndCompact);
+    Settings::setValue("databrowser", "sort_keys", mustSortKeys);
     Settings::setValue("databrowser", "auto_switch_mode", ui->buttonAutoSwitchMode->isChecked());
     Settings::setValue("databrowser", "editor_word_wrap", ui->actionWordWrap->isChecked());
     delete ui;
@@ -607,10 +609,13 @@ void EditDialog::accept()
 
             QString newData;
             bool proceed = true;
-            json jsonDoc;
+            ordered_json jsonDoc;
 
             try {
-                jsonDoc = json::parse(sciEdit->text().toStdString());
+                if (mustSortKeys)
+                  jsonDoc = json::parse(sciEdit->text().toStdString());
+                else
+                  jsonDoc = ordered_json::parse(sciEdit->text().toStdString());
             } catch(json::parse_error& parseError) {
                 sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
 
@@ -740,10 +745,14 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
         {
             sciEdit->clearErrorIndicators();
 
-            json jsonDoc;
+            ordered_json jsonDoc;
 
             try {
+              if (mustSortKeys)
                 jsonDoc = json::parse(std::string(bArrdata.constData(), static_cast<size_t>(bArrdata.size())));
+              else
+                jsonDoc = ordered_json::parse(std::string(bArrdata.constData(), static_cast<size_t>(bArrdata.size())));
+                
             } catch(json::parse_error& parseError) {
                 sciEdit->setErrorIndicator(static_cast<int>(parseError.byte - 1));
             }
@@ -801,8 +810,9 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
 void EditDialog::editModeChanged(int newMode)
 {
     ui->actionIndent->setEnabled(newMode == JsonEditor || newMode == XmlEditor);
+    ui->actionSortKeys->setEnabled(newMode == JsonEditor);
     setStackCurrentIndex(newMode);
-
+    
     // Change focus from the mode combo to the editor to start typing.
     if (ui->comboMode->hasFocus())
         setFocus();
@@ -924,6 +934,8 @@ void EditDialog::editTextChanged()
 void EditDialog::setMustIndentAndCompact(bool enable)
 {
     mustIndentAndCompact = enable;
+    
+    ui->actionSortKeys->setEnabled(enable);
 
     // Indent or compact if necessary. If data has changed (button Apply indicates so), reload from the widget, else from the table.
     if (ui->buttonApply->isEnabled()) {
@@ -931,6 +943,19 @@ void EditDialog::setMustIndentAndCompact(bool enable)
     } else
         setCurrentIndex(m_currentIndex);
 }
+
+void EditDialog::setMustSortKeys(bool enable)
+{
+  mustSortKeys = enable;
+  
+  // Must order the json keys. If data has changed (button Apply indicates so), reload from the widget, else from the table.
+  if (ui->buttonApply->isEnabled()) {
+    setDataInBuffer(sciEdit->text().toUtf8(), SciBuffer);
+  }
+  else
+    setCurrentIndex(m_currentIndex);
+}
+
 
 // Determine the type of data in the cell
 int EditDialog::checkDataType(const QByteArray& bArrdata) const
@@ -1131,6 +1156,9 @@ void EditDialog::reloadSettings()
 {
     mustIndentAndCompact = Settings::getValue("databrowser", "indent_compact").toBool();
     ui->actionIndent->setChecked(mustIndentAndCompact);
+
+    mustSortKeys = Settings::getValue("databrowser", "sort_keys").toBool();
+    ui->actionSortKeys->setChecked(mustSortKeys);
 
     ui->buttonAutoSwitchMode->setChecked(Settings::getValue("databrowser", "auto_switch_mode").toBool());
 

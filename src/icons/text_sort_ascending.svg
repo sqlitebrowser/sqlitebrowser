@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <linearGradient id="a" x1="0%" x2="100%" y1="0%" y2="100%">
+  <stop offset="0" stop-color="#767676"/>
+  <stop offset="1" stop-color="#070707"/>
+ </linearGradient>
+ <linearGradient id="b" x1="0%" x2="100%" y1="0%" y2="100%">
+  <stop offset="0" stop-color="#bcbcbc"/>
+  <stop offset="1" stop-color="#b3b3b3"/>
+ </linearGradient>
+ <linearGradient id="c" x1="0%" x2="100%" y1="0%" y2="100%">
+  <stop offset="0" stop-color="#f0f0f0"/>
+  <stop offset="1" stop-color="#e6e6e6"/>
+ </linearGradient>
+ <g class="layer" display="inline">
+  <title>Layer 1</title>
+  <path d="m5.75,12.95l9,0l0,1l-9,0m7,1" fill="url(#a)" id="svg_2" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m2.4,4l1.6,0l0,8.2l-1.6,0l0,-8.2z" fill="#d64d4d" id="svg_4"/>
+  <path d="m5.73,11.07l7.2,0l0,1l-7.2,0m5.6,1" fill="url(#a)" id="svg_5" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m5.73,9.03l5.4,0l0,1l-5.4,0m4.2,1" fill="url(#a)" id="svg_6" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m5.73,6.93l3.95,0l0,1l-3.95,0m3.07,1" fill="url(#a)" id="svg_7" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m5.73,4.92l2.85,0l0,1l-2.85,0m2.22,1" fill="url(#a)" id="svg_8"/>
+  <path d="m5.73,3.03l1.7,0l0,1l-1.7,0m1.32,1" fill="url(#a)" id="svg_9" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m5.48,10.76l-2.35,3.24l-2.35,-3.24l4.7,0z" fill="#d64d4d" id="svg_10" stroke-width="0"/>
+ </g>
+</svg>

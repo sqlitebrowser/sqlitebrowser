@@ -48,6 +48,7 @@ private slots:
     void switchEditorMode(bool autoSwitchForType);
     void updateCellInfoAndMode(const QByteArray& bArrdata);
     void setMustIndentAndCompact(bool enable);
+    void setMustSortKeys(bool enable);
     void openPrintDialog();
     void copyHexAscii();
     void setWordWrapping(bool value);
@@ -67,6 +68,7 @@ private:
     int dataType;
     bool isReadOnly;
     bool mustIndentAndCompact;
+    bool mustSortKeys;
     QByteArray removedBom;
 
     enum DataSources {
