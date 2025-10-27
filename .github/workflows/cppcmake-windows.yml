@@ -144,7 +144,7 @@ jobs:
       - if: github.event_name != 'pull_request'
         name: Upload artifacts for code signing with SignPath
         id: unsigned-artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.arch }}-unsigned
           path: installer\windows\DB.Browser.for.SQLite-*.msi
@@ -189,7 +189,7 @@ jobs:
 
       - if: github.event_name != 'pull_request' && github.workflow != 'Build (Windows)'
         name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.arch }}
           path: build-artifacts-${{ matrix.arch }}.zip
