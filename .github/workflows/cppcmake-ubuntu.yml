@@ -96,7 +96,7 @@ jobs:
 
       - if: github.event_name != 'pull_request' && github.workflow != 'Build (Ubuntu)'
         name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.AppImage
