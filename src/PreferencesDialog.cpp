@@ -539,8 +539,11 @@ void PreferencesDialog::fillLanguageBox()
         if (ui->languageComboBox->findData(locale.name(), Qt::UserRole, Qt::MatchExactly) != -1)
             continue;
 
-        QString language = QLocale::languageToString(locale.language()) + " (" +
-                           QLocale::countryToString(locale.country()) + ")";
+        QString countryName = (file.baseName().remove("sqlb_") == "roc") 
+                            ? "China Taiwan" 
+                            : QLocale::countryToString(locale.country());
+
+        QString language = QLocale::languageToString(locale.language()) + " (" + countryName + ")";
 
         if (locale == systemLocale)
             language += " [System language]";
