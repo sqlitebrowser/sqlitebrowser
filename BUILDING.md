@@ -164,7 +164,7 @@ mv DB\ Browser\ for\ SQLite.app /Applications
 
 An icon for "DB Browser for SQLite" should now be in your main macOS Applications list, ready to launch.
 
-> Also, we have a CI workflow for macOS, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-macos.yml)
+> Also, we have a CI workflow for macOS, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/cppcmake-macos.yml)
 
 ### Windows
 #### Compiling on Windows with MSVC
