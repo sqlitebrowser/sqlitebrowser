@@ -98,6 +98,7 @@
         <file alias="text_bold">text_bold.svg</file>
         <file alias="text_italic">text_italic.svg</file>
         <file alias="text_indent">text_padding_left.svg</file>
+		<file alias="text_sort_ascending">text_sort_ascending.svg</file>
         <file alias="comment_block">text_padding_top.svg</file>
         <file alias="foreground_color">color_wheel.svg</file>
         <file alias="text_replace">find_edit.svg</file>
