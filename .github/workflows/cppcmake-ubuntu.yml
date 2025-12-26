@@ -33,11 +33,13 @@ jobs:
 
       - if: matrix.bundle == 'SQLCipher'
         name: Build SQLCipher
+        working-directory: ${{ runner.temp }}
         run: |
-          # git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
-          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout v4.6.1
-          ./configure --enable-tempstore=yes --with-crypto-lib=openssl --enable-load-extension --disable-tcl CFLAGS="-DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
+          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
+          LDFLAGS="-lcrypto -Wl,-soname,libsqlcipher.so.0" ./configure --prefix=./prefix --with-tempstore=yes --enable-load-extension --disable-tcl CFLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
           make -j2 && sudo make install -j2
+          cp ${GITHUB_WORKSPACE}/installer/linux/sqlcipher_rename.sh .
+          chmod +x sqlcipher_rename.sh && sudo ./sqlcipher_rename.sh
 
       - if: matrix.bundle == 'SQLite'
         name: Build SQLite
@@ -60,6 +62,7 @@ jobs:
           mkdir -v appbuild appdir && cd appbuild
           cmake -G Ninja \
                 -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_PREFIX_PATH=$RUNNER_TEMP/sqlcipher/prefix \
                 -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr \
                 -DENABLE_TESTING=ON \
                 -DFORCE_INTERNAL_QSCINTILLA=ON \
@@ -83,7 +86,7 @@ jobs:
           else
             export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           fi
-          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
+          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib;$RUNNER_TEMP/sqlcipher/prefix/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
@@ -115,7 +118,7 @@ jobs:
           QT_VERSION=$(qmake --version | awk '/Using Qt version/ {print $4}')
           if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
               OPENSSL_VERSION=$(openssl version | awk '{print $2}')
-              SQLCIPHER_VERSION=$(/usr/local/bin/sqlcipher ":memory:" "PRAGMA cipher_version;" | awk '{print $1}')
+              SQLCIPHER_VERSION=$($RUNNER_TEMP/sqlcipher/prefix/bin/sqlcipher ":memory:" "PRAGMA cipher_version;" | awk '{print $1}')
               SQLITE_VERSION="Not applicable"
           else
               OPENSSL_VERSION="Not applicable"
