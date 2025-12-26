@@ -443,22 +443,6 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return true;
     }
 
-    // Remote settings?
-    if(group == "remote")
-    {
-        // Enable the File → Remote menu by default
-        if(name == "active")
-            return true;
-
-        // Clone directory
-        if(name == "clonedirectory")
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-            return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-#else
-            return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-#endif
-    }
-
     // Proxy settings
     if(group == "proxy")
     {

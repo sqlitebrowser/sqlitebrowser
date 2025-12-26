@@ -1480,15 +1480,6 @@ You can drag SQL statements from the Schema column and drop them into the SQL ed
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockRemote">
-   <property name="windowTitle">
-    <string>&amp;Remote</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_5"/>
-  </widget>
   <widget class="QToolBar" name="toolbarProject">
    <property name="windowTitle">
     <string>Project Toolbar</string>

@@ -144,12 +144,8 @@ target_sources(${PROJECT_NAME}
     src/FileDialog.h
     src/ColumnDisplayFormatDialog.h
     src/FilterLineEdit.h
-    src/RemoteDatabase.h
     src/ForeignKeyEditorDelegate.h
     src/PlotDock.h
-    src/RemoteDock.h
-    src/RemoteModel.h
-    src/RemotePushDialog.h
     src/FindReplaceDialog.h
     src/ExtendedScintilla.h
     src/FileExtensionManager.h
@@ -162,8 +158,6 @@ target_sources(${PROJECT_NAME}
     src/SelectItemsPopup.h
     src/TableBrowser.h
     src/ImageViewer.h
-    src/RemoteLocalFilesModel.h
-    src/RemoteCommitsModel.h
     src/RemoteNetwork.h
     src/TableBrowserDock.h
 )
@@ -203,12 +197,8 @@ target_sources(${PROJECT_NAME}
     src/FileDialog.cpp
     src/ColumnDisplayFormatDialog.cpp
     src/FilterLineEdit.cpp
-    src/RemoteDatabase.cpp
     src/ForeignKeyEditorDelegate.cpp
     src/PlotDock.cpp
-    src/RemoteDock.cpp
-    src/RemoteModel.cpp
-    src/RemotePushDialog.cpp
     src/FindReplaceDialog.cpp
     src/ExtendedScintilla.cpp
     src/FileExtensionManager.cpp
@@ -226,8 +216,6 @@ target_sources(${PROJECT_NAME}
     src/sql/parser/sqlite3_lexer.cpp
     src/sql/parser/sqlite3_parser.cpp
     src/ImageViewer.cpp
-    src/RemoteLocalFilesModel.cpp
-    src/RemoteCommitsModel.cpp
     src/RemoteNetwork.cpp
     src/TableBrowserDock.cpp
 )
@@ -250,8 +238,6 @@ target_sources(${PROJECT_NAME}
     src/ExportSqlDialog.ui
     src/ColumnDisplayFormatDialog.ui
     src/PlotDock.ui
-    src/RemoteDock.ui
-    src/RemotePushDialog.ui
     src/FindReplaceDialog.ui
     src/FileExtensionManager.ui
     src/CondFormatManager.ui
@@ -268,7 +254,6 @@ target_sources(${PROJECT_NAME}
     PRIVATE
 
     # General
-    src/certs/CaCerts.qrc
     src/sql/parser/sqlite3_parser.yy
     src/sql/parser/sqlite3_lexer.ll
 

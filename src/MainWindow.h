@@ -14,7 +14,6 @@ class EditDialog;
 class ExtendedTableWidget;
 class FindReplaceDialog;
 class PlotDock;
-class RemoteDock;
 class RunSql;
 class SqliteTableModel;
 class TableBrowser;
@@ -111,7 +110,6 @@ private:
 
     EditDialog* editDock;
     PlotDock* plotDock;
-    RemoteDock* remoteDock;
     TableBrowser* currentTableBrowser;
     FindReplaceDialog* findReplaceDialog;
 

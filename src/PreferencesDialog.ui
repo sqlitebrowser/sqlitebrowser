@@ -122,10 +122,115 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelAppStyle">
+         <property name="text">
+          <string>Application style</string>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="appStyleCombo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+         <property name="minimumContentsLength">
+          <number>35</number>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>15</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Follow the desktop style</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dark style</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Light style</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_27">
+         <property name="toolTip">
+          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
+         </property>
+         <property name="text">
+          <string>Font size</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinGeneralFontSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinGeneralFontSize"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelMaxRecentFiles">
+         <property name="text">
+          <string>Max Recent Files</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinMaxRecentFiles</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="spinMaxRecentFiles">
+         <property name="correctionMode">
+          <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>40</number>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboMain</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelMainToolBar">
+         <property name="text">
+          <string>Main Window</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
          </property>
          <property name="buddy">
           <cstring>toolbarStyleComboMain</cstring>
@@ -182,6 +287,19 @@
          </item>
         </widget>
        </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelStructureToolBar">
+         <property name="text">
+          <string>Database Structure</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboStructure</cstring>
+         </property>
+        </widget>
+       </item>
        <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
@@ -230,6 +348,19 @@
            <string>Follow the style</string>
           </property>
          </item>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelBrowseToolBar">
+         <property name="text">
+          <string>Browse Data</string>
+         </property>
+         <property name="indent">
+          <number>20</number>
+         </property>
+         <property name="buddy">
+          <cstring>toolbarStyleComboBrowse</cstring>
+         </property>
         </widget>
        </item>
        <item row="9" column="1">
@@ -282,149 +413,6 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="1">
-        <widget class="QComboBox" name="toolbarStyleComboSql">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-         <property name="minimumContentsLength">
-          <number>35</number>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>20</width>
-           <height>15</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string>Only display the icon</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Only display the text</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>The text appears beside the icon</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>The text appears under the icon</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Follow the style</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="13" column="0">
-        <widget class="QLabel" name="labelUseRemotes">
-         <property name="text">
-          <string>Show remote options</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkUseRemotes</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="1">
-        <widget class="QCheckBox" name="checkUseRemotes">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
-        <widget class="QLabel" name="labelUpdates">
-         <property name="text">
-          <string>Automatic &amp;updates</string>
-         </property>
-         <property name="buddy">
-          <cstring>checkUpdates</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="1">
-        <widget class="QCheckBox" name="checkUpdates">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>DB file extensions</string>
-         </property>
-         <property name="buddy">
-          <cstring>buttonManageFileExtension</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="1">
-        <widget class="QPushButton" name="buttonManageFileExtension">
-         <property name="text">
-          <string>Manage</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelMainToolBar">
-         <property name="text">
-          <string>Main Window</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboMain</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="labelStructureToolBar">
-         <property name="text">
-          <string>Database Structure</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboStructure</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="labelBrowseToolBar">
-         <property name="text">
-          <string>Browse Data</string>
-         </property>
-         <property name="indent">
-          <number>20</number>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboBrowse</cstring>
-         </property>
-        </widget>
-       </item>
        <item row="10" column="0">
         <widget class="QLabel" name="labelSqlToolBar">
          <property name="text">
@@ -438,8 +426,8 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
-        <widget class="QComboBox" name="toolbarStyleComboEditCell">
+       <item row="10" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -501,16 +489,13 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="appStyleCombo">
+       <item row="11" column="1">
+        <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="toolTip">
-          <string>When this value is changed, all the other color preferences are also set to matching colors.</string>
          </property>
          <property name="currentIndex">
           <number>0</number>
@@ -529,68 +514,29 @@
          </property>
          <item>
           <property name="text">
-           <string>Follow the desktop style</string>
+           <string>Only display the icon</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Dark style</string>
+           <string>Only display the text</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Light style</string>
+           <string>The text appears beside the icon</string>
           </property>
          </item>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelAppStyle">
-         <property name="text">
-          <string>Application style</string>
-         </property>
-         <property name="buddy">
-          <cstring>toolbarStyleComboStructure</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_27">
-         <property name="toolTip">
-          <string>This sets the font size for all UI elements which do not have their own font size option.</string>
-         </property>
-         <property name="text">
-          <string>Font size</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinGeneralFontSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="spinGeneralFontSize"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="labelMaxRecentFiles">
-         <property name="text">
-          <string>Max Recent Files</string>
-         </property>
-         <property name="buddy">
-          <cstring>spinMaxRecentFiles</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="spinMaxRecentFiles">
-          <property name="correctionMode">
-            <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+         <item>
+          <property name="text">
+           <string>The text appears under the icon</string>
           </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>40</number>
-         </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Follow the style</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="12" column="0">
@@ -614,6 +560,57 @@ in new project file</string>
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="0">
+        <widget class="QLabel" name="labelUpdates">
+         <property name="text">
+          <string>Automatic &amp;updates</string>
+         </property>
+         <property name="buddy">
+          <cstring>checkUpdates</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QCheckBox" name="checkUpdates">
+         <property name="text">
+          <string>enabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>DB file extensions</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonManageFileExtension</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QPushButton" name="buttonManageFileExtension">
+         <property name="text">
+          <string>Manage</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0">
+        <widget class="QLabel" name="label_29">
+         <property name="text">
+          <string>Proxy</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonProxy</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="1">
+        <widget class="QToolButton" name="buttonProxy">
+         <property name="text">
+          <string>Configure</string>
          </property>
         </widget>
        </item>
@@ -688,7 +685,7 @@ in new project file</string>
          <item row="3" column="1">
           <widget class="QSpinBox" name="spinPrefetchSize">
            <property name="correctionMode">
-            <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+            <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
            </property>
            <property name="minimum">
             <number>255</number>
@@ -757,7 +754,7 @@ in new project file</string>
           </widget>
          </item>
          <item>
-          <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText">
+          <widget class="SqlTextEdit" name="editDatabaseDefaultSqlText" native="true">
            <property name="minimumSize">
             <size>
              <width>20</width>
@@ -1218,7 +1215,7 @@ in new project file</string>
             <item row="0" column="1">
              <widget class="QSpinBox" name="spinSymbolLimit">
               <property name="correctionMode">
-                <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+               <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
               </property>
               <property name="minimum">
                <number>1</number>
@@ -1241,7 +1238,7 @@ Can be set to 0 for disabling the functionalities.</string>
 Can be set to 0 for disabling completion.</string>
               </property>
               <property name="correctionMode">
-                <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+               <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
               </property>
               <property name="minimum">
                <number>0</number>
@@ -1553,9 +1550,9 @@ Can be set to 0 for disabling completion.</string>
            </item>
            <item>
             <widget class="QSpinBox" name="spinEditorFontSize">
-              <property name="correctionMode">
-                <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
-              </property>
+             <property name="correctionMode">
+              <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -1576,7 +1573,7 @@ Can be set to 0 for disabling completion.</string>
          <item row="1" column="1">
           <widget class="QSpinBox" name="spinLogFontSize">
            <property name="correctionMode">
-            <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+            <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
            </property>
            <property name="minimum">
             <number>1</number>
@@ -1596,7 +1593,7 @@ Can be set to 0 for disabling completion.</string>
          <item row="2" column="1">
           <widget class="QSpinBox" name="spinTabSize">
            <property name="correctionMode">
-            <enum>QAbstractSpinBox::CorrectionMode::CorrectToNearestValue</enum>
+            <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
            </property>
            <property name="minimum">
             <number>1</number>
@@ -1903,242 +1900,6 @@ Can be set to 0 for disabling completion.</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabRemote">
-      <attribute name="title">
-       <string>Remote</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <item>
-        <widget class="QTabWidget" name="tabCertificates">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="tab_6">
-          <attribute name="title">
-           <string>Your certificates</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QTableWidget" name="tableClientCerts">
-             <property name="minimumSize">
-              <size>
-               <width>550</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::ExtendedSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="horizontalScrollMode">
-              <enum>QAbstractItemView::ScrollPerPixel</enum>
-             </property>
-             <attribute name="horizontalHeaderHighlightSections">
-              <bool>false</bool>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>File</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Subject CN</string>
-              </property>
-              <property name="toolTip">
-               <string>Subject Common Name</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Issuer CN</string>
-              </property>
-              <property name="toolTip">
-               <string>Issuer Common Name</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Valid from</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Valid to</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Serial number</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item>
-              <widget class="QToolButton" name="buttonClientCertAdd">
-               <property name="icon">
-                <iconset resource="icons/icons.qrc">
-                 <normaloff>:/icons/trigger_create</normaloff>:/icons/trigger_create</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="buttonClientCertRemove">
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="icons/icons.qrc">
-                 <normaloff>:/icons/trigger_delete</normaloff>:/icons/trigger_delete</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_7">
-          <attribute name="title">
-           <string>CA certificates</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <item>
-            <widget class="QTableWidget" name="tableCaCerts">
-             <property name="minimumSize">
-              <size>
-               <width>550</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="horizontalScrollMode">
-              <enum>QAbstractItemView::ScrollPerPixel</enum>
-             </property>
-             <attribute name="horizontalHeaderHighlightSections">
-              <bool>false</bool>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Subject CN</string>
-              </property>
-              <property name="toolTip">
-               <string>Common Name</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Subject O</string>
-              </property>
-              <property name="toolTip">
-               <string>Organization</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Valid from</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Valid to</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Serial number</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <layout class="QFormLayout" name="formLayout_5">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_23">
-           <property name="text">
-            <string>Clone databases into</string>
-           </property>
-           <property name="buddy">
-            <cstring>editRemoteCloneDirectory</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QLineEdit" name="editRemoteCloneDirectory">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>316</width>
-               <height>0</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="buttonRemoteBrowseCloneDirectory">
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Proxy</string>
-           </property>
-           <property name="buddy">
-            <cstring>buttonProxy</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QToolButton" name="buttonProxy">
-           <property name="text">
-            <string>Configure</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
    <item>
@@ -2174,7 +1935,7 @@ Can be set to 0 for disabling completion.</string>
  <customwidgets>
   <customwidget>
    <class>SqlTextEdit</class>
-   <extends>QTextEdit</extends>
+   <extends>QWidget</extends>
    <header>sqltextedit.h</header>
    <container>1</container>
   </customwidget>
@@ -2194,8 +1955,8 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>toolbarStyleComboSql</tabstop>
   <tabstop>toolbarStyleComboEditCell</tabstop>
   <tabstop>checkPromptSQLTabsInNewProject</tabstop>
-  <tabstop>checkUseRemotes</tabstop>
   <tabstop>checkUpdates</tabstop>
+  <tabstop>buttonProxy</tabstop>
   <tabstop>buttonManageFileExtension</tabstop>
   <tabstop>encodingComboBox</tabstop>
   <tabstop>foreignKeysCheckBox</tabstop>
@@ -2203,7 +1964,6 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinPrefetchSize</tabstop>
   <tabstop>defaultFieldTypeComboBox</tabstop>
   <tabstop>spinStructureFontSize</tabstop>
-  <tabstop>editDatabaseDefaultSqlText</tabstop>
   <tabstop>comboDataBrowserFont</tabstop>
   <tabstop>spinDataBrowserFontSize</tabstop>
   <tabstop>fr_null_fg</tabstop>
@@ -2239,16 +1999,9 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
+  <tabstop>listBuiltinExtensions</tabstop>
   <tabstop>checkRegexDisabled</tabstop>
   <tabstop>checkAllowLoadExtension</tabstop>
-  <tabstop>tabCertificates</tabstop>
-  <tabstop>tableClientCerts</tabstop>
-  <tabstop>buttonClientCertAdd</tabstop>
-  <tabstop>buttonClientCertRemove</tabstop>
-  <tabstop>buttonProxy</tabstop>
-  <tabstop>editRemoteCloneDirectory</tabstop>
-  <tabstop>buttonRemoteBrowseCloneDirectory</tabstop>
-  <tabstop>tableCaCerts</tabstop>
   <tabstop>buttonExportSettings</tabstop>
   <tabstop>buttonImportSettings</tabstop>
  </tabstops>
@@ -2321,70 +2074,6 @@ Can be set to 0 for disabling completion.</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkUseRemotes</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>activateRemoteTab(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>301</x>
-     <y>503</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>382</x>
-     <y>572</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonClientCertAdd</sender>
-   <signal>clicked()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>addClientCertificate()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>723</x>
-     <y>108</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>596</x>
-     <y>243</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonClientCertRemove</sender>
-   <signal>clicked()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>removeClientCertificate()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>723</x>
-     <y>137</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>597</x>
-     <y>295</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonRemoteBrowseCloneDirectory</sender>
-   <signal>clicked()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>chooseRemoteCloneDirectory()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>733</x>
-     <y>568</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>595</x>
-     <y>41</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkAutoCompletion</sender>
    <signal>toggled(bool)</signal>
    <receiver>checkCompleteUpper</receiver>
@@ -2417,22 +2106,6 @@ Can be set to 0 for disabling completion.</string>
    </hints>
   </connection>
   <connection>
-   <sender>buttonProxy</sender>
-   <signal>clicked()</signal>
-   <receiver>PreferencesDialog</receiver>
-   <slot>configureProxy()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>251</x>
-     <y>537</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>385</x>
-     <y>306</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonManageFileExtension</sender>
    <signal>clicked()</signal>
    <receiver>PreferencesDialog</receiver>
@@ -2448,6 +2121,22 @@ Can be set to 0 for disabling completion.</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonProxy</sender>
+   <signal>clicked()</signal>
+   <receiver>PreferencesDialog</receiver>
+   <slot>configureProxy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>538</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>saveSettings()</slot>
@@ -2455,10 +2144,6 @@ Can be set to 0 for disabling completion.</string>
   <slot>showColourDialog(QTreeWidgetItem*,int)</slot>
   <slot>addExtension()</slot>
   <slot>removeExtension()</slot>
-  <slot>activateRemoteTab(bool)</slot>
-  <slot>addClientCertificate()</slot>
-  <slot>removeClientCertificate()</slot>
-  <slot>chooseRemoteCloneDirectory()</slot>
   <slot>configureProxy()</slot>
   <slot>buttonBoxClicked()</slot>
   <slot>showFileExtensionManager()</slot>

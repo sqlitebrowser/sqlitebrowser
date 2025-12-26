@@ -22,11 +22,11 @@
 #include "ExportSqlDialog.h"
 #include "SqlUiLexer.h"
 #include "FileDialog.h"
-#include "RemoteDock.h"
 #include "FindReplaceDialog.h"
 #include "RunSql.h"
 #include "ExtendedTableWidget.h"
 #include "Data.h"
+#include "RemoteNetwork.h"
 #include "TableBrowser.h"
 #include "TableBrowserDock.h"
 
@@ -72,7 +72,6 @@ MainWindow::MainWindow(QWidget* parent)
       m_currentTabTableModel(nullptr),
       editDock(new EditDialog(this)),
       plotDock(new PlotDock(this)),
-      remoteDock(new RemoteDock(this)),
       currentTableBrowser(nullptr),
       findReplaceDialog(new FindReplaceDialog(this)),
       execute_sql_worker(nullptr),
@@ -102,7 +101,6 @@ void MainWindow::init()
     // Load window settings
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
-    tabifyDockWidget(ui->dockLog, ui->dockRemote);
 
 #ifdef Q_OS_MACX
     // Add OpenGL Context for macOS
@@ -158,7 +156,6 @@ void MainWindow::init()
     // Create docks
     ui->dockEdit->setWidget(editDock);
     ui->dockPlot->setWidget(plotDock);
-    ui->dockRemote->setWidget(remoteDock);
 
     // Set up edit dock
     editDock->setReadOnly(true);
@@ -315,10 +312,6 @@ void MainWindow::init()
     ui->viewMenu->actions().at(3)->setShortcut(QKeySequence(tr("Ctrl+E")));
     ui->viewMenu->actions().at(3)->setIcon(QIcon(":/icons/log_dock"));
 
-    // Add menu item for plot dock
-    ui->viewMenu->insertAction(ui->viewDBToolbarAction, ui->dockRemote->toggleViewAction());
-    ui->viewMenu->actions().at(4)->setIcon(QIcon(":/icons/log_dock"));
-
     // Set checked state if toolbar is visible
     ui->viewDBToolbarAction->setChecked(!ui->toolbarDB->isHidden());
     ui->viewExtraDBToolbarAction->setChecked(!ui->toolbarExtraDB->isHidden());
@@ -369,7 +362,6 @@ void MainWindow::init()
             ui->dockPlot->hide();
             ui->dockSchema->hide();
             ui->dockEdit->hide();
-            ui->dockRemote->hide();
         });
     QAction* atBottomLayoutAction = layoutMenu->addAction(tr("Dock Windows at Bottom"));
     connect(atBottomLayoutAction, &QAction::triggered, this, [=]() {
@@ -445,7 +437,6 @@ void MainWindow::init()
     connect(editDock, &EditDialog::requestUrlOrFileOpen, this, &MainWindow::openUrlOrFile);
     connect(ui->dbTreeWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::changeObjectSelection);
     connect(ui->dockEdit, &QDockWidget::visibilityChanged, this, &MainWindow::toggleEditDock);
-    connect(remoteDock, SIGNAL(openFile(QString)), this, SLOT(fileOpen(QString)));
     connect(ui->actionDropSelectQueryCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropSelectQuery);
     connect(ui->actionDropInsertCheck, &QAction::toggled, dbStructureModel, &DbStructureModel::setDropInsert);
     connect(ui->actionDropNamesCheck, &QAction::toggled, dbStructureModel,
@@ -519,7 +510,6 @@ void MainWindow::init()
     ui->dockLog->setWindowTitle(ui->dockLog->windowTitle().remove('&'));
     ui->dockPlot->setWindowTitle(ui->dockPlot->windowTitle().remove('&'));
     ui->dockSchema->setWindowTitle(ui->dockSchema->windowTitle().remove('&'));
-    ui->dockRemote->setWindowTitle(ui->dockRemote->windowTitle().remove('&'));
 }
 
 bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool readOnly)
@@ -594,9 +584,6 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
 
                 refreshTableBrowsers();
 
-                // Update remote dock
-                remoteDock->fileOpened(wFile);
-
                 retval = true;
             } else {
                 QMessageBox::warning(this, qApp->applicationName(), tr("Could not open database file.\nReason: %1").arg(db.lastError()));
@@ -641,7 +628,6 @@ void MainWindow::fileNewInMemoryDatabase(bool open_create_dialog)
     statusEncodingLabel->setText(db.getPragma("encoding"));
     statusEncryptionLabel->setVisible(false);
     statusReadOnlyLabel->setVisible(false);
-    remoteDock->fileOpened(":memory:");
     refreshTableBrowsers();
     if(ui->tabSqlAreas->count() == 0)
         openSqlTab(true);
@@ -783,9 +769,6 @@ bool MainWindow::fileClose()
     SqlTextEdit::sqlLexer->setTableNames(SqlUiLexer::QualifiedTablesMap());
     for(int i=0; i < ui->tabSqlAreas->count(); i++)
         qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(i))->getEditor()->reloadKeywords();
-
-    // Clear remote dock
-    remoteDock->fileOpened(QString());
 
     return true;
 }
@@ -1978,8 +1961,6 @@ void MainWindow::activateFields(bool enable)
     if(!enable)
         ui->actionSqlResultsSave->setEnabled(false);
 
-    remoteDock->enableButtons();
-
     for(const auto& d : allTableBrowserDocks())
         d->tableBrowser()->setEnabled(enable);
 }
@@ -2469,15 +2450,6 @@ void MainWindow::reloadSettings()
     emit db.structureUpdated();
     refreshTableBrowsers();
 
-    // Hide or show the remote dock as needed
-    bool showRemoteActions = Settings::getValue("remote", "active").toBool();
-    ui->viewMenu->actions().at(4)->setVisible(showRemoteActions);
-    if(!showRemoteActions)
-        ui->dockRemote->setHidden(true);
-
-    // Reload remote dock settings
-    remoteDock->reloadSettings();
-
     sqlb::setIdentifierQuoting(static_cast<sqlb::escapeQuoting>(Settings::getValue("editor", "identifier_quotes").toInt()));
 
     ui->tabSqlAreas->setTabsClosable(
@@ -2495,7 +2467,7 @@ void MainWindow::reloadSettings()
 void MainWindow::checkNewVersion(const bool automatic)
 {
         RemoteNetwork::get().fetch(QUrl("https://download.sqlitebrowser.org/currentrelease"), RemoteNetwork::RequestTypeCustom,
-                                   QString(), [this, automatic](const QByteArray& reply) {
+                                   [this, automatic](const QByteArray& reply) {
             QList<QByteArray> info = reply.split('\n');
             if(info.size() >= 2)
             {
@@ -3924,7 +3896,6 @@ void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
     addDockWidget(area, ui->dockLog);
     tabifyDockWidget(ui->dockLog, ui->dockPlot);
     tabifyDockWidget(ui->dockLog, ui->dockSchema);
-    tabifyDockWidget(ui->dockLog, ui->dockRemote);
 }
 
 void MainWindow::clearRecentFiles()
