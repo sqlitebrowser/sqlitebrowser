@@ -453,7 +453,7 @@ void Table::removeConstraint(std::shared_ptr<CheckConstraint> constraint)
 void Table::addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key)
 {
     // Search for matching constraint
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();)
     {
         if(it->second == constraint)
         {
@@ -464,12 +464,16 @@ void Table::addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, con
             m_indexConstraints.insert(std::make_pair(new_columns, it->second));
             it = m_indexConstraints.erase(it);
         }
+        else
+        {
+            ++it;
+        }
     }
 }
 
 void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint, const std::string& key)
 {
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();)
     {
         if(it->second == constraint)
         {
@@ -485,10 +489,8 @@ void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint
                 m_indexConstraints.insert(std::make_pair(new_columns, it->second));
                 it = m_indexConstraints.erase(it);
             }
-
-            // If container is empty now, return here instead of advancing the iterator
-            if(m_indexConstraints.empty())
-                return;
+        } else {
+            ++it;
         }
     }
 }
@@ -511,17 +513,15 @@ void Table::removeKeyFromAllConstraints(const std::string& key)
                 container.insert(std::make_pair(new_columns, it->second));
                 it = container.erase(it);
             }
-
-            // If container is empty now, return here instead of advancing the iterator
-            if(container.empty())
-                return;
+        } else {
+            ++it;
         }
     };
 
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();)
         match_and_remove(m_indexConstraints, it);
 
-    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();++it)
+    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();)
         match_and_remove(m_foreignKeys, it);
 }
 
@@ -544,10 +544,14 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
             container.insert(std::make_pair(new_columns, it->second));
             it = container.erase(it);
         }
+        else
+        {
+            ++it;
+        }
     };
 
     // Update all constraints
-    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();++it)
+    for(auto it=m_indexConstraints.begin();it!=m_indexConstraints.end();)
     {
         match_and_rename(m_indexConstraints, it, [key, to](IndexedColumn c) {
             if(c == key)
