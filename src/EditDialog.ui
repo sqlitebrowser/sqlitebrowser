@@ -151,6 +151,7 @@
        </property>
        <addaction name="actionWordWrap"/>
        <addaction name="actionIndent"/>
+       <addaction name="actionSortKeys"/>
        <addaction name="actionImport"/>
        <addaction name="actionExport"/>
        <addaction name="actionOpenInExternal"/>
@@ -311,6 +312,24 @@
    </property>
    <property name="whatsThis">
     <string>When enabled, the auto-format feature formats the data on loading, breaking the text in lines and indenting it for maximum readability. On data saving, the auto-format feature compacts the data removing end of lines, and unnecessary whitespace.</string>
+   </property>
+  </action>
+  <action name="actionSortKeys">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons/icons.qrc">
+     <normaloff>:/icons/text_sort_ascending</normaloff>:/icons/text_sort_ascending</iconset>
+   </property>
+   <property name="text">
+    <string>SortKeys</string>
+   </property>
+   <property name="toolTip">
+    <string>Sort Keys: when pretty print is on, will sort the json keys alphabetically.</string>
+   </property>
+   <property name="whatsThis">
+    <string>When enabled alongside pretty print, the json keys will be ordered alphabetically by their name</string>
    </property>
   </action>
   <action name="actionExport">
@@ -493,6 +512,22 @@
    <signal>toggled(bool)</signal>
    <receiver>EditDialog</receiver>
    <slot>setMustIndentAndCompact(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSortKeys</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>EditDialog</receiver>
+   <slot>setMustSortKeys(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -305,6 +305,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return false;
         if(name == "indent_compact")
             return false;
+        if (name == "sort_keys")
+          return true;
         if(name == "auto_switch_mode")
             return true;
         if(name == "editor_word_wrap")
