@@ -31,7 +31,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-find_library(QCustomPlot_LIBRARY NAMES qcustomplot qcustomplot-qt5)
+find_library(QCustomPlot_LIBRARY NAMES qcustomplot qcustomplot-qt5 QCustomPlot)
 set(QCustomPlot_LIBRARIES "${QCustomPlot_LIBRARY}")
 
 find_path(QCustomPlot_INCLUDE_DIR qcustomplot.h)
