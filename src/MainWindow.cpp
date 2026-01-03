@@ -1568,32 +1568,56 @@ void MainWindow::importDatabaseFromSQL()
     if(!QFile::exists(fileName))
         return;
 
+	bool doNewDb = true;
+    bool existingDbOpened = false;
     // If there is already a database file opened ask the user whether to import into
     // this one or a new one. If no DB is opened just ask for a DB name directly
     QString newDbFile;
     if((db.isOpen() && QMessageBox::question(this,
                                             QApplication::applicationName(),
-                                            tr("Do you want to create a new database file to hold the imported data?\n"
-                                               "If you answer no we will attempt to import the data in the SQL file to the current database."),
+                                            tr("Do you want to create a new database file or opening another database file to hold the imported data?\n"
+                                               "If you answer the No, we will attempt to import the data in the SQL file to the current database."),
                                             QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) || !db.isOpen())
     {
-        newDbFile = FileDialog::getSaveFileName(
-                    CreateDatabaseFile,
-                    this,
-                    tr("Choose a filename to save under"),
-                    FileDialog::getSqlDatabaseFileFilter());
-        if(QFile::exists(newDbFile))
-        {
-            QMessageBox::information(this, QApplication::applicationName(), tr("File %1 already exists. Please choose a different name.").arg(newDbFile));
-            return;
-        } else if(newDbFile.size() == 0) {
-            return;
-        }
-
+        QString basePathName = db.currentFile();
+        removeFilenameSuffix(basePathName);
+		while (true)
+		{
+			newDbFile = FileDialog::getSaveFileName(
+				CreateDatabaseFile,
+				this,
+				tr("Choose a filename to save under"),
+				FileDialog::getSqlDatabaseFileFilter(),
+				basePathName);
+			if (newDbFile.isEmpty()) // canceled
+				return;
+			if (QFile::exists(newDbFile))
+			{
+                if (QMessageBox::question(this,
+                    QApplication::applicationName(),
+                    tr("File %1 already exists.\nDo you want to open the database file to import data?\n"
+                        "If you answer the No, we will re-ask for the path, or you can cancel the import.").arg(newDbFile),
+                    QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                        existingDbOpened = fileOpen(newDbFile);
+						if (!existingDbOpened)
+                        {
+                            // If the file is not a valid database file, we will ask the user to choose another.
+                            QMessageBox::warning(this, QApplication::applicationName(), tr("Database file %1 failed to open! Please try choose a path again.").arg(newDbFile));
+                            continue;
+                        }
+                        doNewDb = false;
+                        break;
+                    }
+				continue;
+			}
+			break;
+		}
         // Create the new file and open it in the browser
-        db.create(newDbFile);
-        db.close();
-        fileOpen(newDbFile);
+        if (!existingDbOpened) {
+            db.create(newDbFile);
+            db.close();
+            fileOpen(newDbFile);
+        }
     }
 
     // Defer foreign keys. Just deferring them instead of disabling them should work fine because in the import we only expect CREATE and INSERT
@@ -3145,13 +3169,17 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, s
     xml.writeEndElement();
 }
 
+void MainWindow::removeFilenameSuffix(QString& filename) {
+    int dotLen = QFileInfo(filename).suffix().isEmpty() ? 0 : 1;
+    filename.chop(QFileInfo(filename).suffix().size() + dotLen);
+}
+
 void MainWindow::saveProject(const QString& currentFilename)
 {
     QString filename;
     if(currentFilename.isEmpty()) {
         QString basePathName = db.currentFile();
-        // Remove database suffix
-        basePathName.chop(QFileInfo(basePathName).suffix().size()+1);
+        removeFilenameSuffix(basePathName);
         filename = FileDialog::getSaveFileName(
                            CreateProjectFile,
                            this,
