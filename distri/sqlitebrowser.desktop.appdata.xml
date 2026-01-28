@@ -46,6 +46,11 @@
   </screenshots>
   <url type="homepage">https://sqlitebrowser.org/</url>
   <url type="bugtracker">https://github.com/sqlitebrowser/sqlitebrowser/issues</url>
+  <url type="donation">https://www.patreon.com/db4s</url>
+  <url type="faq">https://github.com/sqlitebrowser/sqlitebrowser/wiki/Frequently-Asked-Questions</url>
+  <url type="translate">https://github.com/sqlitebrowser/sqlitebrowser/wiki/Translations</url>
+  <url type="contribute">https://github.com/sqlitebrowser/sqlitebrowser/wiki#for-developers</url>
+  <url type="vcs-browser">https://github.com/sqlitebrowser/sqlitebrowser</url>
   <releases>
     <release version="3.13.1" date="2024-10-16" />
     <release version="3.13.0" date="2024-07-23" />
