@@ -913,9 +913,14 @@ bool DBBrowserDB::dump(const QString& filePath,
                 else {
                     QString statement = QString::fromStdString(it->originalSql());
                     if(keepOldSchema) {
-                        // The statement is guaranteed by SQLite to start with "CREATE TABLE"
-                        const int createTableLength = 12;
-                        statement.replace(0, createTableLength, "CREATE TABLE IF NOT EXISTS");
+                        if (statement.startsWith("CREATE VIRTUAL TABLE", Qt::CaseInsensitive)) {
+                            const int createTableLength = 20;
+                            statement.replace(0, createTableLength, "CREATE VIRTUAL TABLE IF NOT EXISTS");
+                        } else {
+                            // The statement is guaranteed by SQLite to start with "CREATE TABLE"
+                            const int createTableLength = 12;
+                            statement.replace(0, createTableLength, "CREATE TABLE IF NOT EXISTS");
+                        }
                     }
                     stream << statement << ";\n";
                 }
