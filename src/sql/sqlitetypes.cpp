@@ -461,8 +461,8 @@ void Table::addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, con
             auto new_columns = it->first;
             new_columns.emplace_back(key, false);
 
-            m_indexConstraints.insert(std::make_pair(new_columns, it->second));
             it = m_indexConstraints.erase(it);
+            m_indexConstraints.insert(std::make_pair(new_columns, constraint));
         }
         else
         {
@@ -482,12 +482,15 @@ void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint
             std::copy_if(it->first.begin(), it->first.end(), std::back_inserter(new_columns), [key](const auto& c) { return c != key; });
 
             // If the column list is empty now, remove the entire constraint. Otherwise save the updated column list
-            if(new_columns.empty())
+            if (new_columns.empty())
             {
                 it = m_indexConstraints.erase(it);
-            } else {
-                m_indexConstraints.insert(std::make_pair(new_columns, it->second));
+            }
+            else
+            {
+                auto savedConstraint = it->second;
                 it = m_indexConstraints.erase(it);
+                m_indexConstraints.insert(std::make_pair(new_columns, savedConstraint));
             }
         } else {
             ++it;
@@ -510,8 +513,8 @@ void Table::removeKeyFromAllConstraints(const std::string& key)
             {
                 it = container.erase(it);
             } else {
-                container.insert(std::make_pair(new_columns, it->second));
                 it = container.erase(it);
+                container.insert(std::make_pair(new_columns, it->second));
             }
         } else {
             ++it;
