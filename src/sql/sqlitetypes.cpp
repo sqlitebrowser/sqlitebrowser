@@ -125,8 +125,7 @@ std::string DefaultConstraint::toSql() const
     std::string result;
     if(!m_name.empty())
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
-    result += "DEFAULT " + m_value;
-
+    result += "DEFAULT '" + m_value + "'";
     return result;
 }
 
