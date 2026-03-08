@@ -257,6 +257,9 @@ ExtendedTableWidget::ExtendedTableWidget(QWidget* parent) :
     m_frozen_column_count(0),
     m_item_border_delegate(new ItemBorderDelegate(this))
 {
+    // Fix behaviour for ElideMode
+    setWordWrap(false);
+
     setHorizontalScrollMode(ExtendedTableWidget::ScrollPerPixel);
     // Force ScrollPerItem, so scrolling shows all table rows
     setVerticalScrollMode(ExtendedTableWidget::ScrollPerItem);
