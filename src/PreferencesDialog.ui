@@ -1212,6 +1212,16 @@ in new project file</string>
               </property>
              </widget>
             </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelCellWordWrap">
+              <property name="text">
+               <string>Disable word wrap in cell</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkCellWordWrap</cstring>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QSpinBox" name="spinSymbolLimit">
               <property name="correctionMode">
@@ -1252,6 +1262,13 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QCheckBox" name="checkShowImagesInline">
               <property name="toolTip">
                <string>Enable this option to show a preview of BLOBs containing image data in the cells. This can affect the performance of the data browser, however.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QCheckBox" name="checkCellWordWrap">
+              <property name="toolTip">
+               <string>Enable this option to turn off word wrap in the cells.</string>
               </property>
              </widget>
             </item>
@@ -1981,6 +1998,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinSymbolLimit</tabstop>
   <tabstop>spinCompleteThreshold</tabstop>
   <tabstop>checkShowImagesInline</tabstop>
+  <tabstop>checkCellWordWrap</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>
