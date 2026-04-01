@@ -81,7 +81,10 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     if(m_bNewTable == false)
     {
         // Existing table, so load and set the current layout
-        m_table = *pdb.getTableByName(curTable);
+        auto tbl = pdb.getTableByName(curTable);
+        if(!tbl)
+            return;
+        m_table = *tbl;
         ui->labelEditWarning->setVisible(!m_table.fullyParsed());
 
         // Initialise the list of tracked columns for table layout changes
@@ -661,8 +664,11 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
                 // we need to check for this case and cancel here. Maybe we can think of some way to modify the INSERT INTO ... SELECT statement
                 // to at least replace all troublesome NULL values by the default value
                 SqliteTableModel m(pdb, this);
+                auto tbl = pdb.getTableByName(curTable);
+                if(!tbl)
+                    return;
                 m.setQuery(QString("SELECT COUNT(%1) FROM %2 WHERE coalesce(NULL,%3) IS NULL;").arg(
-                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(pdb.getTableByName(curTable)->rowidColumns()), ",")),
+                           QString::fromStdString(sqlb::joinStringVector(sqlb::escapeIdentifier(tbl->rowidColumns()), ",")),
                            QString::fromStdString(curTable.toString()),
                            QString::fromStdString(sqlb::escapeIdentifier(field.name()))));
                 if(!m.completeCache())
