@@ -147,11 +147,15 @@ QWidget* ExtendedTableWidgetEditorDelegate::createEditor(QWidget* parent, const 
         // If no column name is set, assume the primary key is meant
         if(fk->columns().empty()) {
             sqlb::TablePtr obj = m->db().getTableByName(foreignTable);
+            if(!obj)
+                return nullptr;
             column = obj->primaryKeyColumns().front().name();
         } else
             column = fk->columns().at(0);
 
         sqlb::TablePtr currentTable = m->db().getTableByName(m->currentTableName());
+        if(!currentTable)
+            return nullptr;
         QString query = QString("SELECT %1 FROM %2").arg(QString::fromStdString(sqlb::escapeIdentifier(column)), QString::fromStdString(foreignTable.toString()));
 
         // if the current column of the current table does NOT have not-null constraint,

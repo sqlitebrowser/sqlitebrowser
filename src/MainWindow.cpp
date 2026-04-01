@@ -1042,6 +1042,8 @@ void MainWindow::editObject()
             refreshTableBrowsers();
     } else if(type == "view") {
         sqlb::TablePtr view = db.getTableByName(obj);
+        if(!view)
+            return;
         runSqlNewTab(QString("DROP VIEW IF EXISTS %1;\n%2").arg(QString::fromStdString(obj.toString()), QString::fromStdString(view->sql())),
                      tr("Edit View %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createview.html",
@@ -3311,6 +3313,11 @@ void MainWindow::saveProject(const QString& currentFilename)
             xml.writeAttribute("name", QString::fromStdString(tableIt->first.name()));
 
             auto obj = db.getTableByName(tableIt->first);
+            if(!obj)
+            {
+                xml.writeEndElement();
+                continue;
+            }
             saveBrowseDataTableSettings(tableIt->second, obj, xml);
             xml.writeEndElement();
         }

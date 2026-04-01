@@ -190,6 +190,8 @@ void AddRecordDialog::populateFields()
 
     // Initialize fields, fks and pk differently depending on whether it's a table or a view.
     const sqlb::TablePtr table = pdb.getTableByName(curTable);
+    if(!table)
+        return;
     fields = table->fields;
     if (!table->isView())
     {
