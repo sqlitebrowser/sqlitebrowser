@@ -1245,7 +1245,12 @@ void MainWindow::executeQuery()
         if (char_at_index == '\r' || char_at_index == '\n') {
             execute_from_line++;
             // The next lines could be empty, so skip all of them too.
-            while(editor->text(execute_from_line).trimmed().isEmpty())
+            // Guard against running off the end of the document: if the query ends
+            // with trailing blank lines (as happens with some SQL samples) the
+            // previous unbounded loop would spin forever because QScintilla returns
+            // an empty string for out-of-range line numbers.
+            while(execute_from_line <= editor->lines() &&
+                  editor->text(execute_from_line).trimmed().isEmpty())
                 execute_from_line++;
             execute_from_index = 0;
         }
@@ -1292,6 +1297,13 @@ void MainWindow::executeQuery()
         ui->actionSqlResultsSaveAsView->setEnabled(false);
 
         query_logger(false, status_message, from_position, to_position);
+    }, Qt::QueuedConnection);
+    // A statementWarning is emitted when a suspicious pattern is detected that
+    // SQLite would otherwise silently accept (e.g. a bare negative JSON path
+    // index like '$[-1]' — see issue #4113). The query still runs; this just
+    // surfaces the warning in the SQL results area so the user notices.
+    connect(execute_sql_worker.get(), &RunSql::statementWarning, sqlWidget, [query_logger](const QString& warning_message, int from_position, int to_position) {
+        query_logger(false, warning_message, from_position, to_position);
     }, Qt::QueuedConnection);
     connect(execute_sql_worker.get(), &RunSql::statementExecuted, sqlWidget, [query_logger, this](const QString& status_message, int from_position, int to_position) {
         ui->actionSqlResultsSave->setEnabled(false);

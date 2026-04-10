@@ -2,6 +2,7 @@
 #include "sqlite.h"
 #include "sqlitedb.h"
 #include "Data.h"
+#include "JsonPathChecker.h"
 
 #include <chrono>
 #include <QApplication>
@@ -108,6 +109,14 @@ bool RunSql::executeNextStatement()
     QString error;
     if (sql3status == SQLITE_OK)
     {
+        // Check for known silent-failure patterns before executing. These are
+        // cases where SQLite will return success without an error but may
+        // silently drop data (e.g. rows in a WHERE clause) due to an invalid
+        // argument such as a bare negative index in a JSON path.
+        const QString json_path_warning = checkForInvalidJsonPaths(executed_query);
+        if(!json_path_warning.isEmpty())
+            emit statementWarning(json_path_warning, execute_current_position, end_of_current_statement_position);
+
         // What type of query was this?
         StatementType query_type = getQueryType(executed_query);
 

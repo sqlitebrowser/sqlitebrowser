@@ -154,6 +154,7 @@ target_sources(${PROJECT_NAME}
     src/Palette.h
     src/CondFormat.h
     src/RunSql.h
+    src/JsonPathChecker.h
     src/ProxyDialog.h
     src/SelectItemsPopup.h
     src/TableBrowser.h
