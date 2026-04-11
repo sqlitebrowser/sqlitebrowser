@@ -25,10 +25,22 @@
  */
 inline QString checkForInvalidJsonPaths(const QString& query)
 {
-    // Match any JSON path segment of the form $[<negative-integer>], e.g. $[-1], $[-42].
-    // The negative look-ahead (?!#) ensures we do NOT match the valid SQLite form $[#-N].
+    // Match any JSON path step that uses a bare negative array index, e.g.:
+    //   $[-1]          — negative index at the root
+    //   $.array[-1]    — negative index after a key step
+    //   $[0][-1]       — negative index after another array step
+    //
+    // The three alternates in the leading group cover these three cases:
+    //   \$              — root anchor  (e.g. $[-1])
+    //   \.[\w*@]+       — key step     (e.g. .array[-1])
+    //   \]              — array step   (e.g. [0][-1])
+    //
+    // The negative look-ahead (?!#) ensures we do NOT match the valid SQLite
+    // form $[#-N], which uses '#' as the array-length placeholder.
+    // Capture group 1 isolates the bare negative index step (e.g. '[-1]') so
+    // the warning message shows the problematic part without the leading anchor.
     static const QRegularExpression invalidJsonPathRx(
-        QStringLiteral(R"(\$\[(?!#)-\d+\])"),
+        QStringLiteral(R"((?:\$|\.[\w*@]+|\])(\[(?!#)-\d+\]))"),
         QRegularExpression::CaseInsensitiveOption
     );
 
@@ -36,12 +48,12 @@ inline QString checkForInvalidJsonPaths(const QString& query)
     if(match.hasMatch())
     {
         return QCoreApplication::translate("RunSql",
-            "Warning: the JSON path '%1' uses a bare negative array index which is not "
+            "Warning: the JSON path step '%1' uses a bare negative array index which is not "
             "supported by SQLite. SQLite silently returns NULL for such paths, which may "
             "cause rows to be silently missing from your results. "
-            "Use '$[#-N]' syntax instead (e.g. '$[#-1]' for the last element). "
+            "Use '[#-N]' syntax instead (e.g. '$[#-1]' for the last element). "
             "See: https://sqlite.org/json1.html")
-            .arg(match.captured(0));
+            .arg(match.captured(1));
     }
 
     return {};

@@ -1302,8 +1302,10 @@ void MainWindow::executeQuery()
     // SQLite would otherwise silently accept (e.g. a bare negative JSON path
     // index like '$[-1]' — see issue #4113). The query still runs; this just
     // surfaces the warning in the SQL results area so the user notices.
+    // We pass ok=true so the editor does NOT highlight the statement as an
+    // error — the query executed successfully, it is just potentially wrong.
     connect(execute_sql_worker.get(), &RunSql::statementWarning, sqlWidget, [query_logger](const QString& warning_message, int from_position, int to_position) {
-        query_logger(false, warning_message, from_position, to_position);
+        query_logger(true, warning_message, from_position, to_position);
     }, Qt::QueuedConnection);
     connect(execute_sql_worker.get(), &RunSql::statementExecuted, sqlWidget, [query_logger, this](const QString& status_message, int from_position, int to_position) {
         ui->actionSqlResultsSave->setEnabled(false);
