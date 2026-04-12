@@ -399,6 +399,23 @@
        </property>
       </widget>
      </item>
+     <item row="13" column="1">
+      <widget class="QCheckBox" name="checkReplaceNonAlnum">
+       <property name="toolTip">
+        <string>Replace non-alphanumeric characters in column name with an underscore.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="0">
+      <widget class="QLabel" name="labelReplaceNonAlnum">
+       <property name="text">
+        <string>Replace non-alphanumeric in column name</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkReplaceNonAlnum</cstring>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -792,6 +809,12 @@
      <y>358</y>
     </hint>
    </hints>
+  </connection>
+  <connection>
+   <sender>checkReplaceNonAlnum</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
   </connection>
  </connections>
  <slots>
