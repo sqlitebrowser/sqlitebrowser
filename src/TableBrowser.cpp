@@ -897,15 +897,18 @@ void TableBrowser::applyViewportSettings(const BrowseDataTableSettings& storedDa
 
     // Show/hide some menu options depending on whether this is a table or a view
     const auto table = db->getTableByName(tablename);
-    if(!table->isView())
+    if(table)
     {
-        // Table
-        ui->actionUnlockViewEditing->setVisible(false);
-        ui->actionShowRowidColumn->setVisible(!table->withoutRowidTable());
-    } else {
-        // View
-        ui->actionUnlockViewEditing->setVisible(true);
-        ui->actionShowRowidColumn->setVisible(false);
+        if(!table->isView())
+        {
+            // Table
+            ui->actionUnlockViewEditing->setVisible(false);
+            ui->actionShowRowidColumn->setVisible(!table->withoutRowidTable());
+        } else {
+            // View
+            ui->actionUnlockViewEditing->setVisible(true);
+            ui->actionShowRowidColumn->setVisible(false);
+        }
     }
 
     // Frozen columns
@@ -990,8 +993,11 @@ void TableBrowser::generateFilters()
     FilterTableHeader* filterHeader = qobject_cast<FilterTableHeader*>(ui->dataTable->horizontalHeader());
     bool oldState = filterHeader->blockSignals(true);
     auto obj = db->getTableByName(currentlyBrowsedTableName());
-    for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
-        ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
+    if(obj)
+    {
+        for(auto filterIt=settings.filterValues.cbegin();filterIt!=settings.filterValues.cend();++filterIt)
+            ui->dataTable->setFilter(sqlb::getFieldNumber(obj, filterIt->first) + 1, filterIt->second);
+    }
     filterHeader->blockSignals(oldState);
 
     ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
@@ -1447,7 +1453,10 @@ void TableBrowser::editDisplayFormat()
     // column is always the rowid column. Ultimately, get the column name from the column object
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     size_t field_number = sender()->property("clicked_column").toUInt();
-    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(field_number-1).name());
+    auto tbl = db->getTableByName(current_table);
+    if(!tbl || field_number < 1 || field_number > tbl->fields.size())
+        return;
+    QString field_name = QString::fromStdString(tbl->fields.at(field_number-1).name());
 
     // Get the current display format of the field
     QString current_displayformat = m_settings[current_table].displayFormats[field_number];
@@ -1548,7 +1557,10 @@ void TableBrowser::setDefaultTableEncoding()
 void TableBrowser::copyColumnName(){
     sqlb::ObjectIdentifier current_table = currentlyBrowsedTableName();
     int col_index = ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt();
-    QString field_name = QString::fromStdString(db->getTableByName(current_table)->fields.at(col_index - 1).name());
+    auto tbl = db->getTableByName(current_table);
+    if(!tbl || col_index < 1 || col_index > static_cast<int>(tbl->fields.size()))
+        return;
+    QString field_name = QString::fromStdString(tbl->fields.at(col_index - 1).name());
 
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(field_name);

@@ -132,6 +132,12 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
 
     // Set the row id columns
     m_table_of_query = m_db.getTableByName(query.table());
+    if(!m_table_of_query)
+    {
+        // Table not found in schema (e.g. case mismatch between sqlite_master and SQL statement, or table dropped).
+        // Cannot proceed without table metadata.
+        return;
+    }
     if(!m_table_of_query->isView())
     {
         // It is a table

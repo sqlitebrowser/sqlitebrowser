@@ -17,6 +17,7 @@
 #include <QTextStream>
 #include <QFileInfo>
 #include <memory>
+#include <regex>
 
 // Enable this line to show basic performance stats after each imported CSV file. Please keep in mind that while these
 // numbers might help to estimate the performance of the algorithm, this is not a proper benchmark.
@@ -71,11 +72,13 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->comboSeparator->blockSignals(true);
     ui->comboQuote->blockSignals(true);
     ui->comboEncoding->blockSignals(true);
+    ui->checkReplaceNonAlnum->blockSignals(true);
 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
     ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
+    ui->checkReplaceNonAlnum->setChecked(Settings::getValue("importcsv", "replacenonalnum").toBool());
     setSeparatorChar(getSettingsChar("importcsv", "separator"));
     setQuoteChar(getSettingsChar("importcsv", "quotecharacter"));
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
@@ -87,6 +90,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->comboSeparator->blockSignals(false);
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
+    ui->checkReplaceNonAlnum->blockSignals(false);
 
     // Prepare and show interface depending on how many files are selected
     if (csvFilenames.size() > 1)
@@ -193,6 +197,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "separatetables", ui->checkBoxSeparateTables->isChecked());
     Settings::setValue("importcsv", "localconventions", ui->checkLocalConventions->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
+    Settings::setValue("importcsv", "replacenonalnum", ui->checkReplaceNonAlnum->isChecked());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -425,6 +430,13 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
             {
                 // Take field name from CSV
                 fieldname = std::string(rowData.fields[i].data, rowData.fields[i].data_length);
+
+                // Replace any non-nlphanumeric characters with an underscore
+                if(ui->checkReplaceNonAlnum->isChecked())
+                {
+                    std::regex pattern("[^a-zA-Z0-9_]");
+                    fieldname = std::regex_replace(fieldname, pattern, "_");
+                }
             }
 
             // If we don't have a field name by now, generate one
@@ -879,6 +891,8 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkIgnoreDefaults->setVisible(show);
     ui->labelOnConflictStrategy->setVisible(show);
     ui->comboOnConflictStrategy->setVisible(show);
+    ui->labelReplaceNonAlnum->setVisible(show);
+    ui->checkReplaceNonAlnum->setVisible(show);
 }
 
 char32_t ImportCsvDialog::toUtf8(const QString& s) const

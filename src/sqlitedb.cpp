@@ -1333,7 +1333,10 @@ bool DBBrowserDB::getRow(const sqlb::ObjectIdentifier& table, const QString& row
     std::string query = "SELECT * FROM " + table.toString() + " WHERE ";
 
     // For a single rowid column we can use a simple WHERE condition, for multiple rowid columns we have to use sqlb_make_single_value to decode the composed rowid values.
-    sqlb::StringVector pks = getTableByName(table)->rowidColumns();
+    auto tbl = getTableByName(table);
+    if(!tbl)
+        return false;
+    sqlb::StringVector pks = tbl->rowidColumns();
     if(pks.size() == 1)
         query += sqlb::escapeIdentifier(pks.front()) + "='" + rowid.toStdString() + "'";
     else
@@ -1375,14 +1378,18 @@ unsigned long DBBrowserDB::max(const sqlb::ObjectIdentifier& tableName, const st
     // If, however, there is a sequence table in this database and the given column is the primary key of the table, we try to look up a value in the sequence table
     if(schemata.at(tableName.schema()).tables.count("sqlite_sequence"))
     {
-        auto pk = getTableByName(tableName)->primaryKeyColumns();
-        if(pk.size() == 1 && pk.front().name() == field)
+        auto tbl = getTableByName(tableName);
+        if(tbl)
         {
-            // This SQL statement tries to do two things in one statement: get the current sequence number for this table from the sqlite_sequence table or, if there is no record for the table, return the highest integer value in the given column.
-            // This works by querying the sqlite_sequence table and using an aggregate function (SUM in this case) to make sure to always get exactly one result row, no matter if there is a sequence record or not. We then let COALESCE decide
-            // whether to return that sequence value if there is one or fall back to the SELECT MAX statement from avove if there is no sequence value.
-            query = "SELECT COALESCE(SUM(seq), (" + query + ")) FROM sqlite_sequence WHERE name=" + sqlb::escapeString(tableName.name());
-         }
+            auto pk = tbl->primaryKeyColumns();
+            if(pk.size() == 1 && pk.front().name() == field)
+            {
+                // This SQL statement tries to do two things in one statement: get the current sequence number for this table from the sqlite_sequence table or, if there is no record for the table, return the highest integer value in the given column.
+                // This works by querying the sqlite_sequence table and using an aggregate function (SUM in this case) to make sure to always get exactly one result row, no matter if there is a sequence record or not. We then let COALESCE decide
+                // whether to return that sequence value if there is one or fall back to the SELECT MAX statement from avove if there is no sequence value.
+                query = "SELECT COALESCE(SUM(seq), (" + query + ")) FROM sqlite_sequence WHERE name=" + sqlb::escapeString(tableName.name());
+            }
+        }
     }
 
     return querySingleValueFromDb(query).toULong();
@@ -1789,7 +1796,9 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
     if(changed_something)
     {
         updateSchema();
-        old_table = *getTableByName(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()));
+        auto newTbl = getTableByName(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()));
+        if(newTbl)
+            old_table = *newTbl;
     }
 
     // Check if there's still more work to be done or if we are finished now

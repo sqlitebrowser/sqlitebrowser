@@ -1042,6 +1042,8 @@ void MainWindow::editObject()
             refreshTableBrowsers();
     } else if(type == "view") {
         sqlb::TablePtr view = db.getTableByName(obj);
+        if(!view)
+            return;
         runSqlNewTab(QString("DROP VIEW IF EXISTS %1;\n%2").arg(QString::fromStdString(obj.toString()), QString::fromStdString(view->sql())),
                      tr("Edit View %1").arg(QString::fromStdString(obj.toDisplayString())),
                      "https://www.sqlite.org/lang_createview.html",
@@ -1245,26 +1247,50 @@ void MainWindow::executeQuery()
     // Prepare a lambda function for logging the results of a query
     auto logged_queries = std::make_shared<QString>();
     auto query_logger = [sqlWidget, editor, logged_queries](bool ok, const QString& status_message, int from_position, int to_position) {
+        int editor_length = editor->length();
+        int lines = editor->lines();
+        if(editor_length == 0 || lines == 0)
+        {
+            sqlWidget->finishExecution(status_message, ok);
+            return;
+        }
+
+        from_position = qBound(0, from_position, editor_length);
+        to_position = qBound(0, to_position, editor_length);
+
+        // Clamp a (line, index) pair from lineIndexFromPosition to valid editor bounds.
+        auto clampToEditor = [&](int& line, int& index) {
+            line = qMin(line, lines - 1);
+            index = qMin(index, editor->text(line).size());
+        };
+
         int execute_from_line, execute_from_index;
         editor->lineIndexFromPosition(from_position, &execute_from_line, &execute_from_index);
+        clampToEditor(execute_from_line, execute_from_index);
 
         // Special case: if the start position is at the end of a line, then move to the beginning of next line.
         // Otherwise for the typical case, the line reference is one less than expected.
         // Note that execute_from_index uses character positions and not byte positions, so at() can be used.
-        QChar char_at_index = editor->text(execute_from_line).at(execute_from_index);
-        if (char_at_index == '\r' || char_at_index == '\n') {
-            execute_from_line++;
-            // The next lines could be empty, so skip all of them too.
-            while(editor->text(execute_from_line).trimmed().isEmpty())
+        QString line_text = editor->text(execute_from_line);
+        if(execute_from_index < line_text.size())
+        {
+            QChar char_at_index = line_text.at(execute_from_index);
+            if (char_at_index == '\r' || char_at_index == '\n') {
                 execute_from_line++;
-            execute_from_index = 0;
+                // The next lines could be empty, so skip all of them too.
+                while(execute_from_line < lines && editor->text(execute_from_line).trimmed().isEmpty())
+                    execute_from_line++;
+                execute_from_index = 0;
+            }
         }
+        clampToEditor(execute_from_line, execute_from_index);
 
         // If there was an error highlight the erroneous SQL statement
         if(!ok)
         {
             int end_of_current_statement_line, end_of_current_statement_index;
             editor->lineIndexFromPosition(to_position, &end_of_current_statement_line, &end_of_current_statement_index);
+            clampToEditor(end_of_current_statement_line, end_of_current_statement_index);
             editor->setErrorIndicator(execute_from_line, execute_from_index, end_of_current_statement_line, end_of_current_statement_index);
 
             editor->setCursorPosition(execute_from_line, execute_from_index);
@@ -1272,7 +1298,9 @@ void MainWindow::executeQuery()
 
         // Log the query and the result message.
         // The query takes the last placeholder as it may itself contain the sequence '%' + number.
-        QString query = editor->text(from_position, to_position);
+        QString query;
+        if(from_position < to_position)
+            query = editor->text(from_position, to_position);
         QString log_message = "-- " + tr("At line %1:").arg(execute_from_line+1) + "\n" + query.trimmed() + "\n-- " + tr("Result: %1").arg(status_message);
         logged_queries->append(log_message + "\n");
 
@@ -3285,6 +3313,11 @@ void MainWindow::saveProject(const QString& currentFilename)
             xml.writeAttribute("name", QString::fromStdString(tableIt->first.name()));
 
             auto obj = db.getTableByName(tableIt->first);
+            if(!obj)
+            {
+                xml.writeEndElement();
+                continue;
+            }
             saveBrowseDataTableSettings(tableIt->second, obj, xml);
             xml.writeEndElement();
         }
