@@ -26,7 +26,7 @@ jobs:
       MACOSX_DEPLOYMENT_TARGET: 10.13
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # Uninstall Mono, which is included by default in GitHub-hosted macOS runners,
       # as it interferes with referencing our own compiled SQLite libraries.

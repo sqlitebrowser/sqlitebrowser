@@ -32,7 +32,7 @@ jobs:
     outputs:
       skip: ${{ steps.set-skippable.outputs.skippable || 'false' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Check and set skippable
         id: set-skippable

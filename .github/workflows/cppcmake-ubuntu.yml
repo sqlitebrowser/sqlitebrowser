@@ -28,7 +28,7 @@ jobs:
         os: [ubuntu-22.04, ubuntu-22.04-arm]
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install and cache dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.0
