@@ -43,6 +43,8 @@ PlotDock::PlotDock(QWidget* parent)
       m_showLegend(false),
       m_stackedBars(false),
       m_fixedFormat(false),
+      m_logScaleX(false),
+      m_logScaleY(false),
       m_xtype(QVariant::Invalid)
 {
     ui->setupUi(this);
@@ -116,11 +118,24 @@ PlotDock::PlotDock(QWidget* parent)
     fixedFormatsAction->setCheckable(true);
     m_contextMenu->addAction(fixedFormatsAction);
 
-    connect(fixedFormatsAction, &QAction::toggled, this,
-      [=](bool fixed) {
-          m_fixedFormat = fixed;
-          adjustAxisFormat();
-          ui->plotWidget->replot();
+   QAction* logScaleXAction = new QAction(tr("Logarithmic scale (X)"), m_contextMenu);
+    logScaleXAction->setCheckable(true);
+    m_contextMenu->addAction(logScaleXAction);
+
+    connect(logScaleXAction, &QAction::toggled, this, [=](bool log) {
+        m_logScaleX = log;
+        updateLogScale();
+        ui->plotWidget->replot();
+    });
+
+    QAction* logScaleYAction = new QAction(tr("Logarithmic scale (Y)"), m_contextMenu);
+    logScaleYAction->setCheckable(true);
+    m_contextMenu->addAction(logScaleYAction);
+
+    connect(logScaleYAction, &QAction::toggled, this, [=](bool log) {
+        m_logScaleY = log;
+        updateLogScale();
+        ui->plotWidget->replot();
     });
 
     connect(ui->plotWidget, &QTableView::customContextMenuRequested, this,
@@ -544,6 +559,7 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
         }
 
         ui->plotWidget->rescaleAxes(true);
+        updateLogScale();
         ui->plotWidget->legend->setVisible(m_showLegend);
         // Legend with slightly transparent background brush:
         ui->plotWidget->legend->setBrush(QColor(255, 255, 255, 150));
@@ -1048,7 +1064,26 @@ void PlotDock::adjustAxisFormat()
     adjustOneAxisFormat(ui->plotWidget->yAxis, m_fixedFormat);
     adjustOneAxisFormat(ui->plotWidget->yAxis2, m_fixedFormat);
 }
+void PlotDock::updateLogScale()
+{
+    // Set scale type for X axis
+    ui->plotWidget->xAxis->setScaleType(
+        m_logScaleX ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
 
+    // Set scale type for both Y axes
+    yAxes[0]->setScaleType(
+        m_logScaleY ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
+    yAxes[1]->setScaleType(
+        m_logScaleY ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
+
+    // Log scale breaks on zero/negative values — clamp range minimum to small positive
+    if(m_logScaleX && ui->plotWidget->xAxis->range().lower <= 0)
+        ui->plotWidget->xAxis->setRangeLower(1e-3);
+    if(m_logScaleY && yAxes[0]->range().lower <= 0)
+        yAxes[0]->setRangeLower(1e-3);
+    if(m_logScaleY && yAxes[1]->range().lower <= 0)
+        yAxes[1]->setRangeLower(1e-3);
+}
 void PlotDock::toggleStackedBars(bool stacked)
 {
     m_stackedBars = stacked;
