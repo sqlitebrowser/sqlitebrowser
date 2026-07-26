@@ -100,6 +100,7 @@ void PreferencesDialog::loadSettings()
 
     ui->spinStructureFontSize->setValue(Settings::getValue("db", "fontsize").toInt());
     ui->watcherCheckBox->setChecked(Settings::getValue("db", "watcher").toBool());
+    ui->checkSQLCipherParentDotenvLookup->setChecked(Settings::getValue("db", "sqlcipherparentdotenvlookup").toBool());
 
     // Gracefully handle the preferred Data Browser font not being available
     int matchingFont = ui->comboDataBrowserFont->findText(Settings::getValue("databrowser", "font").toString(), Qt::MatchExactly);
@@ -199,6 +200,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("db", "defaultfieldtype", ui->defaultFieldTypeComboBox->currentIndex());
     Settings::setValue("db", "fontsize", ui->spinStructureFontSize->value());
     Settings::setValue("db", "watcher", ui->watcherCheckBox->isChecked());
+    Settings::setValue("db", "sqlcipherparentdotenvlookup", ui->checkSQLCipherParentDotenvLookup->isChecked());
 
     Settings::setValue("checkversion", "enabled", ui->checkUpdates->isChecked());
 

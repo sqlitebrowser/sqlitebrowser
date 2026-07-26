@@ -1,4 +1,4 @@
-name: Build (Windows)
+name: Build (Windows on ARM)
 
 on:
   workflow_call:
@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }}-${{ matrix.arch }}
+    name: ${{ matrix.os }}-arm64
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
@@ -21,93 +21,116 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86, x64]
-        os: [windows-2022]
+        os: [windows-11-arm]
     env:
       GH_TOKEN: ${{ github.token }}
-      OPENSSL_VERSION: 1.1.1.2100
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.4"
+          cache: "pip"
+          cache-dependency-path: tools/windows/requirements/download_latest_openssl3.txt
+
       - name: Install dependencies
         run: |
-          choco install --no-progress ninja
-          if ("${{ matrix.arch }}" -eq "x86") {
-            choco install --no-progress openssl --x86 --version=${{ env.OPENSSL_VERSION}}
-          } else {
-            choco install --no-progress openssl --version=${{ env.OPENSSL_VERSION}}
-          }
+          choco install --no-progress ninja wixtoolset
 
-          # When building SQLCipher, if we specify a path to OpenSSL and
-          # there are spaces in the path, an error will occur, so to
-          # avoid this, create the symlink.
-          New-Item -Path C:\dev -ItemType Directory
-          if ("${{ matrix.arch }}" -eq "x86") {
-            New-Item -Path "C:\dev\OpenSSL" -ItemType SymbolicLink -Value "C:\Program Files (x86)\OpenSSL-Win32\"
-          } else {
-            New-Item -Path "C:\dev\OpenSSL" -ItemType SymbolicLink -Value "C:\Program Files\OpenSSL"
-          }
+          cd $env:GITHUB_WORKSPACE/tools/windows/
+          python -m pip install --disable-pip-version-check -r requirements/download_latest_openssl3.txt
+          $OpenSSLInstallerFileName = (python download_latest_openssl3.py).Trim()
+          Start-Process -FilePath ".\$OpenSSLInstallerFileName" -ArgumentList '/ALLUSERS /verysilent /dir="C:\dev\OpenSSL"' -Wait
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          arch: ${{ matrix.arch == 'x86' && 'win32_msvc2019' || matrix.arch == 'x64' && 'win64_msvc2019_64'}}
+          arch: "win64_msvc2022_arm64"
           cache: true
           cache-key-prefix: "cache"
-          version: 5.15.2
+          modules: "debug_info qt5compat qtactiveqt qtcharts qtconnectivity qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpositioning qtquick3d qtquick3dphysics qtquicktimeline qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtshadertools qtspeech qtvirtualkeyboard qtwebchannel qtwebsockets"
+          version: 6.8.3
 
-      - name: Install VS2019
-        run: choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041 --add Microsoft.VisualStudio.Component.VC.Redist.MSM"
-
-      - name: Setup MSVC
+      - name: Setup MSVC for ARM64
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: ${{ matrix.arch == 'x86' && 'amd64_x86' || matrix.arch == 'x64' && 'amd64'}}
-          vsversion: 2019
+          arch: arm64
+          vsversion: 2022
 
       - name: Build SQLite
         run: |
-          Set-Location "${{ github.workspace }}\tools\windows"
+          cd $env:GITHUB_WORKSPACE/tools/windows/
           $SQLiteArchiveFileName = (python download_latest_sqlite.py).Trim()
           Expand-Archive -Path $SQLiteArchiveFileName -DestinationPath C:\dev\
           Move-Item -Path C:\dev\sqlite-amalgamation-* C:\dev\SQLite\
           cd C:\dev\SQLite
           cl sqlite3.c -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_SOUNDEX -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_MAX_ATTACHED=125 -DSQLITE_API="__declspec(dllexport)" -link -dll -out:sqlite3.dll
 
-      - name: Download SQLean extension
-        run: |
-          if ("${{ matrix.arch }}" -eq "x86") {
-            # sqlean has discontinued x86 support starting from v0.28.0
-            gh release download 0.27.4 --pattern "sqlean-win-x86.zip" --repo "nalgeon/sqlean"
-            Expand-Archive -Path sqlean-win-x86.zip -DestinationPath .\sqlean
-          } else {
-            gh release download --pattern "sqlean-win-x64.zip" --repo "nalgeon/sqlean"
-            Expand-Archive -Path sqlean-win-x64.zip -DestinationPath .\sqlean
-          }
+      # MSYS2 is required to build the SQLean extension.
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: CLANGARM64
+          update: true
+          install: >-
+            curl
+            git
+            make
+            mingw-w64-clang-aarch64-clang
+            unzip
 
-      - name: Build 'formats' Extensions
+      - name: Build SQLean extension
+        shell: msys2 {0}
         run: |
-          cp .\src\extensions\extension-formats.c C:\dev\SQLite\
-          cp .\src\extensions\extension-formats.def C:\dev\SQLite\
+          git clone https://www.github.com/nalgeon/sqlean /c/dev/sqlean
+          cd /c/dev/sqlean
+          cp /c/a/sqlitebrowser/sqlitebrowser/tools/windows/add_sqlean_arm64_target.patch .
+          git apply --ignore-space-change --ignore-whitespace add_sqlean_arm64_target.patch
+          make prepare-dist
+          make download-sqlite
+          make download-external
+          make compile-windows-arm64
+
+      - name: Build Extension
+        run: |
+          cp $env:GITHUB_WORKSPACE/src/extensions/extension-formats.c C:\dev\SQLite\
+          cp $env:GITHUB_WORKSPACE/src/extensions/extension-formats.def C:\dev\SQLite\
           cd C:\dev\SQLite
           cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
 
+      - name: Setup MSVC to x64 to build required SQLCipher binaries
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+          vsversion: 2022
+
+      - name: Build x64 binaries for build SQLCipher
+        run: |
+          git clone https://www.github.com/sqlcipher/sqlcipher C:\dev\SQLCipher --branch v4.6.1
+          cd C:\dev\SQLCipher
+          nmake /f Makefile.msc lemon.exe mkkeywordhash.exe mksourceid.exe src-verify.exe USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL\lib\VC\x64\MD\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL\include\x64"
+
+      - name: Re-setup MSVC for ARM64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: arm64
+          vsversion: 2022
+
       - name: Build SQLCipher
         run: |
-          cd C:\dev
-          Invoke-WebRequest -Uri https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.6.1.zip -OutFile 'sqlcipher.zip'
-          Expand-Archive -Path sqlcipher.zip -DestinationPath C:\dev\
-          Move-Item -Path C:\dev\sqlcipher-4.6.1 C:\dev\SQLCipher\
-          cd SQLCipher
-          nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL\lib\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL\include"
+          cd C:\dev\SQLCipher
+          nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL\lib\VC\arm64\MD\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL\include\arm64"
           mkdir sqlcipher
           copy sqlite3.h sqlcipher
+          # Avoid the C2059 error.
+          mv VERSION VERSION.txt
 
       - name: Configure build (SQLite)
         run: |
           mkdir release-sqlite && cd release-sqlite
-          cmake -G "Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:\dev\SQLite" -DENABLE_TESTING=ON ..\
+          cmake -G "Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:\dev\SQLite" -DENABLE_TESTING=ON -DQT_MAJOR=Qt6 ..\
 
       - name: Build (SQLite)
         run: |
@@ -122,7 +145,7 @@ jobs:
       - name: Configure build (SQLCipher)
         run: |
           mkdir release-sqlcipher && cd release-sqlcipher
-          cmake -G "Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLCipher" -DENABLE_TESTING=ON ..\
+          cmake -G "Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLCipher" -DENABLE_TESTING=ON -DQT_MAJOR=Qt6 ..\
 
       - name: Build (SQLCipher)
         run: |
@@ -140,16 +163,16 @@ jobs:
           ExePath: ${{ github.workspace }}
           OpenSSLPath: C:\dev\OpenSSL
           SQLCipherPath: C:\dev\SQLCipher
-          SqleanPath: ${{ github.workspace }}\sqlean
+          SqleanPath: C:\dev\sqlean
           SQLitePath: C:\dev\SQLite
         run: |
-          cd installer/windows
-          ./build.cmd ${{ matrix.arch }}
+          cd installer\windows_on_arm
+          ./build.cmd
           $DATE=$(Get-Date -Format "yyyyMMdd")
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$DATE-win-${{ matrix.arch }}.msi"
+            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$DATE-win-arm64.msi"
           } else {
-            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-${{ matrix.arch }}.msi"
+            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-arm64.msi"
           }
 
       - if: github.event_name != 'pull_request'
@@ -157,8 +180,8 @@ jobs:
         id: unsigned-artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: build-artifacts-${{ matrix.os }}-win-${{ matrix.arch }}-unsigned
-          path: installer\windows\DB.Browser.for.SQLite-*.msi
+          name: build-artifacts-${{ matrix.os }}-win-arm64-unsigned
+          path: installer\windows_on_arm\DB.Browser.for.SQLite-*.msi
           retention-days: 1
 
       # Change the signing-policy-slug when you release an RC, RTM or stable release.
@@ -169,7 +192,7 @@ jobs:
           api-token: "${{ secrets.SIGNPATH_API_TOKEN }}"
           github-artifact-id: "${{ steps.unsigned-artifacts.outputs.artifact-id }}"
           organization-id: "${{ secrets.SIGNPATH_ORGANIZATION_ID }}"
-          output-artifact-directory: .\installer\windows
+          output-artifact-directory: .\installer\windows_on_arm
           project-slug: "sqlitebrowser"
           signing-policy-slug: "test-signing"
           wait-for-completion: true
@@ -179,31 +202,26 @@ jobs:
         run: |
           $DATE=$(Get-Date -Format "yyyyMMdd")
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            $FILENAME_FORMAT="DB.Browser.for.SQLite-$DATE-win-${{ matrix.arch }}.zip"
+            $FILENAME_FORMAT="DB.Browser.for.SQLite-$DATE-win-arm64.zip"
           } else {
-            $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-${{ matrix.arch }}.zip"
+            $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-arm64.zip"
           }
-          Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
-          if ("${{ matrix.arch }}" -eq "x86") {
-            move target\System\* "target\DB Browser for SQLite\"
-          } else {
-            move target\System64\* "target\DB Browser for SQLite\"
-          }
+          Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows_on_arm\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
           Compress-Archive -Path "target\DB Browser for SQLite\*" -DestinationPath $FILENAME_FORMAT
 
       - if: github.event_name != 'pull_request'
         name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: build-artifacts-win-${{ matrix.arch }}
+          name: build-artifacts-${{ matrix.os }}-win-arm64
           path: |
-            installer\windows\DB.Browser.for.SQLite-*.msi
+            installer\windows_on_arm\DB.Browser.for.SQLite-*.msi
             DB.Browser.for.SQLite-*.zip
           retention-days: 1
 
       - name: Summary
         run: |
-          $OPENSSL_VERSION=(C:\dev\OpenSSL\bin\openssl version) -replace "OpenSSL ([\d\.]+[a-z]+) .*", '$1'
+          $OPENSSL_VERSION=(C:\dev\OpenSSL\bin\arm64\openssl version) -replace "OpenSSL ([\d\.]+[a-z]+) .*", '$1'
           $QT_VERSION = & "$env:QT_ROOT_DIR\bin\qmake.exe" --version | Select-String "Using Qt version" | ForEach-Object { $_.ToString().Split()[3] }
           $SQLCIPHER_VERSION=(Get-Item "C:\dev\SQLCipher\sqlcipher.dll").VersionInfo.FileVersion
           Select-String -Path "C:\dev\SQLite\sqlite3.h" -Pattern '#define SQLITE_VERSION\s+"([\d\.]+)"' | ForEach-Object {
@@ -212,13 +230,13 @@ jobs:
           }
 
           New-Item -ItemType Directory -Force -Path dependency-summary | Out-Null
-          $SUMMARY_ROW = "| Build (Windows) | ${{ matrix.os }} / ${{ matrix.arch }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
-          Set-Content -Path "dependency-summary/dependencies-windows-${{ matrix.os }}-${{ matrix.arch }}.md" -Value $SUMMARY_ROW
+          $SUMMARY_ROW = "| Build (Windows on ARM) | ${{ matrix.os }} / arm64 | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
+          Set-Content -Path "dependency-summary/dependencies-windows-on-arm-${{ matrix.os }}-arm64.md" -Value $SUMMARY_ROW
 
       - name: Upload dependency summary
         uses: actions/upload-artifact@v7
         with:
-          name: dependency-summary-windows-${{ matrix.os }}-${{ matrix.arch }}
+          name: dependency-summary-windows-on-arm-${{ matrix.os }}-arm64
           path: dependency-summary/*.md
           retention-days: 1
 
@@ -257,7 +275,7 @@ jobs:
           fi
 
   release:
-    if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Windows)'
+    if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Windows on ARM)'
     needs: build
     name: Release
     permissions:

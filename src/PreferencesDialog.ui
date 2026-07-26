@@ -637,7 +637,7 @@ in new project file</string>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="label_foreignKeys">
            <property name="toolTip">
             <string>Open databases with foreign keys enabled.</string>
            </property>
@@ -752,16 +752,36 @@ in new project file</string>
            </property>
           </widget>
          </item>
-       <item row="6" column="1">
-        <widget class="QCheckBox" name="watcherCheckBox">
-         <property name="text">
-          <string>enabled</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="watcherCheckBox">
+           <property name="text">
+            <string>enabled</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="labelSQLCipherParentDotenvLookup">
+           <property name="toolTip">
+            <string>When enabled, DB4S searches parent folders for .db4s.env files, which can slow down opening encrypted databases.</string>
+           </property>
+           <property name="text">
+            <string>Search parent folders for .db4s.env SQLCipher passwords</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkSQLCipherParentDotenvLookup</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QCheckBox" name="checkSQLCipherParentDotenvLookup">
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>

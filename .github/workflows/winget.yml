@@ -4,6 +4,9 @@ on:
   release:
     types: [released]
 
+permissions:
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -11,5 +14,5 @@ jobs:
       - uses: vedantmgoyal9/winget-releaser@main
         with:
           identifier: DBBrowserForSQLite.DBBrowserForSQLite
-          installers-regex: '\.msi$' # Only .msi files
+          installers-regex: '\.msi$'  # Only .msi files
           token: ${{ secrets.WINGET_TOKEN }}

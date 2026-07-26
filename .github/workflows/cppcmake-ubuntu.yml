@@ -10,12 +10,17 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+      CONSOLIDATE_DEPENDENCY_SUMMARY:
+        default: false
+        type: boolean
   workflow_dispatch:
 
 jobs:
   build:
     name: ${{ matrix.os }} (${{ matrix.bundle }})
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -23,7 +28,7 @@ jobs:
         os: [ubuntu-22.04, ubuntu-22.04-arm]
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install and cache dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.0
@@ -38,7 +43,7 @@ jobs:
           git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
           LDFLAGS="-lcrypto -Wl,-soname,libsqlcipher.so.0" ./configure --prefix=./prefix --with-tempstore=yes --enable-load-extension --disable-tcl CFLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
           make -j2 && sudo make install -j2
-          cp ${GITHUB_WORKSPACE}/installer/linux/sqlcipher_rename.sh .
+          cp ${GITHUB_WORKSPACE}/tools/linux/sqlcipher_rename.sh .
           chmod +x sqlcipher_rename.sh && sudo ./sqlcipher_rename.sh
 
       - if: matrix.bundle == 'SQLite'
@@ -86,7 +91,7 @@ jobs:
           else
             export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
           fi
-          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib;$RUNNER_TEMP/sqlcipher/prefix/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
+          LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib:$RUNNER_TEMP/sqlcipher/prefix/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
@@ -97,21 +102,13 @@ jobs:
             mv -v DB.Browser.for.SQLite*.AppImage $FILE
           fi
 
-      - if: github.event_name != 'pull_request' && github.workflow != 'Build (Ubuntu)'
+      - if: github.event_name != 'pull_request'
         name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.AppImage
           retention-days: 1
-
-      - if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Ubuntu)'
-        name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: DB.Browser.for.*.AppImage
-          prerelease: true
-          tag_name: ${{ github.sha }}-ubuntu
 
       - name: Summary
         run: |
@@ -126,5 +123,56 @@ jobs:
               SQLITE_VERSION=$(/usr/local/bin/sqlite3 --version | awk '{print $1}')
           fi
 
-          echo "## Libaries used" >> $GITHUB_STEP_SUMMARY
-          echo "OpenSSL: $OPENSSL_VERSION, Qt: $QT_VERSION, SQLCipher: $SQLCIPHER_VERSION, SQLite: $SQLITE_VERSION" >> $GITHUB_STEP_SUMMARY
+          mkdir -p dependency-summary
+          SUMMARY_ROW="| Build (Ubuntu) | ${{ matrix.os }} / ${{ matrix.bundle }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
+          echo "$SUMMARY_ROW" > "dependency-summary/dependencies-ubuntu-${{ matrix.os }}-${{ matrix.bundle }}.md"
+
+      - name: Upload dependency summary
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-summary-ubuntu-${{ matrix.os }}-${{ matrix.bundle }}
+          path: dependency-summary/*.md
+          retention-days: 1
+
+  summarize-dependencies:
+    if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
+    needs: build
+    name: Summarize Dependencies
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Download dependency summaries
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          pattern: dependency-summary-*
+          path: dependency-summary
+          merge-multiple: true
+
+      - name: Summary
+        run: |
+          {
+            echo "## Dependencies used"
+            echo ""
+            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
+            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
+            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            done
+          else
+            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  release:
+    if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Ubuntu)'
+    needs: build
+    name: Release
+    permissions:
+      actions: read
+      contents: write
+    uses: ./.github/workflows/release.yml

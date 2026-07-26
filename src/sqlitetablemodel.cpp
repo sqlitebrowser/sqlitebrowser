@@ -41,6 +41,7 @@ SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QStri
     // any UI updates must be performed in the UI thread, not in the worker thread:
     connect(worker, &RowLoader::fetched, this, &SqliteTableModel::handleFinishedFetch, Qt::QueuedConnection);
     connect(worker, &RowLoader::rowCountComplete, this, &SqliteTableModel::handleRowCountComplete, Qt::QueuedConnection);
+    connect(worker, &RowLoader::error, this, &SqliteTableModel::handleError, Qt::QueuedConnection);
 
     reset();
 }
@@ -106,11 +107,20 @@ void SqliteTableModel::handleRowCountComplete (int life_id, int num_rows)
     emit finishedRowCount();
 }
 
+void SqliteTableModel::handleError(int life_id, const QString& errMsg)
+{
+    if (life_id < m_lifeCounter)
+        return;
+
+    m_lastError = errMsg;
+}
+
 void SqliteTableModel::reset()
 {
     beginResetModel();
 
     clearCache();
+    m_lastError.clear();
     m_sQuery.clear();
     m_query.clear();
     m_table_of_query.reset();

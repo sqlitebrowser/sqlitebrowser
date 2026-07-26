@@ -6,12 +6,17 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+      CONSOLIDATE_DEPENDENCY_SUMMARY:
+        default: false
+        type: boolean
   workflow_dispatch:
 
 jobs:
   build:
     name: ${{ matrix.os }} (${{ matrix.bundle }})
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -21,7 +26,7 @@ jobs:
       MACOSX_DEPLOYMENT_TARGET: 10.13
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # Uninstall Mono, which is included by default in GitHub-hosted macOS runners,
       # as it interferes with referencing our own compiled SQLite libraries.
@@ -89,26 +94,18 @@ jobs:
           SQLCIPHER: ${{ matrix.bundle == 'SQLCipher'}}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
-      - if: steps.notarization.conclusion != 'skipped'
+      - if: always() && steps.notarization.conclusion != 'skipped'
         name: Clear Keychain
         run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
         continue-on-error: true
 
-      - if: github.event_name != 'pull_request' && github.workflow != 'Build (macOS)'
+      - if: github.event_name != 'pull_request'
         name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.dmg
           retention-days: 1
-
-      - if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (macOS)'
-        name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: DB.Browser.for.*.dmg
-          prerelease: true
-          tag_name: ${{ github.sha }}-macos
 
       - name: Summary
         run: |
@@ -123,5 +120,56 @@ jobs:
               SQLITE_VERSION=$($(brew --prefix sqlb-sqlite)/bin/sqlite3 --version | awk '{print $1}')
           fi
 
-          echo "## Libaries used" >> $GITHUB_STEP_SUMMARY
-          echo "OpenSSL: $OPENSSL_VERSION, Qt: $QT_VERSION, SQLCipher: $SQLCIPHER_VERSION, SQLite: $SQLITE_VERSION" >> $GITHUB_STEP_SUMMARY
+          mkdir -p dependency-summary
+          SUMMARY_ROW="| Build (macOS) | ${{ matrix.os }} / ${{ matrix.bundle }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
+          echo "$SUMMARY_ROW" > "dependency-summary/dependencies-macos-${{ matrix.os }}-${{ matrix.bundle }}.md"
+
+      - name: Upload dependency summary
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-summary-macos-${{ matrix.os }}-${{ matrix.bundle }}
+          path: dependency-summary/*.md
+          retention-days: 1
+
+  summarize-dependencies:
+    if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
+    needs: build
+    name: Summarize Dependencies
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Download dependency summaries
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          pattern: dependency-summary-*
+          path: dependency-summary
+          merge-multiple: true
+
+      - name: Summary
+        run: |
+          {
+            echo "## Dependencies used"
+            echo ""
+            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
+            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
+            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            done
+          else
+            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  release:
+    if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (macOS)'
+    needs: build
+    name: Release
+    permissions:
+      actions: read
+      contents: write
+    uses: ./.github/workflows/release.yml

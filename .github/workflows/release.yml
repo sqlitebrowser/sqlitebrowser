@@ -1,0 +1,118 @@
+name: Release Artifacts
+
+on:
+  workflow_call:
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: write
+    concurrency:
+      group: release-${{ github.repository }}-${{ contains(github.workflow_ref, '/cppcmake.yml@') && ((github.event_name == 'schedule' || github.event.inputs.NIGHTLY == 'true') && 'nightly' || 'continuous') || format('{0}-{1}', github.workflow, github.sha) }}
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Set release tag
+        id: release-tag
+        run: |
+          case "${{ github.workflow_ref }}" in
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake.yml@"*)
+              if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.NIGHTLY }}" = "true" ]; then
+                TAG_NAME="nightly"
+              else
+                TAG_NAME="continuous"
+              fi
+              ;;
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake-ubuntu.yml@"*)
+              TAG_NAME="${GITHUB_SHA}-ubuntu"
+              ;;
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake-macos.yml@"*)
+              TAG_NAME="${GITHUB_SHA}-macos"
+              ;;
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake-windows.yml@"*)
+              TAG_NAME="${GITHUB_SHA}-windows"
+              ;;
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake-windows_on_arm.yml@"*)
+              TAG_NAME="${GITHUB_SHA}-windows-on-arm"
+              ;;
+            *)
+              echo "::error::Unsupported release caller workflow: ${{ github.workflow_ref }}"
+              exit 1
+              ;;
+          esac
+
+          echo "tag_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+
+      - run: mkdir -v target release
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: target
+
+      - name: Remove dependency summary artifacts
+        run: find target -depth -name 'dependency-summary-*' -exec rm -rfv {} +
+
+      - name: Remove unsigned Windows artifacts
+        run: find target -depth -name '*unsigned*' -exec rm -rfv {} +
+
+      - name: Flatten artifacts
+        run: find target -type f -exec mv -v {} release \;
+
+      - name: Check release files
+        run: |
+          if ! find release -type f | grep -q .; then
+            echo "::error::No release files were prepared."
+            exit 1
+          fi
+
+      - name: Check if release is still current
+        id: publish-guard
+        run: |
+          case "${{ github.workflow_ref }}" in
+            "$GITHUB_REPOSITORY/.github/workflows/cppcmake.yml@"*)
+              ;;
+            *)
+              echo "releasable=true" >> "$GITHUB_OUTPUT"
+              exit 0
+              ;;
+          esac
+
+          REMOTE_SHA=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${{ github.ref_name }}" | awk '{print $1}')
+
+          if [ -z "$REMOTE_SHA" ]; then
+            echo "::warning::Unable to resolve the latest commit for refs/heads/${{ github.ref_name }} right before publishing. Skipping release."
+            echo "releasable=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$REMOTE_SHA" = "$GITHUB_SHA" ]; then
+            echo "releasable=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "::notice::Skipping release for ${GITHUB_SHA} because a newer commit exists on refs/heads/${{ github.ref_name }} (${REMOTE_SHA}) right before publishing."
+          echo "releasable=false" >> "$GITHUB_OUTPUT"
+
+      - if: steps.publish-guard.outputs.releasable != 'true'
+        name: Summarize skipped publish
+        run: |
+          echo "## Publish skipped" >> "$GITHUB_STEP_SUMMARY"
+          echo "This run finished building, but a newer commit appeared while preparing artifacts, so the shared \`${{ steps.release-tag.outputs.tag_name }}\` release was left untouched." >> "$GITHUB_STEP_SUMMARY"
+
+      - if: steps.publish-guard.outputs.releasable == 'true'
+        name: Delete existing tag and release
+        run: gh release delete ${{ steps.release-tag.outputs.tag_name }} --cleanup-tag --yes --repo $GITHUB_REPOSITORY
+        continue-on-error: true
+
+      - if: steps.publish-guard.outputs.releasable == 'true'
+        name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          prerelease: true
+          tag_name: ${{ steps.release-tag.outputs.tag_name }}

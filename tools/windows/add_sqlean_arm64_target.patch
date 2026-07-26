@@ -1,0 +1,45 @@
+diff --git a/Makefile b/Makefile
+index 5033c1d..ac038f1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -10,11 +10,13 @@ SQLITE_BRANCH := 3.36
+ SQLEAN_VERSION := '"$(or $(shell git tag --points-at HEAD),main)"'
+ 
+ CC ?= gcc
++CC_WIN_ARM64 ?= clang --target=aarch64-w64-mingw32
+ CFLAGS ?=
+ COMMON_CFLAGS := -Isrc -DSQLEAN_VERSION=$(SQLEAN_VERSION)
+ 
+ LINIX_FLAGS := $(CFLAGS) -z now -z relro -Wall -Wsign-compare -Wno-unknown-pragmas -fPIC -shared $(COMMON_CFLAGS)
+ WINDO_FLAGS := $(CFLAGS) -shared $(COMMON_CFLAGS)
++WINDO_ARM64_FLAGS := $(CFLAGS) -shared $(COMMON_CFLAGS)
+ MACOS_FLAGS := $(CFLAGS) -Wall -Wsign-compare -fPIC -dynamiclib $(COMMON_CFLAGS)
+ CTEST_FLAGS := $(CFLAGS) -Wall -Wsign-compare -Wno-unknown-pragmas -Isrc
+ 
+@@ -118,8 +120,26 @@ compile-windows:
+ 	gcc -O3 $(WINDO_FLAGS) src/sqlite3-vsv.c src/vsv/*.c -o dist/vsv.dll -lm
+ 	gcc -O3 $(WINDO_FLAGS) -include src/regexp/constants.h src/sqlite3-sqlean.c src/crypto/*.c src/define/*.c src/fileio/*.c src/fuzzy/*.c src/math/*.c src/regexp/*.c src/regexp/pcre2/*.c src/stats/*.c src/text/*.c src/text/*/*.c src/time/*.c src/unicode/*.c src/uuid/*.c src/vsv/*.c -o dist/sqlean.dll -lm
+ 
++compile-windows-arm64:
++	mkdir -p dist/arm64
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-crypto.c src/crypto/*.c -o dist/arm64/crypto.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-define.c src/define/*.c -o dist/arm64/define.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-fileio.c src/fileio/*.c -o dist/arm64/fileio.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-fuzzy.c src/fuzzy/*.c -o dist/arm64/fuzzy.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-ipaddr.c src/ipaddr/*.c -o dist/arm64/ipaddr.dll -lws2_32
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-math.c src/math/*.c -o dist/arm64/math.dll -lm
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-regexp.c -include src/regexp/constants.h src/regexp/*.c src/regexp/pcre2/*.c -o dist/arm64/regexp.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-stats.c src/stats/*.c -o dist/arm64/stats.dll -lm
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-text.c src/text/*.c src/text/*/*.c -o dist/arm64/text.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-time.c src/time/*.c -o dist/arm64/time.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-unicode.c src/unicode/*.c -o dist/arm64/unicode.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-uuid.c src/uuid/*.c -o dist/arm64/uuid.dll
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) src/sqlite3-vsv.c src/vsv/*.c -o dist/arm64/vsv.dll -lm
++	$(CC_WIN_ARM64) -O3 $(WINDO_ARM64_FLAGS) -include src/regexp/constants.h src/sqlite3-sqlean.c src/crypto/*.c src/define/*.c src/fileio/*.c src/fuzzy/*.c src/math/*.c src/regexp/*.c src/regexp/pcre2/*.c src/stats/*.c src/text/*.c src/text/*/*.c src/time/*.c src/unicode/*.c src/uuid/*.c src/vsv/*.c -o dist/arm64/sqlean.dll -lm
++
+ pack-windows:
+ 	7z a -tzip dist/sqlean-win-x64.zip ./dist/*.dll
++	7z a -tzip dist/sqlean-win-arm64.zip ./dist/arm64/*.dll
+ 
+ compile-macos:
+ 	$(CC) -O3 $(MACOS_FLAGS) src/sqlite3-crypto.c src/crypto/*.c -o dist/crypto.dylib

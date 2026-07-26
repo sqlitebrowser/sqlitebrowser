@@ -35,7 +35,7 @@ set(TESTSQLOBJECTS_HDR
 
 add_executable(test-sqlobjects ${TESTSQLOBJECTS_HDR} ${TESTSQLOBJECTS_SRC})
 target_link_libraries(test-sqlobjects ${QT_MAJOR}::Test)
-add_test(test-sqlobjects test-sqlobjects)
+add_test(NAME test-sqlobjects COMMAND $<TARGET_FILE:test-sqlobjects>)
 
 # test-import
 
@@ -50,7 +50,7 @@ set(TESTIMPORT_MOC_HDR
 
 add_executable(test-import ${TESTIMPORT_MOC_HDR} ${TESTIMPORT_SRC})
 target_link_libraries(test-import ${QT_MAJOR}::Test)
-add_test(test-import test-import)
+add_test(NAME test-import COMMAND $<TARGET_FILE:test-import>)
 
 # test regex
 
@@ -66,7 +66,7 @@ set(TESTREGEX_HDR
 
 add_executable(test-regex ${TESTREGEX_HDR} ${TESTREGEX_SRC})
 target_link_libraries(test-regex ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT5_COMPAT})
-add_test(test-regex test-regex)
+add_test(NAME test-regex COMMAND $<TARGET_FILE:test-regex>)
 
 # test cache
 
@@ -80,4 +80,4 @@ set(TESTCACHE_HDR
 
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
-add_test(test-cache test-cache)
+add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)

@@ -163,6 +163,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "db" && name == "watcher")
         return false;
 
+    // db/sqlcipherparentdotenvlookup?
+    if(group == "db" && name == "sqlcipherparentdotenvlookup")
+        return false;
+
     // exportcsv/firstrowheader?
     if(group == "exportcsv" && name == "firstrowheader")
         return true;

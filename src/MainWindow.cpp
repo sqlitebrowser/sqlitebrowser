@@ -1255,7 +1255,8 @@ void MainWindow::executeQuery()
         if (char_at_index == '\r' || char_at_index == '\n') {
             execute_from_line++;
             // The next lines could be empty, so skip all of them too.
-            while(editor->text(execute_from_line).trimmed().isEmpty())
+            while(execute_from_line <= editor->lines() &&
+                    editor->text(execute_from_line).trimmed().isEmpty())
                 execute_from_line++;
             execute_from_index = 0;
         }
@@ -1336,7 +1337,11 @@ void MainWindow::executeQuery()
 
             auto time_end = std::chrono::high_resolution_clock::now();
             auto time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end-time_start);
-            query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms.count()+time_in_ms_so_far), from_position, to_position);
+            if (model->hasError()) {
+                query_logger(false, model->lastError(), from_position, to_position);
+            } else {
+                query_logger(true, tr("%1 rows returned in %2ms").arg(model->rowCount()).arg(time_in_ms.count()+time_in_ms_so_far), from_position, to_position);
+            }
             execute_sql_worker->startNextStatement();
         });
     }, Qt::QueuedConnection);
@@ -2084,18 +2089,24 @@ void MainWindow::logSql(const QString& sql, int msgtype)
 // Ask user to save the buffer in the specified tab index.
 // ignoreUnattachedBuffers is used to store answer about buffers not linked to files, so user is only asked once about them.
 // Return true unless user wants to cancel the invoking action.
-bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers)
+bool MainWindow::askSaveSqlTab(int index, bool& ignoreUnattachedBuffers, bool singleTabClose)
 {
     SqlExecutionArea* sqlExecArea = qobject_cast<SqlExecutionArea*>(ui->tabSqlAreas->widget(index));
     const bool isPromptSQLTabsInNewProject = Settings::getValue("General", "promptsqltabsinnewproject").toBool();
 
     if(sqlExecArea->getEditor()->isModified()) {
-        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && isPromptSQLTabsInNewProject) {
-            // Once the project is saved, remaining SQL tabs will not be modified, so this is only expected to be asked once.
-            QString message = currentProjectFilename.isEmpty() ?
-                tr("Do you want to save the changes made to SQL tabs in a new project file?") :
-                tr("Do you want to save the changes made to SQL tabs in the project file '%1'?").
-                arg(QFileInfo(currentProjectFilename).fileName());
+        if(sqlExecArea->fileName().isEmpty() && !ignoreUnattachedBuffers && (singleTabClose || isPromptSQLTabsInNewProject)) {
+            // For single-tab closes, always prompt with singular wording.
+            // For bulk closes, only asked once after project save.
+            QString message = singleTabClose ?
+                (currentProjectFilename.isEmpty() ?
+                    tr("Do you want to save the changes made to this SQL tab in a new project file?") :
+                    tr("Do you want to save the changes made to this SQL tab in the project file '%1'?").
+                    arg(QFileInfo(currentProjectFilename).fileName())) :
+                (currentProjectFilename.isEmpty() ?
+                    tr("Do you want to save the changes made to SQL tabs in a new project file?") :
+                    tr("Do you want to save the changes made to SQL tabs in the project file '%1'?").
+                    arg(QFileInfo(currentProjectFilename).fileName()));
             QMessageBox::StandardButton reply = QMessageBox::question(nullptr,
                                                                       QApplication::applicationName(),
                                                                       message,
@@ -2149,7 +2160,7 @@ void MainWindow::closeSqlTab(int index, bool force, bool askSaving)
     }
     // Ask for saving and comply with cancel answer.
     bool ignoreUnattachedBuffers = false;
-    if (askSaving && !askSaveSqlTab(index, ignoreUnattachedBuffers))
+    if (askSaving && !askSaveSqlTab(index, ignoreUnattachedBuffers, true))
         return;
     // Remove the tab and delete the widget
     QWidget* w = ui->tabSqlAreas->widget(index);

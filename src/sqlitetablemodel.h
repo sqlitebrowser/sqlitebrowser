@@ -143,6 +143,9 @@ public:
 
     void reloadSettings();
 
+    bool hasError() const { return !m_lastError.isEmpty(); }
+    QString lastError() const { return m_lastError; }
+
 public slots:
     void updateFilter(const std::string& column, const QString& value);
     void updateGlobalFilter(const std::vector<QString>& values);
@@ -165,6 +168,7 @@ private:
 
     void handleFinishedFetch(int life_id, unsigned int fetched_row_begin, unsigned int fetched_row_end);
     void handleRowCountComplete(int life_id, int num_rows);
+    void handleError(int life_id, const QString& errMsg);
 
     void updateAndRunQuery();
 
@@ -253,6 +257,8 @@ private:
      * to that row count.
      */
     size_t m_chunkSize;
+
+    QString m_lastError;
 };
 
 #endif

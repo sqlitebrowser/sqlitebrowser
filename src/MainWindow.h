@@ -142,7 +142,7 @@ private:
     QString saveOpenTabs();
     void saveProject(const QString& currentFilename);
     bool closeProject();
-    bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers);
+    bool askSaveSqlTab(int index, bool& ignoreUnattachedBuffers, bool singleTabClose = false);
     void focusSqlEditor();
     void moveDocksTo(Qt::DockWidgetArea area);
 

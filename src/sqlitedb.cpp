@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QThread>
 #include <QRegularExpression>
+#include <QSettings>
 
 #include <algorithm>
 #include <array>
@@ -478,32 +479,31 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
             // Being in a while loop, we don't want to check the same file multiple times
             if (!isDotenvChecked) {
-                QFile databaseFile(filePath);
-                QFileInfo databaseFileInfo(databaseFile);
+                const QFileInfo databaseFileInfo(filePath);
 
-                QString databaseDirectoryPath = databaseFileInfo.dir().path();
-                QString databaseFileName(databaseFileInfo.fileName());
+                const QDir databaseDirectory(databaseFileInfo.absoluteDir());
+                const QString databaseFileName(databaseFileInfo.fileName());
 
-                QString dotenvFilePath = databaseDirectoryPath + "/.env";
-                QSettings dotenv(dotenvFilePath, QSettings::IniFormat);
+                auto tryLoadDotenv = [&](const QString& dotenvFilePath) -> bool {
+                    if (!QFile::exists(dotenvFilePath))
+                        return false;
 
-                QVariant passwordValue = dotenv.value(databaseFileName);
+                    const QSettings dotenv(dotenvFilePath, QSettings::IniFormat);
+                    const QVariant passwordValue = dotenv.value(databaseFileName);
 
-                foundDotenvPassword = !passwordValue.isNull();
-                isDotenvChecked = true;
+                    if (passwordValue.isNull())
+                        return false;
 
-                if (foundDotenvPassword)
-                {
-                    std::string password = passwordValue.toString().toStdString();
+                    const std::string password = passwordValue.toString().toStdString();
 
-                    QVariant keyFormatValue = dotenv.value(databaseFileName + "_keyFormat", QVariant(CipherSettings::KeyFormats::Passphrase));
-                    CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(keyFormatValue.toInt());
+                    const QVariant keyFormatValue = dotenv.value(databaseFileName + "_keyFormat", QVariant(CipherSettings::KeyFormats::Passphrase));
+                    const CipherSettings::KeyFormats keyFormat = CipherSettings::getKeyFormat(keyFormatValue.toInt());
 
-                    int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
-                    int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
-                    int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_plaintext_header_size).toInt();
-                    std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
-                    std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
+                    const int pageSize = dotenv.value(databaseFileName + "_pageSize", enc_default_page_size).toInt();
+                    const int kdfIterations = dotenv.value(databaseFileName + "_kdfIter", enc_default_kdf_iter).toInt();
+                    const int plaintextHeaderSize = dotenv.value(databaseFileName + "_plaintextHeaderSize", enc_default_plaintext_header_size).toInt();
+                    const std::string hmacAlgorithm = dotenv.value(databaseFileName + "_hmacAlgorithm", QString::fromStdString(enc_default_hmac_algorithm)).toString().toStdString();
+                    const std::string kdfAlgorithm = dotenv.value(databaseFileName + "_kdfAlgorithm", QString::fromStdString(enc_default_kdf_algorithm)).toString().toStdString();
 
                     cipherSettings->setKeyFormat(keyFormat);
                     cipherSettings->setPassword(password);
@@ -512,7 +512,36 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
                     cipherSettings->setHmacAlgorithm("HMAC_" + hmacAlgorithm);
                     cipherSettings->setKdfAlgorithm("PBKDF2_HMAC_" + kdfAlgorithm);
                     cipherSettings->setPlaintextHeaderSize(plaintextHeaderSize);
+
+                    return true;
+                };
+
+                const QString db4sEnvPath = databaseDirectory.filePath(".db4s.env");
+                const bool hasDB4SEnv = QFile::exists(db4sEnvPath);
+
+                if (hasDB4SEnv)
+                {
+                    foundDotenvPassword = tryLoadDotenv(db4sEnvPath);
+                } else {
+                    // Deprecated: legacy .env in the database directory only. Remove once .db4s.env is adopted.
+                    foundDotenvPassword = tryLoadDotenv(databaseDirectory.filePath(".env"));
+
+                    // Parent folder search is opt-in because it can slow down opening encrypted databases.
+                    if (!foundDotenvPassword && Settings::getValue("db", "sqlcipherparentdotenvlookup").toBool())
+                    {
+                        QDir searchDirectory(databaseDirectory);
+                        while (searchDirectory.cdUp())
+                        {
+                            if (tryLoadDotenv(searchDirectory.filePath(".db4s.env")))
+                            {
+                                foundDotenvPassword = true;
+                                break;
+                            }
+                        }
+                    }
                 }
+
+                isDotenvChecked = true;
             }
 
             if(foundDotenvPassword)
@@ -1236,30 +1265,31 @@ bool DBBrowserDB::executeMultiSQL(QByteArray query, bool dirty, bool log)
         // Execute next statement
         if(sqlite3_prepare_v2(_db, tail, static_cast<int>(tail_end - tail + 1), &vm, &tail) == SQLITE_OK)
         {
-            switch(sqlite3_step(vm))
+            if(vm)
             {
-            case SQLITE_OK:
-            case SQLITE_ROW:
-            case SQLITE_DONE:
-            case SQLITE_MISUSE:             // This is a workaround around problematic user scripts. If they lead to empty commands,
-                                            // SQLite will return a misuse error which we hereby ignore.
-                sqlite3_finalize(vm);
-                break;
-            default:
-                // In case of *any* error abort the execution and roll back the transaction
+                switch(sqlite3_step(vm))
+                {
+                case SQLITE_OK:
+                case SQLITE_ROW:
+                case SQLITE_DONE:
+                    sqlite3_finalize(vm);
+                    break;
+                default:
+                    // In case of *any* error abort the execution and roll back the transaction
 
-                // Make sure to save the error message first before any other function can mess around with it
-                lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.").arg(
-                        QString::number(line),
-                        sqlite3_errmsg(_db),
-                        dirty ? tr(" and rolling back") : "");
-                qWarning() << lastErrorMessage;
+                    // Make sure to save the error message first before any other function can mess around with it
+                    lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.").arg(
+                            QString::number(line),
+                            sqlite3_errmsg(_db),
+                            dirty ? tr(" and rolling back") : "");
+                    qWarning() << lastErrorMessage;
 
-                // Clean up
-                sqlite3_finalize(vm);
-                if(dirty)
-                    revertToSavepoint(savepoint_name);
-                return false;
+                    // Clean up
+                    sqlite3_finalize(vm);
+                    if(dirty)
+                        revertToSavepoint(savepoint_name);
+                    return false;
+                }
             }
         } else {
             lastErrorMessage = tr("Error in statement #%1: %2.\nAborting execution%3.").arg(

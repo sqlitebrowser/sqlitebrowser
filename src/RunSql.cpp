@@ -104,6 +104,22 @@ bool RunSql::executeNextStatement()
     auto time_end_prepare = std::chrono::high_resolution_clock::now();
     auto time_for_prepare_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time_end_prepare - time_start);
 
+    // If there was no actual statement (e.g. empty line or comments), SQLite returns SQLITE_OK but vm is nullptr.
+    // We can safely skip execution of this block.
+    if (sql3status == SQLITE_OK && !vm)
+    {
+        lk.lock();
+        releaseDbAccess();
+
+        execute_current_position = end_of_current_statement_position;
+        if(execute_current_position >= execute_to_position)
+        {
+            stopExecution();
+            return false;
+        }
+        return true;
+    }
+
     // Execute prepared statement
     QString error;
     if (sql3status == SQLITE_OK)
@@ -167,23 +183,24 @@ bool RunSql::executeNextStatement()
         // Start measuring time from here again
         time_start = std::chrono::high_resolution_clock::now();
 
-        // Check if this statement returned any data. We skip this check if this is an ALTER TABLE statement which, for some reason, are reported to return one column.
-        if(query_type != AlterStatement && sqlite3_column_count(vm))
-        {
-            // It did. So it is definitely some SELECT statement or similar and we don't need to actually execute it here
-            sql3status = SQLITE_ROW;
-        } else {
-            // It did not. So it's probably some modifying SQL statement and we want to execute it here. If for some reason
-            // it turns out to return data after all, we just change the status
-            sql3status = sqlite3_step(vm);
-
-            // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
-            // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
-            // return rows just like SELECT statements, too.
-            if((query_type == SelectStatement || query_type == PragmaStatement) && sql3status == SQLITE_DONE)
+        if(sql3status == SQLITE_OK || sql3status == SQLITE_ROW) {
+            // Check if this statement returned any data. We skip this check if this is an ALTER TABLE statement which, for some reason, are reported to return one column.
+            if(query_type != AlterStatement && sqlite3_column_count(vm))
+            {
+                // It did. So it is definitely some SELECT statement or similar and we don't need to actually execute it here
                 sql3status = SQLITE_ROW;
-        }
+            } else {
+                // It did not. So it's probably some modifying SQL statement and we want to execute it here. If for some reason
+                // it turns out to return data after all, we just change the status
+                sql3status = sqlite3_step(vm);
 
+                // SQLite returns SQLITE_DONE when a valid SELECT statement was executed but returned no results. To run into the branch that updates
+                // the status message and the table view anyway manipulate the status value here. This is also done for PRAGMA statements as they (sometimes)
+                // return rows just like SELECT statements, too.
+                if((query_type == SelectStatement || query_type == PragmaStatement) && sql3status == SQLITE_DONE)
+                    sql3status = SQLITE_ROW;
+          }
+        }
         // Destroy statement
         sqlite3_finalize(vm);
 
@@ -246,8 +263,6 @@ bool RunSql::executeNextStatement()
             lk.unlock();
             break;
         }
-        case SQLITE_MISUSE:
-            break;
         default:
             error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
         }

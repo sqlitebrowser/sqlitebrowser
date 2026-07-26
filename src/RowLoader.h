@@ -65,6 +65,7 @@ public:
 signals:
     void fetched(int token, size_t row_begin, size_t row_end);
     void rowCountComplete(int token, int num_rows);
+    void error(int token, const QString& errMsg);
 
 private:
     const std::function<std::shared_ptr<sqlite3>()> db_getter;
