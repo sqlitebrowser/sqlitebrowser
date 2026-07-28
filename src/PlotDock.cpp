@@ -117,6 +117,13 @@ PlotDock::PlotDock(QWidget* parent)
     QAction* fixedFormatsAction = new QAction(tr("Fixed number format"), m_contextMenu);
     fixedFormatsAction->setCheckable(true);
     m_contextMenu->addAction(fixedFormatsAction);
+    
+    connect(fixedFormatsAction, &QAction::toggled, this,
+    [=](bool fixed) {
+        m_fixedFormat = fixed;
+        adjustAxisFormat();
+        ui->plotWidget->replot();
+    });
 
    QAction* logScaleXAction = new QAction(tr("Logarithmic scale (X)"), m_contextMenu);
     logScaleXAction->setCheckable(true);
