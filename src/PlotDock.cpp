@@ -1076,12 +1076,22 @@ void PlotDock::updateLogScale()
     // Set scale type for X axis
     ui->plotWidget->xAxis->setScaleType(
         m_logScaleX ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
+    ui->plotWidget->xAxis->setTicker(m_logScaleX
+        ? QSharedPointer<QCPAxisTicker>(new QCPAxisTickerLog)
+        : QSharedPointer<QCPAxisTicker>(new QCPAxisTicker));
 
     // Set scale type for both Y axes
     yAxes[0]->setScaleType(
         m_logScaleY ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
+    yAxes[0]->setTicker(m_logScaleY
+        ? QSharedPointer<QCPAxisTicker>(new QCPAxisTickerLog)
+        : QSharedPointer<QCPAxisTicker>(new QCPAxisTicker));
+
     yAxes[1]->setScaleType(
         m_logScaleY ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
+    yAxes[1]->setTicker(m_logScaleY
+        ? QSharedPointer<QCPAxisTicker>(new QCPAxisTickerLog)
+        : QSharedPointer<QCPAxisTicker>(new QCPAxisTicker));
 
     // Log scale breaks on zero/negative values — clamp range minimum to small positive
     if(m_logScaleX && ui->plotWidget->xAxis->range().lower <= 0)
