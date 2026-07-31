@@ -431,11 +431,15 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
                 // Take field name from CSV
                 fieldname = std::string(rowData.fields[i].data, rowData.fields[i].data_length);
 
-                // Replace any non-nlphanumeric characters with an underscore
-                if(ui->checkReplaceNonAlnum->isChecked())
+                // Replace any non-alphanumeric characters with an underscore
+                if (ui->checkReplaceNonAlnum->isChecked())
                 {
-                    std::regex pattern("[^a-zA-Z0-9_]");
-                    fieldname = std::regex_replace(fieldname, pattern, "_");
+                    QString qFieldname = QString::fromStdString(fieldname);
+                    for (QChar &c : qFieldname)
+                        if (!c.isLetterOrNumber() && c != '_')
+                            c = '_';
+
+                    fieldname = qFieldname.toStdString();
                 }
             }
 
