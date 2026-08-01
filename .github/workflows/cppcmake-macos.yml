@@ -39,6 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew tap sqlitebrowser/tap
+          brew trust sqlitebrowser/tap
           brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite ninja
           npm install -g appdmg
 
