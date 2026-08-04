@@ -82,7 +82,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     });
 
     // Set up shortcuts
-    QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this);
+    QShortcut* dittoRecordShortcut = new QShortcut(QKeySequence("Ctrl+\""), this, nullptr, nullptr, Qt::WidgetWithChildrenShortcut);
     connect(dittoRecordShortcut, &QShortcut::activated, this, [this]() {
         int currentRow = ui->dataTable->currentIndex().row();
         duplicateRecord(currentRow);

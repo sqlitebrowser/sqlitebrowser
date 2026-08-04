@@ -243,6 +243,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "General" && name == "maxRecentFiles")
         return 5;
 
+    // General/recentfileshortcuts?
+    if(group == "General" && name == "recentfileshortcuts")
+        return false;
+
     // General/language?
     if(group == "General" && name == "language")
         return QLocale::system().name();

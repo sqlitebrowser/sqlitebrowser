@@ -202,19 +202,47 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QSpinBox" name="spinMaxRecentFiles">
-         <property name="correctionMode">
-          <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>40</number>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_12">
+         <item>
+          <widget class="QSpinBox" name="spinMaxRecentFiles">
+           <property name="correctionMode">
+            <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>40</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="5" column="0">
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelRecentFileShortcuts">
+        <property name="text">
+         <string>Read-only Recent File
+Shortcuts</string>
+        </property>
+        <property name="buddy">
+         <cstring>checkRecentFileShortcuts</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="checkRecentFileShortcuts">
+        <property name="toolTip">
+         <string>Enable the keyboard shortcuts for opening recent files toggling the read-only mode. Turn this off if Ctrl+Shift+number is ambiguous with your keyboard layout.</string>
+        </property>
+        <property name="text">
+         <string>enabled</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
         <widget class="QLabel" name="labelToolbarStyle">
          <property name="text">
           <string>Toolbar style</string>
@@ -224,7 +252,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+      <item row="8" column="0">
         <widget class="QLabel" name="labelMainToolBar">
          <property name="text">
           <string>Main Window</string>
@@ -237,7 +265,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <widget class="QComboBox" name="toolbarStyleComboMain">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -287,7 +315,7 @@
          </item>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="labelStructureToolBar">
          <property name="text">
           <string>Database Structure</string>
@@ -300,7 +328,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QComboBox" name="toolbarStyleComboStructure">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -350,7 +378,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="labelBrowseToolBar">
          <property name="text">
           <string>Browse Data</string>
@@ -363,7 +391,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="10" column="1">
         <widget class="QComboBox" name="toolbarStyleComboBrowse">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -413,7 +441,7 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="labelSqlToolBar">
          <property name="text">
           <string>Execute SQL</string>
@@ -426,7 +454,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="11" column="1">
         <widget class="QComboBox" name="toolbarStyleComboSql">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -476,7 +504,7 @@
          </item>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="labelEditCellToolBar">
          <property name="text">
           <string>Edit Database Cell</string>
@@ -489,7 +517,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="12" column="1">
         <widget class="QComboBox" name="toolbarStyleComboEditCell">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -539,7 +567,7 @@
          </item>
         </widget>
        </item>
-       <item row="12" column="0">
+       <item row="13" column="0">
         <widget class="QLabel" name="labelPromptSQLTabsInNewProject">
          <property name="text">
           <string>Prompt to save SQL tabs
@@ -550,7 +578,7 @@ in new project file</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="13" column="1">
         <widget class="QCheckBox" name="checkPromptSQLTabsInNewProject">
          <property name="toolTip">
           <string>If this is turned on, then changes to the SQL editor generate a save a project confirmation dialog when closing the SQL editor tab.</string>
@@ -563,7 +591,7 @@ in new project file</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="14" column="0">
         <widget class="QLabel" name="labelUpdates">
          <property name="text">
           <string>Automatic &amp;updates</string>
@@ -573,7 +601,7 @@ in new project file</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
+       <item row="14" column="1">
         <widget class="QCheckBox" name="checkUpdates">
          <property name="text">
           <string>enabled</string>
@@ -581,23 +609,6 @@ in new project file</string>
         </widget>
        </item>
        <item row="15" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>DB file extensions</string>
-         </property>
-         <property name="buddy">
-          <cstring>buttonManageFileExtension</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="1">
-        <widget class="QPushButton" name="buttonManageFileExtension">
-         <property name="text">
-          <string>Manage</string>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
         <widget class="QLabel" name="label_29">
          <property name="text">
           <string>Proxy</string>
@@ -607,10 +618,27 @@ in new project file</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="1">
+       <item row="15" column="1">
         <widget class="QToolButton" name="buttonProxy">
          <property name="text">
           <string>Configure</string>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>DB file extensions</string>
+         </property>
+         <property name="buddy">
+          <cstring>buttonManageFileExtension</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="1">
+        <widget class="QPushButton" name="buttonManageFileExtension">
+         <property name="text">
+          <string>Manage</string>
          </property>
         </widget>
        </item>
@@ -2009,6 +2037,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>appStyleCombo</tabstop>
   <tabstop>spinGeneralFontSize</tabstop>
   <tabstop>spinMaxRecentFiles</tabstop>
+  <tabstop>checkRecentFileShortcuts</tabstop>
   <tabstop>toolbarStyleComboMain</tabstop>
   <tabstop>toolbarStyleComboStructure</tabstop>
   <tabstop>toolbarStyleComboBrowse</tabstop>

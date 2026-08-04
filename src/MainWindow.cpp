@@ -1786,6 +1786,7 @@ void MainWindow::updateRecentFileActions()
 {
     // Get recent files list from settings
     QStringList files = Settings::getValue("General", "recentFileList").toStringList();
+    const bool enableRoRecentFileShortcuts = Settings::getValue("General", "recentfileshortcuts").toBool();
 
     // Check if files still exist and remove any non-existent file
     for(int i=0;i<files.size();i++)
@@ -1821,18 +1822,24 @@ void MainWindow::updateRecentFileActions()
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);
 
+        QList<QKeySequence> shortcuts = {};
         // Add shortcut for opening the file using the keyboard. However, if the application is configured to store
         // more than nine recently opened files don't set shortcuts for the later ones which wouldn't be single digit anymore.
-        if(i < 9)
+        if (i < 9)
         {
-            recentFileActs[i]->setShortcuts({
-                                                QKeySequence(Qt::CTRL | (Qt::Key_1 + i)),
-                                                QKeySequence(Qt::CTRL | Qt::SHIFT | (Qt::Key_1 + i))
-                                            });
+            shortcuts = {QKeySequence(Qt::CTRL | (Qt::Key_1 + i))};
+            if (enableRoRecentFileShortcuts)
+            {
+                shortcuts.append(QKeySequence(Qt::CTRL | Qt::SHIFT | (Qt::Key_1 + i)));
+            }
         }
+        recentFileActs[i]->setShortcuts(shortcuts);
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
+    {
         recentFileActs[j]->setVisible(false);
+        recentFileActs[j]->setShortcuts({});
+    }
 }
 
 void MainWindow::setCurrentFile(const QString &fileName)
@@ -2411,6 +2418,8 @@ void MainWindow::reloadSettings()
         MaxRecentFiles = newMaxRecentFiles;
         updateRecentFileActions();
     }
+
+    updateRecentFileActions();
 
     Settings::AppStyle style = static_cast<Settings::AppStyle>(Settings::getValue("General", "appStyle").toInt());
 
