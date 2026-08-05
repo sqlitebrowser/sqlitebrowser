@@ -8,7 +8,7 @@
         <DirectoryRef Id='INSTALLDIR'>
 
             <!--
-            Each language requires 6 *.qm files to work properly.
+            Each language requires 5 *.qm files to work properly.
             
             The list of the required files:
                 - qt_<language_code>.qm
@@ -18,12 +18,13 @@
                 - qtxmlpatterns_<language_code>.qm
 
             Notes:
-                - Arabic is missing "qtxmlpatterns_ar.qm" but seems to work without a problem.
+                - Arabic and Turkish are missing their respective "qtxmlpatterns" qm files but seems to work without a problem.
 
-                - Chinese (China), Chinese (Taiwan), and Portuguese have only one file (qt_<language_code>.qm), so
+				- Chinese (Taiwan) is missing "qtscript_zh_TW.qm" but seems to work without a problem.
+
+                - Chinese (China), Portuguese have only one file (qt_<language_code>.qm), so
                   the default buttons are not translated for these languages.
 
-                - Turkish language doesn't have any *.qm files at all, so no default buttons translation also.
             -->
 
             <Directory Id="translations" Name="translations">
@@ -39,6 +40,9 @@
 
                 <!-- Chinese (Taiwan) -->
                 <Component><File Source="$(var.QtPath)\translations\qt_zh_TW.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtbase_zh_TW.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtmultimedia_zh_TW.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_zh_TW.qm" /></Component>
 
                 <!-- Czech -->
                 <Component><File Source="$(var.QtPath)\translations\qt_cs.qm" /></Component>
@@ -114,6 +118,10 @@
                 <Component><File Source="$(var.QtPath)\translations\qtxmlpatterns_es.qm" /></Component>
 
                 <!-- Turkish -->
+                <Component><File Source="$(var.QtPath)\translations\qt_tr.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtbase_tr.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtmultimedia_tr.qm" /></Component>
+                <Component><File Source="$(var.QtPath)\translations\qtscript_tr.qm" /></Component>
 
                 <!-- Ukrainian -->
                 <Component><File Source="$(var.QtPath)\translations\qt_uk.qm" /></Component>
@@ -139,6 +147,9 @@
 
             <!-- Chinese (Taiwan) -->
             <ComponentRef Id="qt_zh_TW.qm" />
+            <ComponentRef Id="qtbase_zh_TW.qm" />
+            <ComponentRef Id="qtmultimedia_zh_TW.qm" />
+            <ComponentRef Id="qtxmlpatterns_zh_TW.qm" />
 
             <!-- Czech -->
             <ComponentRef Id="qt_cs.qm" />
@@ -214,6 +225,10 @@
             <ComponentRef Id="qtxmlpatterns_es.qm" />
 
             <!-- Turkish -->
+            <ComponentRef Id="qt_tr.qm" />
+            <ComponentRef Id="qtbase_tr.qm" />
+            <ComponentRef Id="qtmultimedia_tr.qm" />
+            <ComponentRef Id="qtscript_tr.qm" />
 
             <!-- Ukrainian -->
             <ComponentRef Id="qt_uk.qm" />
