@@ -57,6 +57,58 @@ jobs:
           cache-key-prefix: "cache"
           version: 5.15.2
 
+      - name: Checkout Missing Translations
+        uses: actions/checkout@v7
+        with:
+          repository: 'qt/qttranslations'
+          ref: '5.15-tr'
+          path: 'src/translations/qttranslations'
+
+          sparse-checkout-cone-mode: false
+
+          sparse-checkout: |
+            translations/qt_pt_BR.ts
+            translations/qtbase_pt_BR.ts
+            translations/qtmultimedia_pt_BR.ts
+            translations/qtscript_pt_BR.ts
+            translations/qtxmlpatterns_pt_BR.ts
+            translations/qt_sv.ts
+            translations/qtbase_sv.ts
+            translations/qtmultimedia_sv.ts
+            translations/qtscript_sv.ts
+            translations/qtxmlpatterns_sv.ts
+            translations/qt_zh_CN.ts
+            translations/qtbase_zh_CN.ts
+            translations/qtmultimedia_zh_CN.ts
+            translations/qtscript_zh_CN.ts
+            translations/qtxmlpatterns_zh_CN.ts
+
+      - name: Compile Missing Translations
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $sourceDir = "$env:GITHUB_WORKSPACE\src\translations\qttranslations\translations"
+          $outputDir = "$env:QT_ROOT_DIR\translations"
+
+          New-Item -ItemType Directory -Force -Path $outputDir | Out-Null
+
+          Get-ChildItem "$sourceDir\*.ts" | ForEach-Object {
+            $outputName = "$($_.BaseName).qm"
+
+            if ($_.BaseName -eq "qt_zh_CN") {
+              $outputName = "qt_zh.qm"
+            }
+
+            & "$env:QT_ROOT_DIR\bin\lrelease.exe" `
+              $_.FullName `
+              -qm (Join-Path $outputDir $outputName)
+
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to compile $($_.Name)"
+            }
+          }
+
       - name: Install VS2019
         run: choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041 --add Microsoft.VisualStudio.Component.VC.Redist.MSM"
 
