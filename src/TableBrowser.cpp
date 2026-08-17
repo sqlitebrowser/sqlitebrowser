@@ -309,6 +309,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->actionFind, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
+           ui->frameColumnSearch->hide();
+           ui->actionFindColumn->setChecked(false);
            ui->widgetReplace->hide();
            ui->frameFind->show();
            ui->editFindExpression->setFocus();
@@ -323,6 +325,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     connect(ui->actionReplace, &QAction::triggered, this, [this](bool checked) {
        if(checked)
        {
+           ui->frameColumnSearch->hide();
+           ui->actionFindColumn->setChecked(false);
            ui->widgetReplace->show();
            ui->frameFind->show();
            ui->editFindExpression->setFocus();
@@ -393,6 +397,39 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     // Connect slots
     connect(m_model, &SqliteTableModel::finishedFetch, this, &TableBrowser::fetchedData);
+
+    // Set up column search frame
+    ui->frameColumnSearch->hide();
+
+    connect(ui->actionFindColumn, &QAction::triggered, this, [this](bool checked) {
+        if(checked) {
+            ui->frameFind->hide();
+            ui->actionFind->setChecked(false);
+            ui->actionReplace->setChecked(false);
+            ui->frameColumnSearch->show();
+            ui->editColumnSearchExpression->setFocus();
+        } else {
+            ui->frameColumnSearch->hide();
+        } 
+    });
+
+    connect(ui->buttonColumnSearchClose, &QToolButton::clicked, this, [this]() {
+        ui->frameColumnSearch->hide();
+        ui->actionFindColumn->setChecked(false); 
+    });
+
+    connect(ui->editColumnSearchExpression, &QLineEdit::returnPressed, ui->buttonColumnSearchNext, &QToolButton::click);
+    connect(ui->editColumnSearchExpression, &QLineEdit::textChanged, this, [this]() {
+        findNextColumn(true, true); 
+    });
+
+    connect(ui->buttonColumnSearchNext, &QToolButton::clicked, this, [this]() {
+        findNextColumn(true, false); 
+    });
+
+    connect(ui->buttonColumnSearchPrevious, &QToolButton::clicked, this, [this]() {
+        findNextColumn(false, false); 
+    });
 
     // Load initial settings
     reloadSettings();
@@ -1712,6 +1749,74 @@ void TableBrowser::find(const QString& expr, bool forward, bool include_first, R
             ui->editFindExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
     } break;
     }
+}
+
+void TableBrowser::findNextColumn(bool forward, bool checkCurrentColumn)
+{
+    if (!m_model)
+        return;
+
+    const QString searchText = ui->editColumnSearchExpression->text();
+    if (searchText.isEmpty())
+    {
+        ui->editColumnSearchExpression->setStyleSheet(QString());
+        return;
+    }
+
+    const Qt::CaseSensitivity caseSensitivity = ui->checkColumnSearchCaseSensitive->isChecked()
+                                                    ? Qt::CaseSensitive
+                                                    : Qt::CaseInsensitive;
+
+    const int columnCount = m_model->columnCount();
+    if (columnCount <= 0)
+        return;
+
+    static int lastFoundIndex = -1;
+    auto tryMatch = [&](int i) -> bool
+    {
+        const QString columnName = m_model->headerData(i, Qt::Horizontal, Qt::EditRole).toString();
+        if (!columnName.contains(searchText, caseSensitivity))
+            return false;
+
+        lastFoundIndex = i;
+        ui->editColumnSearchExpression->setStyleSheet(QString());
+
+        QModelIndex top = m_model->index(0, i);
+        QModelIndex bottom = m_model->index(m_model->rowCount() - 1, i);
+        ui->dataTable->selectionModel()->select(QItemSelection(top, bottom), 
+            QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Columns);   
+
+        ui->dataTable->horizontalScrollBar()->setValue(ui->dataTable->horizontalHeader()->sectionViewportPosition(i));
+        return true;
+    };
+    
+    if (lastFoundIndex < 0 || lastFoundIndex >= columnCount)
+        lastFoundIndex = forward ? -1 : columnCount;
+    else if (checkCurrentColumn && tryMatch(lastFoundIndex))
+        return;
+
+    if (forward)
+    {
+        for (int i = lastFoundIndex + 1; i < columnCount; i++)
+            if (tryMatch(i))
+                return;
+
+        for (int i = 0; i < lastFoundIndex; i++)
+            if (tryMatch(i))
+                return;
+    }
+    else
+    {
+        for (int i = lastFoundIndex - 1; i >= 0; i--)
+            if (tryMatch(i))
+                return;
+
+        for (int i = columnCount - 1; i > lastFoundIndex; i--)
+            if (tryMatch(i))
+                return;
+    }
+    
+    ui->editColumnSearchExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
 }
 
 void TableBrowser::fetchedData()

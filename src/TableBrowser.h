@@ -147,8 +147,8 @@ private:
         ReplaceAll,
     };
     void find(const QString& expr, bool forward, bool include_first = false, ReplaceMode replace = ReplaceMode::NoReplace);
+    void findNextColumn(bool forward, bool checkCurrentColumn);
 
-private:
     Ui::TableBrowser* ui;
     QIntValidator* gotoValidator;
     QMenu* popupNewRecordMenu;

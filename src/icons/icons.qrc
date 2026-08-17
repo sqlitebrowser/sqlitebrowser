@@ -48,6 +48,7 @@
         <file alias="field_delete">page_delete.svg</file>
         <file alias="field_edit">page_edit.svg</file>
         <file alias="find">page_find.svg</file>
+        <file alias="find_column">page_find_column.svg</file>
         <file alias="field">page_green.svg</file>
         <file alias="field_key">page_key.svg</file>
         <file alias="browser_open">world_link.svg</file>
