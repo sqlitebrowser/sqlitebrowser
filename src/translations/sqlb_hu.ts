@@ -24,42 +24,42 @@
     <message>
         <location filename="../AddRecordDialog.ui" line="14"/>
         <source>Add New Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Új rekord hozzáadása</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="27"/>
         <source>Enter values for the new record considering constraints. Fields in bold are mandatory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adja meg az új rekord értékeit a korlátozások figyelembevételével. A félkövérrel jelzett mezők kitöltése kötelező.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="67"/>
         <source>In the Value column you can specify the value for the field identified in the Name column. The Type column indicates the type of the field. Default values are displayed in the same style as NULL values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az Érték oszlopban megadhatja a Név oszlopban azonosított mező értékét. A Típus oszlop a mező típusát jelzi. Az alapértelmezett értékek ugyanabban a stílusban jelennek meg, mint a NULL értékek.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="74"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
+        <source>Típus</source>
+        <translation>Tipus</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="84"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="87"/>
         <source>Values to insert. Pre-filled default values are inserted automatically unless they are changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beszúrandó értékek. Az előre kitöltött alapértelmezett értékek automatikusan beszúródnak, hacsak nem módosítják őket.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="93"/>
         <source>When you edit the values in the upper frame, the SQL query for inserting this new record is shown here. You can edit manually the query before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Amikor a felső keretben szerkeszti az értékeket, itt látható az új rekord beszúrására szolgáló SQL-lekérdezés. A mentés előtt manuálisan szerkesztheti a lekérdezést.</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="110"/>
@@ -68,45 +68,38 @@
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="239"/>
-        <source>Auto-increment
-</source>
-        <translation type="unfinished"></translation>
+        <source>Auto-increment</source>
+        <translation>Automatikus növelés</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="242"/>
-        <source>Unique constraint
-</source>
-        <translation type="unfinished"></translation>
+        <source>Unique constraint</source>
+        <translation>Egyedi korlátozás</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="245"/>
-        <source>Check constraint:	 %1
-</source>
+        <source>Check constraint:	 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="249"/>
-        <source>Foreign key:	 %1
-</source>
-        <translation type="unfinished"></translation>
+        <source>Foreign key:	 %1</source>
+        <translation>Idegen kulcs:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="258"/>
-        <source>Default value:	 %1
-</source>
-        <translation type="unfinished"></translation>
+        <source>Default value:	 %1</source>
+        <translation>Alapértelmezett érték:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="284"/>
-        <source>Error adding record. Message from database engine:
-
-%1</source>
-        <translation type="unfinished"></translation>
+        <source>Error adding record. Message from database engine:  %1</source>
+        <translation>Hiba a rekord hozzáadásakor. Üzenet az adatbázismotortól:   %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="365"/>
         <source>Are you sure you want to restore all the entered values to their defaults?</source>
-        <translation type="unfinished"></translation>
+        <translation>Valóban visszaállítja az összes beírt értéket az alapértelmezett értékre?</translation>
     </message>
 </context>
 <context>
