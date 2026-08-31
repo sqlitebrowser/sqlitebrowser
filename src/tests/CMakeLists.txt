@@ -94,6 +94,12 @@ set(TESTGLOBALFILTER_HDR
 add_executable(test-global-filter ${TESTGLOBALFILTER_HDR} ${TESTGLOBALFILTER_SRC})
 target_link_libraries(test-global-filter ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${LIBSQLITE_NAME} ${QT5_COMPAT})
 add_test(NAME test-global-filter COMMAND $<TARGET_FILE:test-global-filter>)
+if(WIN32)
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    # Keep those prefixes on PATH while CTest launches this executable.
+    string(REPLACE ";" "\\;" TESTGLOBALFILTER_PATH "${CMAKE_PREFIX_PATH};$ENV{PATH}")
+    set_tests_properties(test-global-filter PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
+endif()
 
 # test cache
 
