@@ -68,6 +68,33 @@ add_executable(test-regex ${TESTREGEX_HDR} ${TESTREGEX_SRC})
 target_link_libraries(test-regex ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT5_COMPAT})
 add_test(NAME test-regex COMMAND $<TARGET_FILE:test-regex>)
 
+# test global filter
+
+set(TESTGLOBALFILTER_SRC
+    TestGlobalFilter.cpp
+    GlobalFilterTestSupport.cpp
+    ../GlobalFilter.cpp
+    ../CondFormat.cpp
+    ../Data.cpp
+    ../Settings.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+)
+
+set(TESTGLOBALFILTER_HDR
+    TestGlobalFilter.h
+    ../GlobalFilter.h
+    ../CondFormat.h
+    ../Data.h
+    ../Settings.h
+    ../sql/Query.h
+    ../sql/ObjectIdentifier.h
+)
+
+add_executable(test-global-filter ${TESTGLOBALFILTER_HDR} ${TESTGLOBALFILTER_SRC})
+target_link_libraries(test-global-filter ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-global-filter COMMAND $<TARGET_FILE:test-global-filter>)
+
 # test cache
 
 set(TESTCACHE_SRC
