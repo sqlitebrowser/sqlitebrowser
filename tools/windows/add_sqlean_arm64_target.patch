@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index 5033c1d..ac038f1 100644
+index 33517ea..37281a6 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -10,11 +10,13 @@ SQLITE_BRANCH := 3.36
@@ -14,9 +14,9 @@ index 5033c1d..ac038f1 100644
  WINDO_FLAGS := $(CFLAGS) -shared $(COMMON_CFLAGS)
 +WINDO_ARM64_FLAGS := $(CFLAGS) -shared $(COMMON_CFLAGS)
  MACOS_FLAGS := $(CFLAGS) -Wall -Wsign-compare -fPIC -dynamiclib $(COMMON_CFLAGS)
- CTEST_FLAGS := $(CFLAGS) -Wall -Wsign-compare -Wno-unknown-pragmas -Isrc
+ CTEST_FLAGS := $(CFLAGS) -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unknown-pragmas -Isrc
  
-@@ -118,8 +120,26 @@ compile-windows:
+@@ -152,8 +154,26 @@ compile-windows:
  	gcc -O3 $(WINDO_FLAGS) src/sqlite3-vsv.c src/vsv/*.c -o dist/vsv.dll -lm
  	gcc -O3 $(WINDO_FLAGS) -include src/regexp/constants.h src/sqlite3-sqlean.c src/crypto/*.c src/define/*.c src/fileio/*.c src/fuzzy/*.c src/math/*.c src/regexp/*.c src/regexp/pcre2/*.c src/stats/*.c src/text/*.c src/text/*/*.c src/time/*.c src/unicode/*.c src/uuid/*.c src/vsv/*.c -o dist/sqlean.dll -lm
  
