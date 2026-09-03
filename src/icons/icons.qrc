@@ -8,6 +8,8 @@
         <file alias="down">bullet_arrow_down.svg</file>
         <file alias="arrow_top">bullet_arrow_top.svg</file>
         <file alias="up">bullet_arrow_up.svg</file>
+        <file alias="right">bullet_arrow_right.svg</file>
+        <file alias="left">bullet_arrow_left.svg</file>
         <file alias="cancel">cancel.svg</file>
         <file alias="function">chart_curve.svg</file>
         <file alias="clear_filters">funnel_delete.svg</file>
