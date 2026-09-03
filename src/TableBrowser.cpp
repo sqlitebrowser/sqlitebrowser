@@ -1773,7 +1773,10 @@ void TableBrowser::findNextColumn(bool forward, bool checkCurrentColumn)
 
     static int lastFoundIndex = -1;
     auto tryMatch = [&](int i) -> bool
-    {
+    {         
+        if (ui->dataTable->isColumnHidden(i))
+            return false;
+
         const QString columnName = m_model->headerData(i, Qt::Horizontal, Qt::EditRole).toString();
         if (!columnName.contains(searchText, caseSensitivity))
             return false;
