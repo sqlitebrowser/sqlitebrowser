@@ -169,6 +169,7 @@ private:
     Palette m_condFormatPalette;
     bool m_adjustRows;
     bool m_columnsResized;
+    int m_columnSearchLastFoundIndex;
 
     void modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex,
                             std::function<void(CondFormat&)> changeFunction);

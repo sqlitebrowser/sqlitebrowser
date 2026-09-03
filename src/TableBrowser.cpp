@@ -32,7 +32,8 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     dbStructureModel(nullptr),
     m_model(nullptr),
     m_adjustRows(false),
-    m_columnsResized(false)
+    m_columnsResized(false),
+    m_columnSearchLastFoundIndex(-1)
 {
     ui->setupUi(this);
 
@@ -600,6 +601,9 @@ void TableBrowser::refresh()
     applyModelSettings(storedData, buildQuery(storedData, tablename));
     applyViewportSettings(storedData, tablename);
     emit updatePlot(ui->dataTable, m_model, &m_settings[tablename], true);
+    
+    // Reset the last found index for column search
+    m_columnSearchLastFoundIndex = -1;
 }
 
 void TableBrowser::clearFilters()
@@ -1771,9 +1775,8 @@ void TableBrowser::findNextColumn(bool forward, bool checkCurrentColumn)
     if (columnCount <= 0)
         return;
 
-    static int lastFoundIndex = -1;
     auto tryMatch = [&](int i) -> bool
-    {         
+    {
         if (ui->dataTable->isColumnHidden(i))
             return false;
 
@@ -1781,44 +1784,44 @@ void TableBrowser::findNextColumn(bool forward, bool checkCurrentColumn)
         if (!columnName.contains(searchText, caseSensitivity))
             return false;
 
-        lastFoundIndex = i;
+        m_columnSearchLastFoundIndex = i;
         ui->editColumnSearchExpression->setStyleSheet(QString());
 
         QModelIndex top = m_model->index(0, i);
         QModelIndex bottom = m_model->index(m_model->rowCount() - 1, i);
-        ui->dataTable->selectionModel()->select(QItemSelection(top, bottom), 
-            QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Columns);   
+        ui->dataTable->selectionModel()->select(QItemSelection(top, bottom),
+            QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Columns);
 
         ui->dataTable->horizontalScrollBar()->setValue(ui->dataTable->horizontalHeader()->sectionViewportPosition(i));
         return true;
     };
-    
-    if (lastFoundIndex < 0 || lastFoundIndex >= columnCount)
-        lastFoundIndex = forward ? -1 : columnCount;
-    else if (checkCurrentColumn && tryMatch(lastFoundIndex))
+
+    if (m_columnSearchLastFoundIndex < 0 || m_columnSearchLastFoundIndex >= columnCount)
+        m_columnSearchLastFoundIndex = forward ? -1 : columnCount;
+    else if (checkCurrentColumn && tryMatch(m_columnSearchLastFoundIndex))
         return;
 
     if (forward)
     {
-        for (int i = lastFoundIndex + 1; i < columnCount; i++)
+        for (int i = m_columnSearchLastFoundIndex + 1; i < columnCount; i++)
             if (tryMatch(i))
                 return;
 
-        for (int i = 0; i < lastFoundIndex; i++)
+        for (int i = 0; i < m_columnSearchLastFoundIndex; i++)
             if (tryMatch(i))
                 return;
     }
     else
     {
-        for (int i = lastFoundIndex - 1; i >= 0; i--)
+        for (int i = m_columnSearchLastFoundIndex - 1; i >= 0; i--)
             if (tryMatch(i))
                 return;
 
-        for (int i = columnCount - 1; i > lastFoundIndex; i--)
+        for (int i = columnCount - 1; i > m_columnSearchLastFoundIndex; i--)
             if (tryMatch(i))
                 return;
     }
-    
+
     ui->editColumnSearchExpression->setStyleSheet("QLineEdit {color: white; background-color: rgb(255, 102, 102)}");
 }
 
