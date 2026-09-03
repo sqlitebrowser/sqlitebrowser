@@ -33,7 +33,7 @@ jobs:
       - name: Install and cache dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.3
         with:
-          packages: libfuse2 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
+          packages: libfuse2 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev qttranslations5-l10n
           version: ${{ matrix.os }}
 
       - if: matrix.bundle == 'SQLCipher'
@@ -80,6 +80,61 @@ jobs:
       - name: Tests
         working-directory: ./appbuild
         run: ninja test
+
+      - name: Checkout Missing Translations
+        uses: actions/checkout@v7
+        with:
+          repository: 'qt/qttranslations'
+          ref: '5.15-tr'
+          path: 'src/translations/qttranslations'
+
+          sparse-checkout-cone-mode: false
+
+          sparse-checkout: |
+            /translations/qt_pt_BR.ts
+            /translations/qtbase_pt_BR.ts
+            /translations/qtmultimedia_pt_BR.ts
+            /translations/qtscript_pt_BR.ts
+            /translations/qtxmlpatterns_pt_BR.ts
+            /translations/qt_sv.ts
+            /translations/qtbase_sv.ts
+            /translations/qtmultimedia_sv.ts
+            /translations/qtscript_sv.ts
+            /translations/qtxmlpatterns_sv.ts
+            /translations/qt_zh_CN.ts
+            /translations/qtbase_zh_CN.ts
+            /translations/qtmultimedia_zh_CN.ts
+            /translations/qtscript_zh_CN.ts
+            /translations/qtxmlpatterns_zh_CN.ts
+
+      - name: Compile Missing Translations
+        run: |
+          set -euxo pipefail
+
+          source_dir="$GITHUB_WORKSPACE/src/translations/qttranslations/translations"
+          output_dir="$GITHUB_WORKSPACE/appdir/usr/translations"
+
+          mkdir -p "$output_dir"
+
+          catalogs=(qt qtbase qtmultimedia qtscript qtxmlpatterns)
+          locales=(ar cs de en es fr id it ja ko nl pl pt_BR ro ru sv tr uk zh_CN zh_TW)
+
+          for locale in "${locales[@]}"; do
+            for catalog in "${catalogs[@]}"; do
+              translation="/usr/share/qt5/translations/${catalog}_${locale}.qm"
+              if [[ -f "$translation" ]]; then
+                cp -v "$translation" "$output_dir/"
+              fi
+            done
+          done
+
+          for source in "$source_dir"/*.ts; do
+            output_name="$(basename "${source%.ts}").qm"
+            lrelease "$source" -qm "$output_dir/$output_name"
+          done
+
+          cp -v "$output_dir/qt_zh_CN.qm" \
+                "$output_dir/qt_zh.qm"
 
       - name: Build AppImage
         run: |
