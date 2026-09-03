@@ -6,6 +6,7 @@
 #include "DbStructureModel.h"
 #include "ExportDataDialog.h"
 #include "FilterTableHeader.h"
+#include "GlobalFilter.h"
 #include "TableBrowser.h"
 #include "Settings.h"
 #include "sqlitedb.h"
@@ -129,14 +130,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
         emit prepareForFilter();
     });
     connect(ui->editGlobalFilter, &FilterLineEdit::delayedTextChanged, this, [this](const QString& value) {
-        // Split up filter values
-#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
-        QStringList values = value.trimmed().split(" ", QString::SkipEmptyParts);
-#else
-        QStringList values = value.trimmed().split(" ", Qt::SkipEmptyParts);
-#endif
-        std::vector<QString> filters;
-        std::copy(values.begin(), values.end(), std::back_inserter(filters));
+        const std::vector<QString> filters = GlobalFilter::tokenize(value);
 
         ui->actionClearFilters->setEnabled(m_model->filterCount() > 0 || !ui->editGlobalFilter->text().isEmpty());
 
