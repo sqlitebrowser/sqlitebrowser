@@ -79,7 +79,7 @@
     <message>
         <location filename="../AddRecordDialog.cpp" line="245"/>
         <source>Check constraint:	 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Korlátozás ellenőrzése:	 %1</translation>
     </message>
     <message>
         <location filename="../AddRecordDialog.cpp" line="249"/>
