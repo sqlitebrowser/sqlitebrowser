@@ -43,7 +43,7 @@
     </message>
     <message>
         <location filename="../AddRecordDialog.ui" line="79"/>
-        <source>Típus</source>
+        <source>Type</source>
         <translation>Tipus</translation>
     </message>
     <message>
