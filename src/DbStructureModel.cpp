@@ -283,7 +283,19 @@ QMimeData* DbStructureModel::mimeData(const QModelIndexList& indices) const
                         {
                             QString insertStatement = "INSERT INTO " + QString::fromStdString(objid.toString()) + " VALUES(";
                             for(int j=1; j < tableModel.columnCount(); ++j)
-                                insertStatement += QString("'%1',").arg(tableModel.data(tableModel.index(i, j), Qt::EditRole).toString());
+                            {
+                                // Write each value as a SQL literal, the same way "Copy as SQL" in the table grid does
+                                const QModelIndex cell = tableModel.index(i, j);
+                                const QVariant value = tableModel.data(cell, Qt::EditRole);
+                                if(value.isNull())
+                                    insertStatement += "NULL,";
+                                else if(tableModel.isBinary(cell))
+                                    insertStatement += QString("X'%1',").arg(QString(value.toByteArray().toHex()));
+                                else if(value.type() == QVariant::LongLong || value.type() == QVariant::Double)
+                                    insertStatement += value.toString() + ",";
+                                else
+                                    insertStatement += sqlb::escapeString(value.toString()) + ",";
+                            }
                             insertStatement.chop(1);
                             insertStatement += ");\n";
                             sqlData.append(insertStatement.toUtf8());
