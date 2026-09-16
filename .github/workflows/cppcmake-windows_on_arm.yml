@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-11-vs2026-arm]
+        os: [windows-11-arm]
     env:
       GH_TOKEN: ${{ github.token }}
       OPENSSL_INCLUDE_DIR: C:\dev\OpenSSL\include
@@ -71,13 +71,11 @@ jobs:
           modules: "debug_info qt5compat qtactiveqt qtcharts qtconnectivity qtgraphs qtgrpc qthttpserver qtimageformats qtlanguageserver qtlocation qtlottie qtmultimedia qtnetworkauth qtpositioning qtquick3d qtquick3dphysics qtquicktimeline qtremoteobjects qtscxml qtsensors qtserialbus qtserialport qtshadertools qtspeech qtvirtualkeyboard qtwebchannel qtwebsockets"
           version: 6.8.3
 
-      - name: Install VS2022
-        run: choco install visualstudio2022community --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.ARM64 Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041 --add Microsoft.VisualStudio.Component.VC.Redist.MSM"
-
       - name: Setup MSVC for ARM64
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: arm64
+          vsversion: 2022
 
       - name: Build SQLite
         run: |
@@ -124,6 +122,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
+          vsversion: 2022
 
       - name: Build x64 binaries for build SQLCipher
         run: |
@@ -136,6 +135,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: arm64
+          vsversion: 2022
 
       - name: Build SQLCipher
         run: |
