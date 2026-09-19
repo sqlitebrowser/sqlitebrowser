@@ -139,7 +139,7 @@ Download macOS releases here:
 
 * https://sqlitebrowser.org/dl/#macos
 
-The latest macOS binary can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
+The latest macOS binary can be installed via [Homebrew Cask](https://formulae.brew.sh/cask/db-browser-for-sqlite "Homebrew Cask"):
 
 ```
 brew install --cask db-browser-for-sqlite
@@ -154,7 +154,7 @@ Continuous builds are available here:
 Nightly builds are available here:
 * https://nightlies.sqlitebrowser.org/latest
 
-and also you can be installed via [Homebrew Cask](https://caskroom.github.io/ "Homebrew Cask"):
+and also you can be installed via [Homebrew Cask](https://formulae.brew.sh/cask/db-browser-for-sqlite "Homebrew Cask"):
 
 ```
 brew tap homebrew/cask-versions
