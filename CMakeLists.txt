@@ -144,6 +144,7 @@ target_sources(${PROJECT_NAME}
     src/FileDialog.h
     src/ColumnDisplayFormatDialog.h
     src/FilterLineEdit.h
+    src/GlobalFilter.h
     src/ForeignKeyEditorDelegate.h
     src/PlotDock.h
     src/FindReplaceDialog.h
@@ -197,6 +198,7 @@ target_sources(${PROJECT_NAME}
     src/FileDialog.cpp
     src/ColumnDisplayFormatDialog.cpp
     src/FilterLineEdit.cpp
+    src/GlobalFilter.cpp
     src/ForeignKeyEditorDelegate.cpp
     src/PlotDock.cpp
     src/FindReplaceDialog.cpp
