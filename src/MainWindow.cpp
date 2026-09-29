@@ -3548,7 +3548,7 @@ void MainWindow::requestCollation(const QString& name, int eTextRep)
         QPushButton* button_dont_ask_again = msgbox.addButton(tr("Yes. Don't ask again"), QMessageBox::ActionRole);
         msgbox.addButton(QMessageBox::Yes);
         msgbox.addButton(QMessageBox::No);
-        msgbox.setTextFormat(Qt::RichText);
+        msgbox.setTextFormat(Qt::PlainText);
         msgbox.setWindowTitle(tr("Collation needed! Proceed?"));
         msgbox.setText(tr("A table in this database requires a special collation function '%1' "
                           "that this application can't provide without further knowledge.\n"
