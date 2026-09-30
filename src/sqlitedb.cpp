@@ -990,7 +990,19 @@ bool DBBrowserDB::dump(const QString& filePath,
                 // get columns
                 sqlb::StringVector cols = it->fieldNames();
 
+                // Generated columns cannot be inserted into, so leave them out of both the SELECT and the
+                // INSERT statements, like the sqlite3 shell's .dump does
                 std::string sQuery = "SELECT * FROM " + sqlb::escapeIdentifier(it->name());
+                if(std::any_of(it->fields.begin(), it->fields.end(), [](const sqlb::Field& f) { return f.generated() != nullptr; }))
+                {
+                    cols.clear();
+                    for(const sqlb::Field& f : it->fields)
+                    {
+                        if(!f.generated())
+                            cols.push_back(f.name());
+                    }
+                    sQuery = "SELECT " + sqlb::joinStringVector(sqlb::escapeIdentifier(cols), ",") + " FROM " + sqlb::escapeIdentifier(it->name());
+                }
                 sqlite3_stmt *stmt;
                 QString lineSep(QString(")%1\n").arg(insertNewSyntx?',':';'));
 
