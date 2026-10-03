@@ -163,6 +163,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "db" && name == "watcher")
         return false;
 
+    // db/sqlcipherparentdotenvlookup?
+    if(group == "db" && name == "sqlcipherparentdotenvlookup")
+        return false;
+
     // exportcsv/firstrowheader?
     if(group == "exportcsv" && name == "firstrowheader")
         return true;
@@ -238,6 +242,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     // General/maxRecentFiles?
     if(group == "General" && name == "maxRecentFiles")
         return 5;
+
+    // General/recentfileshortcuts?
+    if(group == "General" && name == "recentfileshortcuts")
+        return false;
 
     // General/language?
     if(group == "General" && name == "language")

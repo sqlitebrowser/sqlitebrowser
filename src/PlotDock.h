@@ -98,6 +98,8 @@ private:
     bool m_showLegend;
     bool m_stackedBars;
     bool m_fixedFormat;
+    bool m_logScaleX;
+    bool m_logScaleY;
     Palette m_graphPalette;
     std::vector<QCPAxis *> yAxes;
     std::vector<int> PlotColumnY;
@@ -112,6 +114,7 @@ private:
     QVariant::Type guessDataType(SqliteTableModel* model, int column) const;
     void adjustBars();
     void adjustAxisFormat();
+    void updateLogScale();
 
 private slots:
     void columnItemChanged(QTreeWidgetItem* item, int column);

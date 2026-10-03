@@ -19,7 +19,7 @@ if(UNIX)
         DESTINATION ${CMAKE_INSTALL_DATADIR}/applications/
     )
 
-    install(FILES distri/${PROJECT_NAME}.desktop.appdata.xml
+    install(FILES distri/${PROJECT_NAME}.metainfo.xml
         DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo/
     )
 endif()

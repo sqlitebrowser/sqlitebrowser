@@ -4,3 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: "pip"
+    directory: "/tools/windows/requirements"
+    schedule:
+      interval: "weekly"

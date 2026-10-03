@@ -147,8 +147,8 @@ private:
         ReplaceAll,
     };
     void find(const QString& expr, bool forward, bool include_first = false, ReplaceMode replace = ReplaceMode::NoReplace);
+    void findNextColumn(bool forward, bool checkCurrentColumn);
 
-private:
     Ui::TableBrowser* ui;
     QIntValidator* gotoValidator;
     QMenu* popupNewRecordMenu;
@@ -169,6 +169,7 @@ private:
     Palette m_condFormatPalette;
     bool m_adjustRows;
     bool m_columnsResized;
+    int m_columnSearchLastFoundIndex;
 
     void modifySingleFormat(const bool isRowIdFormat, const QString& filter, const QModelIndex refIndex,
                             std::function<void(CondFormat&)> changeFunction);

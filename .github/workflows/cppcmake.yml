@@ -5,25 +5,34 @@ on:
     branches: [master]
   pull_request:
   schedule:
-    - cron: '0 0 * * *'  # Every day at midnight UTC
+    - cron: "0 0 * * *"  # Every day at midnight UTC
   workflow_dispatch:
     inputs:
       NIGHTLY:
-        description: 'Run as a nightly build'
+        description: "Run as a nightly build"
         default: false
         required: true
         type: boolean
 
-run-name: "${{ (github.event_name == 'schedule' || inputs.NIGHTLY == true) && 'Build and Deploy Nightly Builds' || github.event.head_commit.message}}"
+run-name: >-
+  ${{
+    (github.event_name == 'schedule' || inputs.NIGHTLY == true)
+      && 'Build and Deploy Nightly Builds'
+      || github.event.pull_request.title
+      || github.event.head_commit.message
+      || format('{0} on {1}', github.workflow, github.ref_name)
+  }}
 
 jobs:
   check-skippable:
     name: Check Skippable
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     outputs:
       skip: ${{ steps.set-skippable.outputs.skippable || 'false' }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Check and set skippable
         id: set-skippable
@@ -43,57 +52,96 @@ jobs:
   build-macos:
     needs: check-skippable
     if: needs.check-skippable.outputs.skip != 'true'
+    permissions:
+      actions: read
+      contents: write
     uses: ./.github/workflows/cppcmake-macos.yml
     secrets: inherit
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      CONSOLIDATE_DEPENDENCY_SUMMARY: true
 
   build-ubuntu:
     needs: check-skippable
     if: needs.check-skippable.outputs.skip != 'true'
+    permissions:
+      actions: read
+      contents: write
     uses: ./.github/workflows/cppcmake-ubuntu.yml
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      CONSOLIDATE_DEPENDENCY_SUMMARY: true
 
   build-windows:
     needs: check-skippable
     if: needs.check-skippable.outputs.skip != 'true'
+    permissions:
+      actions: read
+      contents: write
     uses: ./.github/workflows/cppcmake-windows.yml
     secrets: inherit
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      CONSOLIDATE_DEPENDENCY_SUMMARY: true
+
+  build-windows_on_arm:
+    needs: check-skippable
+    if: needs.check-skippable.outputs.skip != 'true'
+    permissions:
+      actions: read
+      contents: write
+    uses: ./.github/workflows/cppcmake-windows_on_arm.yml
+    secrets: inherit
+    with:
+      NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      CONSOLIDATE_DEPENDENCY_SUMMARY: true
+
+  summarize-dependencies:
+    needs:
+      [
+        check-skippable,
+        build-macos,
+        build-ubuntu,
+        build-windows,
+        build-windows_on_arm,
+      ]
+    if: always() && needs.check-skippable.outputs.skip != 'true' && !cancelled()
+    name: Summarize Dependencies
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Download dependency summaries
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          pattern: dependency-summary-*
+          path: dependency-summary
+          merge-multiple: true
+
+      - name: Summary
+        run: |
+          {
+            echo "## Dependencies used"
+            echo ""
+            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
+            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
+            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            done
+          else
+            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
+          fi
 
   release:
     if: github.event_name != 'pull_request'
-    needs: [build-macos, build-ubuntu, build-windows]
+    needs: [build-macos, build-ubuntu, build-windows, build-windows_on_arm]
     name: Release
-    runs-on: ubuntu-24.04
-    env:
-      GH_TOKEN: ${{ github.token }}
-      tag_name: ${{ (github.event_name == 'schedule' || inputs.NIGHTLY == true) && 'nightly' || 'continuous' }}
-    steps:
-      - name: Delete existing tag and release
-        run: gh release delete ${{ env.tag_name }} --cleanup-tag --yes --repo $GITHUB_REPOSITORY
-        continue-on-error: true
-
-      - run: mkdir -v target
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v8
-        with:
-          path: target
-
-      - name: Remove unsigned Windows build
-        run: rm -rfv target/*unsigned*
-
-      - run: find target -type f -exec mv -v {} target \;
-
-      - name: Unarchive Windows's build artifacts
-        run: for f in target/*.zip; do unzip -d target/ "$f" && rm -v "$f"; done
-
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: target/*
-          prerelease: true
-          tag_name: ${{ env.tag_name }}
+    permissions:
+      actions: read
+      contents: write
+    uses: ./.github/workflows/release.yml

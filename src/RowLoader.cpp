@@ -235,7 +235,8 @@ void RowLoader::process (Task & t)
     auto row = t.row_begin;
     if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
     {
-        while(!t.cancel && sqlite3_step(stmt) == SQLITE_ROW)
+        int step_result = SQLITE_OK;
+        while(!t.cancel && (step_result = sqlite3_step(stmt)) == SQLITE_ROW)
         {
             size_t num_columns = static_cast<size_t>(sqlite3_data_count(stmt));
 
@@ -255,6 +256,11 @@ void RowLoader::process (Task & t)
             }
             std::lock_guard<std::mutex> lk(cache_mutex);
             cache_data.set(row++, std::move(rowdata));
+        }
+
+        if (step_result != SQLITE_ROW && step_result != SQLITE_DONE && step_result != SQLITE_OK && !t.cancel) {
+            QString errorMsg = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
+            emit error(t.token, errorMsg);
         }
 
         sqlite3_finalize(stmt);

@@ -5,7 +5,7 @@
 
     <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
 
-        <Package Id="*" Compressed="yes" InstallerVersion="405" InstallPrivileges="elevated" InstallScope="perMachine" />
+        <Package Id="*" Compressed="yes" InstallerVersion="500" InstallPrivileges="elevated" InstallScope="perMachine" Platform="arm64" />
 
         <Media Id="1" Cabinet="Media.cab" EmbedCab="yes" CompressionLevel="high" />
 
@@ -39,30 +39,30 @@
 
         <!-- ================================================ Files ================================================ -->
 
-        <?if $(sys.BUILDARCH)="x64"?>
-            <?define ProgramFilesFolder="ProgramFiles64Folder" ?>
-        <?elseif $(sys.BUILDARCH)="x86"?>
-            <?define ProgramFilesFolder="ProgramFilesFolder" ?>
-        <?endif?>
+        <?define ProgramFilesFolder="ProgramFiles64Folder" ?>
 
         <Directory Id="TARGETDIR" Name="SourceDir">
-            <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <Component Id="ARM64_CRT_Runtime" Guid="66C61A39-F6A2-41CB-A705-7D7607CBD48F">
+                        <File Source="$(var.VCRedistPath)\msvcp140.dll" KeyPath="yes" />
+                        <File Source="$(var.VCRedistPath)\msvcp140_1.dll" />
+                        <File Source="$(var.VCRedistPath)\msvcp140_2.dll" />
+                        <File Source="$(var.VCRedistPath)\vcruntime140.dll" />
+                        <File Source="$(var.VCRedistPath)\vcruntime140_1.dll" />
+                    </Component>
+
                     <!-- Save the install location to the Registry -->
                     <Component Id="RegistryInstallLocation">
                         <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="InstallLocation" Value="[INSTALLDIR]" Type="string" />
                     </Component>
 
                     <Directory Id="styles" Name="styles">
-                        <Component><File Source="$(var.QtPath)\plugins\styles\qwindowsvistastyle.dll" /></Component>
-                    </Directory>
-                    <Directory Id="bearer" Name="bearer">
-                        <Component><File Source="$(var.QtPath)\plugins\bearer\qgenericbearer.dll" /></Component>
+                        <Component><File Source="$(var.QtPath)\plugins\styles\qmodernwindowsstyle.dll" /></Component>
                     </Directory>
                     <Directory Id="extensions" Name="extensions">
                         <Component><File Source="$(var.SQLitePath)\formats.dll" /></Component>
-                        <Component><File Source="$(var.SqleanPath)\sqlean.dll" /></Component>
+                        <Component><File Source="$(var.SqleanPath)\dist\arm64\sqlean.dll" /></Component>
                     </Directory>
                     <Directory Id="iconengines" Name="iconengines">
                         <Component><File Source="$(var.QtPath)\plugins\iconengines\qsvgicon.dll" /></Component>
@@ -81,8 +81,8 @@
                     <Directory Id="platforms" Name="platforms">
                         <Component><File Source="$(var.QtPath)\plugins\platforms\qwindows.dll" /></Component>
                     </Directory>
-                    <Directory Id="printsupport" Name="printsupport">
-                        <Component><File Source="$(var.QtPath)\plugins\printsupport\windowsprintersupport.dll" /></Component>
+                    <Directory Id="tls" Name="tls">
+                        <Component><File Source="$(var.QtPath)\plugins\tls\qopensslbackend.dll" /></Component>
                     </Directory>
                     <Directory Id="licenses" Name="licenses">
                         <Component><File Source="..\..\LICENSE" /></Component>
@@ -91,22 +91,18 @@
                         <Component><File Source="..\..\LICENSE-MPL-2.0" /></Component>
                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
                     </Directory>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Concurrent.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Core.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Gui.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Network.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5PrintSupport.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
-                    <Component><File Source="$(var.QtPath)\bin\Qt5Svg.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Concurrent.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Core.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Core5Compat.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Gui.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Network.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6PrintSupport.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Widgets.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Xml.dll" /></Component>
+                    <Component><File Source="$(var.QtPath)\bin\Qt6Svg.dll" /></Component>
 		    <!-- OpenSSL 3.x -->
-                    <?if $(sys.BUILDARCH)="x64"?>
-                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x64\libcrypto-3-x64.dll" /></Component>
-                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x64\libssl-3-x64.dll" /></Component>
-                    <?elseif $(sys.BUILDARCH)="x86"?>
-                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x86\libcrypto-3.dll" /></Component>
-                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x86\libssl-3.dll" /></Component>
-                    <?endif?>
+                    <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\arm64\libcrypto-3-arm64.dll" /></Component>
+                    <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\arm64\libssl-3-arm64.dll" /></Component>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
@@ -144,7 +140,7 @@
         <Feature Id="Complete" Title="$(var.Name)" Description="The complete package" ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no" Display="expand">
 
             <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden">
-                <MergeRef Id="VCRedist"/>
+                <ComponentRef Id="ARM64_CRT_Runtime" />
             </Feature>
 
             <Feature Id="Extensions" Title="SQLite Extensions" Description="SQLite runtime loadable extensions" AllowAdvertise="no" Display="expand">
@@ -168,8 +164,6 @@
             <!-- Translations -->
             <ComponentGroupRef Id="TranslationsGroup" />
 
-            <!-- Bearer -->
-            <ComponentRef Id="qgenericbearer.dll" />
             <!-- Plugins -->
             <ComponentRef Id="qsvgicon.dll" />
             <ComponentRef Id="qgif.dll" />
@@ -183,10 +177,10 @@
             <ComponentRef Id="qwebp.dll" />
             <!-- Platforms -->
             <ComponentRef Id="qwindows.dll" />
+            <!-- TLS -->
+            <ComponentRef Id="qopensslbackend.dll" />
             <!-- Windows Vista Style -->
-                <ComponentRef Id="qwindowsvistastyle.dll" />
-            <!-- Printer -->
-            <ComponentRef Id="windowsprintersupport.dll" />
+                <ComponentRef Id="qmodernwindowsstyle.dll" />
             <!-- Licenses -->
             <ComponentRef Id="LICENSE" />
             <ComponentRef Id="LICENSE_GPL_3.0" />
@@ -194,14 +188,15 @@
             <ComponentRef Id="LICENSE_MPL_2.0" />
             <ComponentRef Id="LICENSE_PLUGINS" />
             <!-- Qt -->
-            <ComponentRef Id="Qt5Concurrent.dll" />
-            <ComponentRef Id="Qt5Core.dll" />
-            <ComponentRef Id="Qt5Gui.dll" />
-            <ComponentRef Id="Qt5Network.dll" />
-            <ComponentRef Id="Qt5PrintSupport.dll" />
-            <ComponentRef Id="Qt5Widgets.dll" />
-            <ComponentRef Id="Qt5Xml.dll" />
-            <ComponentRef Id="Qt5Svg.dll" />
+            <ComponentRef Id="Qt6Concurrent.dll" />
+            <ComponentRef Id="Qt6Core.dll" />
+            <ComponentRef Id="Qt6Core5Compat.dll" />
+            <ComponentRef Id="Qt6Gui.dll" />
+            <ComponentRef Id="Qt6Network.dll" />
+            <ComponentRef Id="Qt6PrintSupport.dll" />
+            <ComponentRef Id="Qt6Widgets.dll" />
+            <ComponentRef Id="Qt6Xml.dll" />
+            <ComponentRef Id="Qt6Svg.dll" />
             <!-- OpenSSL -->
             <ComponentRef Id="libcrypto.dll" />
             <ComponentRef Id="libssl.dll" />

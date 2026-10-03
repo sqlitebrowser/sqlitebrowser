@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16"
+   width="16"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="bullet_arrow_right.svg"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5" />
+  <sodipodi:namedview
+     id="namedview5"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="49"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="1920"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <linearGradient
+     id="a"
+     x1="-3.2071349"
+     x2="2.4053512"
+     y1="-3.1180478"
+     y2="2.4944383"
+     gradientTransform="scale(1.2472191,0.80178373)"
+     gradientUnits="userSpaceOnUse">
+    <stop
+       offset="0"
+       stop-color="#c4c4c4"
+       id="stop1" />
+    <stop
+       offset="1"
+       stop-color="#6f6f6f"
+       id="stop2" />
+  </linearGradient>
+  <linearGradient
+     id="b"
+     x1="-2.1213203"
+     x2="1.4142136"
+     y1="-1.979899"
+     y2="1.5556349"
+     gradientTransform="scale(1.4142136,0.70710678)"
+     gradientUnits="userSpaceOnUse">
+    <stop
+       offset="0"
+       stop-color="#c6c6c6"
+       id="stop3" />
+    <stop
+       offset="1"
+       stop-color="#b1b1b1"
+       id="stop4" />
+  </linearGradient>
+  <g
+     transform="rotate(90,0,8.25)"
+     id="g5">
+    <path
+       d="M -4,2 H 3 V 1 L -0.5,-2.5 -4,1 Z"
+       fill="url(#a)"
+       id="path4"
+       style="fill:url(#a)" />
+    <path
+       d="M -3,1.1 H 2 L -0.5,-1.4 Z"
+       fill="url(#b)"
+       id="path5"
+       style="fill:url(#b)" />
+  </g>
+</svg>
