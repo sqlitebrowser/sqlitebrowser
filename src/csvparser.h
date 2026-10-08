@@ -95,6 +95,8 @@ private:
     int64_t m_nBufferSize;        //! internal buffer read size
 
     bool look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd, char expected);
+    bool look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd,
+                    const char* expected, int extraBytes);
 };
 
 #endif
