@@ -23,6 +23,7 @@
 #include "SqlUiLexer.h"
 #include "FileDialog.h"
 #include "FindReplaceDialog.h"
+#include "GlobalFilter.h"
 #include "RunSql.h"
 #include "ExtendedTableWidget.h"
 #include "Data.h"
@@ -2797,15 +2798,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 settings.plotYAxes[1][y2AxisName] = y2AxisSettings;
             }
         } else if(xml.name() == QT_UNICODE_LITERAL("global_filter")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("global_filter"))
-            {
-                if(xml.name() == QT_UNICODE_LITERAL("filter"))
-                {
-                    QString value = xml.attributes().value("value").toString();
-                    settings.globalFilters.push_back(value);
-                    xml.skipCurrentElement();
-                }
-            }
+            GlobalFilter::load(settings.globalFilters, xml);
         }
     }
 }
@@ -3198,14 +3191,7 @@ static void saveBrowseDataTableSettings(const BrowseDataTableSettings& object, s
       xml.writeEndElement();
     }
     xml.writeEndElement();
-    xml.writeStartElement("global_filter");
-    for(const auto& v : object.globalFilters)
-    {
-        xml.writeStartElement("filter");
-        xml.writeAttribute("value", v);
-        xml.writeEndElement();
-    }
-    xml.writeEndElement();
+    GlobalFilter::save(object.globalFilters, xml);
 }
 
 void MainWindow::saveProject(const QString& currentFilename)
