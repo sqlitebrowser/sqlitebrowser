@@ -176,6 +176,10 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                         field = addColumn(record, field, m_bTrimFields);
                         it += m_iNumExtraBytesFieldSeparator;
                     }
+                    else
+                    {
+                        addChar(field, c);
+                    }
                 }
                 else if(c == m_cQuoteChar[0])
                 {
@@ -185,6 +189,10 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     {
                         state = StateInQuote;
                         it += m_iNumExtraBytesQuoteChar;
+                    }
+                    else
+                    {
+                        addChar(field, c);
                     }
                 }
                 else if(c == '\r')
@@ -221,6 +229,10 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     {
                         state = StateEndQuote;
                         it += m_iNumExtraBytesQuoteChar;
+                    }
+                    else
+                    {
+                        addChar(field, c);
                     }
                 }
                 else
