@@ -12,6 +12,8 @@ class TestRegex : public QObject
 private slots:
     void sqlQueryComments();
     void sqlQueryComments_data();
+    void clipboardRows();
+    void clipboardRows_data();
 };
 
 #endif

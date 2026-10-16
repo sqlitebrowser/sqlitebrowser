@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QByteArray>
+#include <vector>
 
 // This returns false if the data in the data parameter contains binary data. If it is text only, the function returns
 // true. If the second parameter is specified, it will be used to convert the data from the given encoding to Unicode
@@ -39,5 +40,8 @@ QString isoDateTimeStringToLocalDateTimeString(const QString& date_string);
 
 // Helper function for removing all comments from a SQL query
 void removeCommentsFromQuery(QString& query);
+
+// Split tab-separated clipboard data into rows, preserving quoted fields.
+std::vector<std::vector<QByteArray>> parseClipboard(QString clipboard);
 
 #endif
