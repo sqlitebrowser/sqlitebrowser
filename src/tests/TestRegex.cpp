@@ -3,7 +3,44 @@
 
 #include <QtTest/QTest>
 
+using ClipboardRows = std::vector<std::vector<QByteArray>>;
+Q_DECLARE_METATYPE(ClipboardRows)
+
 QTEST_APPLESS_MAIN(TestRegex)
+
+void TestRegex::clipboardRows_data()
+{
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<ClipboardRows>("expected");
+
+    QTest::newRow("plain-rows") << QString("one\ntwo\n")
+        << ClipboardRows{{"one"}, {"two"}};
+    QTest::newRow("quoted-cell") << QString("\"one\"\ttwo")
+        << ClipboardRows{{"one", "two"}};
+    QTest::newRow("literal-quotes-between-rows") << QString("a\"b\nc\"d\ne")
+        << ClipboardRows{{"a\"b"}, {"c\"d"}, {"e"}};
+    QTest::newRow("literal-quotes-after-column") << QString("x\ta\"b\nc\"d\te")
+        << ClipboardRows{{"x", "a\"b"}, {"c\"d", "e"}};
+    QTest::newRow("quoted-multiline") << QString("\"one\ntwo\"\tthree")
+        << ClipboardRows{{"one\ntwo", "three"}};
+    QTest::newRow("literal-double-quotes") << QString("one \"\" two\nthree")
+        << ClipboardRows{{"one \"\" two"}, {"three"}};
+    QTest::newRow("escaped-quotes") << QString("\"one \"\"two\"\"\"\tthree")
+        << ClipboardRows{{"one \"two\"", "three"}};
+    QTest::newRow("empty-cells") << QString("one\t\tthree\r\n\tfive\t")
+        << ClipboardRows{{"one", "", "three"}, {"", "five", ""}};
+    QTest::newRow("unmatched-quote") << QString("one\n\"two\nthree")
+        << ClipboardRows{{"one"}, {"\"two"}, {"three"}};
+    QTest::newRow("libreoffice-tab") << QString("one\x01two\tthree")
+        << ClipboardRows{{"one\ttwo", "three"}};
+}
+
+void TestRegex::clipboardRows()
+{
+    QFETCH(QString, text);
+    QFETCH(ClipboardRows, expected);
+    QVERIFY(parseClipboard(text) == expected);
+}
 
 void TestRegex::sqlQueryComments_data()
 {
