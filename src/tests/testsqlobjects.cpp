@@ -469,6 +469,24 @@ void TestTable::parseDefaultValues()
     QCOMPARE(tab.fields.at(3).defaultValue(), "'0'");
 }
 
+void TestTable::parseDoubleQuotedDefaultValues()
+{
+    std::string sql = "CREATE TABLE test(a text DEFAULT \"0000-00-00T00:00:00.000\", b text DEFAULT \"say \"\"hi\"\"\", c text DEFAULT foo);";
+
+    Table tab(*Table::parseSQL(sql));
+
+    // Double-quoted defaults are string literals and must be written out quoted again
+    QCOMPARE(tab.fields.at(0).defaultValue(), "'0000-00-00T00:00:00.000'");
+    QCOMPARE(tab.fields.at(1).defaultValue(), "'say \"hi\"'");
+    // Bare identifiers are left as they are
+    QCOMPARE(tab.fields.at(2).defaultValue(), "foo");
+
+    // The generated SQL must be parseable again and yield the same defaults
+    Table tab2(*Table::parseSQL(tab.sql()));
+    QCOMPARE(tab2.fields.at(0).defaultValue(), "'0000-00-00T00:00:00.000'");
+    QCOMPARE(tab2.fields.at(1).defaultValue(), "'say \"hi\"'");
+}
+
 void TestTable::createTableWithIn()
 {
     std::string sSQL = "CREATE TABLE not_working("
