@@ -561,7 +561,10 @@ void TableBrowser::refresh()
                         min = std::min(min, dblData);
                         max = std::max(max, dblData);
                     }
-                    statusMessage += tr(". Sum: %1; Average: %2; Min: %3; Max: %4").arg(sum).arg(sum/sel.count()).arg(min).arg(max);
+                    // QString::arg(double) defaults to 6 significant digits, which silently rounds larger sums.
+                    // Use enough precision to show doubles accurately without exposing binary rounding noise.
+                    const auto fmt = [](double value) { return QString::number(value, 'g', 15); };
+                    statusMessage += tr(". Sum: %1; Average: %2; Min: %3; Max: %4").arg(fmt(sum), fmt(sum/sel.count()), fmt(min), fmt(max));
                 }
             }
             emit statusMessageRequested(statusMessage);
