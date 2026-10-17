@@ -183,6 +183,35 @@ void TestTable::foreignKeys()
                        ");");
 }
 
+void TestTable::addAndRemoveKeyInConstraint()
+{
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    tt.fields.emplace_back("c", "integer");
+    auto pk = std::make_shared<PrimaryKeyConstraint>();
+    tt.addConstraint({std::string("a")}, pk);
+
+    // Extending the key sorts the updated entry behind the old one. This used to loop forever.
+    tt.addKeyToConstraint(pk, "b");
+    tt.addKeyToConstraint(pk, "c");
+    QCOMPARE(tt.primaryKeyColumns().size(), size_t(3));
+    QCOMPARE(tt.indexConstraints().size(), size_t(1));
+    QVERIFY(tt.sql().find("PRIMARY KEY(\"a\",\"b\",\"c\")") != std::string::npos);
+
+    // Removing the first key column sorts the updated entry behind the old one, too
+    tt.removeKeyFromConstraint(pk, "a");
+    QCOMPARE(tt.primaryKeyColumns().size(), size_t(2));
+    QCOMPARE(tt.indexConstraints().size(), size_t(1));
+    QVERIFY(tt.sql().find("PRIMARY KEY(\"b\",\"c\")") != std::string::npos);
+
+    // Removing the last remaining keys removes the constraint
+    tt.removeKeyFromConstraint(pk, "b");
+    tt.removeKeyFromConstraint(pk, "c");
+    QVERIFY(!tt.primaryKey());
+    QCOMPARE(tt.indexConstraints().size(), size_t(0));
+}
+
 void TestTable::uniqueConstraint()
 {
     Table tt("testtable");

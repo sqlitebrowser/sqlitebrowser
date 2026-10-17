@@ -462,7 +462,11 @@ void Table::addKeyToConstraint(std::shared_ptr<UniqueConstraint> constraint, con
             new_columns.emplace_back(key, false);
 
             m_indexConstraints.insert(std::make_pair(new_columns, it->second));
-            it = m_indexConstraints.erase(it);
+            m_indexConstraints.erase(it);
+
+            // A constraint object is only stored once and the updated entry we have just inserted can be sorted
+            // behind the removed one, so stop here instead of finding it again.
+            break;
         }
         else
         {
@@ -484,11 +488,15 @@ void Table::removeKeyFromConstraint(std::shared_ptr<UniqueConstraint> constraint
             // If the column list is empty now, remove the entire constraint. Otherwise save the updated column list
             if(new_columns.empty())
             {
-                it = m_indexConstraints.erase(it);
+                m_indexConstraints.erase(it);
             } else {
                 m_indexConstraints.insert(std::make_pair(new_columns, it->second));
-                it = m_indexConstraints.erase(it);
+                m_indexConstraints.erase(it);
             }
+
+            // A constraint object is only stored once and the updated entry we have just inserted can be sorted
+            // behind the removed one, so stop here instead of finding it again.
+            break;
         } else {
             ++it;
         }
