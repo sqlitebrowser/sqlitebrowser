@@ -368,7 +368,7 @@ void QHexEdit::ensureVisible()
 {
     if (_cursorPosition < (_bPosFirst * 2))
         verticalScrollBar()->setValue((int)(_cursorPosition / 2 / _bytesPerLine));
-    if (_cursorPosition > ((_bPosFirst + (_rowsShown - 1)*_bytesPerLine) * 2))
+    if (_cursorPosition > ((_bPosFirst + (static_cast<qint64>(_rowsShown - 1) * _bytesPerLine)) * 2))
         verticalScrollBar()->setValue((int)(_cursorPosition / 2 / _bytesPerLine) - _rowsShown + 1);
     if (_pxCursorX < horizontalScrollBar()->value())
         horizontalScrollBar()->setValue(_pxCursorX);
@@ -852,7 +852,7 @@ void QHexEdit::paintEvent(QPaintEvent *event)
             QString address;
             for (int row=0, pxPosY = _pxCharHeight; row <= (_dataShown.size()/_bytesPerLine); row++, pxPosY +=_pxCharHeight)
             {
-                address = QString("%1").arg(_bPosFirst + row*_bytesPerLine + _addressOffset, _addrDigits, 16, QChar('0'));
+                address = QString("%1").arg(_bPosFirst + static_cast<qint64>(row) * _bytesPerLine + _addressOffset, _addrDigits, 16, QChar('0'));
                 painter.drawText(_pxPosAdrX - pxOfsX, pxPosY, address);
             }
         }
@@ -867,7 +867,7 @@ void QHexEdit::paintEvent(QPaintEvent *event)
             QByteArray hex;
             int pxPosX = _pxPosHexX  - pxOfsX;
             int pxPosAsciiX2 = _pxPosAsciiX  - pxOfsX;
-            qint64 bPosLine = row * _bytesPerLine;
+            qint64 bPosLine = static_cast<qint64>(row) * _bytesPerLine;
             for (int colIdx = 0; ((bPosLine + colIdx) < _dataShown.size() && (colIdx < _bytesPerLine)); colIdx++)
             {
                 QColor c = viewport()->palette().color(QPalette::Base);
