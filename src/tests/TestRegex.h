@@ -14,6 +14,8 @@ private slots:
     void sqlQueryComments_data();
     void clipboardRows();
     void clipboardRows_data();
+    void isTextOnlyControlCharacters();
+    void isTextOnlyControlCharacters_data();
 };
 
 #endif

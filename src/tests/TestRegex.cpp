@@ -42,6 +42,28 @@ void TestRegex::clipboardRows()
     QVERIFY(parseClipboard(text) == expected);
 }
 
+void TestRegex::isTextOnlyControlCharacters_data()
+{
+    QTest::addColumn<QByteArray>("data");
+    QTest::addColumn<bool>("expected");
+
+    QTest::newRow("plain") << QByteArray("John Mary") << true;
+    QTest::newRow("whitespace-controls") << QByteArray("a\tb\r\nc") << true;
+    QTest::newRow("unit-separator") << QByteArray("John\x1f" "Mary") << true;
+    QTest::newRow("record-separator") << QByteArray("a\x1e" "b") << true;
+    QTest::newRow("group-and-file-separator") << QByteArray("a\x1d" "b\x1c" "c") << true;
+    QTest::newRow("nul") << QByteArray("a\0b", 3) << false;
+    QTest::newRow("bell") << QByteArray("a\x07" "b") << false;
+    QTest::newRow("escape") << QByteArray("a\x1b" "b") << false;
+}
+
+void TestRegex::isTextOnlyControlCharacters()
+{
+    QFETCH(QByteArray, data);
+    QFETCH(bool, expected);
+    QCOMPARE(isTextOnly(data), expected);
+}
+
 void TestRegex::sqlQueryComments_data()
 {
     QTest::addColumn<QString>("dirtyQuery");

@@ -51,7 +51,10 @@ bool isTextOnly(QByteArray data, const QString& encoding, bool quickTest)
         QString text (data);
         bool isPrintable = true;
         for(QChar character : text) {
-            if(character.isNonCharacter() || (character.category() == QChar::Other_Control && !character.isSpace())) {
+            // The ASCII information separators (U+001C to U+001F) are control characters which Qt does not consider
+            // white space. They are regularly used as field delimiters in text, though, so don't treat them as binary.
+            const bool isSeparator = character.unicode() >= 0x1C && character.unicode() <= 0x1F;
+            if(character.isNonCharacter() || (character.category() == QChar::Other_Control && !character.isSpace() && !isSeparator)) {
                 isPrintable = false;
                 break;
             }
