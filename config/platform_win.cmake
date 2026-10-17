@@ -10,6 +10,12 @@ else()
     find_package(OpenSSL 3.0.0 REQUIRED)
 endif()
 
+target_sources(${PROJECT_NAME} PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/WindowsJumpList.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/WindowsJumpList.cpp"
+)
+list(APPEND PLATFORM_LIBS ole32 shell32 shlwapi uuid)
+
 if(MSVC)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS,5.02 /ENTRY:mainCRTStartup")

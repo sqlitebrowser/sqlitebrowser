@@ -31,6 +31,10 @@
 #include "TableBrowser.h"
 #include "TableBrowserDock.h"
 
+#ifdef Q_OS_WIN
+#include "WindowsJumpList.h"
+#endif
+
 #include <chrono>
 #include <QFile>
 #include <QSaveFile>
@@ -1834,6 +1838,12 @@ void MainWindow::updateRecentFileActions()
             i--;
         }
     }
+
+#ifdef Q_OS_WIN
+    // Mirror the list in the taskbar Jump List and forget the files the user has removed from it there
+    for(const QString& removed : WindowsJumpList::update(tr("Recent Files"), files.mid(0, MaxRecentFiles)))
+        files.removeAll(removed);
+#endif
 
     // Store updated list
     Settings::setValue("General", "recentFileList", files);
@@ -3972,6 +3982,9 @@ void MainWindow::moveDocksTo(Qt::DockWidgetArea area)
 void MainWindow::clearRecentFiles()
 {
     Settings::clearValue("General", "recentFileList");
+#ifdef Q_OS_WIN
+    WindowsJumpList::update(tr("Recent Files"), {});
+#endif
 
     for(int i=0; i < MaxRecentFiles; ++i)
         recentFileActs[i]->setVisible(false);
