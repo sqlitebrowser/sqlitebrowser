@@ -647,7 +647,8 @@ void EditDialog::accept()
             QString errorMsg;
             int errorLine, errorColumn;
 
-            bool isValid = xmlDoc.setContent(sciEdit->text().toUtf8(), true, &errorMsg, &errorLine, &errorColumn);
+            // Don't process namespaces: QDomDocument would otherwise repeat the default xmlns declaration on every element
+            bool isValid = xmlDoc.setContent(sciEdit->text().toUtf8(), false, &errorMsg, &errorLine, &errorColumn);
             bool proceed;
 
             sciEdit->clearErrorIndicators();
@@ -776,7 +777,8 @@ void EditDialog::setDataInBuffer(const QByteArray& bArrdata, DataSources source)
             QString errorMsg;
             int errorLine, errorColumn;
             QDomDocument xmlDoc;
-            bool isValid = xmlDoc.setContent(bArrdata, true, &errorMsg, &errorLine, &errorColumn);
+            // Don't process namespaces: QDomDocument would otherwise repeat the default xmlns declaration on every element
+            bool isValid = xmlDoc.setContent(bArrdata, false, &errorMsg, &errorLine, &errorColumn);
 
             if (mustIndentAndCompact && isValid) {
                 // Load indented XML into the XML editor
