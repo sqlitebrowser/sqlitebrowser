@@ -95,9 +95,18 @@ add_executable(test-global-filter ${TESTGLOBALFILTER_HDR} ${TESTGLOBALFILTER_SRC
 target_link_libraries(test-global-filter ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${LIBSQLITE_NAME} ${QT5_COMPAT})
 add_test(NAME test-global-filter COMMAND $<TARGET_FILE:test-global-filter>)
 if(WIN32)
+    set(_gf_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _gf_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _gf_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _gf_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
     # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
-    # Keep those prefixes on PATH while CTest launches this executable.
-    string(REPLACE ";" "\\;" TESTGLOBALFILTER_PATH "${CMAKE_PREFIX_PATH};$ENV{PATH}")
+    string(REPLACE ";" "\\;" TESTGLOBALFILTER_PATH "${_gf_extra_paths};$ENV{PATH}")
     set_tests_properties(test-global-filter PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
 endif()
 
