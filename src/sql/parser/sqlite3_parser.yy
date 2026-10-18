@@ -709,8 +709,14 @@ columnconstraint:
 												d->setName($1);
 												drv.last_table_column->setDefaultValue(d);
 											}
-	| optional_constraintname DEFAULT id						{
+	| optional_constraintname DEFAULT IDENTIFIER					{
 												auto d = std::make_shared<sqlb::DefaultConstraint>($3);
+												d->setName($1);
+												drv.last_table_column->setDefaultValue(d);
+											}
+	| optional_constraintname DEFAULT QUOTEDLITERAL					{	// A double-quoted default value is a string literal: keep it quoted so
+												// the value survives being written out again, e.g. when exporting to SQL.
+												auto d = std::make_shared<sqlb::DefaultConstraint>(sqlb::escapeString($3));
 												d->setName($1);
 												drv.last_table_column->setDefaultValue(d);
 											}

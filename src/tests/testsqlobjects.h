@@ -36,6 +36,7 @@ private slots:
     void parseSQLForeignKeys();
     void parseSQLCheckConstraint();
     void parseDefaultValues();
+    void parseDoubleQuotedDefaultValues();
     void createTableWithIn();
     void createTableWithNotLikeConstraint();
     void rowValues();
