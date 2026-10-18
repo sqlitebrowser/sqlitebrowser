@@ -479,7 +479,7 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
                     else if(old_type.empty() && convert_to_real)                         // No type yet and only convertible to float (less 'difficult' than integer)
                         new_type = "REAL";
                     else if(old_type == "REAL" && convert_to_real)                       // It was float so far and still is
-                        new_type = "INTEGER";
+                        new_type = "REAL";
                     else if(old_type == "INTEGER" && convert_to_integer)                 // It was integer so far and still is
                         new_type = "INTEGER";
 
