@@ -46,6 +46,13 @@ jobs:
           esac
 
           echo "tag_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          if [ "$TAG_NAME" = "continuous" ]; then
+            echo "release_name=Continuous (${GITHUB_SHA:0:7})" >> "$GITHUB_OUTPUT"
+          elif [ "$TAG_NAME" = "nightly" ]; then
+            echo "release_name=Nightly ($(date -u +'%Y%m%d'))" >> "$GITHUB_OUTPUT"
+          else
+            echo "release_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          fi
 
       - run: mkdir -v target release
 
@@ -114,5 +121,6 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           files: release/*
+          name: ${{ steps.release-tag.outputs.release_name }}
           prerelease: true
           tag_name: ${{ steps.release-tag.outputs.tag_name }}
