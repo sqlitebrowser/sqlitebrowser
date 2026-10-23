@@ -93,7 +93,7 @@ Download continuous builds for AppImage, macOS and Windows here:
 
 Download nightly builds for Windows and macOS here:
 
-* https://nightlies.sqlitebrowser.org/latest
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/nightly
 
 ## Windows
 
@@ -125,7 +125,7 @@ Continuous builds are available here:
 * https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
 
 Nightly builds are available here:
-* https://nightlies.sqlitebrowser.org/latest
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/nightly
 
 ## macOS
 
@@ -152,7 +152,7 @@ Continuous builds are available here:
 * https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/continuous
 
 Nightly builds are available here:
-* https://nightlies.sqlitebrowser.org/latest
+* https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/nightly
 
 and also you can be installed via [Homebrew Cask](https://formulae.brew.sh/cask/db-browser-for-sqlite "Homebrew Cask"):
 
