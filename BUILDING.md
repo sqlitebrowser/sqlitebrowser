@@ -110,7 +110,7 @@ sudo make install
 
 This should complete without errors, giving you an executable file called `sqlitebrowser`. Done. :)
 
-> Also, we have a CI workflow for Ubuntu, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-ubuntu.yml)
+> Also, we have a CI workflow for Ubuntu, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/cppcmake-ubuntu.yml)
 
 #### OpenSUSE
 
@@ -217,7 +217,7 @@ If you additionally want an NSIS installer:
 
 Done.
 
-> Also, we have a CI workflow for Windows, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/build-windows.yml)
+> Also, we have a CI workflow for Windows, you can check it out [here](https://github.com/sqlitebrowser/sqlitebrowser/blob/master/.github/workflows/cppcmake-windows.yml)
 
 ## Build with SQLCipher support
 
