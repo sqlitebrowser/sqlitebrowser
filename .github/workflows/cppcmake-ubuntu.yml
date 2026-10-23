@@ -83,8 +83,8 @@ jobs:
 
       - name: Build AppImage
         run: |
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-$(uname -m).AppImage"
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20240109-1/linuxdeploy-plugin-qt-$(uname -m).AppImage"
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/linuxdeploy-$(uname -m).AppImage"
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-$(uname -m).AppImage"
           chmod a+x "linuxdeploy-$(uname -m).AppImage" "linuxdeploy-plugin-qt-$(uname -m).AppImage"
           if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
             export VERSION=$(date +%Y%m%d)
