@@ -61,13 +61,8 @@ done
 # Copy the icon file to the app bundle
 for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
     TARGET=$(echo $TARGET | sed -e 's/_/ /g')
-    if [ "$NIGHTLY" = "false" ]; then
-    cp installer/macos/macapp.icns "$TARGET/Contents/Resources/"
-    /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp.icns" "$TARGET/Contents/Info.plist"
-    else
     cp installer/macos/macapp-nightly.icns "$TARGET/Contents/Resources/"
     /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile macapp-nightly.icns" "$TARGET/Contents/Info.plist"
-    fi
 done
 
 # Sign the manually added extensions
