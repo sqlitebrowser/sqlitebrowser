@@ -43,6 +43,12 @@ done
 for TARGET in $(find build -name "DB Browser for SQL*.app" | sed -e 's/ /_/g'); do
     TARGET=$(echo $TARGET | sed -e 's/_/ /g')
     cp LICENSE* "$TARGET/Contents/Resources/"
+
+    if [ "$SQLCIPHER" = "true" ]; then
+        cp "$(brew --prefix sqlb-sqlcipher)/share/sqlb-sqlcipher/LICENSE-ICU" "$TARGET/Contents/Resources/"
+    else
+        cp "$(brew --prefix sqlb-sqlite)/share/sqlb-sqlite/LICENSE-ICU" "$TARGET/Contents/Resources/"
+    fi
 done
 
 # Copy the translation files to the app bundle

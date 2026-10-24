@@ -29,19 +29,20 @@
     silently installing it at the end of the installation. Unfortunately, this package is a self-extracting MSI.
     A Windows Installer mutex will prevent us from installing this package from within our application MSI.
 
-    Another option is to use redistributable merge modules (.msm files). Merge modules enables the installation of
-    redistributable Visual C++ DLLs into the "%SYSTEMROOT%\system32\" folder.
+    We also used redistributable merge modules (.msm files) for a while, which install the Visual C++ DLLs into the
+    "%SYSTEMROOT%\system32\" folder. The VC143 x64 merge module contains two different "vcruntime140.dll" files
+    targeting the same "System64" folder, which SignPath rejects when code signing the MSI. Microsoft also no longer
+    recommends merge modules, so we now deploy the Visual C++ DLLs app-local, next to the executables, as the
+    Windows on ARM installer does.
 
     VCRedistPath
-        The Visual C++ runtime merge modules are installed with Visual Studio and are located in this directory.
-    VCRedistFile
-        The Visual C++ runtime file. This file is usually named "Microsoft_[VERSION]_CRT_[ARCH].msm". "VERSION" is the
-        Visual Studio version the application is built with. Use VC141 (version 14.1) if the application is built with
-        Visual Studio 2017. The build "ARCH" will be set automatically.
+        The directory containing the Visual C++ runtime DLLs, usually
+        "[VS]\VC\Redist\MSVC\[VERSION]\[ARCH]\Microsoft.VC143.CRT". The prebuilt ICU libraries are built with Visual
+        Studio 2022, so VC143 (version 14.3) is used even though the application itself is built with Visual Studio
+        2019. TODO: We also need to update this when migrating to Qt6 later.
     -->
 
-    <?define VCRedistPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.29.30133\MergeModules" ?>
-    <?define VCRedistFile="Microsoft_VC142_CRT_$(sys.BUILDARCH).msm" ?>
+    <?define VCRedistPath="$(env.VCRedistPath)" ?>
 
     <!--
     =================================================== Build System ===================================================
@@ -54,6 +55,8 @@
     <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
     <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
     <?define SqleanPath="$(env.SqleanPath)" ?>
+    <?define ICUPath="$(env.ICUPath)" ?>
+    <?define ICUMajorVersion="$(env.ICUMajorVersion)" ?>
     <?define SQLiteExePath="$(env.ExePath)\release-sqlite\Release" ?>
     <?define SQLCipherExePath="$(env.ExePath)\release-sqlcipher\Release" ?>
 

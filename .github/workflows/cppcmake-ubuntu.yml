@@ -33,7 +33,7 @@ jobs:
       - name: Install and cache dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.3
         with:
-          packages: libfuse2 libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
+          packages: libfuse2 libicu-dev libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
           version: ${{ matrix.os }}
 
       - if: matrix.bundle == 'SQLCipher'
@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{ runner.temp }}
         run: |
           git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
-          LDFLAGS="-lcrypto -Wl,-soname,libsqlcipher.so.0" ./configure --prefix=./prefix --with-tempstore=yes --enable-load-extension --disable-tcl CFLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
+          LDFLAGS="-lcrypto -Wl,-soname,libsqlcipher.so.0" ./configure --prefix=./prefix --with-tempstore=yes --enable-load-extension --disable-tcl --with-icu-config=pkg-config CFLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
           make -j2 && sudo make install -j2
           cp ${GITHUB_WORKSPACE}/tools/linux/sqlcipher_rename.sh .
           chmod +x sqlcipher_rename.sh && sudo ./sqlcipher_rename.sh
@@ -59,13 +59,18 @@ jobs:
           fi
           tar -xzf sqlite.tar.gz && cd sqlite-autoconf-*
 
-          CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1" ./configure --disable-shared
+          CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1" ./configure --disable-shared --with-icu-config=pkg-config
           make -j2 && sudo make install -j2
 
       - name: Configure build
         run: |
+          # SQLite is built as a static library, so the ICU libraries it depends on must be linked into the application.
+          if [ "${{ matrix.bundle }}" = "SQLite" ]; then
+            EXTRA_LIBS=$(pkg-config --libs icu-i18n)
+          fi
           mkdir -v appbuild appdir && cd appbuild
           cmake -G Ninja \
+                -DCMAKE_CXX_STANDARD_LIBRARIES="${EXTRA_LIBS}" \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_PREFIX_PATH=$RUNNER_TEMP/sqlcipher/prefix \
                 -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr \

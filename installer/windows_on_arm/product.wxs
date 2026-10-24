@@ -90,6 +90,7 @@
                         <Component><File Source="..\..\LICENSE-MIT" /></Component>
                         <Component><File Source="..\..\LICENSE-MPL-2.0" /></Component>
                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
+                        <Component><File Id="LICENSE_ICU" Name="LICENSE-ICU" Source="$(var.ICUPath)\LICENSE" /></Component>
                     </Directory>
                     <Component><File Source="$(var.QtPath)\bin\Qt6Concurrent.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt6Core.dll" /></Component>
@@ -100,9 +101,13 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt6Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt6Xml.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt6Svg.dll" /></Component>
-		    <!-- OpenSSL 3.x -->
+                    <!-- OpenSSL 3.x -->
                     <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\arm64\libcrypto-3-arm64.dll" /></Component>
                     <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\arm64\libssl-3-arm64.dll" /></Component>
+                    <!-- ICU -->
+                    <Component><File Id="icudt.dll" Source="$(var.ICUPath)\bin\icudt$(var.ICUMajorVersion).dll" /></Component>
+                    <Component><File Id="icuin.dll" Source="$(var.ICUPath)\bin\icuin$(var.ICUMajorVersion).dll" /></Component>
+                    <Component><File Id="icuuc.dll" Source="$(var.ICUPath)\bin\icuuc$(var.ICUMajorVersion).dll" /></Component>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
@@ -187,6 +192,7 @@
             <ComponentRef Id="LICENSE_MIT" />
             <ComponentRef Id="LICENSE_MPL_2.0" />
             <ComponentRef Id="LICENSE_PLUGINS" />
+            <ComponentRef Id="LICENSE_ICU" />
             <!-- Qt -->
             <ComponentRef Id="Qt6Concurrent.dll" />
             <ComponentRef Id="Qt6Core.dll" />
@@ -200,6 +206,10 @@
             <!-- OpenSSL -->
             <ComponentRef Id="libcrypto.dll" />
             <ComponentRef Id="libssl.dll" />
+            <!-- ICU -->
+            <ComponentRef Id="icudt.dll" />
+            <ComponentRef Id="icuin.dll" />
+            <ComponentRef Id="icuuc.dll" />
             <!-- SQLite & SQLCipher -->
             <ComponentRef Id="sqlcipher.dll" />
             <ComponentRef Id="sqlite3.dll" />

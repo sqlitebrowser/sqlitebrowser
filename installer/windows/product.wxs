@@ -46,9 +46,21 @@
         <?endif?>
 
         <Directory Id="TARGETDIR" Name="SourceDir">
-            <Merge Id="VCRedist" SourceFile="$(var.VCRedistPath)\$(var.VCRedistFile)" DiskId="1" Language="0" />
             <Directory Id="$(var.ProgramFilesFolder)">
                 <Directory Id="INSTALLDIR" Name="$(var.Name)">
+                    <!-- Visual C++ CRT (app-local) -->
+                    <Component><File Source="$(var.VCRedistPath)\concrt140.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\msvcp140.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\msvcp140_1.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\msvcp140_2.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\msvcp140_atomic_wait.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\msvcp140_codecvt_ids.dll" /></Component>
+                    <Component><File Source="$(var.VCRedistPath)\vcruntime140.dll" /></Component>
+                    <?if $(sys.BUILDARCH)="x64"?>
+                        <Component><File Source="$(var.VCRedistPath)\vcruntime140_1.dll" /></Component>
+                    <?endif?>
+                    <Component><File Source="$(var.VCRedistPath)\vcruntime140_threads.dll" /></Component>
+
                     <!-- Save the install location to the Registry -->
                     <Component Id="RegistryInstallLocation">
                         <RegistryValue Root="HKLM" Key="Software\$(var.Name)" Name="InstallLocation" Value="[INSTALLDIR]" Type="string" />
@@ -90,6 +102,7 @@
                         <Component><File Source="..\..\LICENSE-MIT" /></Component>
                         <Component><File Source="..\..\LICENSE-MPL-2.0" /></Component>
                         <Component><File Source="..\..\LICENSE-PLUGINS" /></Component>
+                        <Component><File Id="LICENSE_ICU" Name="LICENSE-ICU" Source="$(var.ICUPath)\LICENSE" /></Component>
                     </Directory>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Concurrent.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Core.dll" /></Component>
@@ -99,7 +112,7 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Svg.dll" /></Component>
-		    <!-- OpenSSL 3.x -->
+                    <!-- OpenSSL 3.x -->
                     <?if $(sys.BUILDARCH)="x64"?>
                         <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x64\libcrypto-3-x64.dll" /></Component>
                         <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x64\libssl-3-x64.dll" /></Component>
@@ -107,6 +120,10 @@
                         <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x86\libcrypto-3.dll" /></Component>
                         <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x86\libssl-3.dll" /></Component>
                     <?endif?>
+                    <!-- ICU -->
+                    <Component><File Id="icudt.dll" Source="$(var.ICUPath)\bin\icudt$(var.ICUMajorVersion).dll" /></Component>
+                    <Component><File Id="icuin.dll" Source="$(var.ICUPath)\bin\icuin$(var.ICUMajorVersion).dll" /></Component>
+                    <Component><File Id="icuuc.dll" Source="$(var.ICUPath)\bin\icuuc$(var.ICUMajorVersion).dll" /></Component>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
                     <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
@@ -144,7 +161,17 @@
         <Feature Id="Complete" Title="$(var.Name)" Description="The complete package" ConfigurableDirectory="INSTALLDIR" AllowAdvertise="no" Display="expand">
 
             <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden">
-                <MergeRef Id="VCRedist"/>
+                <ComponentRef Id="concrt140.dll" />
+                <ComponentRef Id="msvcp140.dll" />
+                <ComponentRef Id="msvcp140_1.dll" />
+                <ComponentRef Id="msvcp140_2.dll" />
+                <ComponentRef Id="msvcp140_atomic_wait.dll" />
+                <ComponentRef Id="msvcp140_codecvt_ids.dll" />
+                <ComponentRef Id="vcruntime140.dll" />
+                <?if $(sys.BUILDARCH)="x64"?>
+                    <ComponentRef Id="vcruntime140_1.dll" />
+                <?endif?>
+                <ComponentRef Id="vcruntime140_threads.dll" />
             </Feature>
 
             <Feature Id="Extensions" Title="SQLite Extensions" Description="SQLite runtime loadable extensions" AllowAdvertise="no" Display="expand">
@@ -193,6 +220,7 @@
             <ComponentRef Id="LICENSE_MIT" />
             <ComponentRef Id="LICENSE_MPL_2.0" />
             <ComponentRef Id="LICENSE_PLUGINS" />
+            <ComponentRef Id="LICENSE_ICU" />
             <!-- Qt -->
             <ComponentRef Id="Qt5Concurrent.dll" />
             <ComponentRef Id="Qt5Core.dll" />
@@ -205,6 +233,10 @@
             <!-- OpenSSL -->
             <ComponentRef Id="libcrypto.dll" />
             <ComponentRef Id="libssl.dll" />
+            <!-- ICU -->
+            <ComponentRef Id="icudt.dll" />
+            <ComponentRef Id="icuin.dll" />
+            <ComponentRef Id="icuuc.dll" />
             <!-- SQLite & SQLCipher -->
             <ComponentRef Id="sqlcipher.dll" />
             <ComponentRef Id="sqlite3.dll" />

@@ -53,6 +53,8 @@
     <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
     <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
     <?define SqleanPath="$(env.SqleanPath)" ?>
+    <?define ICUPath="$(env.ICUPath)" ?>
+    <?define ICUMajorVersion="$(env.ICUMajorVersion)" ?>
     <?define SQLiteExePath="$(env.ExePath)\release-sqlite\Release" ?>
     <?define SQLCipherExePath="$(env.ExePath)\release-sqlcipher\Release" ?>
 

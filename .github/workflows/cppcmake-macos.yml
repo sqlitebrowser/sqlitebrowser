@@ -32,7 +32,7 @@ jobs:
         run: |
           brew tap sqlitebrowser/tap
           brew trust sqlitebrowser/tap
-          brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite ninja
+          brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite sqlb-icu4c ninja
           npm install -g appdmg
 
       - name: Configure build
