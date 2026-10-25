@@ -1,6 +1,7 @@
 #include <QtTest/QTest>
 #include <QApplication>
 #include <QTemporaryDir>
+#include <QFile>
 
 #include "TestTableModel.h"
 #include "../sqlitedb.h"
@@ -24,7 +25,10 @@ struct Fixture
     Fixture()
     {
         Settings::setValue("db", "prefetchsize", 10);
-        db.create(dir.filePath("test.db"));
+        // Open an empty file instead of using create(), which closes the database handle twice
+        const QString filename = dir.filePath("test.db");
+        QFile(filename).open(QIODevice::WriteOnly);
+        db.open(filename);
         db.executeSQL("CREATE TABLE t (id INTEGER PRIMARY KEY, val TEXT);");
         db.executeSQL("WITH RECURSIVE c(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM c WHERE x < " + std::to_string(rowCount) +
                       ") INSERT INTO t(id, val) SELECT x, 'v' || x FROM c;");
