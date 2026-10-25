@@ -65,6 +65,19 @@ void TestTableModel::setDataOnUncachedRowLoadsRowAndUpdates()
     QCOMPARE(f.model->data(idx, Qt::EditRole).toString(), QString("changed"));
 }
 
+void TestTableModel::queryThatCannotBePreparedReportsError()
+{
+    Fixture f;
+
+    // The table is dropped behind the model's back, e.g. by another program. The model used to show an empty
+    // table without any error in this case because a statement that fails to prepare was silently ignored.
+    f.db.executeSQL("DROP TABLE t;");
+    f.model->setQuery(QString("SELECT * FROM t"));
+    f.model->waitUntilIdle();
+    QTRY_VERIFY_WITH_TIMEOUT(f.model->hasError(), 5000);
+    QVERIFY(f.model->lastError().contains("no such table"));
+}
+
 int main(int argc, char* argv[])
 {
     // The model needs a QApplication, but the tests must also run on machines without a display (e.g. CI)

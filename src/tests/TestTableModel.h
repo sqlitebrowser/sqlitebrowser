@@ -10,6 +10,7 @@ class TestTableModel : public QObject
 private slots:
     void setDataOnCachedRow();
     void setDataOnUncachedRowLoadsRowAndUpdates();
+    void queryThatCannotBePreparedReportsError();
 };
 
 #endif // TESTTABLEMODEL_H
