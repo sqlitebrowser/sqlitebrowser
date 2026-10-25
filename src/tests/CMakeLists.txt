@@ -151,3 +151,7 @@ set(TESTTABLEMODEL_HDR
 add_executable(test-table-model ${TESTTABLEMODEL_HDR} ${TESTTABLEMODEL_SRC})
 target_link_libraries(test-table-model ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
 add_test(NAME test-table-model COMMAND $<TARGET_FILE:test-table-model>)
+if(WIN32)
+    # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
+    set_tests_properties(test-table-model PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
+endif()
