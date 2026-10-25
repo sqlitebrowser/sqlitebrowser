@@ -65,4 +65,13 @@ void TestTableModel::setDataOnUncachedRowLoadsRowAndUpdates()
     QCOMPARE(f.model->data(idx, Qt::EditRole).toString(), QString("changed"));
 }
 
-QTEST_MAIN(TestTableModel)
+int main(int argc, char* argv[])
+{
+    // The model needs a QApplication, but the tests must also run on machines without a display (e.g. CI)
+    if(qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM"))
+        qputenv("QT_QPA_PLATFORM", "offscreen");
+
+    QApplication app(argc, argv);
+    TestTableModel test;
+    return QTest::qExec(&test, argc, argv);
+}
