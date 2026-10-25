@@ -4,7 +4,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(${QT_MAJOR} REQUIRED COMPONENTS Test Widgets)
+find_package(${QT_MAJOR} REQUIRED COMPONENTS Concurrent PrintSupport Test Widgets)
 if(QT_MAJOR STREQUAL "Qt6")
     find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
     set(QT5_COMPAT Qt6::Core5Compat)
@@ -123,3 +123,47 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test edit table dialog
+
+set(TESTEDITTABLE_SRC
+    TestEditTableDialog.cpp
+    ../EditTableDialog.cpp
+    ../ForeignKeyEditorDelegate.cpp
+    ../SelectItemsPopup.cpp
+    ../sqlitedb.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../Settings.cpp
+    ../CondFormat.cpp
+    ../Data.cpp
+    ../CipherSettings.cpp
+    ../sqltextedit.cpp
+    ../SqlUiLexer.cpp
+    ../ExtendedScintilla.cpp
+    ../FindReplaceDialog.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTEDITTABLE_HDR
+    TestEditTableDialog.h
+    ../EditTableDialog.h
+    ../ForeignKeyEditorDelegate.h
+    ../SelectItemsPopup.h
+    ../sqlitedb.h
+    ../sqlitetablemodel.h
+    ../RowLoader.h
+    ../Settings.h
+    ../CondFormat.h
+    ../Data.h
+)
+
+add_executable(test-edit-table ${TESTEDITTABLE_HDR} ${TESTEDITTABLE_SRC})
+target_include_directories(test-edit-table PRIVATE "${PROJECT_BINARY_DIR}")
+target_link_libraries(test-edit-table ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${QT_MAJOR}::PrintSupport QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-edit-table COMMAND $<TARGET_FILE:test-edit-table>)

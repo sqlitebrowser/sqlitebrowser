@@ -519,6 +519,78 @@ void TestTable::parseDoubleQuotedDefaultValues()
     QCOMPARE(tab2.fields.at(3).defaultValue(), "foo");
 }
 
+void TestTable::generatedColumnSql()
+{
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    tt.fields.emplace_back("virt", "integer");
+    tt.fields.emplace_back("stor", "integer");
+    tt.fields.at(2).setGenerated(std::make_shared<GeneratedColumnConstraint>("a + b"));
+    tt.fields.at(3).setGenerated(std::make_shared<GeneratedColumnConstraint>("a * b", "STORED"));
+
+    QCOMPARE(tt.sql(), "CREATE TABLE \"testtable\" (\n"
+                       "\t\"a\"\tinteger,\n"
+                       "\t\"b\"\tinteger,\n"
+                       "\t\"virt\"\tinteger GENERATED ALWAYS AS (a + b) VIRTUAL,\n"
+                       "\t\"stor\"\tinteger GENERATED ALWAYS AS (a * b) STORED\n"
+                       ");");
+}
+
+void TestTable::parseGeneratedColumns()
+{
+    Table tab(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER, "
+                               "c INTEGER GENERATED ALWAYS AS (a + b), "
+                               "d INTEGER AS (a * b) STORED, "
+                               "e TEXT GENERATED ALWAYS AS (a || '-' || b) VIRTUAL);"));
+
+    QVERIFY(!tab.fields.at(0).generated());
+    QVERIFY(!tab.fields.at(1).generated());
+
+    // No storage keyword means VIRTUAL
+    QVERIFY(tab.fields.at(2).generated());
+    QCOMPARE(tab.fields.at(2).type(), "INTEGER");
+    QCOMPARE(tab.fields.at(2).generated()->storage(), "VIRTUAL");
+    QCOMPARE(tab.fields.at(2).generated()->expression(), "\"a\" + \"b\"");
+
+    QVERIFY(tab.fields.at(3).generated());
+    QCOMPARE(tab.fields.at(3).generated()->storage(), "STORED");
+    QCOMPARE(tab.fields.at(3).generated()->expression(), "\"a\" * \"b\"");
+
+    QVERIFY(tab.fields.at(4).generated());
+    QCOMPARE(tab.fields.at(4).type(), "TEXT");
+    QCOMPARE(tab.fields.at(4).generated()->storage(), "VIRTUAL");
+
+    // The generated SQL must be parseable again and yield the same generated columns
+    Table tab2(*Table::parseSQL(tab.sql()));
+    for(size_t i = 0; i < tab.fields.size(); ++i)
+    {
+        QCOMPARE(static_cast<bool>(tab2.fields.at(i).generated()), static_cast<bool>(tab.fields.at(i).generated()));
+        if(tab.fields.at(i).generated())
+        {
+            QCOMPARE(tab2.fields.at(i).generated()->expression(), tab.fields.at(i).generated()->expression());
+            QCOMPARE(tab2.fields.at(i).generated()->storage(), tab.fields.at(i).generated()->storage());
+        }
+    }
+    QCOMPARE(tab2.sql(), tab.sql());
+}
+
+void TestTable::generatedColumnComparison()
+{
+    // DB4S decides whether a table has been modified by comparing the old and the new table object, so changes of the
+    // generated column definition must not be ignored by the comparison
+    Table plain(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER);"));
+    Table virt(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER AS (a + 1));"));
+    Table virt2(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER AS (a + 1));"));
+    Table other_expr(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER AS (a + 2));"));
+    Table stored(*Table::parseSQL("CREATE TABLE test(a INTEGER, b INTEGER AS (a + 1) STORED);"));
+
+    QVERIFY(!(plain == virt));
+    QVERIFY(virt == virt2);
+    QVERIFY(!(virt == other_expr));
+    QVERIFY(!(virt == stored));
+}
+
 void TestTable::createTableWithIn()
 {
     std::string sSQL = "CREATE TABLE not_working("
