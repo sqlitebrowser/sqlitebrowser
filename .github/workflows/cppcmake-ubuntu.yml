@@ -134,6 +134,39 @@ jobs:
           path: dependency-summary/*.md
           retention-days: 1
 
+  # Qt6 build and test only (no packaging), to keep -DQT_MAJOR=Qt6 working.
+  # It runs on ubuntu-24.04 (Qt 6.4) because ubuntu-22.04 only ships Qt 6.2.
+  # The AppImage builds above stay on the oldest runner and keep using Qt5.
+  build-qt6:
+    name: ubuntu-24.04 (Qt6)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ninja-build libsqlite3-dev qt6-base-dev qt6-tools-dev qt6-tools-dev-tools \
+            qt6-l10n-tools qt6-5compat-dev libgl1-mesa-dev
+
+      - name: Configure build
+        run: |
+          cmake -G Ninja -B build-qt6 \
+                -DQT_MAJOR=Qt6 \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DENABLE_TESTING=ON \
+                -DFORCE_INTERNAL_QSCINTILLA=ON
+
+      - name: Build
+        run: cmake --build build-qt6
+
+      - name: Tests
+        run: ctest --test-dir build-qt6 --output-on-failure
+
   summarize-dependencies:
     if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
     needs: build
