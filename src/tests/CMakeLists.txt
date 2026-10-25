@@ -150,6 +150,10 @@ set(TESTTABLEMODEL_HDR
 
 add_executable(test-table-model ${TESTTABLEMODEL_HDR} ${TESTTABLEMODEL_SRC})
 target_link_libraries(test-table-model ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
+if(QT_MAJOR STREQUAL "Qt6")
+    # Same as for the main target: the .ui files connect to slots that only exist in Qt5 unless connections are by string
+    set_target_properties(test-table-model PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
 add_test(NAME test-table-model COMMAND $<TARGET_FILE:test-table-model>)
 if(WIN32)
     # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
