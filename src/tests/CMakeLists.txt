@@ -123,3 +123,19 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test JSONB detection
+
+set(TESTJSONB_SRC
+    TestJsonb.cpp
+    ../JsonbUtil.cpp
+)
+
+set(TESTJSONB_HDR
+    TestJsonb.h
+    ../JsonbUtil.h
+)
+
+add_executable(test-jsonb ${TESTJSONB_HDR} ${TESTJSONB_SRC})
+target_link_libraries(test-jsonb ${QT_MAJOR}::Test ${LIBSQLITE_NAME})
+add_test(NAME test-jsonb COMMAND $<TARGET_FILE:test-jsonb>)
