@@ -69,6 +69,35 @@ void TestTableModel::setDataOnUncachedRowLoadsRowAndUpdates()
     QCOMPARE(f.model->data(idx, Qt::EditRole).toString(), QString("changed"));
 }
 
+namespace
+{
+QStringList capturedWarnings;
+
+void captureWarnings(QtMsgType type, const QMessageLogContext&, const QString& msg)
+{
+    if(type == QtWarningMsg)
+        capturedWarnings << msg;
+}
+}
+
+void TestTableModel::createClosesTheHandleOnlyOnce()
+{
+    QTemporaryDir dir;
+    DBBrowserDB db;
+
+    // create() closes the handle it used to write the file header and opens the file again. Closing the stale handle a
+    // second time is undefined behaviour: it is reported as a warning on some platforms and crashes on others.
+    capturedWarnings.clear();
+    const auto previous_handler = qInstallMessageHandler(captureWarnings);
+    const bool created = db.create(dir.filePath("created.db"));
+    qInstallMessageHandler(previous_handler);
+
+    QVERIFY(created);
+    QVERIFY(db.isOpen());
+    QVERIFY2(capturedWarnings.isEmpty(), qPrintable(capturedWarnings.join("; ")));
+    QVERIFY(db.executeSQL("CREATE TABLE t (id INTEGER);"));
+}
+
 int main(int argc, char* argv[])
 {
     // The model needs a QApplication, but the tests must also run on machines without a display (e.g. CI)
