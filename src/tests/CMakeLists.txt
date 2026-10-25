@@ -139,3 +139,46 @@ set(TESTJSONB_HDR
 add_executable(test-jsonb ${TESTJSONB_HDR} ${TESTJSONB_SRC})
 target_link_libraries(test-jsonb ${QT_MAJOR}::Test ${LIBSQLITE_NAME})
 add_test(NAME test-jsonb COMMAND $<TARGET_FILE:test-jsonb>)
+
+# test edit dialog
+
+set(TESTEDITDIALOG_SRC
+    TestEditDialog.cpp
+    ../EditDialog.cpp
+    ../EditDialog.ui
+    ../docktextedit.cpp
+    ../sqltextedit.cpp
+    ../ExtendedScintilla.cpp
+    ../FindReplaceDialog.cpp
+    ../FindReplaceDialog.ui
+    ../ImageViewer.cpp
+    ../ImageViewer.ui
+    ../FileDialog.cpp
+    ../SqlUiLexer.cpp
+    ../JsonbUtil.cpp
+    ../Data.cpp
+    ../Settings.cpp
+    ../sqlitedb.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../CipherSettings.cpp
+    ../CipherDialog.cpp
+    ../CipherDialog.ui
+    ../CondFormat.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTEDITDIALOG_HDR
+    TestEditDialog.h
+)
+
+add_executable(test-edit-dialog ${TESTEDITDIALOG_HDR} ${TESTEDITDIALOG_SRC})
+target_include_directories(test-edit-dialog PRIVATE ${CMAKE_SOURCE_DIR}/libs/json)
+target_link_libraries(test-edit-dialog ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${QT_MAJOR}::Xml ${QT_MAJOR}::PrintSupport
+    QHexEdit::QHexEdit QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-edit-dialog COMMAND $<TARGET_FILE:test-edit-dialog>)
