@@ -40,7 +40,9 @@ private:
         kDefault = 6,
         kCheck = 7,
         kCollation = 8,
-        kForeignKey = 9
+        kGenerated = 9,
+        kStored = 10,
+        kForeignKey = 11
     };
 
     enum IndexConstraintColumns {

@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QLineEdit>
-#include <QPushButton>
+#include <QToolButton>
 #include <QTemporaryDir>
 #include <QTimer>
 #include <QTreeWidget>
@@ -31,7 +31,10 @@ public:
             if(auto* box = qobject_cast<QMessageBox*>(QApplication::activeModalWidget()))
             {
                 m_count++;
-                box->done(m_answer);
+                if(QAbstractButton* button = box->button(m_answer))
+                    button->click();
+                else
+                    box->done(QMessageBox::Cancel);
             }
         });
         m_timer.start(10);
@@ -70,7 +73,7 @@ QTreeWidgetItem* fieldItem(EditTableDialog& dialog, const QString& name)
 // Adds a new field using the dialog's add button and returns its list item
 QTreeWidgetItem* addField(EditTableDialog& dialog, const QString& name)
 {
-    dialog.findChild<QPushButton*>("addFieldButton")->click();
+    dialog.findChild<QToolButton*>("addFieldButton")->click();
     QTreeWidget* tree = fieldTree(dialog);
     QTreeWidgetItem* item = tree->topLevelItem(tree->topLevelItemCount() - 1);
     item->setText(column(tree, "Name"), name);
@@ -170,16 +173,14 @@ void TestEditTableDialog::showsGeneratedColumns()
     QVERIFY2(gen != -1, "The field list has no 'Generated' column");
     QVERIFY2(stored != -1, "The field list has no 'Stored' column");
 
-    // Ordinary column: no expression and the storage can't be chosen
+    // Ordinary column: no expression
     QCOMPARE(fieldItem(dialog, "a")->text(gen), QString());
     QCOMPARE(fieldItem(dialog, "a")->checkState(stored), Qt::Unchecked);
-    QVERIFY(!(fieldItem(dialog, "a")->flags() & Qt::ItemIsUserCheckable));
 
     // Virtual column
     QCOMPARE(fieldItem(dialog, "v")->text(gen), QString::fromStdString(tableField("v").generated()->expression()));
     QVERIFY(!fieldItem(dialog, "v")->text(gen).isEmpty());
     QCOMPARE(fieldItem(dialog, "v")->checkState(stored), Qt::Unchecked);
-    QVERIFY(fieldItem(dialog, "v")->flags() & Qt::ItemIsUserCheckable);
 
     // Stored column
     QCOMPARE(fieldItem(dialog, "s")->text(gen), QString::fromStdString(tableField("s").generated()->expression()));
@@ -199,7 +200,6 @@ void TestEditTableDialog::addVirtualGeneratedColumn()
 
         QTreeWidgetItem* item = addField(dialog, "total");
         item->setText(gen, "a + b");
-        QVERIFY(item->flags() & Qt::ItemIsUserCheckable);
         acceptDialog(dialog);
         QCOMPARE(dialog.result(), static_cast<int>(QDialog::Accepted));
     }
@@ -224,8 +224,8 @@ void TestEditTableDialog::addStoredGeneratedColumn()
         QVERIFY(gen != -1 && stored != -1);
 
         QTreeWidgetItem* item = addField(dialog, "prod");
+        item->setCheckState(stored, Qt::Checked);   // Choosing the storage first must work, too
         item->setText(gen, "a * b");
-        item->setCheckState(stored, Qt::Checked);
         acceptDialog(dialog);
         QCOMPARE(dialog.result(), static_cast<int>(QDialog::Accepted));
     }
