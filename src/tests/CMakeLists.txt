@@ -166,6 +166,10 @@ set(TESTEDITTABLE_HDR
 add_executable(test-edit-table ${TESTEDITTABLE_HDR} ${TESTEDITTABLE_SRC})
 target_include_directories(test-edit-table PRIVATE "${PROJECT_BINARY_DIR}")
 target_link_libraries(test-edit-table ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${QT_MAJOR}::PrintSupport QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
+if(QT_MAJOR STREQUAL "Qt6")
+    # Same as for the main target: the .ui files connect to slots that only exist in Qt5 unless connections are by string
+    set_target_properties(test-edit-table PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
 add_test(NAME test-edit-table COMMAND $<TARGET_FILE:test-edit-table>)
 if(WIN32)
     # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
