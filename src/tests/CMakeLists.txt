@@ -139,6 +139,10 @@ set(TESTJSONB_HDR
 add_executable(test-jsonb ${TESTJSONB_HDR} ${TESTJSONB_SRC})
 target_link_libraries(test-jsonb ${QT_MAJOR}::Test ${LIBSQLITE_NAME})
 add_test(NAME test-jsonb COMMAND $<TARGET_FILE:test-jsonb>)
+if(WIN32)
+    # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
+    set_tests_properties(test-jsonb PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
+endif()
 
 # test edit dialog
 
@@ -182,3 +186,7 @@ target_include_directories(test-edit-dialog PRIVATE ${CMAKE_SOURCE_DIR}/libs/jso
 target_link_libraries(test-edit-dialog ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${QT_MAJOR}::Xml ${QT_MAJOR}::PrintSupport
     QHexEdit::QHexEdit QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
 add_test(NAME test-edit-dialog COMMAND $<TARGET_FILE:test-edit-dialog>)
+if(WIN32)
+    # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
+    set_tests_properties(test-edit-dialog PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
+endif()
