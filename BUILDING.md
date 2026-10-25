@@ -5,7 +5,7 @@ For more information on Qt please consult http://www.qt.io and for SQLite please
 
 Please note that all versions after 3.12.1 will require:
 * A C++ compiler with support for C++14 or later
-* Qt 5.15.9 later
+* Qt 5.15.9 or later (Qt 6 is supported too, see [Building with Qt6](#building-with-qt6))
 
 Without these or with older versions you won't be able to compile DB Browser for
 SQLite any more.<br>This applies to all platforms. However, most likely you won't
@@ -25,6 +25,7 @@ The wiki has information that is a bit more detailed or less common, but may be 
     - [CentOS / Fedora Linux](#centos--fedora-linux)
     - [Debian / Ubuntu Linux](#debian--ubuntu-linux)
     - [OpenSUSE](#opensuse)
+  - [Building with Qt6](#building-with-qt6)
   - [macOS](#macos)
     - [Build an `.app` bundle](#build-an-app-bundle)
   - [Windows](#windows)
@@ -39,7 +40,7 @@ The wiki has information that is a bit more detailed or less common, but may be 
 ### Linux
 #### Generic Linux and FreeBSD
 
-The only requirements for building this code are the presence of Qt5 and
+The only requirements for building this code are the presence of Qt (5 or 6) and
 SQLite 3.<br>Qt can be included as a static or shared library, depending on the
 current Qt configuration on the building machine.
 
@@ -123,6 +124,29 @@ cmake -DFORCE_INTERNAL_QSCINTILLA=ON ..
 make
 sudo make install
 ```
+
+### Building with Qt6
+
+Qt5 is still the default. To build against Qt6 instead, pass `-DQT_MAJOR=Qt6` to
+cmake. Everything else works as described above, and the unit tests can be
+enabled the same way. On Debian 12 / Ubuntu 24.04 or newer, for example:
+
+```bash
+sudo apt install build-essential cmake ninja-build git libsqlite3-dev \
+    qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools qt6-5compat-dev libgl1-mesa-dev
+git clone https://github.com/sqlitebrowser/sqlitebrowser
+cd sqlitebrowser
+cmake -G Ninja -B build-qt6 -DQT_MAJOR=Qt6 -DENABLE_TESTING=ON -DFORCE_INTERNAL_QSCINTILLA=ON
+cmake --build build-qt6
+ctest --test-dir build-qt6 --output-on-failure
+```
+
+Qt6 needs the `Core5Compat` module (`qt6-5compat-dev` on Debian / Ubuntu,
+`qt6-qt5compat-devel` on Fedora). `-DFORCE_INTERNAL_QSCINTILLA=ON` makes cmake use
+the bundled QScintilla, so no Qt6 QScintilla package is needed; if you would
+rather use the distribution's one, install `libqscintilla2-qt6-dev` and leave that
+option out. QCustomPlot and QHexEdit are bundled and built from `libs/` by default.
+This setup is built and tested by the Ubuntu CI workflow with Qt 6.4.
 
 ### macOS
 
