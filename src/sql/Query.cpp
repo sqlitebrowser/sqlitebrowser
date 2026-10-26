@@ -147,4 +147,41 @@ std::vector<SelectedColumn>::const_iterator Query::findSelectedColumnByName(cons
     });
 }
 
+void updateSortColumns(std::vector<OrderBy>& columns, const std::string& column, bool multi_column, bool cycle_to_none)
+{
+    auto toggle = [](OrderBy& sorted_column) {
+        sorted_column.direction = (sorted_column.direction == OrderBy::Ascending ? OrderBy::Descending : OrderBy::Ascending);
+    };
+
+    if(multi_column)
+    {
+        // If the column is in the sort order already, change its sort order. If not, add it as a new sort column to the list.
+        for(auto it = columns.begin(); it != columns.end(); ++it)
+        {
+            if(it->expr == column)
+            {
+                if(cycle_to_none && it->direction == OrderBy::Descending)
+                    columns.erase(it);
+                else
+                    toggle(*it);
+                return;
+            }
+        }
+        columns.emplace_back(column, OrderBy::Ascending);
+    } else {
+        // If we have exactly one sort column and it is the column which was just clicked, change its sort order.
+        // If not, replace the list of sort columns by a single new sort column.
+        if(columns.size() == 1 && columns.front().expr == column)
+        {
+            if(cycle_to_none && columns.front().direction == OrderBy::Descending)
+                columns.clear();
+            else
+                toggle(columns.front());
+        } else {
+            columns.clear();
+            columns.emplace_back(column, OrderBy::Ascending);
+        }
+    }
+}
+
 }

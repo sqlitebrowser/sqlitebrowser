@@ -317,6 +317,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return false;
         if(name == "cell_word_wrap")
             return true;
+        if(name == "sort_cycle_none")
+            return false;
         if(name == "indent_compact")
             return false;
         if (name == "sort_keys")

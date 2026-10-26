@@ -1213,38 +1213,14 @@ void TableBrowser::headerClicked(int logicalindex)
 
     // Before sorting, first check if the Control key is pressed. If it is, we want to append this column to the list of sort columns. If it is not,
     // we want to sort only by the new column.
-    if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
-    {
-        // Multi column sorting
+    const bool multiColumn = QApplication::keyboardModifiers().testFlag(Qt::ControlModifier);
+    sqlb::updateSortColumns(columns, column, multiColumn, Settings::getValue("databrowser", "sort_cycle_none").toBool());
 
-        // If the column was control+clicked again, change its sort order.
-        // If not already in the sort order, add the column as a new sort column to the list.
-        bool present = false;
-        for(sqlb::OrderBy& sortedCol : columns) {
-            if(sortedCol.expr == column) {
-                sortedCol.direction = (sortedCol.direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
-                present = true;
-                break;
-            }
-        }
-        if(!present)
-            columns.emplace_back(column, sqlb::OrderBy::Ascending);
-    } else {
-        // Single column sorting
-
-        // If we have exactly one sort column and it is the column which was just clicked, change its sort order.
-        // If not, clear the list of sorting columns and replace it by a single new sort column.
-        if(columns.size() == 1 && columns.front().expr == column)
-        {
-            columns.front().direction = (columns.front().direction == sqlb::OrderBy::Ascending ? sqlb::OrderBy::Descending : sqlb::OrderBy::Ascending);
-        } else {
-            columns.clear();
-            columns.emplace_back(column, sqlb::OrderBy::Ascending);
-        }
-    }
-
-    // Do the actual sorting
-    ui->dataTable->sortByColumns(columns);
+    // Do the actual sorting. Sorting by no column at all is what clearing the sort columns does.
+    if(columns.empty())
+        clearSorting();
+    else
+        ui->dataTable->sortByColumns(columns);
 
     ui->actionClearSorting->setEnabled(columns.size() > 0);
 
