@@ -3,6 +3,7 @@
 
 #include "dbstructureqitemviewfacade.h"
 #include "sqlitedb.h"
+#include "sql/DropOrder.h"
 
 #include <memory>
 #include <vector>
@@ -152,6 +153,7 @@ private:
 
     QList<TableBrowserDock*> allTableBrowserDocks() const;
     void getSelectedObject(QString &type, sqlb::ObjectIdentifier& obj);
+    void deleteObjects(const std::vector<sqlb::DropItem>& items);    // Expects items in the order of sqlb::orderForDrop()
 
 protected:
     void closeEvent(QCloseEvent *) override;

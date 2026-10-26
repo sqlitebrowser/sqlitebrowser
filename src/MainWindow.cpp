@@ -913,8 +913,89 @@ void MainWindow::compact()
     dialog.exec();
 }
 
+// Collect all tables, views, indexes and triggers which are selected in the Database Structure tree
+static std::vector<sqlb::DropItem> selectedDropItems(const QTreeView& view)
+{
+    std::vector<sqlb::DropItem> items;
+    QSet<QModelIndex> seen;
+    const QModelIndexList selected = view.selectionModel()->selectedIndexes();
+    for(const QModelIndex& index : selected)
+    {
+        // Every selected row has one selected index per column. Only look at each row once.
+        const QModelIndex nameIndex = index.sibling(index.row(), DbStructureModel::ColumnName);
+        if(seen.contains(nameIndex))
+            continue;
+        seen.insert(nameIndex);
+
+        const QString type = nameIndex.sibling(nameIndex.row(), DbStructureModel::ColumnObjectType).data(Qt::EditRole).toString();
+        if(type != "table" && type != "view" && type != "trigger" && type != "index")
+            continue;
+
+        items.push_back({type.toStdString(), sqlb::ObjectIdentifier(
+            nameIndex.sibling(nameIndex.row(), DbStructureModel::ColumnSchema).data(Qt::EditRole).toString().toStdString(),
+            nameIndex.data(Qt::EditRole).toString().toStdString())});
+    }
+    return items;
+}
+
+void MainWindow::deleteObjects(const std::vector<sqlb::DropItem>& items)
+{
+    // List all objects in the confirmation, but keep the dialog at a sensible size
+    const size_t maxListed = 15;
+    QString list;
+    for(size_t i = 0; i < items.size() && i < maxListed; ++i)
+        list += QString("\n%1 '%2'").arg(QString::fromStdString(items[i].type), QString::fromStdString(items[i].object.toDisplayString()));
+    if(items.size() > maxListed)
+        list += "\n" + tr("... and %n more", nullptr, static_cast<int>(items.size() - maxListed));
+
+    const QString message = tr("Are you sure you want to delete the following %n objects?\nAll data associated with deleted tables will be lost.", nullptr, static_cast<int>(items.size())) + "\n" + list;
+    if(QMessageBox::warning(this, QApplication::applicationName(), message,
+                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
+        return;
+
+    // Delete everything in one savepoint so that either all or none of the objects are removed
+    // The restore point makes sure the changes are not written to disk before the user saves them.
+    const bool wasDirty = db.getDirty();
+    const std::string savepoint = db.generateSavepointName("deleteobjects");
+    if(!db.setSavepoint() || !db.setSavepoint(savepoint))
+    {
+        QMessageBox::warning(this, QApplication::applicationName(), tr("Error: could not delete the selected objects.") + " " +
+                             tr("Message from database engine:\n%1").arg(db.lastError()));
+        return;
+    }
+    for(const sqlb::DropItem& item : items)
+    {
+        if(!db.executeSQL(sqlb::dropStatement(item), false, true))
+        {
+            const QString error = tr("Message from database engine:\n%1").arg(db.lastError());
+            db.revertToSavepoint(savepoint);
+            if(!wasDirty)
+                db.revertToSavepoint();     // Nothing changed, so don't leave the database marked as modified
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("Error: could not delete the selected objects. No objects were deleted.") + " " + error);
+            return;
+        }
+    }
+    db.releaseSavepoint(savepoint);
+
+    refreshTableBrowsers();
+    changeObjectSelection();
+}
+
 void MainWindow::deleteObject()
 {
+    // If more than one object is selected in the Database Structure tab, delete all of them with a single confirmation
+    if(ui->mainTab->currentWidget() == ui->structure)
+    {
+        // Ordering also removes duplicates, e.g. a table which is selected in both the Tables and the Browsables branch
+        const std::vector<sqlb::DropItem> items = sqlb::orderForDrop(selectedDropItems(*ui->dbTreeWidget));
+        if(items.size() > 1)
+        {
+            deleteObjects(items);
+            return;
+        }
+    }
+
     // Get name and type of object to delete
     sqlb::ObjectIdentifier obj;
     QString type;
