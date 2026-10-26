@@ -111,7 +111,14 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     QStyledItemDelegate* styledItemDelegate = new QStyledItemDelegate(ui->comboBrowseTable);
     ui->comboBrowseTable->setItemDelegate(styledItemDelegate);
 
+    // The shortcuts of these actions only apply while the focus is inside this browser. Without adding them to this widget they would only apply
+    // inside the toolbar or, without a context, be ambiguous when there are multiple browsers.
+    addAction(ui->actionNewRecord);
+    addAction(ui->actionDeleteRecord);
+
     // Add the documentation of shortcuts, which aren't otherwise visible in the user interface, to some buttons.
+    addShortcutsTooltip(ui->actionNewRecord);
+    addShortcutsTooltip(ui->actionDeleteRecord);
     addShortcutsTooltip(ui->actionRefresh, {QKeySequence(tr("Ctrl+R"))});
     addShortcutsTooltip(ui->actionPrintTable);
 
