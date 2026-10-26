@@ -6,6 +6,7 @@
 #include "Settings.h"
 #include "ExportDataDialog.h"
 #include "FilterTableHeader.h"
+#include "ExplainTree.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -15,6 +16,7 @@
 SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     QWidget(parent),
     db(_db),
+    explainTreeDelegate(nullptr),
     ui(new Ui::SqlExecutionArea),
     m_columnsResized(false),
     error_state(false),
@@ -101,6 +103,21 @@ void SqlExecutionArea::finishExecution(const QString& result, const bool ok)
             ui->editErrors->setStyleSheet("QTextEdit {color: white; background-color: rgb(255, 102, 102)}");
     }
 
+}
+
+void SqlExecutionArea::updateResultPresentation(const QString& query)
+{
+    // The result of EXPLAIN QUERY PLAN has the columns id, parent, notused and detail. Show the last one indented by
+    // the nesting level of the plan step. All other results keep the default delegate of the view.
+    const int detailColumn = 3;
+    if(ExplainTree::isExplainQueryPlan(query))
+    {
+        if(!explainTreeDelegate)
+            explainTreeDelegate = new ExplainTree::Delegate(this);
+        ui->tableResult->setItemDelegateForColumn(detailColumn, explainTreeDelegate);
+    } else if(explainTreeDelegate) {
+        ui->tableResult->setItemDelegateForColumn(detailColumn, nullptr);
+    }
 }
 
 void SqlExecutionArea::fetchedData()

@@ -1348,6 +1348,7 @@ void MainWindow::executeQuery()
         ui->actionSqlResultsSaveAsView->setEnabled(!db.readOnly());
 
         auto * model = sqlWidget->getModel();
+        sqlWidget->updateResultPresentation(query);
         model->setQuery(query);
 
         // Wait until the initial loading of data (= first chunk and row count) has been performed
