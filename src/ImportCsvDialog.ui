@@ -50,6 +50,26 @@
       </widget>
      </item>
      <item row="2" column="0">
+      <widget class="QLabel" name="labelSkipRows">
+       <property name="text">
+        <string>S&amp;kip first rows</string>
+       </property>
+       <property name="buddy">
+        <cstring>spinBoxSkipRows</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="spinBoxSkipRows">
+       <property name="toolTip">
+        <string>Number of rows at the beginning of the file which are ignored, for example a title or other information preceding the actual data. If the first line contains the column names, this is the first line after the skipped rows.</string>
+       </property>
+       <property name="maximum">
+        <number>1000000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
       <widget class="QLabel" name="labelSeparator">
        <property name="text">
         <string>Field &amp;separator</string>
@@ -59,7 +79,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QComboBox" name="comboSeparator">
@@ -124,7 +144,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="labelQuote">
        <property name="text">
         <string>&amp;Quote character</string>
@@ -134,7 +154,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QComboBox" name="comboQuote">
@@ -194,7 +214,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="labelEncoding">
        <property name="text">
         <string>&amp;Encoding</string>
@@ -204,7 +224,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QComboBox" name="comboEncoding">
@@ -248,7 +268,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="labelTrim">
        <property name="text">
         <string>Trim fields?</string>
@@ -258,7 +278,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="QCheckBox" name="checkBoxTrimFields">
        <property name="text">
         <string/>
@@ -268,7 +288,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="separateTables">
        <property name="text">
         <string>Separate tables</string>
@@ -278,14 +298,14 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QCheckBox" name="checkBoxSeparateTables">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QPushButton" name="buttonAdvanced">
        <property name="text">
         <string>Advanced</string>
@@ -299,14 +319,14 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <widget class="QCheckBox" name="checkIgnoreDefaults">
        <property name="toolTip">
         <string>When importing an empty value from the CSV file into an existing table with a default value for this column, that default value is inserted. Activate this option to insert an empty value instead.</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="labelIgnoreDefaults">
        <property name="text">
         <string>Ignore default &amp;values</string>
@@ -316,14 +336,14 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="12" column="1">
       <widget class="QCheckBox" name="checkFailOnMissing">
        <property name="toolTip">
         <string>Activate this option to stop the import when trying to import an empty value into a NOT NULL column without a default value.</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="0">
+     <item row="12" column="0">
       <widget class="QLabel" name="labelFailOnMissing">
        <property name="text">
         <string>Fail on missing values </string>
@@ -333,7 +353,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="labelNoTypeDetection">
        <property name="text">
         <string>Disable data type detection</string>
@@ -343,14 +363,14 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <widget class="QCheckBox" name="checkNoTypeDetection">
        <property name="toolTip">
         <string>Disable the automatic data type detection when creating a new table.</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
+     <item row="10" column="0">
       <widget class="QLabel" name="labelLocalConventions">
        <property name="text">
         <string>Use local number conventions</string>
@@ -360,14 +380,14 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <widget class="QCheckBox" name="checkLocalConventions">
        <property name="toolTip">
         <string>Use decimal and thousands separators according to the system locale.</string>
        </property>
       </widget>
      </item>
-     <item row="12" column="1">
+     <item row="13" column="1">
       <widget class="QComboBox" name="comboOnConflictStrategy">
        <property name="toolTip">
         <string>When importing into an existing table with a primary key, unique constraints or a unique index there is a chance for a conflict. This option allows you to select a strategy for that case: By default the import is aborted and rolled back but you can also choose to ignore and not import conflicting rows or to replace the existing row in the table.</string>
@@ -389,7 +409,7 @@
        </item>
       </widget>
      </item>
-     <item row="12" column="0">
+     <item row="13" column="0">
       <widget class="QLabel" name="labelOnConflictStrategy">
        <property name="text">
         <string>Conflict strategy</string>
@@ -399,14 +419,14 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="1">
+     <item row="14" column="1">
       <widget class="QCheckBox" name="checkReplaceNonAlnum">
        <property name="toolTip">
         <string>Replace non-alphanumeric characters in column name with an underscore.</string>
        </property>
       </widget>
      </item>
-     <item row="13" column="0">
+     <item row="14" column="0">
       <widget class="QLabel" name="labelReplaceNonAlnum">
        <property name="text">
         <string>Replace non-alphanumeric in column name</string>
@@ -515,6 +535,7 @@
  <tabstops>
   <tabstop>editName</tabstop>
   <tabstop>checkboxHeader</tabstop>
+  <tabstop>spinBoxSkipRows</tabstop>
   <tabstop>comboSeparator</tabstop>
   <tabstop>editCustomSeparator</tabstop>
   <tabstop>comboQuote</tabstop>
@@ -659,6 +680,22 @@
     <hint type="sourcelabel">
      <x>192</x>
      <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>354</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBoxSkipRows</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportCsvDialog</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>

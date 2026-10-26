@@ -184,6 +184,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     {
         if(name == "firstrowheader")
             return false;
+        if(name == "skiprows")
+            return 0;
         if(name == "trimfields")
             return true;
         if(name == "separatetables")
