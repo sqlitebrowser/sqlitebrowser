@@ -167,6 +167,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "db" && name == "sqlcipherparentdotenvlookup")
         return false;
 
+    // db/warnlockingdisabled?
+    if(group == "db" && name == "warnlockingdisabled")
+        return true;
+
     // exportcsv/firstrowheader?
     if(group == "exportcsv" && name == "firstrowheader")
         return true;

@@ -240,6 +240,9 @@ public:
     bool isOpen() const;
     bool encrypted() const { return isEncrypted; }
     bool readOnly() const { return isReadOnly; }
+    static bool isLockingSupported(const QString& path);
+    static bool isWalMode(const QString& path);
+    static QString attachNotSupportedMessage();
     bool getDirty() const;
     QString currentFile() const { return curDBFilename; }
 

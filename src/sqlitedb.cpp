@@ -17,6 +17,7 @@
 #include <QThread>
 #include <QRegularExpression>
 #include <QSettings>
+#include <QStorageInfo>
 
 #include <algorithm>
 #include <array>
@@ -48,6 +49,41 @@ typename MapType::const_iterator findCaseInsensitive(const MapType& map, const s
     return std::find_if(map.begin(), map.end(), [&key](const auto& entry) {
         return equalsIgnoreCase(entry.first, key);
     });
+}
+
+// Files inside WSL are served to Windows over the 9P protocol, which doesn't support the byte-range locks
+// SQLite relies on. Every attempt to read such a file fails with "database is locked", so these files need
+// to be opened using SQLite's non-locking VFS. Returns nullptr (the default VFS) for all other files.
+const char* vfsForFile(const QString& path)
+{
+#ifdef Q_OS_WIN
+    if(path.isEmpty() || path == ":memory:")
+        return nullptr;
+
+    const QString p = QDir::fromNativeSeparators(path);
+    const bool isWsl = p.startsWith("//wsl$/", Qt::CaseInsensitive) ||
+            p.startsWith("//wsl.localhost/", Qt::CaseInsensitive) ||
+            QStorageInfo(QFileInfo(p).absolutePath()).fileSystemType() == "9P";     // WSL share mapped to a drive letter
+    if(isWsl && sqlite3_vfs_find("win32-none"))
+        return "win32-none";
+#else
+    Q_UNUSED(path)
+#endif
+
+    return nullptr;
+}
+
+// Authorizer which denies attaching databases when the main database or the attached file is located inside WSL.
+// Attached files always use the VFS of the main database, so they would either be opened without locking or fail
+// with "database is locked". mainDbInWsl is non-null if the main database is located inside WSL.
+int wslAttachAuthorizer(void* mainDbInWsl, int action, const char* filename, const char*, const char*, const char*)
+{
+    if(action != SQLITE_ATTACH)
+        return SQLITE_OK;
+
+    if(mainDbInWsl || (filename && vfsForFile(QString::fromUtf8(filename))))
+        return SQLITE_DENY;
+    return SQLITE_OK;
 }
 
 }
@@ -206,6 +242,27 @@ bool DBBrowserDB::isOpen ( ) const
     return _db != nullptr;
 }
 
+bool DBBrowserDB::isLockingSupported(const QString& path)
+{
+    return vfsForFile(path) == nullptr;
+}
+
+bool DBBrowserDB::isWalMode(const QString& path)
+{
+    QFile file(path);
+    if(!file.open(QIODevice::ReadOnly))
+        return false;
+    const QByteArray header = file.read(20);
+    return header.size() == 20 && header.startsWith(QByteArray("SQLite format 3\0", 16)) &&
+            (header.at(18) == 2 || header.at(19) == 2);
+}
+
+QString DBBrowserDB::attachNotSupportedMessage()
+{
+    return tr("Attaching databases is not supported when the main database or the attached database file is located "
+              "inside WSL(Windows Subsystem for Linux).");
+}
+
 bool DBBrowserDB::getDirty() const
 {
     return !savepointList.empty();
@@ -224,11 +281,15 @@ bool DBBrowserDB::open(const QString& db, bool readOnly)
         return false;
 
     // Open database file
-    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, nullptr) != SQLITE_OK)
+    const char* vfs = vfsForFile(db);
+    if(sqlite3_open_v2(db.toUtf8(), &_db, readOnly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_READWRITE, vfs) != SQLITE_OK)
     {
         lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
         return false;
     }
+
+    // Deny ATTACH statements involving files inside WSL, including those executed by the user
+    sqlite3_set_authorizer(_db, wslAttachAuthorizer, vfs ? this : nullptr);
 
     // Set encryption details if database is encrypted
 #ifdef ENABLE_SQLCIPHER
@@ -341,6 +402,12 @@ bool DBBrowserDB::attach(const QString& filePath, QString attach_as)
 
     waitForDbRelease();
 
+    if(!isLockingSupported(curDBFilename) || !isLockingSupported(filePath))
+    {
+        QMessageBox::warning(nullptr, qApp->applicationName(), attachNotSupportedMessage());
+        return false;
+    }
+
     // In shared cache mode, attempting to attach the same database file more than once results in an error.
     // So no need for a check if this file has already been attached and abort if this is the case
 
@@ -429,7 +496,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
     // Open database file
     sqlite3* dbHandle;
-    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
+    if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, vfsForFile(filePath)) != SQLITE_OK)
         return false;
 
     // Try reading from database
@@ -464,9 +531,14 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
         sqlite3_stmt* vm;
         const char* tail;
         int err = sqlite3_prepare_v2(dbHandle, statement.c_str(), static_cast<int>(statement.size()), &vm, &tail);
-        if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN)
+        if(err == SQLITE_BUSY || err == SQLITE_PERM || err == SQLITE_NOMEM || err == SQLITE_IOERR || err == SQLITE_CORRUPT || err == SQLITE_CANTOPEN || err == SQLITE_PROTOCOL)
         {
             lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(dbHandle));
+            // WAL mode databases inside WSL fail here because the shared memory file can't be locked. MainWindow detects them
+            // before opening, except for encrypted files whose journal mode can only be read after decrypting them.
+            if(err == SQLITE_PROTOCOL && !isLockingSupported(filePath))
+                lastErrorMessage = tr("This database uses the WAL journal mode. Opening WAL mode databases inside WSL(Windows Subsystem "
+                                      "for Linux) is not supported. Change its journal mode inside WSL first, for example to DELETE.");
             sqlite3_close_v2(dbHandle);
             return false;
         }
@@ -561,7 +633,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
             // Close and reopen database first to be in a clean state after the failed read attempt from above
             sqlite3_close_v2(dbHandle);
-            if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, nullptr) != SQLITE_OK)
+            if(sqlite3_open_v2(filePath.toUtf8(), &dbHandle, SQLITE_OPEN_READONLY, vfsForFile(filePath)) != SQLITE_OK)
                 return false;
 
             // Set the key
@@ -711,15 +783,11 @@ bool DBBrowserDB::create ( const QString & db)
     if (isOpen())
         close();
 
-    // read encoding from settings and open with sqlite3_open for utf8 and sqlite3_open16 for utf16
+    int openresult = sqlite3_open_v2(db.toUtf8(), &_db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, vfsForFile(db));
+
     QString sEncoding = Settings::getValue("db", "defaultencoding").toString();
-
-    int openresult = SQLITE_OK;
-
-    if(sEncoding == "UTF-8" || sEncoding == "UTF8" || sEncoding == "Latin1")
-        openresult = sqlite3_open(db.toUtf8(), &_db);
-    else
-        openresult = sqlite3_open16(db.utf16(), &_db);
+    if(openresult == SQLITE_OK && !(sEncoding == "UTF-8" || sEncoding == "UTF8" || sEncoding == "Latin1"))
+        openresult = sqlite3_exec(_db, "PRAGMA encoding = 'UTF-16';", nullptr, nullptr, nullptr);
 
     if( openresult != SQLITE_OK ){
         lastErrorMessage = QString::fromUtf8(sqlite3_errmsg(_db));
@@ -810,7 +878,7 @@ bool DBBrowserDB::saveAs(const std::string& filename) {
     // Open the database file identified by filename. Exit early if this fails
     // for any reason.
     sqlite3* pTo;
-    int rc = sqlite3_open(filename.c_str(), &pTo);
+    int rc = sqlite3_open_v2(filename.c_str(), &pTo, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, vfsForFile(QString::fromStdString(filename)));
     if(rc!=SQLITE_OK) {
         qWarning() << tr("Cannot open destination file: '%1'").arg(filename.c_str());
         return false;

@@ -266,6 +266,8 @@ bool RunSql::executeNextStatement()
         default:
             error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
         }
+    } else if(sql3status == SQLITE_AUTH && getQueryType(executed_query) == AttachStatement) {
+        error = DBBrowserDB::attachNotSupportedMessage();
     } else {
         error = QString::fromUtf8(sqlite3_errmsg(pDb.get()));
     }

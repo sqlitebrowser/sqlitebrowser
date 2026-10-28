@@ -554,6 +554,9 @@ bool MainWindow::fileOpen(const QString& fileName, bool openFromProject, bool re
             // so try to import it as CSV.
             importCSVfiles({wFile});
         } else {
+            if(!confirmOpenWithoutLocking(wFile))
+                return false;
+
             // Close the database. If the user didn't want to close it, though, stop here
             if (db.isOpen())
                 if(!fileClose())
@@ -610,7 +613,7 @@ void MainWindow::fileNew()
                            this,
                            tr("Choose a filename to save under"),
                            FileDialog::getSqlDatabaseFileFilter());
-    if(!fileName.isEmpty())
+    if(!fileName.isEmpty() && confirmOpenWithoutLocking(fileName))
     {
         if(QFile::exists(fileName))
             QFile::remove(fileName);
@@ -1927,6 +1930,48 @@ void MainWindow::addToRecentFilesMenu(const QString& filename, bool read_only)
         if (mainWin)
             mainWin->updateRecentFileActions();
     }
+}
+
+bool MainWindow::confirmOpenWithoutLocking(const QString& fileName)
+{
+    if(DBBrowserDB::isLockingSupported(fileName))
+        return true;
+
+    if(DBBrowserDB::isWalMode(fileName))
+    {
+        QMessageBox msgBox(this);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(qApp->applicationName());
+        msgBox.setText(tr("This database file is located inside WSL(Windows Subsystem for Linux) and uses the WAL journal mode. "
+                          "Opening WAL mode databases inside WSL is not supported, so it will not be opened."));
+        msgBox.setInformativeText(tr("To open it, change its journal mode inside WSL first, for example by running:\n"
+                                     "sqlite3 <file> \"PRAGMA journal_mode=DELETE;\""));
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.exec();
+        return false;
+    }
+
+    if(!Settings::getValue("db", "warnlockingdisabled").toBool())
+        return true;
+
+    QMessageBox msgBox(this);
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setWindowTitle(qApp->applicationName());
+    msgBox.setText(tr("This database file is located inside WSL(Windows Subsystem for Linux), which does not support "
+                      "file locking. It will be opened without locking."));
+    msgBox.setInformativeText(tr("Do not modify this database from other programs, for example from inside WSL, while it "
+                                 "is open here. Otherwise the database file may become CORRUPTED."));
+    QPushButton* idontcarebutton = msgBox.addButton(tr("Don't show again"), QMessageBox::ActionRole);
+    QPushButton* dontopenbutton = msgBox.addButton(tr("Don't open"), QMessageBox::RejectRole);
+    msgBox.addButton(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.setEscapeButton(dontopenbutton);
+    msgBox.exec();
+    if(msgBox.clickedButton() == dontopenbutton)
+        return false;
+    if(msgBox.clickedButton() == idontcarebutton)
+        Settings::setValue("db", "warnlockingdisabled", false);
+    return true;
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -3426,6 +3471,14 @@ void MainWindow::fileAttach(const QString& fileName)
 void MainWindow::editEncryption()
 {
 #ifdef ENABLE_SQLCIPHER
+    if(!DBBrowserDB::isLockingSupported(db.currentFile()))
+    {
+        QMessageBox::warning(this, qApp->applicationName(),
+                             tr("Changing the encryption is not supported for database files located inside WSL (Windows Subsystem for Linux).\n\n"
+                                "To change it, copy the database file to a Windows folder, change the encryption there and copy it back."));
+        return;
+    }
+
     CipherDialog cipherDialog(this, true);
     if(cipherDialog.exec())
     {

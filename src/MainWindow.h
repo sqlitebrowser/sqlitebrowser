@@ -133,6 +133,7 @@ private:
     void toggleAutoLoadLastDBFileAtStartupOption();
     void setCurrentFile(const QString& fileName);
     void addToRecentFilesMenu(const QString& filename, bool read_only = false);
+    bool confirmOpenWithoutLocking(const QString& fileName);
     void activateFields(bool enable = true);
     void saveAsView(const std::string& query);
     void attachPlot(ExtendedTableWidget* tableWidget, SqliteTableModel* model, BrowseDataTableSettings* settings = nullptr, bool keepOrResetSelection = true);
