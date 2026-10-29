@@ -27,6 +27,8 @@ public:
     static bool importSettings(const QString& fileName);
     static void sync();
 
+    static QString systemLanguage();
+
 private:
     Settings() = delete;    // class is fully static
 

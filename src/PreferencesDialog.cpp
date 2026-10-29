@@ -417,7 +417,7 @@ void PreferencesDialog::fillLanguageBox()
     QDir translationsDir(QCoreApplication::applicationDirPath() + "/translations",
                          "sqlb_*.qm");
 
-    QLocale systemLocale = QLocale::system();
+    QLocale systemLocale(Settings::systemLanguage());
 
     // Add default language
     if (systemLocale.name() == "en_US")

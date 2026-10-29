@@ -253,7 +253,7 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     // General/language?
     if(group == "General" && name == "language")
-        return QLocale::system().name();
+        return systemLanguage();
 
     // General/appStyle
     if(group == "General" && name == "appStyle")
@@ -674,4 +674,12 @@ bool Settings::importSettings(const QString& fileName)
 void Settings::sync()
 {
     settings->sync();
+}
+
+QString Settings::systemLanguage()
+{
+    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    if(uiLanguages.isEmpty())
+        return QLocale::system().name();
+    return QLocale(uiLanguages.first()).name();
 }
