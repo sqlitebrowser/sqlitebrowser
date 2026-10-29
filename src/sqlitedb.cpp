@@ -667,7 +667,7 @@ bool DBBrowserDB::tryEncryptionSettings(const QString& filePath, bool* encrypted
 
 void DBBrowserDB::getSqliteVersion(QString& sqlite, QString& sqlcipher)
 {
-    sqlite = QString(SQLITE_VERSION);
+    sqlite = QString(sqlite3_libversion());
 
     // The SQLCipher version must be queried via a pragma and for a pragma we need a database connection.
     // Because we want to be able to query the SQLCipher version without opening a database file first, we

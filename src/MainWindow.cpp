@@ -2698,7 +2698,7 @@ void MainWindow::openLinkBugReport() const
               "> DB4S v%1 [built for %2] on %3 (%4/%5) [%6]\n"
               "> using %7\n"
               "> and Qt %8")
-            .arg(version, built_for, os, kernelType, kernelVersion, arch, sqlite_version, QT_VERSION_STR);
+            .arg(version, built_for, os, kernelType, kernelVersion, arch, sqlite_version, qVersion());
 
     QUrlQuery query;
     query.addQueryItem("labels", "bug");
