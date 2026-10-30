@@ -226,6 +226,9 @@ private:
 
     bool isBinary(const QByteArray& index) const;
 
+    // The text to show in a cell for binary data
+    QString binaryDisplayText(const QByteArray& data) const;
+
     QString m_sQuery;
 
     // These are only used when a custom query is shown, i.e. when the model was set up using setQuery(const QString&). m_sQuery is the SQL
@@ -268,6 +271,7 @@ private:
     QColor m_binBgColour;
     QFont m_font;
     int m_symbolLimit;
+    int m_blobHexLimit;
     int m_rowsLimit;
     bool m_imagePreviewEnabled;
 

@@ -390,7 +390,7 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
         {
             return m_nullText;
         } else if(isBinary(data)) {
-            return m_blobText;
+            return binaryDisplayText(data);
         } else {
             if (data.length() > m_symbolLimit) {
                 // Add "..." to the end of truncated strings
@@ -982,6 +982,20 @@ bool SqliteTableModel::isBinary(const QByteArray& data) const
     return !isTextOnly(data, m_encoding, true);
 }
 
+QString SqliteTableModel::binaryDisplayText(const QByteArray& data) const
+{
+    // Small BLOBs can be shown as hexadecimal string, like the one the hex() function returns. The result is cut off at the symbol limit like text is.
+    if(data.size() <= m_blobHexLimit)
+    {
+        QString hex = QString::fromLatin1(data.toHex().toUpper());
+        if(hex.length() > m_symbolLimit)
+            hex = hex.left(m_symbolLimit) + " ...";
+        return hex;
+    }
+
+    return m_blobText;
+}
+
 QByteArray SqliteTableModel::encode(const QByteArray& str) const
 {
     return encodeString(str, m_encoding);
@@ -1270,6 +1284,7 @@ void SqliteTableModel::reloadSettings()
     m_font = QFont(Settings::getValue("databrowser", "font").toString());
     m_font.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
     m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
+    m_blobHexLimit = Settings::getValue("databrowser", "blob_hex_limit").toInt();
     m_rowsLimit = Settings::getValue("databrowser", "rows_limit").toInt();
     m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
     m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
