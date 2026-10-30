@@ -181,6 +181,34 @@ void TestRunSql::executeCurrentLine()
     QCOMPARE(statements, executed);
 }
 
+void TestRunSql::statementReturningNoRows_data()
+{
+    QTest::addColumn<QString>("sql");
+    QTest::addColumn<bool>("returnsRows");
+
+    QTest::newRow("select") << "SELECT 1 WHERE 0;" << true;
+    QTest::newRow("with") << "WITH dup(id) AS (SELECT 1) SELECT dup.* FROM dup WHERE id = 10;" << true;
+    QTest::newRow("with and comment") << "-- comment\nWITH dup(id) AS (SELECT 1) SELECT dup.* FROM dup WHERE id = 10;" << true;
+    QTest::newRow("with recursive") << "WITH RECURSIVE c(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM c WHERE x < 3) SELECT x FROM c WHERE x > 5;" << true;
+    QTest::newRow("values") << "VALUES (1) EXCEPT VALUES (1);" << true;
+    QTest::newRow("statement without data") << "CREATE TABLE t(a);" << false;
+}
+
+void TestRunSql::statementReturningNoRows()
+{
+    QFETCH(QString, sql);
+    QFETCH(bool, returnsRows);
+
+    DBBrowserDB db;
+    QVERIFY(db.open(":memory:"));
+
+    const QList<StatementResult> results = runSql(db, sql, 0, sql.toUtf8().length());
+
+    QCOMPARE(results.size(), 1);
+    QVERIFY2(results.at(0).type != StatementResult::Errored, qPrintable(results.at(0).message));
+    QCOMPARE(results.at(0).type == StatementResult::ReturnsRows, returnsRows);
+}
+
 void TestRunSql::getCurrentLineRange_data()
 {
     QTest::addColumn<QString>("sql");

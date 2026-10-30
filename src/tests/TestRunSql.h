@@ -18,6 +18,10 @@ private slots:
     void executeCurrentLine_data();
     void executeCurrentLine();
 
+    // A statement returning data has to be reported as such, also when it returns no rows
+    void statementReturningNoRows_data();
+    void statementReturningNoRows();
+
     void getCurrentLineRange_data();
     void getCurrentLineRange();
     void findStatementStart_data();
