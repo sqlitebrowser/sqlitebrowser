@@ -22,10 +22,11 @@ RunSql::RunSql(DBBrowserDB& _db, QString query, int execute_from_position, int _
     // Get lock to set up everything
     std::unique_lock<std::mutex> lk(m);
 
-    // Cancel if there is nothing to execute
+    // Cancel if there is nothing to execute. Note that the positions are byte positions in the UTF-8 encoded query and not character positions,
+    // so we can't use them with QString::mid() because they differ as soon as there are multibyte characters in front of the part to execute.
+    const QString query_to_execute = QString::fromUtf8(query.toUtf8().mid(execute_from_position, execute_to_position-execute_from_position)).trimmed();
     if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed().isEmpty() ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed() == ";")
+            query_to_execute.isEmpty() || query_to_execute == ";")
         return;
 
     // All replacements in the query should be made by the same amount of characters, so the positions in the file
