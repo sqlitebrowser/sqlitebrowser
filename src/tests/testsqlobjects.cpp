@@ -243,7 +243,7 @@ void TestTable::parseSQL()
     Table tab(*Table::parseSQL(sSQL));
 
     QCOMPARE(tab.name(), "hero");
-    QCOMPARE(tab.rowidColumns(), {"_rowid_"});
+    QCOMPARE(tab.rowidColumns(), sqlb::StringVector({"_rowid_"}));
     QCOMPARE(tab.fields.at(0).name(), "id");
     QCOMPARE(tab.fields.at(1).name(), "name");
     QCOMPARE(tab.fields.at(2).name(), "info");
@@ -386,7 +386,7 @@ void TestTable::parseSQLWithoutRowid()
     Table tab(*Table::parseSQL(sSQL));
 
     QCOMPARE(tab.primaryKeyColumns().at(0).name(), "a");
-    QCOMPARE(tab.rowidColumns(), {"a"});
+    QCOMPARE(tab.rowidColumns(), sqlb::StringVector({"a"}));
     QCOMPARE(tab.withoutRowidTable(), true);
     QCOMPARE(tab.isStrict(), false);
 }
