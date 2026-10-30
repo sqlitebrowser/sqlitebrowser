@@ -143,7 +143,7 @@ void TestDuplicateRecord::duplicateKeepsExistingRecords()
     const QStringList after = tableRows(db, columns, order);
     QVERIFY2(!dialogShown, "an error dialog was shown while duplicating");
     QCOMPARE(after.size(), before.size() + 1);
-    const QSet<QString> afterSet = QSet<QString>::fromList(after);
+    const QSet<QString> afterSet(after.begin(), after.end());
     for(const QString& row : before)
         QVERIFY2(afterSet.contains(row), qPrintable("record was lost or overwritten: " + row));
 }
