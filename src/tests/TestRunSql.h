@@ -13,6 +13,15 @@ private slots:
     void executeRangeAfterMultibyteText();
     void executeEverythingWithMultibyteText();
     void executeBlankRangeAfterMultibyteText();
+
+    // Executing the current line must not run any statement that starts after the end of the line
+    void executeCurrentLine_data();
+    void executeCurrentLine();
+
+    void getCurrentLineRange_data();
+    void getCurrentLineRange();
+    void findStatementStart_data();
+    void findStatementStart();
 };
 
 #endif // TESTRUNSQL_H

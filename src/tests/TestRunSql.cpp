@@ -50,6 +50,21 @@ QList<StatementResult> runSql(DBBrowserDB& db, const QString& sql, int from_posi
     return results;
 }
 
+// The byte position of the first character of the given line. Lines are separated by CR+LF, LF or CR, like in the editor.
+int lineStart(const QByteArray& sql, int line)
+{
+    int position = 0;
+    for(; line > 0; line--)
+    {
+        while(position < sql.length() && sql.at(position) != '\r' && sql.at(position) != '\n')
+            position++;
+        if(position < sql.length() && sql.at(position) == '\r' && position + 1 < sql.length() && sql.at(position + 1) == '\n')
+            position++;
+        position++;
+    }
+    return position;
+}
+
 }
 
 void TestRunSql::executeRangeAfterMultibyteText_data()
@@ -111,4 +126,132 @@ void TestRunSql::executeBlankRangeAfterMultibyteText()
     const QList<StatementResult> results = runSql(db, sql, bytes.indexOf(';') + 1, bytes.length());
 
     QVERIFY(results.isEmpty());
+}
+
+void TestRunSql::executeCurrentLine_data()
+{
+    QTest::addColumn<QString>("sql");
+    QTest::addColumn<int>("line");
+    QTest::addColumn<QStringList>("executed");
+
+    QTest::newRow("only statement") << "SELECT 1;" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("first of two lines") << "SELECT 1;\nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("last of two lines") << "SELECT 1;\nSELECT 2;\n" << 1 << (QStringList() << "SELECT 2;");
+    QTest::newRow("last line without line break") << "SELECT 1;\nSELECT 2;" << 1 << (QStringList() << "SELECT 2;");
+    QTest::newRow("last line without semicolon") << "SELECT 1;\nSELECT 2" << 1 << (QStringList() << "SELECT 2");
+    QTest::newRow("CRLF line breaks") << "SELECT 1;\r\nSELECT 2;\r\nSELECT 3;\r\n" << 1 << (QStringList() << "SELECT 2;");
+    QTest::newRow("CR line breaks") << "SELECT 1;\rSELECT 2;\rSELECT 3;\r" << 1 << (QStringList() << "SELECT 2;");
+    QTest::newRow("several statements in the line") << "SELECT 1; SELECT 2;\nSELECT 3;\n" << 0 << (QStringList() << "SELECT 1;" << "SELECT 2;");
+    QTest::newRow("statement over several lines, first line") << "SELECT 1,\n2;\nSELECT 3;\n" << 0 << (QStringList() << "SELECT 1,\n2;");
+    QTest::newRow("statement over several lines, last line") << "SELECT 1,\n2;\nSELECT 3;\n" << 1 << (QStringList() << "SELECT 1,\n2;");
+    QTest::newRow("leading comment") << "SELECT 1;\n/* c */ SELECT 2;\nSELECT 3;\n" << 1 << (QStringList() << "/* c */ SELECT 2;");
+
+    // Whatever is left in the line after the last statement must not make the next line run
+    QTest::newRow("empty statement after statement") << "SELECT 1; ;\n\nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("two semicolons after statement") << "SELECT 1;;\nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("trailing spaces") << "SELECT 1;  \nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("trailing spaces and CRLF") << "SELECT 1; \t\r\nSELECT 2;\r\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("trailing line comment") << "SELECT 1; -- note\nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("trailing block comment") << "SELECT 1; /* note */\nSELECT 2;\n" << 0 << (QStringList() << "SELECT 1;");
+    QTest::newRow("comment line") << "SELECT 1;\n-- SELECT 5;\nSELECT 2;\n" << 1 << QStringList();
+    QTest::newRow("blank line") << "SELECT 1;\n\nSELECT 2;\n" << 1 << QStringList();
+    QTest::newRow("line with only a semicolon") << "SELECT 1;\n;\nSELECT 2;\n" << 1 << QStringList();
+}
+
+void TestRunSql::executeCurrentLine()
+{
+    QFETCH(QString, sql);
+    QFETCH(int, line);
+    QFETCH(QStringList, executed);
+
+    DBBrowserDB db;
+    QVERIFY(db.open(":memory:"));
+
+    const QByteArray bytes = sql.toUtf8();
+    int from_position, to_position;
+    RunSql::getCurrentLineRange(bytes, lineStart(bytes, line), from_position, to_position);
+
+    QStringList statements;
+    for(const StatementResult& result : runSql(db, sql, from_position, to_position))
+    {
+        QVERIFY2(result.type == StatementResult::ReturnsRows, qPrintable(result.message));
+        statements.append(result.message);
+    }
+
+    QCOMPARE(statements, executed);
+}
+
+void TestRunSql::getCurrentLineRange_data()
+{
+    QTest::addColumn<QString>("sql");
+    QTest::addColumn<int>("line");
+    QTest::addColumn<int>("from");
+    QTest::addColumn<int>("to");
+
+    QTest::newRow("empty") << "" << 0 << 0 << 0;
+    QTest::newRow("only line") << "SELECT 1;" << 0 << 0 << 9;
+    QTest::newRow("only line with line break") << "SELECT 1;\n" << 0 << 0 << 9;
+    QTest::newRow("empty last line") << "SELECT 1;\n" << 1 << 9 << 10;
+    QTest::newRow("second line") << "SELECT 1;\nSELECT 2;\nSELECT 3;" << 1 << 9 << 19;
+    QTest::newRow("last line without line break") << "SELECT 1;\nSELECT 2;\nSELECT 3;" << 2 << 19 << 29;
+    QTest::newRow("last line without semicolon") << "SELECT 1;\nSELECT 2" << 1 << 9 << 18;
+    QTest::newRow("CRLF") << "SELECT 1;\r\nSELECT 2;\r\nSELECT 3;\r\n" << 1 << 9 << 20;
+    QTest::newRow("CR") << "SELECT 1;\rSELECT 2;\rSELECT 3;\r" << 1 << 9 << 19;
+    QTest::newRow("first line of a statement") << "SELECT 1;\nSELECT 2,\n3;\nSELECT 4;" << 1 << 9 << 19;
+    QTest::newRow("last line of a statement") << "SELECT 1;\nSELECT 2,\n3;\nSELECT 4;" << 2 << 9 << 22;
+    QTest::newRow("no semicolon in front") << "SELECT 1,\n2,\n3" << 2 << 0 << 14;
+    QTest::newRow("several statements in the line") << "SELECT 1;\nSELECT 2; SELECT 3;\n" << 1 << 9 << 29;
+    QTest::newRow("blank line") << "SELECT 1;\n\nSELECT 2;" << 1 << 9 << 10;
+
+    // Positions are in bytes, U+0416 has two of them
+    QTest::newRow("multibyte") << "SELECT '" + QString(QChar(0x0416)) + "';\nSELECT '" + QString(2, QChar(0x0416)) + "';\n" << 1 << 12 << 27;
+}
+
+void TestRunSql::getCurrentLineRange()
+{
+    QFETCH(QString, sql);
+    QFETCH(int, line);
+    QFETCH(int, from);
+    QFETCH(int, to);
+
+    const QByteArray bytes = sql.toUtf8();
+    int from_position = -1, to_position = -1;
+    RunSql::getCurrentLineRange(bytes, lineStart(bytes, line), from_position, to_position);
+
+    QCOMPARE(from_position, from);
+    QCOMPARE(to_position, to);
+}
+
+void TestRunSql::findStatementStart_data()
+{
+    QTest::addColumn<QString>("sql");
+    QTest::addColumn<int>("position");
+    QTest::addColumn<int>("start");
+
+    QTest::newRow("empty") << "" << 0 << 0;
+    QTest::newRow("statement") << "SELECT 1;" << 0 << 0;
+    QTest::newRow("white space") << " \t\r\n\fSELECT 1;" << 0 << 5;
+    QTest::newRow("only white space") << " \n " << 0 << 3;
+    QTest::newRow("empty statements") << " ; ;;SELECT 1;" << 0 << 5;
+    QTest::newRow("line comment") << "-- comment\nSELECT 1;" << 0 << 11;
+    QTest::newRow("line comment at the end") << "-- comment" << 0 << 10;
+    QTest::newRow("line comment with CRLF") << "-- comment\r\nSELECT 1;" << 0 << 12;
+    QTest::newRow("block comment") << "/* comment\n; */SELECT 1;" << 0 << 15;
+    QTest::newRow("unterminated block comment") << "/* comment" << 0 << 10;
+    QTest::newRow("block comment not closed by its opening") << "/*/ SELECT 1;" << 0 << 13;
+    QTest::newRow("everything mixed") << " ; /* a */ -- b\n;\n/* c */SELECT 1;" << 0 << 25;
+    QTest::newRow("single minus") << "- 1" << 0 << 0;
+    QTest::newRow("single slash") << "/ 1" << 0 << 0;
+    QTest::newRow("comment in a statement") << "SELECT /* a */ 1;" << 0 << 0;
+    QTest::newRow("starting later") << "SELECT 1; -- a\nSELECT 2;" << 9 << 15;
+    QTest::newRow("starting at the end") << "SELECT 1;" << 9 << 9;
+}
+
+void TestRunSql::findStatementStart()
+{
+    QFETCH(QString, sql);
+    QFETCH(int, position);
+    QFETCH(int, start);
+
+    QCOMPARE(RunSql::findStatementStart(sql.toUtf8(), position), start);
 }
