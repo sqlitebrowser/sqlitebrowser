@@ -18,6 +18,7 @@
 #include <QPushButton>
 
 #include <cassert>
+#include <cstring>
 
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
@@ -122,6 +123,10 @@ void SqliteTableModel::reset()
     clearCache();
     m_lastError.clear();
     m_sQuery.clear();
+    m_customQuery.clear();
+    m_customQuerySortable = false;
+    m_customSortColumn = -1;
+    m_customSortOrder = Qt::AscendingOrder;
     m_query.clear();
     m_table_of_query.reset();
     m_headers.clear();
@@ -168,6 +173,20 @@ void SqliteTableModel::setQuery(const sqlb::Query& query)
     updateAndRunQuery();
 }
 
+// Statements which return rows and can be used inside another statement as a subquery: SELECT and WITH ... SELECT. This doesn't cover PRAGMA and
+// EXPLAIN statements. It also doesn't check whether the statement could modify data, see SqliteTableModel::getColumnNames().
+static bool canBeUsedAsSubquery(const QString& query)
+{
+    for(const char* keyword : {"SELECT", "WITH"})
+    {
+        const int length = static_cast<int>(strlen(keyword));
+        if(query.startsWith(QLatin1String(keyword), Qt::CaseInsensitive) &&
+           (query.size() == length || !(query.at(length).isLetterOrNumber() || query.at(length) == '_')))
+            return true;
+    }
+    return false;
+}
+
 void SqliteTableModel::setQuery(const QString& sQuery)
 {
     // Reset
@@ -175,8 +194,12 @@ void SqliteTableModel::setQuery(const QString& sQuery)
 
     m_sQuery = sQuery.trimmed();
     removeCommentsFromQuery(m_sQuery);
+    m_customQuery = m_sQuery;
 
+    // The query can only be wrapped in another one for sorting if it is a statement for which this is possible. getColumnNames() checks whether
+    // it is read-only, so statements like WITH ... DELETE ... RETURNING are not mistaken for a SELECT statement.
     getColumnNames(sQuery.toStdString());
+    m_customQuerySortable = m_customQuerySortable && canBeUsedAsSubquery(m_customQuery);
 
     worker->setQuery(m_sQuery, QString());
 
@@ -261,14 +284,20 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
             }
             default:
                 QString sortIndicator;
-                for(size_t i = 0; i < m_query.orderBy().size(); i++) {
-                    const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
-                    // Append sort indicator with direction and ordinal number in superscript style
-                    if (sortedColumn.expr == plainHeader) {
-                        sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▴" : " ▾";
-                        if(m_query.orderBy().size() > 1)
-                            sortIndicator.append(toSuperScript(i+1));
-                        break;
+                if(!m_customQuery.isEmpty()) {
+                    // The results of a custom query are sorted by column number because the column names don't need to be unique
+                    if(section == m_customSortColumn)
+                        sortIndicator = m_customSortOrder == Qt::AscendingOrder ? " ▴" : " ▾";
+                } else {
+                    for(size_t i = 0; i < m_query.orderBy().size(); i++) {
+                        const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
+                        // Append sort indicator with direction and ordinal number in superscript style
+                        if (sortedColumn.expr == plainHeader) {
+                            sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▴" : " ▾";
+                            if(m_query.orderBy().size() > 1)
+                                sortIndicator.append(toSuperScript(i+1));
+                            break;
+                        }
                     }
                 }
                 return QString::fromStdString(plainHeader) + sortIndicator;
@@ -622,6 +651,13 @@ Qt::ItemFlags SqliteTableModel::flags(const QModelIndex& index) const
 
 void SqliteTableModel::sort(int column, Qt::SortOrder order)
 {
+    // The results of a custom query are not sorted by column name
+    if(!m_customQuery.isEmpty())
+    {
+        sortResults(column, order);
+        return;
+    }
+
     // Construct a sort order list from this item and forward it to the function to sort by lists
     std::vector<sqlb::OrderBy> list;
     list.emplace_back(m_headers.at(static_cast<size_t>(column)), order == Qt::AscendingOrder ? sqlb::OrderBy::Ascending : sqlb::OrderBy::Descending);
@@ -640,6 +676,55 @@ void SqliteTableModel::sort(const std::vector<sqlb::OrderBy>& columns)
     // Set the new query (but only if a table has already been set
     if(!m_query.table().isEmpty())
         updateAndRunQuery();
+}
+
+void SqliteTableModel::cycleResultSort(int column)
+{
+    if(column != m_customSortColumn)
+        sortResults(column, Qt::AscendingOrder);
+    else if(m_customSortOrder == Qt::AscendingOrder)
+        sortResults(column, Qt::DescendingOrder);
+    else
+        sortResults(-1, Qt::AscendingOrder);
+}
+
+void SqliteTableModel::sortResults(int column, Qt::SortOrder order)
+{
+    if(!m_customQuerySortable)
+        return;
+
+    // Any column which doesn't exist means no sorting
+    if(column < 0 || column >= columnCount())
+        column = -1;
+
+    // Don't do anything when the sort order hasn't changed
+    if(column == m_customSortColumn && (column == -1 || order == m_customSortOrder))
+        return;
+
+    m_customSortColumn = column;
+    m_customSortOrder = column == -1 ? Qt::AscendingOrder : order;
+
+    clearCache();
+
+    if(column == -1)
+    {
+        m_sQuery = m_customQuery;
+    } else {
+        // Sort by wrapping the original query. This way it doesn't matter what the original query does, e.g. whether it has an ORDER BY or a LIMIT clause
+        // itself, and sorting by column number works even if some columns have the same name. The semicolon at the end of the original query has to go
+        // because it would end the statement inside the parentheses.
+        QString query = m_customQuery.trimmed();
+        while(query.endsWith(';'))
+            query = query.left(query.size() - 1).trimmed();
+        m_sQuery = QString("SELECT * FROM (%1) ORDER BY %2 %3").arg(query).arg(column + 1).arg(order == Qt::AscendingOrder ? QStringLiteral("ASC") : QStringLiteral("DESC"));
+    }
+
+    worker->setQuery(m_sQuery, QString());
+
+    // now fetch the first entries
+    triggerCacheLoad(static_cast<int>(m_chunkSize / 2) - 1);
+
+    emit layoutChanged();
 }
 
 SqliteTableModel::Row SqliteTableModel::makeDefaultCacheEntry () const
@@ -782,9 +867,12 @@ void SqliteTableModel::getColumnNames(const std::string& sQuery)
 {
     auto pDb = m_db.get(tr("retrieving list of columns"));
 
+    m_customQuerySortable = false;
+
     sqlite3_stmt* stmt;
     if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) == SQLITE_OK)
     {
+        m_customQuerySortable = sqlite3_stmt_readonly(stmt) != 0;
         int columns = sqlite3_column_count(stmt);
         for(int i = 0; i < columns; ++i)
         {

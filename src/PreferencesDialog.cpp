@@ -166,6 +166,7 @@ void PreferencesDialog::loadSettings()
     ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
+    ui->checkSortResults->setChecked(Settings::getValue("editor", "sort_results").toBool());
     ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
@@ -243,6 +244,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
+    Settings::setValue("editor", "sort_results", ui->checkSortResults->isChecked());
     Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;

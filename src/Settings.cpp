@@ -410,6 +410,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "editor" && name == "horizontal_tiling")
         return false;
 
+    // editor/sort_results?
+    if(group == "editor" && name == "sort_results")
+        return false;
+
     // editor/splitter1_sizes?
     if(group == "editor" && name == "splitter1_sizes")
         return QVariant();
