@@ -38,6 +38,8 @@ struct CSVField
     // These variables point to the parsed contents of the field and can be directly passed to SQLite functions
     char* data;                     // Pointer to the start of the field contents
     uint64_t data_length;           // Length of the field contents
+
+    bool quoted;                    // True if the field was enclosed in quote characters in the file
 };
 
 /*

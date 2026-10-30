@@ -275,6 +275,72 @@ void TestImport::csvImport_data()
                                << result;
 }
 
+void TestImport::csvQuotedFields()
+{
+    QFETCH(QByteArray, csv);
+    QFETCH(QChar, quote);
+    QFETCH(QStringList, expected);
+
+    QBuffer buffer(&csv);
+    QVERIFY(buffer.open(QIODevice::ReadOnly));
+    QTextStream tstream(&buffer);
+
+    // Each row is rendered as a string with a "|" between the fields and a "*" after every field which was quoted
+    QStringList parsed;
+    CSVParser csvparser(true, ',', quote.unicode());
+    QCOMPARE(csvparser.parse([&parsed](size_t /*rowNum*/, const CSVRow& data) -> bool {
+        QStringList row;
+        for(size_t i=0;i<data.num_fields;i++)
+            row.push_back(QString::fromUtf8(data.fields[i].data, static_cast<int>(data.fields[i].data_length)) + (data.fields[i].quoted ? "*" : ""));
+        parsed.push_back(row.join("|"));
+        return true;
+    }, tstream), CSVParser::ParserResultSuccess);
+
+    QCOMPARE(parsed, expected);
+}
+
+void TestImport::csvQuotedFields_data()
+{
+    QTest::addColumn<QByteArray>("csv");
+    QTest::addColumn<QChar>("quote");
+    QTest::addColumn<QStringList>("expected");
+
+    QTest::newRow("unquoted") << QByteArray("007,123,abc\n")
+                              << QChar('"')
+                              << QStringList{"007|123|abc"};
+    QTest::newRow("mixed") << QByteArray("\"007\",123,\"abc\"\n")
+                           << QChar('"')
+                           << QStringList{"007*|123|abc*"};
+    // The state must not be carried over to the following fields, rows or to the fields reused for them
+    QTest::newRow("reset_between_rows") << QByteArray("\"1\",\"2\",\"3\"\r\n4,5,6\r\n\"7\",8,\"9\"\n10,\"11\",12")
+                                        << QChar('"')
+                                        << QStringList{"1*|2*|3*", "4|5|6", "7*|8|9*", "10|11*|12"};
+    QTest::newRow("more_than_initial_fields") << QByteArray("a,b,c,d,e,f,g,\"h\",i\n1,2,3,4,5,6,7,8,9\n")
+                                              << QChar('"')
+                                              << QStringList{"a|b|c|d|e|f|g|h*|i", "1|2|3|4|5|6|7|8|9"};
+    QTest::newRow("empty_quoted") << QByteArray("\"\",,\"\"\n")
+                                  << QChar('"')
+                                  << QStringList{"*||*"};
+    QTest::newRow("escaped_quote_and_separator") << QByteArray("\"a\"\"b\",\"c,d\"\n")
+                                                 << QChar('"')
+                                                 << QStringList{"a\"b*|c,d*"};
+    QTest::newRow("last_without_linebreak") << QByteArray("1,\"2\"")
+                                            << QChar('"')
+                                            << QStringList{"1|2*"};
+    QTest::newRow("last_empty_without_linebreak") << QByteArray("1\n\"\"")
+                                                  << QChar('"')
+                                                  << QStringList{"1", "*"};
+    QTest::newRow("oldmaclinebreaks") << QByteArray("\"1\",2\r3,\"4\"\r")
+                                      << QChar('"')
+                                      << QStringList{"1*|2", "3|4*"};
+    QTest::newRow("other_quote_char") << QByteArray("'1',\"2\"\n")
+                                      << QChar('\'')
+                                      << QStringList{"1*|\"2\""};
+    QTest::newRow("no_quote_char") << QByteArray("\"1\",2\n")
+                                   << QChar()
+                                   << QStringList{"\"1\"|2"};
+}
+
 void TestImport::csvQuoteField()
 {
     QFETCH(QString, content);

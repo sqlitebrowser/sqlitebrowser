@@ -58,6 +58,7 @@ inline void increaseRowSize(CSVRow& r)
             r.fields[i].buffer = nullptr;
             r.fields[i].buffer_length = 0;
             r.fields[i].buffer_max_length = 0;
+            r.fields[i].quoted = false;
         }
     }
 }
@@ -96,6 +97,9 @@ inline CSVField* addColumn(CSVRow& r, CSVField* field, bool trim)
     // Increase field list size if it is too small
     increaseRowSize(r);
 
+    // The next field is not known to be quoted until we find its opening quote character
+    r.fields[r.num_fields].quoted = false;
+
     // Return pointer to the next field
     return &r.fields[r.num_fields];
 }
@@ -110,6 +114,7 @@ inline CSVField* addRow(CSVParser::csvRowFunction f, CSVRow& r, size_t& rowCount
 
     // Reset the field list by setting the field count to 0. No need to deconstruct anything else.
     r.num_fields = 0;
+    r.fields->quoted = false;
 
     // Increase row count by one, as we're now starting to parse the next row
     rowCount++;
@@ -188,6 +193,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                                   m_iNumExtraBytesQuoteChar))
                     {
                         state = StateInQuote;
+                        field->quoted = true;
                         it += m_iNumExtraBytesQuoteChar;
                     }
                     else
