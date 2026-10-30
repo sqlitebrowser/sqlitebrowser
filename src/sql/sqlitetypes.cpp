@@ -117,6 +117,9 @@ std::string CheckConstraint::toSql() const
         result = "CONSTRAINT " + escapeIdentifier(m_name) + " ";
     result += "CHECK(" + m_expression + ")";
 
+    if(!m_conflictAction.empty())
+        result += " ON CONFLICT " + m_conflictAction;
+
     return result;
 }
 

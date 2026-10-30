@@ -769,6 +769,22 @@ void TestTable::onConflictRoundTrip_data()
                        "\tPRIMARY KEY(\"a\") ON CONFLICT IGNORE\n"
                        ") WITHOUT ROWID;");
 
+    // SQLite also accepts a conflict clause on a table CHECK constraint (it is a no-op there) and on the NULL column constraint.
+    // The parser must not reject these definitions because it would then no longer understand the table at all.
+    QTest::newRow("table check constraint")
+        << std::string("CREATE TABLE t(a INTEGER, CONSTRAINT ck CHECK(a > 0) ON CONFLICT IGNORE)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\tCONSTRAINT \"ck\" CHECK(\"a\" > 0) ON CONFLICT IGNORE\n"
+                       ");");
+
+    QTest::newRow("null column constraint")
+        << std::string("CREATE TABLE t(a INTEGER NULL ON CONFLICT IGNORE, b TEXT NOT NULL ON CONFLICT FAIL)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT NOT NULL ON CONFLICT FAIL\n"
+                       ");");
+
     // Every conflict action for every kind of constraint
     const char* const actions[] = {"ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE"};
     for(const char* action : actions)
@@ -791,6 +807,9 @@ void TestTable::onConflictRoundTrip_data()
         QTest::newRow(("table unique " + a).c_str())
             << std::string("CREATE TABLE t(a INTEGER, UNIQUE(a) ON CONFLICT " + a + ")")
             << std::string(head + "\t\"a\"\tINTEGER,\n\tUNIQUE(\"a\") ON CONFLICT " + a + "\n);");
+        QTest::newRow(("table check " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER, CHECK(a > 0) ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER,\n\tCHECK(\"a\" > 0) ON CONFLICT " + a + "\n);");
     }
 }
 
