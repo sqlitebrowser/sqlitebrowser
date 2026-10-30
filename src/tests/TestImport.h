@@ -14,6 +14,11 @@ public:
 private slots:
     void csvImport();
     void csvImport_data();
+
+    void csvQuoteField();
+    void csvQuoteField_data();
+    void csvExportImportRoundTrip();
+    void csvExportImportRoundTrip_data();
 };
 
 #endif

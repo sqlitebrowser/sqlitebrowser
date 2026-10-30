@@ -6,6 +6,7 @@
 #include "FileDialog.h"
 #include "IconCache.h"
 #include "Data.h"
+#include "csvparser.h"
 
 #include <QSaveFile>
 #include <QTextStream>
@@ -101,12 +102,9 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
 {
     // Prepare the quote and separating characters
     QChar quoteChar = currentQuoteChar();
-    QString quotequoteChar = QString(quoteChar) + quoteChar;
     QChar sepChar = currentSeparatorChar();
     QString newlineStr = currentNewLineString();
 
-    // Chars that require escaping
-    std::string special_chars = newlineStr.toStdString() + sepChar.toLatin1() + quoteChar.toLatin1();
     bool writeError = false;
     // Open file
     QSaveFile file(sFilename);
@@ -126,11 +124,7 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
                 int columns = sqlite3_column_count(stmt);
                 for (int i = 0; i < columns; ++i)
                 {
-                    QString content = QString::fromUtf8(sqlite3_column_name(stmt, i));
-                    if(content.toStdString().find_first_of(special_chars) != std::string::npos)
-                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
-                    else
-                        stream << content;
+                    stream << quoteCsvField(QString::fromUtf8(sqlite3_column_name(stmt, i)), sepChar, quoteChar, newlineStr);
                     if(i != columns - 1)
                         // Only output the separator value if sepChar isn't 0,
                         // as that's used to indicate no separator character
@@ -155,16 +149,11 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
                     // Convert to base64 if the data is binary. This case doesn't need quotes.
                     if(!isTextOnly(blob))
                         stream << blob.toBase64();
-                    // If no quote char is set but the content contains a line break, we enforce some quote characters. This probably isn't entirely correct
-                    // but still better than having the line breaks unquoted and effectively outputting a garbage file.
-                    else if(quoteChar.isNull() && content.contains(newlineStr))
-                        stream << '"' << content.replace('"', "\"\"") << '"';
-                    // If the content needs to be quoted, quote it. But only if a quote char has been specified
-                    else if(!quoteChar.isNull() && content.toStdString().find_first_of(special_chars) != std::string::npos)
-                        stream << quoteChar << content.replace(quoteChar, quotequoteChar) << quoteChar;
-                    // If it doesn't need to be quoted, don't quote it
+                    // Otherwise quote the content if necessary. If no quote char is set but the content contains a line break, some quote
+                    // characters are enforced. This probably isn't entirely correct but still better than having the line breaks unquoted
+                    // and effectively outputting a garbage file.
                     else
-                        stream << content;
+                        stream << quoteCsvField(content, sepChar, quoteChar, newlineStr);
 
                     if(i != columns - 1)
                         // Only output the separator value if sepChar isn't 0,
