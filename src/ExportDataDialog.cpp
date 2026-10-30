@@ -185,8 +185,12 @@ bool ExportDataDialog::exportQueryCsv(const std::string& sQuery, const QString& 
         QApplication::restoreOverrideCursor();
         qApp->processEvents();
 
-        // Done writing the file
-        if(!file.commit()) {
+        // The stream still holds the last part of the data. If the disk is full, writing it is where that shows up when the file is small.
+        if(!flushStream(stream))
+            writeError = true;
+
+        // Done writing the file. Only replace the original file if everything has been written, not with an incomplete file.
+        if(!writeError && !file.commit()) {
             writeError = true;
         }
 
@@ -284,14 +288,14 @@ bool ExportDataDialog::exportQueryJson(const std::string& sQuery, const QString&
         sqlite3_finalize(stmt);
 
         // Create JSON document
-        file.write(json_table.dump(ui->checkPrettyPrint->isChecked() ? 4 : -1).c_str());
-        bool writeError = file.error() != QFileDevice::NoError;
+        const std::string json_text = json_table.dump(ui->checkPrettyPrint->isChecked() ? 4 : -1);
+        bool writeError = !writeAll(file, json_text.c_str(), static_cast<qint64>(json_text.size()));
 
         QApplication::restoreOverrideCursor();
         qApp->processEvents();
 
-        // Done writing the file
-        if(!file.commit()) {
+        // Done writing the file. Only replace the original file if everything has been written, not with an incomplete file.
+        if(!writeError && !file.commit()) {
             writeError = true;
         }
 
