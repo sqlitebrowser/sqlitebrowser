@@ -17,6 +17,14 @@
 
 #include <memory>
 
+// Showing a QMessageBox with the offscreen platform crashes in QMessageBox::showEvent() on Windows CI, so the
+// tests which need the dialog to show a message box are only run on the other platforms
+#ifdef Q_OS_WIN
+#define SKIP_IF_MESSAGE_BOXES_CRASH() QSKIP("Message boxes can't be shown with the offscreen platform on Windows")
+#else
+#define SKIP_IF_MESSAGE_BOXES_CRASH() do {} while(false)
+#endif
+
 namespace
 {
 
@@ -290,6 +298,7 @@ void TestEditTableDialog::switchBetweenVirtualAndStored()
 
 void TestEditTableDialog::convertOrdinaryColumnToGenerated()
 {
+    SKIP_IF_MESSAGE_BOXES_CRASH();
     exec("CREATE TABLE t(a INTEGER, b INTEGER, c INTEGER);");
     exec("INSERT INTO t VALUES (1, 2, 99);");
 
@@ -371,6 +380,7 @@ void TestEditTableDialog::createTableWithGeneratedColumn()
 
 void TestEditTableDialog::generatedColumnCannotBePrimaryKey()
 {
+    SKIP_IF_MESSAGE_BOXES_CRASH();
     exec("CREATE TABLE t(a INTEGER PRIMARY KEY, b INTEGER, c INTEGER AS (b + 1));");
 
     MessageBoxCloser boxes;
@@ -408,6 +418,7 @@ void TestEditTableDialog::generatedColumnCannotBePrimaryKey()
 
 void TestEditTableDialog::generatedColumnCannotHaveDefault()
 {
+    SKIP_IF_MESSAGE_BOXES_CRASH();
     exec("CREATE TABLE t(a INTEGER, b INTEGER DEFAULT 5, c INTEGER AS (a + 1));");
 
     MessageBoxCloser boxes;

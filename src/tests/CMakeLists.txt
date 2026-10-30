@@ -137,6 +137,7 @@ set(TESTEDITTABLE_SRC
     ../Settings.cpp
     ../CondFormat.cpp
     ../Data.cpp
+    ../CipherDialog.cpp
     ../CipherSettings.cpp
     ../sqltextedit.cpp
     ../SqlUiLexer.cpp
@@ -161,9 +162,10 @@ set(TESTEDITTABLE_HDR
     ../Settings.h
     ../CondFormat.h
     ../Data.h
+    ../CipherDialog.h
 )
 
-add_executable(test-edit-table ${TESTEDITTABLE_HDR} ${TESTEDITTABLE_SRC})
+add_executable(test-edit-table ${TESTEDITTABLE_HDR} ${TESTEDITTABLE_SRC} ../CipherDialog.ui)
 target_include_directories(test-edit-table PRIVATE "${PROJECT_BINARY_DIR}")
 target_link_libraries(test-edit-table ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${QT_MAJOR}::PrintSupport QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
 if(QT_MAJOR STREQUAL "Qt6")
