@@ -123,3 +123,68 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test row loader
+
+set(TESTROWLOADER_SRC
+    TestRowLoader.cpp
+    ../sqlitedb.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../CipherDialog.cpp
+    ../CipherSettings.cpp
+    ../CondFormat.cpp
+    ../Data.cpp
+    ../Settings.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTROWLOADER_HDR
+    TestRowLoader.h
+    ../sqlitedb.h
+    ../sqlitetablemodel.h
+    ../RowLoader.h
+    ../RowCache.h
+    ../CipherDialog.h
+    ../CipherSettings.h
+    ../CondFormat.h
+    ../Data.h
+    ../Settings.h
+    ../sql/sqlitetypes.h
+    ../sql/Query.h
+    ../sql/ObjectIdentifier.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
+)
+
+add_executable(test-row-loader ${TESTROWLOADER_HDR} ${TESTROWLOADER_SRC} ../CipherDialog.ui)
+target_include_directories(test-row-loader SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/libs/json)
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-row-loader PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+target_link_libraries(test-row-loader ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-row-loader COMMAND $<TARGET_FILE:test-row-loader>)
+if(WIN32)
+    set(_rl_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _rl_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _rl_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _rl_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\\;" TESTROWLOADER_PATH "${_rl_extra_paths};$ENV{PATH}")
+    set_tests_properties(test-row-loader PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=${TESTROWLOADER_PATH}")
+else()
+    set_tests_properties(test-row-loader PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+endif()
