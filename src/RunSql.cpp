@@ -22,10 +22,11 @@ RunSql::RunSql(DBBrowserDB& _db, QString query, int execute_from_position, int _
     // Get lock to set up everything
     std::unique_lock<std::mutex> lk(m);
 
-    // Cancel if there is nothing to execute
+    // Cancel if there is nothing to execute. Note that the positions are byte positions in the UTF-8 encoded query and not character positions,
+    // so we can't use them with QString::mid() because they differ as soon as there are multibyte characters in front of the part to execute.
+    const QString query_to_execute = QString::fromUtf8(query.toUtf8().mid(execute_from_position, execute_to_position-execute_from_position)).trimmed();
     if(query.trimmed().isEmpty() || query.trimmed() == ";" || execute_from_position == execute_to_position ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed().isEmpty() ||
-            query.mid(execute_from_position, execute_to_position-execute_from_position).trimmed() == ";")
+            query_to_execute.isEmpty() || query_to_execute == ";")
         return;
 
     // All replacements in the query should be made by the same amount of characters, so the positions in the file
@@ -81,6 +82,15 @@ bool RunSql::executeNextStatement()
     // Is there anything left to do?
     if(queries_left_to_execute.isEmpty())
         return false;
+
+    // SQLite skips white space, comments and empty statements in front of a statement. So if there is nothing else left in the part we want to
+    // execute, the statement SQLite would find next belongs to a later part (e.g. the following line when executing the current line) and
+    // must not be executed.
+    if(execute_current_position + findStatementStart(queries_left_to_execute) >= execute_to_position)
+    {
+        stopExecution();
+        return false;
+    }
 
     // Start execution timer
     auto time_start = std::chrono::high_resolution_clock::now();
@@ -340,6 +350,48 @@ RunSql::StatementType RunSql::getQueryType(const QString& query)
     if(query.startsWith("ANALYZE", Qt::CaseInsensitive)) return AnalyzeStatement;
 
     return OtherStatement;
+}
+
+void RunSql::getCurrentLineRange(const QByteArray& sql, int line_start, int& execute_from_position, int& execute_to_position)
+{
+    // The end position is the last character of the line. If the statement(s) continue(s) into the next line, SQLite will execute it/them anyway
+    // and we'll stop afterwards.
+    execute_to_position = line_start;
+    while(execute_to_position < sql.length() && sql.at(execute_to_position) != '\n' && sql.at(execute_to_position) != '\r')
+        execute_to_position++;
+
+    // The start position is the first character of the line, except for those cases where we're in the middle of a statement which started
+    // on one the previous lines. In that case the start position is actually a bit earlier.
+    const int last_semicolon = sql.left(line_start).lastIndexOf(';');
+    if(last_semicolon != -1)
+        execute_from_position = last_semicolon + 1;
+    else
+        execute_from_position = 0;     // No semicolon before the current line, execute from the first line.
+}
+
+int RunSql::findStatementStart(const QByteArray& sql, int position)
+{
+    const int length = sql.length();
+    while(position < length)
+    {
+        const char c = sql.at(position);
+        if(c == ' ' || c == '\t' || c == '\n' || c == '\f' || c == '\r' || c == ';')
+        {
+            position++;
+        } else if(c == '-' && position + 1 < length && sql.at(position + 1) == '-') {
+            // Comment until the end of the line
+            const int end = sql.indexOf('\n', position);
+            position = (end == -1) ? length : end + 1;
+        } else if(c == '/' && position + 1 < length && sql.at(position + 1) == '*') {
+            // Comment until the closing characters. It does not need to be closed.
+            const int end = sql.indexOf("*/", position + 2);
+            position = (end == -1) ? length : end + 2;
+        } else {
+            break;
+        }
+    }
+
+    return position;
 }
 
 void RunSql::acquireDbAccess()

@@ -47,6 +47,25 @@ public:
 
     static StatementType getQueryType(const QString& query);
 
+    /**
+     * Determines the part of the SQL code to execute when only the line the cursor is in is to be executed.
+     * @param sql The complete SQL code, encoded as UTF-8
+     * @param line_start The position in bytes of the first character of the line
+     * @param execute_from_position Set to the position in bytes where the execution has to start. This is the first character of the line, except when the
+     *        line is in the middle of a statement which started in one of the previous lines. Then it is the end of the statement before it.
+     * @param execute_to_position Set to the position in bytes of the end of the line, not including the line break. Statements which start in the line
+     *        and continue in the following ones are executed completely. Nothing that starts after this position is.
+     */
+    static void getCurrentLineRange(const QByteArray& sql, int line_start, int& execute_from_position, int& execute_to_position);
+
+    /**
+     * Skips everything which SQLite ignores in front of a statement: white space, comments and empty statements.
+     * @param sql The SQL code, encoded as UTF-8
+     * @param position The position in bytes where to start looking
+     * @return The position in bytes where the next statement actually starts or the length of the SQL code if there is none
+     */
+    static int findStatementStart(const QByteArray& sql, int position = 0);
+
     void startNextStatement();
 
     void stop();
