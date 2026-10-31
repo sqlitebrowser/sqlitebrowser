@@ -477,6 +477,47 @@ void TestTable::parseSQLCheckConstraint()
     QCOMPARE(tab.fields.at(0).check(), "\"b\" = 'A' OR \"b\" = 'B'");
 }
 
+void TestTable::renameColumnInCheckConstraints()
+{
+    // Renaming a column must also update column names referenced in column and table CHECK constraints
+    std::string sql = "CREATE TABLE t (a INTEGER CHECK(a > 0), b INTEGER CHECK(\"b\" < 10 AND b <> a), c TEXT, CONSTRAINT cc CHECK(a < b AND length(c) > 1), CHECK(c <> 'a' AND [a] <> `a` + 1));";
+
+    Table orig(*Table::parseSQL(sql));
+    Table tab(orig);
+    tab.fields.at(0).setName("x");
+    tab.renameKeyInAllConstraints("a", "x");
+
+    QCOMPARE(tab.fields.at(0).check(), "\"x\" > 0");
+    QCOMPARE(tab.fields.at(1).check(), "\"b\" < 10 AND \"b\" <> \"x\"");
+    QCOMPARE(tab.fields.at(2).check(), "");
+    QCOMPARE(tab.checkConstraints().size(), static_cast<size_t>(2));
+    QCOMPARE(tab.checkConstraints().at(0)->expression(), "\"x\" < \"b\" AND length(\"c\") > 1");
+    QCOMPARE(tab.checkConstraints().at(0)->name(), "cc");
+    // String literals must be left alone, other quoting styles of the identifier are handled
+    QCOMPARE(tab.checkConstraints().at(1)->expression(), "\"c\" <> 'a' AND \"x\" <> \"x\" + 1");
+
+    // Functions, columns with other names and string literals must not be touched
+    Table tab2(*Table::parseSQL("CREATE TABLE t2 (abs INTEGER, c INTEGER CHECK(abs(abs) > 0 AND c > 1), CHECK(c IN ('abs', 'c')));"));
+    tab2.fields.at(0).setName("y");
+    tab2.renameKeyInAllConstraints("abs", "y");
+    QCOMPARE(tab2.fields.at(1).check(), "abs(\"y\") > 0 AND \"c\" > 1");
+    QCOMPARE(tab2.checkConstraints().at(0)->expression(), "\"c\" IN ('abs', 'c')");
+
+    // The new name needs quoting
+    Table tab3(*Table::parseSQL("CREATE TABLE t3 (a INTEGER CHECK(a > 0));"));
+    tab3.fields.at(0).setName("my col");
+    tab3.renameKeyInAllConstraints("a", "my col");
+    QCOMPARE(tab3.fields.at(0).check(), "\"my col\" > 0");
+
+    // The generated SQL must be parseable again and reflect the new name
+    Table tab4(*Table::parseSQL(tab.sql()));
+    QCOMPARE(tab4.fields.at(0).check(), "\"x\" > 0");
+
+    // The original table, which shares data with the copy, must not have been modified
+    QCOMPARE(orig.fields.at(0).check(), "\"a\" > 0");
+    QCOMPARE(orig.checkConstraints().at(0)->expression(), "\"a\" < \"b\" AND length(\"c\") > 1");
+}
+
 void TestTable::parseDefaultValues()
 {
     std::string sql = "CREATE TABLE test(a int DEFAULT 0, b int DEFAULT -1, c text DEFAULT 'hello', d text DEFAULT '0');";
