@@ -167,6 +167,14 @@ bool Field::operator==(const Field& rhs) const
     if(m_collation != rhs.m_collation)
         return false;
 
+    // The generated column constraint is compared by value because the Edit Table dialog replaces it by a new object when it is changed
+    if(static_cast<bool>(m_generated) != static_cast<bool>(rhs.m_generated))
+        return false;
+    if(m_generated && (m_generated->expression() != rhs.m_generated->expression() ||
+                       m_generated->storage() != rhs.m_generated->storage() ||
+                       m_generated->name() != rhs.m_generated->name()))
+        return false;
+
     return true;
 }
 
