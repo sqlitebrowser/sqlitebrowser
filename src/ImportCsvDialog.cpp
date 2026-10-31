@@ -66,6 +66,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
 
     // Load last used settings and apply them
     ui->checkboxHeader->blockSignals(true);
+    ui->spinBoxSkipRows->blockSignals(true);
     ui->checkBoxTrimFields->blockSignals(true);
     ui->checkBoxSeparateTables->blockSignals(true);
     ui->checkLocalConventions->blockSignals(true);
@@ -75,6 +76,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkReplaceNonAlnum->blockSignals(true);
 
     ui->checkboxHeader->setChecked(Settings::getValue("importcsv", "firstrowheader").toBool());
+    ui->spinBoxSkipRows->setValue(Settings::getValue("importcsv", "skiprows").toInt());
     ui->checkBoxTrimFields->setChecked(Settings::getValue("importcsv", "trimfields").toBool());
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
     ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
@@ -84,6 +86,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
 
     ui->checkboxHeader->blockSignals(false);
+    ui->spinBoxSkipRows->blockSignals(false);
     ui->checkBoxTrimFields->blockSignals(false);
     ui->checkBoxSeparateTables->blockSignals(false);
     ui->checkLocalConventions->blockSignals(false);
@@ -191,6 +194,7 @@ void ImportCsvDialog::accept()
 {
     // Save settings
     Settings::setValue("importcsv", "firstrowheader", ui->checkboxHeader->isChecked());
+    Settings::setValue("importcsv", "skiprows", ui->spinBoxSkipRows->value());
     Settings::setValue("importcsv", "separator", currentSeparatorChar());
     Settings::setValue("importcsv", "quotecharacter", currentQuoteChar());
     Settings::setValue("importcsv", "trimfields", ui->checkBoxTrimFields->isChecked());
@@ -411,7 +415,9 @@ CSVParser::ParserResult ImportCsvDialog::parseCSV(const QString &fileName, std::
     tstream.setCodec(currentEncoding().toUtf8());
 #endif
 
-    return csv.parse(rowFunction, tstream, count);
+    // Rows which are to be skipped are not passed to the row function. The row numbers it receives start at 0 after the skipped rows, so
+    // the header row handling is always relative to the first row after the skipped ones.
+    return csv.parse(rowFunction, tstream, count, static_cast<size_t>(ui->spinBoxSkipRows->value()));
 }
 
 sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) const
@@ -669,7 +675,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 #endif
 
         // Save row num for later use. This is used in the case of an error to tell the user in which row the error occurred
-        lastRowNum = rowNum;
+        lastRowNum = rowNum + static_cast<size_t>(ui->spinBoxSkipRows->value());
 
         // If this is the first row and we want to use the first row as table header, skip it now because this is the data import, not the header parsing
         if(rowNum == 0 && ui->checkboxHeader->isChecked())

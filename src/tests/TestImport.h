@@ -14,6 +14,8 @@ public:
 private slots:
     void csvImport();
     void csvImport_data();
+    void csvImportSkipRows();
+    void csvImportSkipRows_data();
 };
 
 #endif
