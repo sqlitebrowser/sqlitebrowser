@@ -243,7 +243,7 @@ void TestTable::parseSQL()
     Table tab(*Table::parseSQL(sSQL));
 
     QCOMPARE(tab.name(), "hero");
-    QCOMPARE(tab.rowidColumns(), {"_rowid_"});
+    QCOMPARE(tab.rowidColumns(), sqlb::StringVector({"_rowid_"}));
     QCOMPARE(tab.fields.at(0).name(), "id");
     QCOMPARE(tab.fields.at(1).name(), "name");
     QCOMPARE(tab.fields.at(2).name(), "info");
@@ -386,7 +386,7 @@ void TestTable::parseSQLWithoutRowid()
     Table tab(*Table::parseSQL(sSQL));
 
     QCOMPARE(tab.primaryKeyColumns().at(0).name(), "a");
-    QCOMPARE(tab.rowidColumns(), {"a"});
+    QCOMPARE(tab.rowidColumns(), sqlb::StringVector({"a"}));
     QCOMPARE(tab.withoutRowidTable(), true);
     QCOMPARE(tab.isStrict(), false);
 }
@@ -660,6 +660,206 @@ void TestTable::parseIdentifierWithDollar()
 
     QCOMPARE(tab.fields.at(0).name(), "te$st$");
     QCOMPARE(tab.fields.at(0).type(), "INTEGER");
+}
+
+void TestTable::onConflictAccessors()
+{
+    TablePtr tab = Table::parseSQL("CREATE TABLE t(a INTEGER, b TEXT, c TEXT, PRIMARY KEY(a) ON CONFLICT replace, UNIQUE(b) ON CONFLICT Fail, UNIQUE(c))");
+    QVERIFY(tab->fullyParsed());
+
+    // The conflict action of the primary key and of the unique constraints is available through the model, case insensitive
+    QVERIFY(tab->primaryKey());
+    QCOMPARE(QString::fromStdString(tab->primaryKey()->conflictAction()).toUpper(), QString("REPLACE"));
+
+    const auto constraints = tab->indexConstraints();
+    QCOMPARE(constraints.size(), size_t(3));
+    for(const auto& it : constraints)
+    {
+        if(it.second->isPrimaryKey())
+            continue;
+        if(it.first.front().name() == "b")
+            QCOMPARE(QString::fromStdString(it.second->conflictAction()).toUpper(), QString("FAIL"));
+        else
+            QVERIFY(it.second->conflictAction().empty());       // No ON CONFLICT clause means no conflict action
+    }
+}
+
+void TestTable::onConflictRoundTrip()
+{
+    QFETCH(std::string, sql);
+    QFETCH(std::string, expected);
+
+    // Parsing a table definition with ON CONFLICT clauses must not lose them when writing the table out again
+    TablePtr parsed = Table::parseSQL(sql);
+    QVERIFY(parsed->fullyParsed());
+    QCOMPARE(QString::fromStdString(parsed->sql()), QString::fromStdString(expected));
+
+    // The same goes for a copy of the table which is what the Edit Table dialog works on
+    Table copy(*parsed);
+    QCOMPARE(QString::fromStdString(copy.sql()), QString::fromStdString(expected));
+
+    // And the output must be parseable again and describe the same table
+    TablePtr reparsed = Table::parseSQL(parsed->sql());
+    QVERIFY(reparsed->fullyParsed());
+    QCOMPARE(QString::fromStdString(reparsed->sql()), QString::fromStdString(expected));
+}
+
+void TestTable::onConflictRoundTrip_data()
+{
+    QTest::addColumn<std::string>("sql");
+    QTest::addColumn<std::string>("expected");
+
+    // Column constraints. Primary keys are converted to table constraints when parsing.
+    QTest::newRow("column constraints")
+        << std::string("CREATE TABLE t(a INTEGER PRIMARY KEY ON CONFLICT REPLACE, b TEXT NOT NULL ON CONFLICT IGNORE, c TEXT UNIQUE ON CONFLICT FAIL)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT NOT NULL ON CONFLICT IGNORE,\n"
+                       "\t\"c\"\tTEXT UNIQUE ON CONFLICT FAIL,\n"
+                       "\tPRIMARY KEY(\"a\") ON CONFLICT REPLACE\n"
+                       ");");
+
+    // Table constraints
+    QTest::newRow("table constraints")
+        << std::string("CREATE TABLE t(a INTEGER, b TEXT, c TEXT, PRIMARY KEY(a) ON CONFLICT ROLLBACK, UNIQUE(b) ON CONFLICT ABORT, UNIQUE(b, c) ON CONFLICT REPLACE)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT,\n"
+                       "\t\"c\"\tTEXT,\n"
+                       "\tPRIMARY KEY(\"a\") ON CONFLICT ROLLBACK,\n"
+                       "\tUNIQUE(\"b\") ON CONFLICT ABORT,\n"
+                       "\tUNIQUE(\"b\",\"c\") ON CONFLICT REPLACE\n"
+                       ");");
+
+    QTest::newRow("named constraints")
+        << std::string("CREATE TABLE t(a INTEGER CONSTRAINT nn NOT NULL ON CONFLICT FAIL, b TEXT CONSTRAINT u UNIQUE ON CONFLICT IGNORE, CONSTRAINT pk PRIMARY KEY(a, b) ON CONFLICT REPLACE)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER CONSTRAINT \"nn\" NOT NULL ON CONFLICT FAIL,\n"
+                       "\t\"b\"\tTEXT CONSTRAINT \"u\" UNIQUE ON CONFLICT IGNORE,\n"
+                       "\tCONSTRAINT \"pk\" PRIMARY KEY(\"a\",\"b\") ON CONFLICT REPLACE\n"
+                       ");");
+
+    QTest::newRow("autoincrement")
+        << std::string("CREATE TABLE t(a INTEGER PRIMARY KEY ON CONFLICT REPLACE AUTOINCREMENT, b TEXT)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT,\n"
+                       "\tPRIMARY KEY(\"a\" AUTOINCREMENT) ON CONFLICT REPLACE\n"
+                       ");");
+
+    QTest::newRow("autoincrement table constraint")
+        << std::string("CREATE TABLE t(a INTEGER, b TEXT, PRIMARY KEY(a AUTOINCREMENT) ON CONFLICT FAIL)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT,\n"
+                       "\tPRIMARY KEY(\"a\" AUTOINCREMENT) ON CONFLICT FAIL\n"
+                       ");");
+
+    QTest::newRow("combined with other column constraints")
+        << std::string("CREATE TABLE t(a TEXT NOT NULL ON CONFLICT REPLACE DEFAULT 'x' UNIQUE ON CONFLICT IGNORE COLLATE NOCASE)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tTEXT NOT NULL ON CONFLICT REPLACE DEFAULT 'x' UNIQUE ON CONFLICT IGNORE COLLATE NOCASE\n"
+                       ");");
+
+    QTest::newRow("without rowid")
+        << std::string("CREATE TABLE t(a TEXT PRIMARY KEY ON CONFLICT IGNORE, b TEXT) WITHOUT ROWID")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tTEXT,\n"
+                       "\t\"b\"\tTEXT,\n"
+                       "\tPRIMARY KEY(\"a\") ON CONFLICT IGNORE\n"
+                       ") WITHOUT ROWID;");
+
+    // SQLite also accepts a conflict clause on a table CHECK constraint (it is a no-op there) and on the NULL column constraint.
+    // The parser must not reject these definitions because it would then no longer understand the table at all.
+    QTest::newRow("table check constraint")
+        << std::string("CREATE TABLE t(a INTEGER, CONSTRAINT ck CHECK(a > 0) ON CONFLICT IGNORE)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\tCONSTRAINT \"ck\" CHECK(\"a\" > 0) ON CONFLICT IGNORE\n"
+                       ");");
+
+    QTest::newRow("null column constraint")
+        << std::string("CREATE TABLE t(a INTEGER NULL ON CONFLICT IGNORE, b TEXT NOT NULL ON CONFLICT FAIL)")
+        << std::string("CREATE TABLE \"t\" (\n"
+                       "\t\"a\"\tINTEGER,\n"
+                       "\t\"b\"\tTEXT NOT NULL ON CONFLICT FAIL\n"
+                       ");");
+
+    // Every conflict action for every kind of constraint
+    const char* const actions[] = {"ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE"};
+    for(const char* action : actions)
+    {
+        const std::string a = action;
+        const std::string head = "CREATE TABLE \"t\" (\n";
+
+        QTest::newRow(("column primary key " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER PRIMARY KEY ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER,\n\tPRIMARY KEY(\"a\") ON CONFLICT " + a + "\n);");
+        QTest::newRow(("column not null " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER NOT NULL ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER NOT NULL ON CONFLICT " + a + "\n);");
+        QTest::newRow(("column unique " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER UNIQUE ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER UNIQUE ON CONFLICT " + a + "\n);");
+        QTest::newRow(("table primary key " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER, PRIMARY KEY(a) ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER,\n\tPRIMARY KEY(\"a\") ON CONFLICT " + a + "\n);");
+        QTest::newRow(("table unique " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER, UNIQUE(a) ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER,\n\tUNIQUE(\"a\") ON CONFLICT " + a + "\n);");
+        QTest::newRow(("table check " + a).c_str())
+            << std::string("CREATE TABLE t(a INTEGER, CHECK(a > 0) ON CONFLICT " + a + ")")
+            << std::string(head + "\t\"a\"\tINTEGER,\n\tCHECK(\"a\" > 0) ON CONFLICT " + a + "\n);");
+    }
+}
+
+void TestTable::onConflictSurvivesTableEdits()
+{
+    // The Edit Table dialog works on a copy of the parsed table, changes it using the functions of the model and then the table is
+    // recreated from the SQL statement of the changed copy (see DBBrowserDB::alterTable()). Check that editing a table does not strip
+    // any of its ON CONFLICT clauses.
+    TablePtr parsed = Table::parseSQL("CREATE TABLE t(a INTEGER PRIMARY KEY ON CONFLICT REPLACE, b TEXT NOT NULL ON CONFLICT IGNORE, "
+                                      "c TEXT UNIQUE ON CONFLICT FAIL, d TEXT, UNIQUE(c, d) ON CONFLICT ROLLBACK)");
+    QVERIFY(parsed->fullyParsed());
+    const std::string original_sql = parsed->sql();
+
+    Table edited(*parsed);
+
+    // Rename the table and a column which is part of a constraint
+    edited.setName("t_new");
+    findField(edited, "c")->setName("c2");
+    edited.renameKeyInAllConstraints("c", "c2");
+
+    // Modify other properties of the columns which carry a conflict clause
+    findField(edited, "b")->setType("VARCHAR");
+    findField(edited, "b")->setDefaultValue("'x'");
+    findField(edited, "c2")->setCheck("c2 <> ''");
+
+    // Extend and shrink the primary key again
+    edited.addKeyToConstraint(edited.primaryKey(), "d");
+    edited.removeKeyFromConstraint(edited.primaryKey(), "d");
+
+    // Add a new column and remove the column d which is also used in the unique constraint
+    edited.fields.emplace_back("e", "TEXT");
+    removeField(edited, "d");
+    edited.removeKeyFromAllConstraints("d");
+
+    QCOMPARE(QString::fromStdString(edited.sql()),
+             QString("CREATE TABLE \"t_new\" (\n"
+                     "\t\"a\"\tINTEGER,\n"
+                     "\t\"b\"\tVARCHAR NOT NULL ON CONFLICT IGNORE DEFAULT 'x',\n"
+                     "\t\"c2\"\tTEXT CHECK(c2 <> '') UNIQUE ON CONFLICT FAIL,\n"
+                     "\t\"e\"\tTEXT,\n"
+                     "\tPRIMARY KEY(\"a\") ON CONFLICT REPLACE,\n"
+                     "\tUNIQUE(\"c2\") ON CONFLICT ROLLBACK\n"
+                     ");"));
+
+    // The table which was edited must not have been touched
+    QCOMPARE(QString::fromStdString(parsed->sql()), QString::fromStdString(original_sql));
+
+    // Changing the conflict action of the primary key (what the combo box in the dialog does) must show up in the SQL
+    edited.primaryKey()->setConflictAction("ABORT");
+    QVERIFY(edited.sql().find("PRIMARY KEY(\"a\") ON CONFLICT ABORT") != std::string::npos);
 }
 
 void TestTable::parseTest()
