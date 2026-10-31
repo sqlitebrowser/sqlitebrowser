@@ -796,7 +796,11 @@ void ExtendedTableWidget::paste()
         int column = firstColumn;
         for(const QByteArray& source_cell : source_row)
         {
-            m->setData(m->index(row, column), source_cell);
+            // Binary data must be stored as binary data and not as text, just like in the single cell cases above. Like setData() does,
+            // we don't change anything if the model is not editable.
+            const QModelIndex index = m->index(row, column);
+            if(m->isEditable(index))
+                m->setTypedData(index, !isTextOnly(source_cell), source_cell);
 
             column++;
             if (column > lastColumn)
