@@ -79,6 +79,7 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->checkBoxSeparateTables->setChecked(Settings::getValue("importcsv", "separatetables").toBool());
     ui->checkLocalConventions->setChecked(Settings::getValue("importcsv", "localconventions").toBool());
     ui->checkReplaceNonAlnum->setChecked(Settings::getValue("importcsv", "replacenonalnum").toBool());
+    ui->checkQuotedAsText->setChecked(Settings::getValue("importcsv", "quotedastext").toBool());
     setSeparatorChar(getSettingsChar("importcsv", "separator"));
     setQuoteChar(getSettingsChar("importcsv", "quotecharacter"));
     setEncoding(Settings::getValue("importcsv", "encoding").toString());
@@ -198,6 +199,7 @@ void ImportCsvDialog::accept()
     Settings::setValue("importcsv", "localconventions", ui->checkLocalConventions->isChecked());
     Settings::setValue("importcsv", "encoding", currentEncoding());
     Settings::setValue("importcsv", "replacenonalnum", ui->checkReplaceNonAlnum->isChecked());
+    Settings::setValue("importcsv", "quotedastext", ui->checkQuotedAsText->isChecked());
 
     // Get all the selected files and start the import
     if (ui->filePickerBlock->isVisible())
@@ -470,6 +472,10 @@ sqlb::FieldVector ImportCsvDialog::generateFieldList(const QString& filename) co
                     locale.toLongLong(content, &convert_to_integer);
                     locale.toDouble(content, &convert_to_real);
 
+                    // If the user wants quoted values to be text, don't treat them as numbers
+                    if(ui->checkQuotedAsText->isChecked() && rowData.fields[i].quoted)
+                        convert_to_integer = convert_to_real = false;
+
                     // Set new data type. If we don't find any better data type, we fall back to the TEXT data type
                     std::string new_type = "TEXT";
                     if(old_type == "INTEGER" && !convert_to_integer && convert_to_real)  // So far it's integer, but now it's only convertible to float
@@ -588,6 +594,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     std::vector<bool> failOnMissingFieldList;
     bool ignoreDefaults = ui->checkIgnoreDefaults->isChecked();
     bool failOnMissing = ui->checkFailOnMissing->isChecked();
+    bool quotedAsText = ui->checkQuotedAsText->isChecked();
     if(!importToExistingTable)
     {
         if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName.toStdString()), fieldList))
@@ -696,7 +703,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
             } else {
                 // This is a non-empty value, or we want to insert the empty string. Just add it to the statement.
                 bool convert_ok = false;
-                if(ui->checkLocalConventions->isChecked()) {
+                if(ui->checkLocalConventions->isChecked() && !(quotedAsText && rowData.fields[i].quoted)) {
                     // Find the correct data type taking into account the locale.
                     QString content = QString::fromUtf8(rowData.fields[i].data, static_cast<int>(rowData.fields[i].data_length));
                     sqlite_int64 int64_value = QLocale::system().toLongLong(content, &convert_ok);
@@ -897,6 +904,8 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->comboOnConflictStrategy->setVisible(show);
     ui->labelReplaceNonAlnum->setVisible(show);
     ui->checkReplaceNonAlnum->setVisible(show);
+    ui->labelQuotedAsText->setVisible(show);
+    ui->checkQuotedAsText->setVisible(show);
 }
 
 char32_t ImportCsvDialog::toUtf8(const QString& s) const

@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <cstddef>
 
+#include <QString>
+
 class QByteArray;
 class QTextStream;
 
@@ -36,6 +38,8 @@ struct CSVField
     // These variables point to the parsed contents of the field and can be directly passed to SQLite functions
     char* data;                     // Pointer to the start of the field contents
     uint64_t data_length;           // Length of the field contents
+
+    bool quoted;                    // True if the field was enclosed in quote characters in the file
 };
 
 /*
@@ -98,5 +102,20 @@ private:
     bool look_ahead(QTextStream& stream, QByteArray& sBuffer, const char** it, const char** sBufferEnd,
                     const char* expected, int extraBytes);
 };
+
+/*!
+ * \brief Prepares a value for being written to a CSV file.
+ *
+ * The value is enclosed in quote characters if it contains the separator, the quote character or a line break. Quote characters inside
+ * the value are escaped by doubling them.
+ *
+ * \param content The value to write.
+ * \param separator The field separator. A null character means that there is no field separator.
+ * \param quote The quote character. A null character means that quoting has been disabled. Values containing line breaks are quoted
+ *              anyway in this case, using a double quote, because the file would be unusable otherwise.
+ * \param newline The line break that is written after each record.
+ * \return The value ready to be written to the file.
+ */
+QString quoteCsvField(const QString& content, QChar separator, QChar quote, const QString& newline);
 
 #endif
