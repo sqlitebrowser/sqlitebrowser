@@ -123,3 +123,54 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test run sql
+
+set(TESTRUNSQL_SRC
+    TestRunSql.cpp
+    ../RunSql.cpp
+    ../sqlitedb.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../CipherDialog.cpp
+    ../CipherDialog.ui
+    ../CipherSettings.cpp
+    ../Settings.cpp
+    ../Data.cpp
+    ../CondFormat.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTRUNSQL_HDR
+    TestRunSql.h
+    ../RunSql.h
+    ../sqlitedb.h
+)
+
+add_executable(test-run-sql ${TESTRUNSQL_HDR} ${TESTRUNSQL_SRC})
+target_link_libraries(test-run-sql ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-run-sql PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+add_test(NAME test-run-sql COMMAND $<TARGET_FILE:test-run-sql>)
+set_tests_properties(test-run-sql PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+if(WIN32)
+    set(_rs_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _rs_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _rs_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _rs_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\\;" TESTRUNSQL_PATH "${_rs_extra_paths};$ENV{PATH}")
+    set_tests_properties(test-run-sql PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=${TESTRUNSQL_PATH}")
+endif()
