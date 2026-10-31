@@ -284,6 +284,10 @@ void TestImport::csvQuotedFields()
     QBuffer buffer(&csv);
     QVERIFY(buffer.open(QIODevice::ReadOnly));
     QTextStream tstream(&buffer);
+// Qt6 QTextStream defaults to utf-8, with Qt5 the codec of the locale would be used which is not UTF-8 on Windows.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    tstream.setCodec("UTF-8");
+#endif
 
     // Each row is rendered as a string with a "|" between the fields and a "*" after every field which was quoted
     QStringList parsed;
@@ -425,6 +429,10 @@ void TestImport::csvExportImportRoundTrip()
     QBuffer buffer(&csv_data);
     QVERIFY(buffer.open(QIODevice::ReadOnly));
     QTextStream tstream(&buffer);
+// Qt6 QTextStream defaults to utf-8, with Qt5 the codec of the locale would be used which is not UTF-8 on Windows.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    tstream.setCodec("UTF-8");
+#endif
 
     std::vector<std::vector<QByteArray>> parsedCsv;
     CSVParser csvparser(false, separator.unicode(), quote.unicode());
