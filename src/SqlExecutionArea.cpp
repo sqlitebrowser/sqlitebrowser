@@ -28,6 +28,7 @@ SqlExecutionArea::SqlExecutionArea(DBBrowserDB& _db, QWidget* parent) :
     ui->tableResult->setModel(model);
     connect(model, &SqliteTableModel::finishedFetch, this, &SqlExecutionArea::fetchedData);
     connect(ui->tableResult->filterHeader(), &FilterTableHeader::sectionPressed, ui->tableResult, &QTableView::selectColumn);
+    connect(ui->tableResult->filterHeader(), &FilterTableHeader::sectionClicked, this, &SqlExecutionArea::headerClicked);
 
     ui->findFrame->hide();
 
@@ -85,6 +86,13 @@ QString SqlExecutionArea::getSelectedSql() const
 void SqlExecutionArea::setSql(const QString& sql)
 {
     ui->editEditor->setText(sql);
+}
+
+void SqlExecutionArea::headerClicked(int column)
+{
+    // Sorting the results is optional because clicking on a header used to be only for selecting the column
+    if(Settings::getValue("editor", "sort_results").toBool())
+        model->cycleResultSort(column);
 }
 
 void SqlExecutionArea::finishExecution(const QString& result, const bool ok)

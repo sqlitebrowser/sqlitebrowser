@@ -56,6 +56,7 @@ private slots:
     void findNext();
     void findLineEdit_textChanged(const QString& text);
     void hideFindFrame();
+    void headerClicked(int column);
 
     void fileChanged(const QString& filename);
 

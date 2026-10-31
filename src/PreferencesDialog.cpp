@@ -123,6 +123,7 @@ void PreferencesDialog::loadSettings()
     ui->spinCompleteThreshold->setValue(Settings::getValue("databrowser", "complete_threshold").toInt());
     ui->checkShowImagesInline->setChecked(Settings::getValue("databrowser", "image_preview").toBool());
     ui->checkCellWordWrap->setChecked(Settings::getValue("databrowser", "cell_word_wrap").toBool());
+    ui->spinBlobHexLimit->setValue(Settings::getValue("databrowser", "blob_hex_limit").toInt());
     ui->txtNull->setText(Settings::getValue("databrowser", "null_text").toString());
     ui->txtBlob->setText(Settings::getValue("databrowser", "blob_text").toString());
     ui->editFilterEscape->setText(Settings::getValue("databrowser", "filter_escape").toString());
@@ -166,6 +167,7 @@ void PreferencesDialog::loadSettings()
     ui->checkCompleteUpper->setChecked(Settings::getValue("editor", "upper_keywords").toBool());
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
+    ui->checkSortResults->setChecked(Settings::getValue("editor", "sort_results").toBool());
     ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
@@ -209,6 +211,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("databrowser", "fontsize", ui->spinDataBrowserFontSize->value());
     Settings::setValue("databrowser", "image_preview", ui->checkShowImagesInline->isChecked());
     Settings::setValue("databrowser", "cell_word_wrap", ui->checkCellWordWrap->isChecked());
+    Settings::setValue("databrowser", "blob_hex_limit", ui->spinBlobHexLimit->value());
     saveColorSetting(ui->fr_null_fg, "null_fg");
     saveColorSetting(ui->fr_null_bg, "null_bg");
     saveColorSetting(ui->fr_reg_fg, "reg_fg");
@@ -243,6 +246,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("editor", "upper_keywords", ui->checkCompleteUpper->isChecked());
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
+    Settings::setValue("editor", "sort_results", ui->checkSortResults->isChecked());
     Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
 
     QStringList extList;
