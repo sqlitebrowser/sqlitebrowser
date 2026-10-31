@@ -5,11 +5,30 @@
 #include "../sqlitetablemodel.h"
 
 #include <QApplication>
+#include <QDir>
+#include <QFile>
 #include <QSignalSpy>
 #include <QTemporaryDir>
 #include <QtTest/QtTest>
 
-QTEST_MAIN(TestResultSort)
+// TEMPORARY CI DIAGNOSTICS: ctest on Windows shows nothing of the test output, so write it to stderr
+int main(int argc, char** argv)
+{
+    QApplication app(argc, argv);
+    TestResultSort tc;
+    const QString logFile = QDir::temp().filePath("test-result-sort-log.txt");
+    QStringList args = QCoreApplication::arguments();
+    args << "-o" << logFile + ",txt";
+    const int result = QTest::qExec(&tc, args);
+    QFile f(logFile);
+    if(f.open(QIODevice::ReadOnly))
+    {
+        const QByteArray b = f.readAll();
+        fwrite(b.constData(), 1, static_cast<size_t>(b.size()), stderr);
+        fflush(stderr);
+    }
+    return result;
+}
 
 namespace
 {
