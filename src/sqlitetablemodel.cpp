@@ -229,6 +229,13 @@ size_t SqliteTableModel::filterCount() const
     return m_query.where().size();
 }
 
+// The arrows are not written as literals because MSVC converts the UTF-8 source to the ANSI code page for narrow string
+// literals, which turns characters it doesn't have, like these, into question marks.
+static QString sortIndicatorText(bool ascending)
+{
+    return QString(QChar(' ')) + QChar(ascending ? 0x25B4 : 0x25BE);
+}
+
 // Convert a number to string using the Unicode superscript characters
 template<class T>
 static QString toSuperScript(T number)
@@ -287,13 +294,13 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
                 if(!m_customQuery.isEmpty()) {
                     // The results of a custom query are sorted by column number because the column names don't need to be unique
                     if(section == m_customSortColumn)
-                        sortIndicator = m_customSortOrder == Qt::AscendingOrder ? " ▴" : " ▾";
+                        sortIndicator = sortIndicatorText(m_customSortOrder == Qt::AscendingOrder);
                 } else {
                     for(size_t i = 0; i < m_query.orderBy().size(); i++) {
                         const sqlb::OrderBy sortedColumn = m_query.orderBy()[i];
                         // Append sort indicator with direction and ordinal number in superscript style
                         if (sortedColumn.expr == plainHeader) {
-                            sortIndicator = sortedColumn.direction == sqlb::OrderBy::Ascending ? " ▴" : " ▾";
+                            sortIndicator = sortIndicatorText(sortedColumn.direction == sqlb::OrderBy::Ascending);
                             if(m_query.orderBy().size() > 1)
                                 sortIndicator.append(toSuperScript(i+1));
                             break;
