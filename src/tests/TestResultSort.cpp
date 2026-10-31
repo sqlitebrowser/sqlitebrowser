@@ -251,7 +251,7 @@ void TestResultSort::showsSortIndicatorInTheHeader()
 
     sortBy(model, 1, Qt::AscendingOrder);
     QCOMPARE(header(model, 0), QString("x"));
-    QVERIFY2(header(model, 1).startsWith("x ") && header(model, 1).contains(QString::fromUtf8("\xE2\x96\xB4")), qPrintable(header(model, 1)));
+    QVERIFY2(header(model, 1).startsWith("x ") && header(model, 1).contains(QString::fromUtf8("\xE2\x96\xB4")), qPrintable(QString("utf8 hex of the header: ") + QString::fromLatin1(header(model, 1).toUtf8().toHex())));
     // The edit role is the plain column name, it must never contain the indicator
     QCOMPARE(header(model, 1, Qt::EditRole), QString("x"));
 
