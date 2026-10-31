@@ -1293,6 +1293,16 @@ in new project file</string>
               </property>
              </widget>
             </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelSortCycleNone">
+              <property name="text">
+               <string>Clicking a sorted column header a third time removes sorting</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkSortCycleNone</cstring>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QSpinBox" name="spinSymbolLimit">
               <property name="correctionMode">
@@ -1340,6 +1350,13 @@ Can be set to 0 for disabling completion.</string>
              <widget class="QCheckBox" name="checkCellWordWrap">
               <property name="toolTip">
                <string>Enable this option to turn on word wrap in the cells.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="checkSortCycleNone">
+              <property name="toolTip">
+               <string>Enable this option to cycle through ascending, descending and no sorting when clicking a column header, instead of only switching between ascending and descending.</string>
               </property>
              </widget>
             </item>
@@ -2071,6 +2088,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinCompleteThreshold</tabstop>
   <tabstop>checkShowImagesInline</tabstop>
   <tabstop>checkCellWordWrap</tabstop>
+  <tabstop>checkSortCycleNone</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>

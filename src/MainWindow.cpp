@@ -498,6 +498,7 @@ void MainWindow::init()
     ui->fileCloseAction->setShortcuts({QKeySequence(tr("Ctrl+F4")), QKeySequence(tr("Alt+Shift+W"))});
     ui->actionCloseProject->setShortcuts({QKeySequence(tr("Ctrl+Shift+W")), QKeySequence(tr("Ctrl+Shift+F4"))});
     addShortcutsTooltip(ui->fileCloseAction);
+    addShortcutsTooltip(ui->fileRevertAction);
 
     // Load all settings
     reloadSettings();

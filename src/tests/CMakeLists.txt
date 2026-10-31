@@ -123,3 +123,38 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test sort cycle
+
+set(TESTSORTCYCLE_SRC
+    TestSortCycle.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+)
+
+set(TESTSORTCYCLE_HDR
+    TestSortCycle.h
+    ../sql/Query.h
+    ../sql/ObjectIdentifier.h
+)
+
+add_executable(test-sort-cycle ${TESTSORTCYCLE_HDR} ${TESTSORTCYCLE_SRC})
+target_link_libraries(test-sort-cycle ${QT_MAJOR}::Test)
+add_test(NAME test-sort-cycle COMMAND $<TARGET_FILE:test-sort-cycle>)
+set_tests_properties(test-sort-cycle PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+
+# test action shortcuts
+
+set(TESTACTIONSHORTCUTS_SRC
+    TestActionShortcuts.cpp
+)
+
+set(TESTACTIONSHORTCUTS_HDR
+    TestActionShortcuts.h
+)
+
+add_executable(test-action-shortcuts ${TESTACTIONSHORTCUTS_HDR} ${TESTACTIONSHORTCUTS_SRC})
+target_compile_definitions(test-action-shortcuts PRIVATE SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/..")
+target_link_libraries(test-action-shortcuts ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets)
+add_test(NAME test-action-shortcuts COMMAND $<TARGET_FILE:test-action-shortcuts>)
+set_tests_properties(test-action-shortcuts PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
