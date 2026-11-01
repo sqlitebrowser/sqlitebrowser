@@ -18,6 +18,9 @@ DockTextEdit::DockTextEdit(QWidget* parent) :
     if(xmlLexer == nullptr)
         xmlLexer = new QsciLexerXML(this);
 
+    // The content of a cell is not SQL code, so don't comment lines by clicking on their number
+    commentOnMarginClickApplies = false;
+
     // Set plain text as default
     setLanguage(PlainText);
 

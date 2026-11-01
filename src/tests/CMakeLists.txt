@@ -123,3 +123,63 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test sql editor
+
+set(TESTSQLEDITOR_SRC
+    TestSqlEditor.cpp
+    SqlEditorTestSupport.cpp
+    ../sqltextedit.cpp
+    ../docktextedit.cpp
+    ../ExtendedScintilla.cpp
+    ../FindReplaceDialog.cpp
+    ../SqlUiLexer.cpp
+    ../Settings.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/Query.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTSQLEDITOR_HDR
+    TestSqlEditor.h
+    ../sqltextedit.h
+    ../docktextedit.h
+    ../ExtendedScintilla.h
+    ../FindReplaceDialog.h
+    ../SqlUiLexer.h
+    ../Settings.h
+    ../sql/sqlitetypes.h
+    ../sql/Query.h
+    ../sql/ObjectIdentifier.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
+)
+
+add_executable(test-sql-editor ${TESTSQLEDITOR_HDR} ${TESTSQLEDITOR_SRC} ../FindReplaceDialog.ui)
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-sql-editor PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+target_link_libraries(test-sql-editor ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::PrintSupport QScintilla::QScintilla ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-sql-editor COMMAND $<TARGET_FILE:test-sql-editor>)
+if(WIN32)
+    set(_se_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _se_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _se_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _se_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\\;" TESTSQLEDITOR_PATH "${_se_extra_paths};$ENV{PATH}")
+    set_tests_properties(test-sql-editor PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=${TESTSQLEDITOR_PATH}")
+else()
+    set_tests_properties(test-sql-editor PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+endif()

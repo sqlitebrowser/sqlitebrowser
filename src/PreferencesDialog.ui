@@ -1880,6 +1880,26 @@ Can be set to 0 for disabling completion.</string>
            </property>
           </widget>
          </item>
+         <item row="11" column="0">
+          <widget class="QLabel" name="labelToggleCommentOnMarginClick">
+           <property name="text">
+            <string>Toggle comment on line number click</string>
+           </property>
+           <property name="buddy">
+            <cstring>checkToggleCommentOnMarginClick</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="1">
+          <widget class="QCheckBox" name="checkToggleCommentOnMarginClick">
+           <property name="toolTip">
+            <string>If enabled, clicking a line number in the SQL editors comments or uncomments that line instead of selecting it. The Un/comment block command and its keyboard shortcut can always be used.</string>
+           </property>
+           <property name="text">
+            <string>enabled</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -2086,6 +2106,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>checkErrorIndicators</tabstop>
   <tabstop>checkHorizontalTiling</tabstop>
   <tabstop>checkCloseButtonOnTabs</tabstop>
+  <tabstop>checkToggleCommentOnMarginClick</tabstop>
   <tabstop>listExtensions</tabstop>
   <tabstop>buttonAddExtension</tabstop>
   <tabstop>buttonRemoveExtension</tabstop>
