@@ -109,6 +109,12 @@ private:
     std::string buildWherePart() const;
 };
 
+// Update the list of sort columns after the header of the given column was clicked. With multi_column set (Ctrl+click) the column is added to
+// the list or, if it already is in there, its direction is changed. Otherwise the list is replaced by that column or, if it already is the only
+// sort column, its direction is changed. When cycle_to_none is set, changing the direction of a descending column removes it from the list
+// instead, so repeated clicks cycle through ascending, descending and no sorting.
+void updateSortColumns(std::vector<OrderBy>& columns, const std::string& column, bool multi_column, bool cycle_to_none);
+
 }
 
 #endif
