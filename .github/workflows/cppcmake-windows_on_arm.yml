@@ -123,6 +123,9 @@ jobs:
         run: |
           git clone https://www.github.com/nalgeon/sqlean /c/dev/sqlean
           cd /c/dev/sqlean
+          # The Makefile of SQLean was reworked after this commit, so that the patch below no longer applies.
+          # Remove this line when the patch has been adapted to the current Makefile.
+          git checkout 315178b95aee90b90a1dc25d18d117bfacb9133e
           cp /c/a/sqlitebrowser/sqlitebrowser/tools/windows/add_sqlean_arm64_target.patch .
           git apply --ignore-space-change --ignore-whitespace add_sqlean_arm64_target.patch
           make prepare-dist
