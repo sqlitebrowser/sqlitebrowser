@@ -1217,26 +1217,11 @@ void MainWindow::executeQuery()
         } break;
     case Line:
         {
-            // Start position is the first character of the current line, except for those cases where we're in the middle of a
-            // statement which started on one the previous line. In that case the start position is actually a bit earlier. For
-            // the end position we set the last character of the current line. If the statement(s) continue(s) into the next line,
-            // SQLite will execute it/them anyway and we'll stop afterwards.
+            // The positions are the ones of the line the cursor is in, or of the beginning of the statement if the line is in the middle of one
             int execute_from_line, dummy;
             editor->getCursorPosition(&execute_from_line, &dummy);
-            execute_from_position = editor->positionFromLineIndex(execute_from_line, 0);
-
-            // Need to set the end position here before adjusting the start line
-            int execute_to_line = execute_from_line;
-            int execute_to_index = editor->text(execute_to_line).remove('\n').remove('\r').length();     // This chops the line break at the end of the line
-            execute_to_position = editor->positionFromLineIndex(execute_to_line, execute_to_index);
-
-            QByteArray firstPartEntireSQL = sqlWidget->getSql().toUtf8().left(execute_from_position);
-            if(firstPartEntireSQL.lastIndexOf(';') != -1) {
-                execute_from_position -= firstPartEntireSQL.length() - firstPartEntireSQL.lastIndexOf(';') - 1;
-            } else {
-                // No semicolon before the current line, execute from the first line.
-                execute_from_position = editor->positionFromLineIndex(0, 0);
-            }
+            RunSql::getCurrentLineRange(sqlWidget->getSql().toUtf8(), editor->positionFromLineIndex(execute_from_line, 0),
+                                        execute_from_position, execute_to_position);
 
             db.logSQL(tr("-- EXECUTING LINE IN '%1'\n--").arg(tabName), kLogMsg_User);
         } break;
