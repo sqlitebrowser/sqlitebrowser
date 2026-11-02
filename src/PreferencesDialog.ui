@@ -1343,6 +1343,26 @@ Can be set to 0 for disabling completion.</string>
               </property>
              </widget>
             </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelRowPadding">
+              <property name="text">
+               <string>Row padding (px)</string>
+              </property>
+              <property name="buddy">
+               <cstring>spinRowPadding</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QSpinBox" name="spinRowPadding">
+              <property name="toolTip">
+               <string>The height of a row is the height of the font plus this many pixels. Lower it to fit more rows on the screen.</string>
+              </property>
+              <property name="maximum">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -2071,6 +2091,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinCompleteThreshold</tabstop>
   <tabstop>checkShowImagesInline</tabstop>
   <tabstop>checkCellWordWrap</tabstop>
+  <tabstop>spinRowPadding</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>

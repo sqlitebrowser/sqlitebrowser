@@ -321,6 +321,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return false;
         if(name == "cell_word_wrap")
             return true;
+        if(name == "row_padding")
+            return 10;
         if(name == "indent_compact")
             return false;
         if (name == "sort_keys")

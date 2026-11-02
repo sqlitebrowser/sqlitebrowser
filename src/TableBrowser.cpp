@@ -25,6 +25,9 @@
 std::map<sqlb::ObjectIdentifier, BrowseDataTableSettings> TableBrowser::m_settings;
 QString TableBrowser::m_defaultEncoding;
 
+// When columns are automatically resized to fit their contents they don't get wider than this
+static const int maxAutoColumnWidth = 300;
+
 TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     QWidget(parent),
     ui(new Ui::TableBrowser),
@@ -64,6 +67,7 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
     popupHeaderMenu->addAction(ui->actionHideColumns);
     popupHeaderMenu->addAction(ui->actionShowAllColumns);
     popupHeaderMenu->addAction(ui->actionSelectColumn);
+    popupHeaderMenu->addAction(ui->actionResizeColumnsToContents);
     popupHeaderMenu->addSeparator();
     popupHeaderMenu->addAction(ui->actionUnlockViewEditing);
     popupHeaderMenu->addAction(ui->actionBrowseTableEditDisplayFormat);
@@ -75,6 +79,9 @@ TableBrowser::TableBrowser(DBBrowserDB* _db, QWidget* parent) :
 
     connect(ui->actionSelectColumn, &QAction::triggered, this, [this]() {
         ui->dataTable->selectColumn(ui->actionBrowseTableEditDisplayFormat->property("clicked_column").toInt());
+    });
+    connect(ui->actionResizeColumnsToContents, &QAction::triggered, this, [this]() {
+        ui->dataTable->fitColumnsToContents(maxAutoColumnWidth);
     });
     connect(ui->actionFreezeColumns, &QAction::triggered, this, [this](bool checked) {
         if(checked)
@@ -1831,11 +1838,6 @@ void TableBrowser::fetchedData()
 
     if (m_settings[currentlyBrowsedTableName()].columnWidths.empty()) {
         // Set column widths according to their contents but make sure they don't exceed a certain size
-        ui->dataTable->resizeColumnsToContents();
-        for(int i = 0; i < m_model->columnCount(); i++)
-        {
-            if(ui->dataTable->columnWidth(i) > 300)
-                ui->dataTable->setColumnWidth(i, 300);
-        }
+        ui->dataTable->fitColumnsToContents(maxAutoColumnWidth);
     }
 }

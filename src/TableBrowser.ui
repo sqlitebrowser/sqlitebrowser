@@ -854,6 +854,14 @@
     <string>Show all columns that were hidden</string>
    </property>
   </action>
+  <action name="actionResizeColumnsToContents">
+   <property name="text">
+    <string>Resize columns to contents</string>
+   </property>
+   <property name="toolTip">
+    <string>Resize all columns to fit their contents</string>
+   </property>
+  </action>
   <action name="actionSetTableEncoding">
    <property name="text">
     <string>Set encoding</string>
