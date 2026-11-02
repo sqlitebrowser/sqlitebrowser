@@ -58,6 +58,7 @@ EditTableDialog::EditTableDialog(DBBrowserDB& db, const sqlb::ObjectIdentifier& 
     ui->treeWidget->setItemDelegateForColumn(kAutoIncrement, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kUnique, new NoEditDelegate(this));
     ui->treeWidget->setItemDelegateForColumn(kCollation, new NoEditDelegate(this));
+    ui->treeWidget->setItemDelegateForColumn(kStored, new NoEditDelegate(this));
 
     // Set up popup menu for adding constraints
     QMenu* constraint_menu = new QMenu(this);
@@ -177,6 +178,8 @@ void EditTableDialog::updateColumnWidth()
     ui->treeWidget->setColumnWidth(kPrimaryKey, 25);
     ui->treeWidget->setColumnWidth(kAutoIncrement, 25);
     ui->treeWidget->setColumnWidth(kUnique, 25);
+    ui->treeWidget->setColumnWidth(kGenerated, 150);
+    ui->treeWidget->setColumnWidth(kStored, 50);
     ui->treeWidget->setColumnWidth(kForeignKey, 500);
 
     ui->tableIndexConstraints->setColumnWidth(kConstraintColumns, 180);
@@ -254,6 +257,11 @@ void EditTableDialog::populateFields()
         collationBox->installEventFilter(this);
         connect(collationBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateTypeAndCollation()));
         ui->treeWidget->setItemWidget(tbitem, kCollation, collationBox);
+
+        // Generated columns show their expression. The checkbox tells whether they are stored instead of virtual.
+        if(f.generated())
+            tbitem->setText(kGenerated, QString::fromStdString(f.generated()->expression()));
+        tbitem->setCheckState(kStored, f.generated() && f.generated()->storage() == "STORED" ? Qt::Checked : Qt::Unchecked);
 
         auto fk = m_table.foreignKey({f.name()});
         if(fk)
@@ -621,6 +629,17 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
             break;
         case kPrimaryKey:
         {
+            // A generated column cannot be part of the primary key
+            if(item->checkState(column) == Qt::Checked && field.generated())
+            {
+                QMessageBox::warning(this, qApp->applicationName(), tr("A generated column cannot be part of the primary key."));
+
+                ui->treeWidget->blockSignals(true);
+                item->setCheckState(column, Qt::Unchecked);
+                ui->treeWidget->blockSignals(false);
+                return;
+            }
+
             // Check if there already is a primary key
             auto pk = m_table.primaryKey();
             if(pk)
@@ -686,6 +705,16 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
         case kAutoIncrement:
         {
             bool ischecked = item->checkState(column) == Qt::Checked;
+            if(ischecked && field.generated())
+            {
+                // Autoincrement requires a primary key
+                QMessageBox::warning(this, qApp->applicationName(), tr("A generated column cannot be part of the primary key."));
+
+                ui->treeWidget->blockSignals(true);
+                item->setCheckState(column, Qt::Unchecked);
+                ui->treeWidget->blockSignals(false);
+                return;
+            }
             if(ischecked)
             {
                 // First check if the contents of this column are all integers. If not this field cannot be set to AI
@@ -775,6 +804,18 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
         case kDefault:
         {
             QString new_value = item->text(column);
+
+            // A generated column cannot have a default value
+            if(!new_value.isEmpty() && field.generated())
+            {
+                QMessageBox::warning(this, qApp->applicationName(), tr("A generated column cannot have a default value."));
+
+                ui->treeWidget->blockSignals(true);
+                item->setText(column, QString());
+                ui->treeWidget->blockSignals(false);
+                return;
+            }
+
             // If the default value isn't a SQL keyword perform an extra check: If it isn't numeric but doesn't start and end with quotes,
             // add the quotes
             if(new_value.size() && new_value.compare("null", Qt::CaseInsensitive) &&
@@ -811,6 +852,76 @@ void EditTableDialog::fieldItemChanged(QTreeWidgetItem *item, int column)
         break;
         case kCheck:
             field.setCheck(item->text(column).toStdString());
+            break;
+        case kGenerated:
+        {
+            const std::string expression = item->text(column).trimmed().toStdString();
+            if(expression.empty())
+            {
+                // No expression, so this is an ordinary column
+                field.setGenerated(nullptr);
+
+                ui->treeWidget->blockSignals(true);
+                item->setCheckState(kStored, Qt::Unchecked);
+                ui->treeWidget->blockSignals(false);
+            } else {
+                // Checks whether the expression can be applied. If not, the old expression is restored in the view.
+                QString error;
+                const auto pkColumns = m_table.primaryKeyColumns();
+                if(contains(pkColumns, field.name()))
+                    error = tr("A generated column cannot be part of the primary key. Please remove the primary key flag first.");
+                else if(!field.defaultValue().empty())
+                    error = tr("A generated column cannot have a default value. Please remove the default value first.");
+                if(!error.isEmpty())
+                {
+                    QMessageBox::warning(this, qApp->applicationName(), error);
+
+                    ui->treeWidget->blockSignals(true);
+                    item->setText(column, field.generated() ? QString::fromStdString(field.generated()->expression()) : QString());
+                    ui->treeWidget->blockSignals(false);
+                    return;
+                }
+
+                // Turning an existing column into a generated column replaces its contents by the calculated values
+                if(!m_bNewTable && !field.generated())
+                {
+                    const sqlb::TablePtr old_table = pdb.getTableByName(curTable);
+                    bool has_data = false;
+                    for(const auto& it : trackColumns)
+                    {
+                        if(!it.first.isNull() && it.second == QString::fromStdString(field.name()))
+                        {
+                            auto old_field = sqlb::findField(*old_table, it.first.toStdString());
+                            has_data = old_field != old_table->fields.end() && !old_field->generated();
+                        }
+                    }
+                    if(has_data && QMessageBox::warning(this, QApplication::applicationName(),
+                                                        tr("Are you sure you want to make the field '%1' a generated column?\nAll data currently stored in this field will be replaced by the calculated values.").arg(item->text(kName)),
+                                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+                    {
+                        ui->treeWidget->blockSignals(true);
+                        item->setText(column, QString());
+                        ui->treeWidget->blockSignals(false);
+                        return;
+                    }
+                }
+
+                // Always use a new constraint object because the old one might still be used by the table object of the main window
+                auto generated = std::make_shared<sqlb::GeneratedColumnConstraint>(expression, item->checkState(kStored) == Qt::Checked ? "STORED" : "VIRTUAL");
+                if(field.generated())
+                    generated->setName(field.generated()->name());
+                field.setGenerated(generated);
+            }
+        }
+        break;
+        case kStored:
+            // Without an expression there is nothing to change here yet. The check state is applied as soon as an expression is entered.
+            if(field.generated())
+            {
+                auto generated = std::make_shared<sqlb::GeneratedColumnConstraint>(field.generated()->expression(), item->checkState(column) == Qt::Checked ? "STORED" : "VIRTUAL");
+                generated->setName(field.generated()->name());
+                field.setGenerated(generated);
+            }
             break;
         case kForeignKey:
             // handled in delegate
@@ -1002,6 +1113,7 @@ void EditTableDialog::addField()
     tbitem->setCheckState(kPrimaryKey, Qt::Unchecked);
     tbitem->setCheckState(kAutoIncrement, Qt::Unchecked);
     tbitem->setCheckState(kUnique, Qt::Unchecked);
+    tbitem->setCheckState(kStored, Qt::Unchecked);
 
     ui->treeWidget->addTopLevelItem(tbitem);
     ui->treeWidget->scrollToBottom();
