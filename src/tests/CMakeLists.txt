@@ -123,3 +123,39 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test table model
+
+set(TESTTABLEMODEL_SRC
+    TestTableModel.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../sqlitedb.cpp
+    ../CipherSettings.cpp
+    ../CipherDialog.cpp
+    ../CondFormat.cpp
+    ../Data.cpp
+    ../Settings.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTTABLEMODEL_HDR
+    TestTableModel.h
+)
+
+add_executable(test-table-model ${TESTTABLEMODEL_HDR} ${TESTTABLEMODEL_SRC})
+target_link_libraries(test-table-model ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
+if(QT_MAJOR STREQUAL "Qt6")
+    # Same as for the main target: the .ui files connect to slots that only exist in Qt5 unless connections are by string
+    set_target_properties(test-table-model PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+add_test(NAME test-table-model COMMAND $<TARGET_FILE:test-table-model>)
+if(WIN32)
+    # Like test-global-filter, this needs to find the SQLite DLL built by the CI jobs
+    set_tests_properties(test-table-model PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
+endif()

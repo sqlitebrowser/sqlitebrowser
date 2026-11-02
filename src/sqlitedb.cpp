@@ -810,6 +810,7 @@ bool DBBrowserDB::create ( const QString & db)
         // Close database and open it through the code for opening existing database files. This is slightly less efficient but saves us some duplicate
         // code.
         sqlite3_close_v2(_db);
+        _db = nullptr;      // open() would try to close the handle again if it thinks the database is still open
         return open(db);
     } else {
         return false;
