@@ -333,6 +333,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return "NULL";
         if(name == "blob_text")
             return "BLOB";
+        if(name == "blob_hex_limit")
+            return 0;
         if(name == "filter_escape")
             return "\\";
         if(name == "filter_delay")
@@ -408,6 +410,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
 
     // editor/horizontal_tiling?
     if(group == "editor" && name == "horizontal_tiling")
+        return false;
+
+    // editor/sort_results?
+    if(group == "editor" && name == "sort_results")
         return false;
 
     // editor/splitter1_sizes?
