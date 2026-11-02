@@ -42,7 +42,9 @@ bool Settings::isVaildSettingsFile(const QString& userSettingsFile)
 
         if(file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            if(file->exists() &&
+            // A file without any content yet is fine, too. It is a settings file which just doesn't contain any settings,
+            // just as if the file did not exist.
+            if(file->exists() && file->size() > 0 &&
               QString::compare(QString("[%General]\n"), file->readLine(), Qt::CaseInsensitive) != 0)
                 isNormalUserSettingsFile = false;
         }

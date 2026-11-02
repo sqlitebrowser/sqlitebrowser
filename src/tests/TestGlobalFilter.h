@@ -13,6 +13,8 @@ private slots:
     void issueFixtureReturnsNewYork();
     void ordinaryTermsRemainAndConnected();
     void projectRoundTripPreservesRegexTerm();
+    void loadGivesUpOnBrokenDocuments_data();
+    void loadGivesUpOnBrokenDocuments();
 };
 
 #endif // TESTGLOBALFILTER_H
