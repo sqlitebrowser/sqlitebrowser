@@ -19,6 +19,41 @@
 
 #include <cassert>
 
+namespace {
+
+// Returns a number as written by SQLite, e.g. -1234567 or 1234.5, in the number format of the default locale, which is the system locale unless the
+// application sets another one. The digits of the fraction are taken over as they are, so nothing is rounded. A null string is returned for anything
+// which is not just an optional minus sign, digits and optionally a decimal point followed by digits, e.g. for numbers with an exponent.
+QString localizedNumber(const QString& number)
+{
+    static const QRegularExpression plainNumber("^(-?)(0|[1-9][0-9]{0,18})(?:\\.([0-9]+))?$");
+    const QRegularExpressionMatch match = plainNumber.match(number);
+    if(!match.hasMatch())
+        return QString();
+
+    bool ok = false;
+    const qulonglong integralPart = match.captured(2).toULongLong(&ok);
+    if(!ok)
+        return QString();
+
+    const QLocale locale;
+    QString result = locale.toString(integralPart);
+    const QString fraction = match.captured(3);
+    if(!fraction.isNull())
+    {
+        // Convert the digits one by one to keep all of them, including any zeros at the end, and to use the digits of the locale
+        result += locale.decimalPoint();
+        for(const QChar digit : fraction)
+            result += locale.toString(static_cast<qulonglong>(digit.digitValue()));
+    }
+    if(!match.captured(1).isEmpty())
+        result.prepend(locale.negativeSign());
+
+    return result;
+}
+
+}
+
 SqliteTableModel::SqliteTableModel(DBBrowserDB& db, QObject* parent, const QString& encoding, bool force_wait)
     : QAbstractTableModel(parent)
     , m_db(db)
@@ -367,6 +402,16 @@ QVariant SqliteTableModel::data(const QModelIndex &index, int role) const
                 // Add "..." to the end of truncated strings
                 return decode(data.left(m_symbolLimit).append(" ..."));
             } else {
+                // Show numbers in the number format of the locale if that is wanted. The values of a column with a display format are
+                // not changed because the display format decides how they look like. Neither are the values of columns which are not numeric
+                // by their type affinity because they can contain text as well.
+                if(m_localeNumbers && !hasDisplayFormat(index) && column < m_vDataTypes.size() &&
+                   (m_vDataTypes.at(column) == SQLITE_INTEGER || m_vDataTypes.at(column) == SQLITE_FLOAT))
+                {
+                    const QString number = localizedNumber(decode(data));
+                    if(!number.isNull())
+                        return number;
+                }
                 return decode(data);
             }
         }
@@ -1184,5 +1229,6 @@ void SqliteTableModel::reloadSettings()
     m_symbolLimit = Settings::getValue("databrowser", "symbol_limit").toInt();
     m_rowsLimit = Settings::getValue("databrowser", "rows_limit").toInt();
     m_imagePreviewEnabled = Settings::getValue("databrowser", "image_preview").toBool();
+    m_localeNumbers = Settings::getValue("databrowser", "locale_numbers").toBool();
     m_chunkSize = static_cast<std::size_t>(Settings::getValue("db", "prefetchsize").toUInt());
 }

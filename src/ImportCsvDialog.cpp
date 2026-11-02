@@ -59,6 +59,16 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
         ui->editName->setText(file.baseName());
     }
 
+    // List the schemata to import into. The main schema is the default and comes first. The temp schema is always offered, even though SQLite
+    // only reports it once it has been used. The attached schemata follow in the same order as everywhere else.
+    ui->comboSchema->addItem("main");
+    ui->comboSchema->addItem("temp");
+    for(const auto& schema : pdb->schemata)
+    {
+        if(schema.first != "main" && schema.first != "temp")
+            ui->comboSchema->addItem(QString::fromStdString(schema.first));
+    }
+
     // Create a list of all available encodings and create an auto completion list from them
     encodingCompleter = new QCompleter(toStringList(QTextCodec::availableCodecs()), this);
     encodingCompleter->setCaseSensitivity(Qt::CaseInsensitive);
@@ -91,6 +101,14 @@ ImportCsvDialog::ImportCsvDialog(const std::vector<QString>& filenames, DBBrowse
     ui->comboQuote->blockSignals(false);
     ui->comboEncoding->blockSignals(false);
     ui->checkReplaceNonAlnum->blockSignals(false);
+
+    // The names in the first line are what the columns are matched by
+    auto enableMatchColumnsByName = [this](bool header) {
+        ui->labelMatchColumnsByName->setEnabled(header);
+        ui->checkMatchColumnsByName->setEnabled(header);
+    };
+    connect(ui->checkboxHeader, &QCheckBox::toggled, this, enableMatchColumnsByName);
+    enableMatchColumnsByName(ui->checkboxHeader->isChecked());
 
     // Prepare and show interface depending on how many files are selected
     if (csvFilenames.size() > 1)
@@ -140,6 +158,34 @@ void rollback(
         QMessageBox::warning(dialog, QApplication::applicationName(), error);
     }
     pdb->revertToSavepoint(savepointName);
+}
+
+// Find the column of the table to import each column of the CSV file into by comparing the names, ignoring the case. If a name is found
+// more than once in the file, only the first of the columns is imported. The result has one entry for each column of the CSV file and
+// the entry is a null pointer for the columns which are not imported because there is no column to import them into.
+std::vector<const sqlb::Field*> matchFieldsByName(const sqlb::FieldVector& csvFields, const sqlb::Table& table)
+{
+    std::vector<const sqlb::Field*> result;
+    std::vector<bool> used(table.fields.size(), false);
+
+    for(const sqlb::Field& csvField : csvFields)
+    {
+        const sqlb::Field* match = nullptr;
+        for(size_t i=0;i<table.fields.size();i++)
+        {
+            // Values cannot be inserted into generated columns
+            if(!used[i] && !table.fields[i].generated() &&
+               QString::compare(QString::fromStdString(csvField.name()), QString::fromStdString(table.fields[i].name()), Qt::CaseInsensitive) == 0)
+            {
+                used[i] = true;
+                match = &table.fields[i];
+                break;
+            }
+        }
+        result.push_back(match);
+    }
+
+    return result;
 }
 }
 
@@ -529,23 +575,45 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     if(fieldList.size() == 0)
         return true;
 
+    // The table is looked up and created in the selected schema
+    const sqlb::ObjectIdentifier tableId(ui->comboSchema->currentText().toStdString(), tableName.toStdString());
+    const QString tableDisplayName = QString::fromStdString(tableId.toDisplayString());
+
     // Are we importing into an existing table?
     bool importToExistingTable = false;
-    const sqlb::TablePtr tbl = pdb->getTableByName(sqlb::ObjectIdentifier("main", tableName.toStdString()));
+    const sqlb::TablePtr tbl = pdb->getTableByName(tableId);
+
+    // The column of the existing table to import each column of the CSV file into. By default the columns are used in the order they are in. When
+    // matching by name, a column of the file which has no match is not imported and is null here.
+    std::vector<const sqlb::Field*> targetFields;
+    const bool matchColumnsByName = ui->checkMatchColumnsByName->isChecked() && ui->checkboxHeader->isChecked();
+
     if(tbl)
     {
-        if(tbl->fields.size() != fieldList.size())
+        if(matchColumnsByName)
+        {
+            targetFields = matchFieldsByName(fieldList, *tbl);
+        } else {
+            for(size_t i=0;i<tbl->fields.size() && i<fieldList.size();i++)
+                targetFields.push_back(&tbl->fields[i]);
+        }
+
+        if(matchColumnsByName && std::none_of(targetFields.begin(), targetFields.end(), [](const sqlb::Field* f) { return f != nullptr; }))
         {
             QMessageBox::warning(this, QApplication::applicationName(),
-                                 tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableName));
+                                 tr("There is already a table named '%1' but none of the column names in the CSV file matches one of its columns.").arg(tableDisplayName));
+            return true;
+        } else if(!matchColumnsByName && tbl->fields.size() != fieldList.size()) {
+            QMessageBox::warning(this, QApplication::applicationName(),
+                                 tr("There is already a table named '%1' and an import into an existing table is only possible if the number of columns match.").arg(tableDisplayName));
             return true;
         } else {
             // Only ask whether to import into any table if the 'Yes to All' button has not been clicked (yet) (empty string is included).
             // Only ask whether to import into the existing table if the 'Yes' button has not been clicked (yet) for that table.
-            if(!dontAskForExistingTableAgain.contains("") && !dontAskForExistingTableAgain.contains(tableName))
+            if(!dontAskForExistingTableAgain.contains("") && !dontAskForExistingTableAgain.contains(tableDisplayName))
             {
                 int answer = QMessageBox::question(this, QApplication::applicationName(),
-                                                   tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableName),
+                                                   tr("There is already a table named '%1'. Do you want to import the data into it?").arg(tableDisplayName),
                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::YesAll | QMessageBox::Cancel, QMessageBox::No);
 
                 // Stop now if the No button has been clicked
@@ -559,7 +627,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
                 // If the 'Yes' button has been clicked, save the answer for that table for later
                 case QMessageBox::Yes:
-                    dontAskForExistingTableAgain.append(tableName);
+                    dontAskForExistingTableAgain.append(tableDisplayName);
                     break;
                 // If the 'Yes to All' button has been clicked, save the answer for any future table name. An empty string is used in that case.
                 case QMessageBox::YesAll:
@@ -590,7 +658,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     bool failOnMissing = ui->checkFailOnMissing->isChecked();
     if(!importToExistingTable)
     {
-        if(!pdb->createTable(sqlb::ObjectIdentifier("main", tableName.toStdString()), fieldList))
+        if(!pdb->createTable(tableId, fieldList))
         {
             rollback(this, pdb, nullptr, restorepointName, 0, tr("Creating the table failed: %1").arg(pdb->lastError()));
             return false;
@@ -598,7 +666,7 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
 
         // If we're creating the table in this import session, don't ask the user if it's okay to import more data into it. It seems
         // safe to just assume that's what they want.
-        dontAskForExistingTableAgain.append(tableName);
+        dontAskForExistingTableAgain.append(tableDisplayName);
     } else {
         // Importing into an existing table. So find out something about it's structure.
 
@@ -606,8 +674,17 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // and the constraints of a field, we need to handle this case differently.
         if(tbl)
         {
-            for(const sqlb::Field& f : tbl->fields)
+            for(const sqlb::Field* target : targetFields)
             {
+                // Columns of the file which are not imported never get a value
+                if(!target)
+                {
+                    failOnMissingFieldList.push_back(false);
+                    nullValues.push_back(QByteArray());
+                    continue;
+                }
+                const sqlb::Field& f = *target;
+
                 // For determining the value for empty fields we follow a set of rules
 
                 // Normally we don't have to fail the import when importing an empty field. This last value of the vector
@@ -646,11 +723,30 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
     }
 
     // Prepare the INSERT statement. The prepared statement can then be reused for each row to insert
-    std::string sQuery = "INSERT " + currentOnConflictStrategy() + " INTO " + sqlb::escapeIdentifier(tableName.toStdString()) + " VALUES(";
-    for(size_t i=1;i<=fieldList.size();i++)
-        sQuery += "?" + std::to_string(i) + ",";
-    sQuery.pop_back();  // Remove last comma
-    sQuery.append(")");
+    std::string sQuery = "INSERT " + currentOnConflictStrategy() + " INTO " + tableId.toString();
+    if(importToExistingTable && matchColumnsByName)
+    {
+        // Name the columns to insert into. The parameters are numbered by the position of the column in the file, so the values need not be
+        // bound in the order of the table. There is no parameter for the columns of the file which are not imported.
+        std::string columns, values;
+        for(size_t i=0;i<targetFields.size();i++)
+        {
+            if(targetFields[i])
+            {
+                columns += sqlb::escapeIdentifier(targetFields[i]->name()) + ",";
+                values += "?" + std::to_string(i + 1) + ",";
+            }
+        }
+        columns.pop_back();  // Remove last comma
+        values.pop_back();
+        sQuery += " (" + columns + ") VALUES(" + values + ")";
+    } else {
+        sQuery += " VALUES(";
+        for(size_t i=1;i<=fieldList.size();i++)
+            sQuery += "?" + std::to_string(i) + ",";
+        sQuery.pop_back();  // Remove last comma
+        sQuery.append(")");
+    }
     sqlite3_stmt* stmt;
     auto pDb = pdb->get(tr("importing CSV"));
     if(sqlite3_prepare_v2(pDb.get(), sQuery.c_str(), static_cast<int>(sQuery.size()), &stmt, nullptr) != SQLITE_OK)
@@ -678,6 +774,10 @@ bool ImportCsvDialog::importCsv(const QString& fileName, const QString& name)
         // Bind all values
         for(size_t i=0;i<rowData.num_fields;i++)
         {
+            // Skip the columns of the file which have no column to be imported into
+            if(importToExistingTable && i < targetFields.size() && !targetFields[i])
+                continue;
+
             // Empty values need special treatment
             // When importing into an existing table where we could find out something about its table definition
             if(importToExistingTable && rowData.fields[i].data_length == 0 && nullValues.size() > i)
@@ -895,6 +995,8 @@ void ImportCsvDialog::toggleAdvancedSection(bool show)
     ui->checkIgnoreDefaults->setVisible(show);
     ui->labelOnConflictStrategy->setVisible(show);
     ui->comboOnConflictStrategy->setVisible(show);
+    ui->labelMatchColumnsByName->setVisible(show);
+    ui->checkMatchColumnsByName->setVisible(show);
     ui->labelReplaceNonAlnum->setVisible(show);
     ui->checkReplaceNonAlnum->setVisible(show);
 }
