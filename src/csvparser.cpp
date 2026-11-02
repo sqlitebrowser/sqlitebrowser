@@ -58,6 +58,7 @@ inline void increaseRowSize(CSVRow& r)
             r.fields[i].buffer = nullptr;
             r.fields[i].buffer_length = 0;
             r.fields[i].buffer_max_length = 0;
+            r.fields[i].quoted = false;
         }
     }
 }
@@ -96,6 +97,9 @@ inline CSVField* addColumn(CSVRow& r, CSVField* field, bool trim)
     // Increase field list size if it is too small
     increaseRowSize(r);
 
+    // The next field is not known to be quoted until we find its opening quote character
+    r.fields[r.num_fields].quoted = false;
+
     // Return pointer to the next field
     return &r.fields[r.num_fields];
 }
@@ -110,6 +114,7 @@ inline CSVField* addRow(CSVParser::csvRowFunction f, CSVRow& r, size_t& rowCount
 
     // Reset the field list by setting the field count to 0. No need to deconstruct anything else.
     r.num_fields = 0;
+    r.fields->quoted = false;
 
     // Increase row count by one, as we're now starting to parse the next row
     rowCount++;
@@ -188,6 +193,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                                   m_iNumExtraBytesQuoteChar))
                     {
                         state = StateInQuote;
+                        field->quoted = true;
                         it += m_iNumExtraBytesQuoteChar;
                     }
                     else
@@ -278,6 +284,7 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
                     // look ahead to check for linefeed
                     if(!look_ahead(stream, sBuffer, &it, &sBufferEnd, '\n'))
                     {
+                        state = StateNormal;
                         addColumn(record, field, m_bTrimFields);
 
                         if(!(field = addRow(insertFunction, record, parsedRows)))
@@ -304,7 +311,8 @@ CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStr
         }
     }
 
-    if(record.num_fields || record.fields->buffer_length)
+    // Also parse a last field which is empty but quoted. In this case there is no content in the buffers but we are still in the end quote state.
+    if(record.num_fields || record.fields->buffer_length || state == StateEndQuote)
     {
         addColumn(record, field, m_bTrimFields);
 
@@ -356,4 +364,29 @@ bool CSVParser::look_ahead(QTextStream& stream, QByteArray& sBuffer, const char*
             return false;
     }
     return true;
+}
+
+QString quoteCsvField(const QString& content, QChar separator, QChar quote, const QString& newline)
+{
+    // Everything which could be taken for a line break needs to be quoted, not only the configured line break. A lone CR or LF is a
+    // line break for many CSV readers, including the parser in this file, even when the records are separated by something else.
+    const bool containsLineBreak = content.contains(QChar('\r')) || content.contains(QChar('\n')) || (!newline.isEmpty() && content.contains(newline));
+
+    if(quote.isNull())
+    {
+        // Quoting has been disabled but there is no way to write a line break without it
+        if(!containsLineBreak)
+            return content;
+
+        QString escaped = content;
+        return QChar('"') + escaped.replace(QChar('"'), QString("\"\"")) + QChar('"');
+    }
+
+    if(containsLineBreak || content.contains(quote) || (!separator.isNull() && content.contains(separator)))
+    {
+        QString escaped = content;
+        return quote + escaped.replace(quote, QString(2, quote)) + quote;
+    }
+
+    return content;
 }

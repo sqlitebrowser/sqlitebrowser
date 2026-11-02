@@ -123,3 +123,72 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test import csv dialog
+
+set(TESTIMPORTCSVDIALOG_SRC
+    TestImportCsvDialog.cpp
+    ../ImportCsvDialog.cpp
+    ../csvparser.cpp
+    ../sqlitedb.cpp
+    ../sqlitetablemodel.cpp
+    ../RowLoader.cpp
+    ../CipherDialog.cpp
+    ../CipherSettings.cpp
+    ../CondFormat.cpp
+    ../Data.cpp
+    ../Settings.cpp
+    ../sql/sqlitetypes.cpp
+    ../sql/Query.cpp
+    ../sql/ObjectIdentifier.cpp
+    ../sql/parser/ParserDriver.cpp
+    ../sql/parser/sqlite3_lexer.cpp
+    ../sql/parser/sqlite3_parser.cpp
+)
+
+set(TESTIMPORTCSVDIALOG_HDR
+    TestImportCsvDialog.h
+    ../ImportCsvDialog.h
+    ../csvparser.h
+    ../sqlitedb.h
+    ../sqlitetablemodel.h
+    ../RowLoader.h
+    ../RowCache.h
+    ../CipherDialog.h
+    ../CipherSettings.h
+    ../CondFormat.h
+    ../Data.h
+    ../Settings.h
+    ../sql/sqlitetypes.h
+    ../sql/Query.h
+    ../sql/ObjectIdentifier.h
+    ../sql/parser/ParserDriver.h
+    ../sql/parser/sqlite3_lexer.h
+    ../sql/parser/sqlite3_location.h
+    ../sql/parser/sqlite3_parser.hpp
+)
+
+add_executable(test-import-csv-dialog ${TESTIMPORTCSVDIALOG_HDR} ${TESTIMPORTCSVDIALOG_SRC} ../ImportCsvDialog.ui ../CipherDialog.ui)
+target_include_directories(test-import-csv-dialog SYSTEM PRIVATE ${CMAKE_SOURCE_DIR}/libs/json)
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-import-csv-dialog PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+target_link_libraries(test-import-csv-dialog ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${QT_MAJOR}::Concurrent ${LIBSQLITE_NAME} ${QT5_COMPAT})
+add_test(NAME test-import-csv-dialog COMMAND $<TARGET_FILE:test-import-csv-dialog>)
+if(WIN32)
+    set(_icd_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _icd_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _icd_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _icd_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\;" TESTIMPORTCSVDIALOG_PATH "${_icd_extra_paths};$ENV{PATH}")
+    set_tests_properties(test-import-csv-dialog PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=${TESTIMPORTCSVDIALOG_PATH}")
+else()
+    set_tests_properties(test-import-csv-dialog PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+endif()
