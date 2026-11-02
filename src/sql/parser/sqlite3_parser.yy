@@ -686,7 +686,7 @@ columnconstraint:
 												nn->setConflictAction($4);
 												drv.last_table_column->setNotNull(nn);
 											}
-	| optional_constraintname NULL 							{
+	| optional_constraintname NULL optional_conflictclause				{	// A conflict clause is allowed here but has no effect
 											}
 	| optional_constraintname UNIQUE optional_conflictclause			{
 												auto u = std::make_shared<sqlb::UniqueConstraint>();
@@ -870,9 +870,10 @@ tableconstraint:
 														sqlb::StringVector columns;
 														$$.index.insert(std::make_pair($4, u));
 													}
-	| optional_constraintname CHECK "(" expr ")"							{
+	| optional_constraintname CHECK "(" expr ")" optional_conflictclause				{
 														auto c = std::make_shared<sqlb::CheckConstraint>($4);
 														c->setName($1);
+														c->setConflictAction($6);
 														$$.check.push_back(c);
 													}
 	| optional_constraintname FOREIGN KEY "(" columnid_list ")" REFERENCES tableid optional_columnid_with_paren_list optional_fk_clause	{

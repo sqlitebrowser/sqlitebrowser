@@ -311,12 +311,19 @@ void EditTableDialog::populateIndexConstraints()
             {
                 auto pk = std::make_shared<sqlb::PrimaryKeyConstraint>();
                 pk->setName(it.second->name());
+                pk->setConflictAction(it.second->conflictAction());
                 m_table.addConstraint(it.first, pk);
             } else if(type->itemData(index).toString() == "u") {
                 auto u = std::make_shared<sqlb::UniqueConstraint>();
                 u->setName(it.second->name());
+                u->setConflictAction(it.second->conflictAction());
                 m_table.addConstraint(it.first, u);
             }
+
+            // The conflict action is carried over to the new constraint, so make sure the primary key's combo box shows the current one
+            ui->comboOnConflict->blockSignals(true);
+            ui->comboOnConflict->setCurrentText(m_table.primaryKey() ? QString::fromStdString(m_table.primaryKey()->conflictAction()).toUpper() : QString());
+            ui->comboOnConflict->blockSignals(false);
 
             // Update SQL and view
             populateFields();

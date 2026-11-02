@@ -202,10 +202,15 @@ public:
     void setExpression(const std::string& expr) { m_expression = expr; }
     const std::string& expression() const { return m_expression; }
 
+    // SQLite accepts a conflict clause for table CHECK constraints but doesn't act on it. We keep it to not change the table definition.
+    void setConflictAction(const std::string& conflict) { m_conflictAction = conflict; }
+    const std::string& conflictAction() const { return m_conflictAction; }
+
     std::string toSql() const;
 
 private:
     std::string m_expression;
+    std::string m_conflictAction;
 };
 
 class DefaultConstraint : public Constraint
