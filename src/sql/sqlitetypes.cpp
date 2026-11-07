@@ -568,7 +568,7 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
         });
     }
 
-    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();++it)
+    for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();)
         match_and_rename(m_foreignKeys, it, [key, to](const std::string& c) { return c == key ? to : c; });
 }
 

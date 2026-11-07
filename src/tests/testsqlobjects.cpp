@@ -212,6 +212,69 @@ void TestTable::addAndRemoveKeyInConstraint()
     QCOMPARE(tt.indexConstraints().size(), size_t(0));
 }
 
+void TestTable::moveAutoIncrementPrimaryKey()
+{
+    // Regression test for #3953: moving an AUTOINCREMENT primary key to another column and back used to loop forever
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    auto pk = std::make_shared<PrimaryKeyConstraint>();
+    pk->setAutoIncrement(true);
+    tt.addConstraint({std::string("a")}, pk);
+
+    tt.addKeyToConstraint(pk, "b");
+    tt.removeKeyFromConstraint(pk, "a");
+    QCOMPARE(tt.primaryKeyColumns().size(), size_t(1));
+    QCOMPARE(tt.primaryKeyColumns().front().name(), std::string("b"));
+
+    tt.addKeyToConstraint(pk, "a");
+    QCOMPARE(tt.primaryKeyColumns().size(), size_t(2));
+    QCOMPARE(tt.indexConstraints().size(), size_t(1));
+    QVERIFY(tt.primaryKey()->autoIncrement());
+}
+
+void TestTable::renameKeyInForeignKeys()
+{
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    tt.addConstraint(sqlb::StringVector{"a"}, std::make_shared<sqlb::ForeignKeyClause>("x", sqlb::StringVector{"id"}));
+    tt.addConstraint(sqlb::StringVector{"a", "b"}, std::make_shared<sqlb::ForeignKeyClause>("y", sqlb::StringVector{"id", "id2"}));
+    tt.addConstraint(sqlb::StringVector{"b"}, std::make_shared<sqlb::ForeignKeyClause>("z", sqlb::StringVector{"id"}));
+
+    // The renamed entries are re-inserted behind the old ones, so none of the following entries may be skipped
+    tt.renameKeyInAllConstraints("a", "c");
+
+    QCOMPARE(tt.foreignKeys().size(), size_t(3));
+    QVERIFY(tt.foreignKey({"c"}));
+    QVERIFY(tt.foreignKey({"c", "b"}));
+    QVERIFY(tt.foreignKey({"b"}));
+    QVERIFY(!tt.foreignKey({"a"}));
+    QVERIFY(!tt.foreignKey({"a", "b"}));
+
+    // Renaming the last entry must not run past the end of the container
+    tt.renameKeyInAllConstraints("b", "d");
+    QCOMPARE(tt.foreignKeys().size(), size_t(3));
+    QVERIFY(tt.foreignKey({"c", "d"}));
+    QVERIFY(tt.foreignKey({"d"}));
+    QVERIFY(!tt.foreignKey({"b"}));
+}
+
+void TestTable::renameKeyInIndexConstraints()
+{
+    Table tt("testtable");
+    tt.fields.emplace_back("a", "integer");
+    tt.fields.emplace_back("b", "integer");
+    tt.addConstraint({std::string("a")}, std::make_shared<PrimaryKeyConstraint>());
+    tt.addConstraint({std::string("a"), std::string("b")}, std::make_shared<sqlb::UniqueConstraint>());
+
+    tt.renameKeyInAllConstraints("a", "c");
+
+    QCOMPARE(tt.indexConstraints().size(), size_t(2));
+    QCOMPARE(tt.primaryKeyColumns().front().name(), std::string("c"));
+    QVERIFY(tt.sql().find("UNIQUE(\"c\",\"b\")") != std::string::npos);
+}
+
 void TestTable::uniqueConstraint()
 {
     Table tt("testtable");
