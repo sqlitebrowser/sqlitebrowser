@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QClipboard>
+#include <QRegularExpression>
 
 DbStructureModel::DbStructureModel(DBBrowserDB& db, QObject* parent,
                                    bool dropSelectQuery,
@@ -54,8 +55,13 @@ QVariant DbStructureModel::data(const QModelIndex& index, int role) const
         // the position of the item in the tree.
         if(index.column() == ColumnName && item->parent() == browsablesRootItem)
             return QString::fromStdString(sqlb::ObjectIdentifier(item->text(ColumnSchema).toStdString(), item->text(ColumnName).toStdString()).toDisplayString());
+        else if(index.column() == ColumnSQL && Settings::getValue("db", "hideschemalinebreaks").toBool())
+        {
+            static const QRegularExpression lineBreaks("\\s*[\\r\\n]\\s*");
+            return item->text(index.column()).replace(lineBreaks, " ").trimmed();
+        }
         else
-            return Settings::getValue("db", "hideschemalinebreaks").toBool() ? item->text(index.column()).simplified() : item->text(index.column());
+            return item->text(index.column());
     case Qt::EditRole:
         return item->text(index.column());
     case Qt::ToolTipRole: {
