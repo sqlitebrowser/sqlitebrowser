@@ -106,6 +106,7 @@ target_sources(${PROJECT_NAME}
     src/csvparser.h
     src/sqlite.h
     src/Data.h
+    src/JsonbUtil.h
     src/IconCache.h
     src/sql/parser/ParserDriver.h
     src/sql/parser/sqlite3_lexer.h
@@ -206,6 +207,7 @@ target_sources(${PROJECT_NAME}
     src/FileExtensionManager.cpp
     src/CondFormatManager.cpp
     src/Data.cpp
+    src/JsonbUtil.cpp
     src/CipherSettings.cpp
     src/Palette.cpp
     src/CondFormat.cpp
