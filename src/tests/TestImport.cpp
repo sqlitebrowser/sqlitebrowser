@@ -182,3 +182,74 @@ void TestImport::csvImport_data()
                                << 3
                                << result;
 }
+
+void TestImport::csvImportSkipRows()
+{
+    QFETCH(QString, csv);
+    QFETCH(int, skipRows);
+    QFETCH(int, maxRecords);
+    QFETCH(std::vector<std::vector<QByteArray>>, result);
+
+    QTemporaryFile file;
+    QVERIFY(file.open());
+    {
+        QTextStream out(&file);
+// Qt6 QTextStream defaults to utf-8.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        out.setCodec("UTF-8");
+#endif
+        out << csv;
+    }
+    file.flush();
+
+    CSVParser csvparser(true, ',', '"');
+    file.seek(0);
+    QTextStream tstream(&file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    tstream.setCodec("UTF-8");
+#endif
+
+    // The row numbers handed to the callback must start at 0 again after the skipped rows
+    std::vector<std::vector<QByteArray>> parsedCsv;
+    std::vector<size_t> rowNumbers;
+    const auto parseResult = csvparser.parse([&parsedCsv, &rowNumbers](size_t rowNum, const CSVRow& data) -> bool {
+        std::vector<QByteArray> row;
+        for(size_t i=0;i<data.num_fields;i++)
+            row.push_back(QByteArray(data.fields[i].data, data.fields[i].data_length));
+        parsedCsv.push_back(row);
+        rowNumbers.push_back(rowNum);
+        return true;
+    }, tstream, static_cast<size_t>(maxRecords), static_cast<size_t>(skipRows));
+
+    QCOMPARE(parseResult, CSVParser::ParserResultSuccess);
+    QCOMPARE(parsedCsv, result);
+    for(size_t i=0;i<rowNumbers.size();i++)
+        QCOMPARE(rowNumbers.at(i), i);
+}
+
+void TestImport::csvImportSkipRows_data()
+{
+    QTest::addColumn<QString>("csv");
+    QTest::addColumn<int>("skipRows");
+    QTest::addColumn<int>("maxRecords");
+    QTest::addColumn<std::vector<std::vector<QByteArray>>>("result");
+
+    const QString preamble("Exported by foo\nDate: 2020-01-01\n\nid,name\n1,a\n2,b\n");
+
+    QTest::newRow("skip_none") << QString("id,name\n1,a\n2,b\n") << 0 << 0
+                               << std::vector<std::vector<QByteArray>>{{"id", "name"}, {"1", "a"}, {"2", "b"}};
+    QTest::newRow("skip_one") << QString("id,name\n1,a\n2,b\n") << 1 << 0
+                              << std::vector<std::vector<QByteArray>>{{"1", "a"}, {"2", "b"}};
+    QTest::newRow("skip_preamble") << preamble << 3 << 0
+                                   << std::vector<std::vector<QByteArray>>{{"id", "name"}, {"1", "a"}, {"2", "b"}};
+    QTest::newRow("skip_all_rows") << QString("a,b\nc,d\n") << 2 << 0
+                                   << std::vector<std::vector<QByteArray>>{};
+    QTest::newRow("skip_more_than_rows") << QString("a,b\nc,d\n") << 10 << 0
+                                         << std::vector<std::vector<QByteArray>>{};
+    QTest::newRow("skip_without_final_linebreak") << QString("a,b\nc,d\ne,f") << 2 << 0
+                                                  << std::vector<std::vector<QByteArray>>{{"e", "f"}};
+    QTest::newRow("skip_multiline_quoted_record") << QString("\"x\ny\",z\nc,d\n") << 1 << 0
+                                                  << std::vector<std::vector<QByteArray>>{{"c", "d"}};
+    QTest::newRow("skip_with_max_records") << QString("junk\na,b\nc,d\ne,f\n") << 1 << 2
+                                           << std::vector<std::vector<QByteArray>>{{"a", "b"}, {"c", "d"}};
+}
