@@ -3343,27 +3343,27 @@ x~y	Fourchette : valeurs entre x et y
     <message>
         <location filename="../MainWindow.ui" line="404"/>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="409"/>
         <source>Truncate</source>
-        <translation type="unfinished">Tronquer</translation>
+        <translation>Tronquer</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="414"/>
         <source>Persist</source>
-        <translation type="unfinished">Persister</translation>
+        <translation>Persister</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="424"/>
         <source>WAL</source>
-        <translation type="unfinished"></translation>
+        <translation>WAL</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="859"/>
         <source>Exclusive</source>
-        <translation type="unfinished">Exclusif</translation>
+        <translation>Exclusif</translation>
     </message>
     <message>
         <location filename="../MainWindow.ui" line="950"/>
@@ -4389,7 +4389,7 @@ Are you sure?</source>
         <location filename="../MainWindow.cpp" line="1870"/>
         <source>Select the action to apply to the dropped file(s). &lt;br/&gt;Note: only &apos;Import&apos; will process more than one file.</source>
         <comment>Note for translation: Although there is no %n in the original, you can use the numerus-form to adjust &apos;files(s)&apos; and remove the note when n = 1. Including %n in the translation will also work.</comment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Sélectionnez l&apos;action à appliquer au fichier déposé.&lt;br&gt;Note : seule l&apos;action &quot;Importer&quot; permet de traiter plus d&apos;un fichier.</numerusform>
             <numerusform>Sélectionnez l&apos;action à appliquer aux fichiers déposés.&lt;br&gt;Note : seule l&apos;action &quot;Importer&quot; permet de traiter plus d&apos;un fichier.</numerusform>
         </translation>
@@ -4882,7 +4882,7 @@ Sélectionnez les axes ou les étiquettes d&apos;axes à faire glisser et à zoo
     <message>
         <location filename="../PlotDock.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <location filename="../PlotDock.cpp" line="103"/>
