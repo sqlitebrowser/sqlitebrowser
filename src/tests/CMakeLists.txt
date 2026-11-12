@@ -123,3 +123,39 @@ set(TESTCACHE_HDR
 add_executable(test-cache ${TESTCACHE_HDR} ${TESTCACHE_SRC})
 target_link_libraries(test-cache ${QT_MAJOR}::Test)
 add_test(NAME test-cache COMMAND $<TARGET_FILE:test-cache>)
+
+# test explain tree
+
+set(TESTEXPLAINTREE_SRC
+    TestExplainTree.cpp
+    ../ExplainTree.cpp
+)
+
+set(TESTEXPLAINTREE_HDR
+    TestExplainTree.h
+    ../ExplainTree.h
+)
+
+add_executable(test-explain-tree ${TESTEXPLAINTREE_HDR} ${TESTEXPLAINTREE_SRC})
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-explain-tree PROPERTIES AUTOUIC_OPTIONS "--connections=string")
+endif()
+target_link_libraries(test-explain-tree ${QT_MAJOR}::Test ${QT_MAJOR}::Widgets ${LIBSQLITE_NAME})
+add_test(NAME test-explain-tree COMMAND $<TARGET_FILE:test-explain-tree>)
+set(TESTEXPLAINTREE_ENV "QT_QPA_PLATFORM=offscreen")
+if(WIN32)
+    set(_et_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _et_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _et_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _et_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\\;" TESTEXPLAINTREE_PATH "${_et_extra_paths};$ENV{PATH}")
+    list(APPEND TESTEXPLAINTREE_ENV "PATH=${TESTEXPLAINTREE_PATH}")
+endif()
+set_tests_properties(test-explain-tree PROPERTIES ENVIRONMENT "${TESTEXPLAINTREE_ENV}")
