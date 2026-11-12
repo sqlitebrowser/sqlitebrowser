@@ -392,6 +392,22 @@
           </column>
           <column>
            <property name="text">
+            <string>Generated</string>
+           </property>
+           <property name="toolTip">
+            <string>Expression of a generated column. Leave empty for an ordinary column.</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Stored</string>
+           </property>
+           <property name="toolTip">
+            <string>Store the value of a generated column in the table instead of calculating it when it is read</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
             <string>Foreign Key</string>
            </property>
            <property name="toolTip">

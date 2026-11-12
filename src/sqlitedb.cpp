@@ -1854,7 +1854,9 @@ bool DBBrowserDB::alterTable(const sqlb::ObjectIdentifier& tablename, const sqlb
                        return p.first.isNull() && p.second.toStdString() == field.name();
         }))
         {
-            if(!addColumn(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()), field))
+            // SQLite can't add a STORED generated column to an existing table. So skip it here and let part 3 add it by rebuilding the table.
+            const bool is_stored_column = field.generated() && field.generated()->storage() == "STORED";
+            if(!is_stored_column && !addColumn(sqlb::ObjectIdentifier(tablename.schema(), new_table.name()), field))
             {
                 revertToSavepoint(savepointName);
                 return false;
