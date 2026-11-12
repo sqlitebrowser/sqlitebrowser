@@ -225,6 +225,9 @@ void RowLoader::process (Task & t)
         if(queryTemp.contains(QRegularExpression("LIMIT\\s+.+\\s*((,|\\b(OFFSET)\\b)\\s*.+\\s*)?$", QRegularExpression::CaseInsensitiveOption)) ||
                 queryTemp.contains(QRegularExpression("\\s(UNION)|(INTERSECT)|(EXCEPT)\\s", QRegularExpression::CaseInsensitiveOption)))
             sLimitQuery = queryTemp;
+        else if(queryTemp.startsWith("VALUES", Qt::CaseInsensitive))
+            // A VALUES clause does not accept a LIMIT clause when it is used on its own, so make it a sub-query instead
+            sLimitQuery = "SELECT * FROM (" + queryTemp + ")" + QString(" LIMIT %1 OFFSET %2;").arg(t.row_end-t.row_begin).arg(t.row_begin);
         else
             sLimitQuery = queryTemp + QString(" LIMIT %1 OFFSET %2;").arg(t.row_end-t.row_begin).arg(t.row_begin);
     }
