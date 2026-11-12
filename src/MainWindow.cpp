@@ -2744,10 +2744,10 @@ static void loadCondFormatMap(BrowseDataTableSettings::CondFormatMap& condFormat
     // using auto solves Qt 5/6 difference, QStringRef vs QStringView
     const auto name = xml.name();
 
-    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != name) {
+    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != name) {
         if (xml.name() == QT_UNICODE_LITERAL("column")) {
             size_t index = xml.attributes().value("index").toUInt();
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("column")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("column")) {
                 if(xml.name() == QT_UNICODE_LITERAL("format")) {
                     QFont font;
                     if (xml.attributes().hasAttribute("font"))
@@ -2781,10 +2781,10 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
     if(xml.attributes().hasAttribute("freeze_columns"))
         settings.frozenColumns = xml.attributes().value("freeze_columns").toUInt();
 
-    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("table")) {
+    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("table")) {
         if(xml.name() == QT_UNICODE_LITERAL("sort"))
         {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("sort"))
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("sort"))
             {
                 if(xml.name() == QT_UNICODE_LITERAL("column"))
                 {
@@ -2796,7 +2796,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 }
             }
         } else if(xml.name() == QT_UNICODE_LITERAL("column_widths")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("column_widths")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("column_widths")) {
                 if (xml.name() == QT_UNICODE_LITERAL("column")) {
                     int index = xml.attributes().value("index").toInt();
                     settings.columnWidths[index] = xml.attributes().value("value").toInt();
@@ -2804,7 +2804,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 }
             }
         } else if(xml.name() == QT_UNICODE_LITERAL("filter_values")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("filter_values")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("filter_values")) {
                 if (xml.name() == QT_UNICODE_LITERAL("column")) {
                     size_t index = xml.attributes().value("index").toUInt();
                     QString value = xml.attributes().value("value").toString();
@@ -2818,7 +2818,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
         } else if(xml.name() == QT_UNICODE_LITERAL("row_id_formats")) {
             loadCondFormatMap(settings.rowIdFormats, xml, settings.encoding);
         } else if(xml.name() == QT_UNICODE_LITERAL("display_formats")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("display_formats")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("display_formats")) {
                 if (xml.name() == QT_UNICODE_LITERAL("column")) {
                     size_t index = xml.attributes().value("index").toUInt();
                     settings.displayFormats[index] = xml.attributes().value("value").toString();
@@ -2826,7 +2826,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 }
             }
         } else if(xml.name() == QT_UNICODE_LITERAL("hidden_columns")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("hidden_columns")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("hidden_columns")) {
                 if (xml.name() == QT_UNICODE_LITERAL("column")) {
                     int index = xml.attributes().value("index").toInt();
                     settings.hiddenColumns[index] = xml.attributes().value("value").toInt();
@@ -2834,7 +2834,7 @@ static void loadBrowseDataTableSettings(BrowseDataTableSettings& settings, sqlb:
                 }
             }
         } else if(xml.name() == QT_UNICODE_LITERAL("plot_y_axes")) {
-            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("plot_y_axes")) {
+            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("plot_y_axes")) {
                 QString y1AxisName;
                 QString y2AxisName;
                 PlotDock::PlotSettings y1AxisSettings;
@@ -2935,7 +2935,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                         db.setPragma("synchronous", xml.attributes().value("synchronous").toString());
                     loadPragmas();
                 } else if(xml.name() == QT_UNICODE_LITERAL("attached")) {
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("attached"))
+                    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("attached"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("db"))
                         {
@@ -2945,7 +2945,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                     }
                 } else if(xml.name() == QT_UNICODE_LITERAL("window")) {
                     // Window settings
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("window"))
+                    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("window"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("main_tabs")) {
                             projectRestoreTabs = xml.attributes().value("open").toString();
@@ -2960,7 +2960,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                     }
                 } else if(xml.name() == QT_UNICODE_LITERAL("tab_structure")) {
                     // Database Structure tab settings
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("tab_structure"))
+                    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("tab_structure"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("column_width"))
                         {
@@ -2987,7 +2987,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                         delete d;
 
                     // Browse Data tab settings
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("tab_browse"))
+                    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("tab_browse"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("current_table"))
                         {
@@ -3064,7 +3064,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                             xml.skipCurrentElement();
                         } else if(xml.name() == QT_UNICODE_LITERAL("browse_table_settings")) {
 
-                            while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("browse_table_settings")) {
+                            while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("browse_table_settings")) {
                                 if (xml.name() == QT_UNICODE_LITERAL("table")) {
 
                                     sqlb::ObjectIdentifier tableIdentifier =
@@ -3091,7 +3091,7 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
                         closeSqlTab(i, true);
 
                     // Execute SQL tab data
-                    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("tab_sql"))
+                    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("tab_sql"))
                     {
                         if(xml.name() == QT_UNICODE_LITERAL("sql"))
                         {
@@ -3120,6 +3120,14 @@ MainWindow::LoadAttempResult MainWindow::loadProject(QString filename, bool read
         }
 
         file.close();
+
+        // The parts of a damaged project which could be read have been restored, but tell the user that there is more
+        if(xml.hasError())
+        {
+            QMessageBox::warning(this, qApp->applicationName(),
+                                 tr("The project file could not be read completely, it is probably damaged. Only part of it has been loaded.\n"
+                                    "Reason: %1 (line %2, column %3)").arg(xml.errorString()).arg(xml.lineNumber()).arg(xml.columnNumber()));
+        }
 
         if (projectRestoreIdx != -1 && !projectRestoreTabs.isEmpty()) {
             ui->mainTab->blockSignals(true);
