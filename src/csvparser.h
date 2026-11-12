@@ -69,10 +69,13 @@ public:
      * @param insertFunction A function pointer that is called for each parsed row. It is passed two parameters, the row number and a list of all parsed columns
      *                       in the row. The called function may return false if an error occurred to stop the import process. Otherwise it should return true.
      * \param stream Stream with the CSV parser
-     * \param nMaxRecords Max records too read, 0 if unlimited
+     * \param nMaxRecords Max records too read, 0 if unlimited. Skipped rows are not counted.
+     * \param nSkipRows Number of rows at the start of the stream to skip. These rows are parsed (so a quoted field spanning several lines
+     *                  counts as part of one row) but are not passed to insertFunction. The row numbers passed to insertFunction start at 0
+     *                  after the skipped rows.
      * \return ParserResult value that indicated whether action finished normally, was cancelled or errored.
      */
-    ParserResult parse(csvRowFunction insertFunction, QTextStream& stream, size_t nMaxRecords = 0);
+    ParserResult parse(csvRowFunction insertFunction, QTextStream& stream, size_t nMaxRecords = 0, size_t nSkipRows = 0);
 
     void setCSVProgress(CSVProgress* csvp) { m_pCSVProgress = csvp; }
 

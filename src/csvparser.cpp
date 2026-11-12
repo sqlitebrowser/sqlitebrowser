@@ -119,8 +119,18 @@ inline CSVField* addRow(CSVParser::csvRowFunction f, CSVRow& r, size_t& rowCount
 }
 }
 
-CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStream& stream, size_t nMaxRecords)
+CSVParser::ParserResult CSVParser::parse(csvRowFunction insertFunction, QTextStream& stream, size_t nMaxRecords, size_t nSkipRows)
 {
+    // If rows are to be skipped, wrap the row function so the caller only sees the rows after the skipped ones, numbered from 0.
+    // The limit of records to read refers to the rows seen by the caller, so it has to be increased by the number of skipped rows here.
+    if(nSkipRows > 0)
+    {
+        auto skippingFunction = [&insertFunction, nSkipRows](size_t rowNum, CSVRow row) -> bool {
+            return rowNum < nSkipRows || insertFunction(rowNum - nSkipRows, row);
+        };
+        return parse(skippingFunction, stream, nMaxRecords > 0 ? nMaxRecords + nSkipRows : 0);
+    }
+
     ParseStates state = StateNormal;        // State of the parser
     QByteArray sBuffer;                     // Buffer for reading the file
     CSVRow record;                          // Buffer for parsing the current row
