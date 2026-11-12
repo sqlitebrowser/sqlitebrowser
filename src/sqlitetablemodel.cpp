@@ -509,9 +509,26 @@ bool SqliteTableModel::setTypedData(const QModelIndex& index, bool isBlob, const
 
     if(index.isValid() && role == Qt::EditRole)
     {
+        // The cache is sparse: rows beyond the chunk loaded so far are valid model rows but not cached yet (e.g. when pasting a large
+        // clipboard). Load the row first, like find() does, instead of letting at() throw.
+        const size_t row = static_cast<size_t>(index.row());
+        bool cached;
+        {
+            std::unique_lock<std::mutex> lock(m_mutexDataCache);
+            cached = m_cache.count(row);
+        }
+        if(!cached)
+        {
+            triggerCacheLoad(index.row());
+            waitUntilIdle();
+        }
+
         std::unique_lock<std::mutex> lock(m_mutexDataCache);
 
-        auto & cached_row = m_cache.at(static_cast<size_t>(index.row()));
+        if(!m_cache.count(row))
+            return false;
+
+        auto & cached_row = m_cache.at(row);
         const size_t column = static_cast<size_t>(index.column());
 
         QByteArray newValue = encode(value.toByteArray());
