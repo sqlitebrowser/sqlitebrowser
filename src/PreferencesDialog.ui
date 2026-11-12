@@ -1343,6 +1343,23 @@ Can be set to 0 for disabling completion.</string>
               </property>
              </widget>
             </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="labelLocaleNumbers">
+              <property name="text">
+               <string>Show numbers in the system number format</string>
+              </property>
+              <property name="buddy">
+               <cstring>checkLocaleNumbers</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="checkLocaleNumbers">
+              <property name="toolTip">
+               <string>Enable this option to show the numbers in the cells of columns with a numeric type (INTEGER, REAL or NUMERIC) with the digit grouping and decimal separator of the system locale, e.g. 1.234,5 instead of 1234.5. Only the display changes. The stored values and the values which are edited, copied or exported stay the same.</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -2071,6 +2088,7 @@ Can be set to 0 for disabling completion.</string>
   <tabstop>spinCompleteThreshold</tabstop>
   <tabstop>checkShowImagesInline</tabstop>
   <tabstop>checkCellWordWrap</tabstop>
+  <tabstop>checkLocaleNumbers</tabstop>
   <tabstop>spinFilterDelay</tabstop>
   <tabstop>editFilterEscape</tabstop>
   <tabstop>treeSyntaxHighlighting</tabstop>

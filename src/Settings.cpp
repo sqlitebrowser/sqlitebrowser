@@ -319,6 +319,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return 1000;
         if(name == "image_preview")
             return false;
+        if(name == "locale_numbers")
+            return false;
         if(name == "cell_word_wrap")
             return true;
         if(name == "indent_compact")
