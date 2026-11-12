@@ -1,6 +1,7 @@
 #include "EditDialog.h"
 #include "ui_EditDialog.h"
 #include "Settings.h"
+#include "JsonbUtil.h"
 #include "qhexedit.h"
 #include "docktextedit.h"
 #include "FileDialog.h"
@@ -194,6 +195,9 @@ void EditDialog::loadData(const QByteArray& bArrdata)
     // Get the current editor mode (eg text, hex, image, json or xml mode)
     int editMode = ui->comboMode->currentIndex();
 
+    // The JSONB view below makes the text editor read-only independently of the dialog's state
+    sciEdit->setReadOnly(isReadOnly);
+
     // Data type specific handling
     switch (dataType) {
     case Null:
@@ -359,13 +363,31 @@ void EditDialog::loadData(const QByteArray& bArrdata)
         case TextEditor:
         case JsonEditor:
         case XmlEditor:
-        case SqlEvaluator:
+        case SqlEvaluator: {
+            // SQLite's binary JSON format can be shown as read-only JSON text. The data stays in the hex buffer.
+            QString jsonbText;
+            if(jsonbToText(bArrdata, jsonbText))
+            {
+                if(editMode == JsonEditor && mustIndentAndCompact)
+                {
+                    auto jsonDoc = ordered_json::parse(jsonbText.toStdString(), nullptr, false);
+                    if(!jsonDoc.is_discarded())
+                        jsonbText = QString::fromStdString(jsonDoc.dump(4));
+                }
+                sciEdit->setText(jsonbText);
+                sciEdit->setTextInMargin(tr("JSONB"));
+                sciEdit->setReadOnly(true);
+                sciEdit->setEnabled(true);
+                break;
+            }
+
             // Disable text editing, and use a warning message as the contents
             sciEdit->setText(QString(tr("Binary data can't be viewed in this mode.") % '\n' %
                                      tr("Try switching to Binary mode.")));
             sciEdit->setTextInMargin(Settings::getValue("databrowser", "blob_text").toString());
             sciEdit->setEnabled(false);
             break;
+        }
 
         case RtlTextEditor:
             // Disable text editing, and use a warning message as the contents
@@ -1149,7 +1171,11 @@ void EditDialog::updateCellInfoAndMode(const QByteArray& bArrdata)
         // Determine the length of the cell data
         int dataLength = cellData.length();
         // If none of the above data types, consider it general binary data
-        ui->labelInfo->setText(tr("Type: Binary; Size: %n byte(s)", "", dataLength));
+        QString jsonbText;
+        if(jsonbToText(cellData, jsonbText))
+            ui->labelInfo->setText(tr("Type: Binary (JSONB); Size: %n byte(s)", "", dataLength));
+        else
+            ui->labelInfo->setText(tr("Type: Binary; Size: %n byte(s)", "", dataLength));
         break;
     }
 }
