@@ -93,6 +93,18 @@ public:
     void sort(const std::vector<sqlb::OrderBy>& columns);
     sqlb::ObjectIdentifier currentTableName() const { return m_query.table(); }
 
+    /// The results of a custom query (see setQuery(const QString&)) can be sorted by wrapping the query in another SELECT statement. That is
+    /// only possible for read-only statements which can be used as a subquery, so not for PRAGMA or EXPLAIN statements and not for statements
+    /// which modify data and return the changed rows using the RETURNING clause.
+    bool isResultSortable() const { return m_customQuerySortable; }
+
+    /// Sort the results of a custom query in the order none -> ascending -> descending -> none when called repeatedly for the same column.
+    /// Calling it for another column sorts by that one in ascending order. Does nothing if the results are not sortable.
+    void cycleResultSort(int column);
+
+    /// The column the results of a custom query are currently sorted by, or -1 if they are not sorted
+    int resultSortColumn() const { return m_customSortColumn; }
+
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     bool isBinary(const QModelIndex& index) const;
@@ -172,7 +184,10 @@ private:
 
     void updateAndRunQuery();
 
+    // Reads the column names and types of the given query. Also finds out whether the query is read-only (see m_customQuerySortable).
     void getColumnNames(const std::string& sQuery);
+    // Sort the results of a custom query. Pass a negative column to remove any sorting.
+    void sortResults(int column, Qt::SortOrder order);
 
     QByteArray encode(const QByteArray& str) const;
     QByteArray decode(const QByteArray& str) const;
@@ -211,7 +226,18 @@ private:
 
     bool isBinary(const QByteArray& index) const;
 
+    // The text to show in a cell for binary data
+    QString binaryDisplayText(const QByteArray& data) const;
+
     QString m_sQuery;
+
+    // These are only used when a custom query is shown, i.e. when the model was set up using setQuery(const QString&). m_sQuery is the SQL
+    // which is actually run and which is what gets exported. For a sorted result it is m_customQuery wrapped in an outer SELECT.
+    QString m_customQuery;                  // The statement as it was passed to setQuery(), without comments
+    bool m_customQuerySortable = false;     // Statement is a read-only SELECT or WITH statement and can be used as a subquery
+    int m_customSortColumn = -1;
+    Qt::SortOrder m_customSortOrder = Qt::AscendingOrder;
+
     std::vector<int> m_vDataTypes;
     std::map<size_t, std::vector<CondFormat>> m_mCondFormats;
     std::map<size_t, std::vector<CondFormat>> m_mRowIdFormats;
@@ -245,6 +271,7 @@ private:
     QColor m_binBgColour;
     QFont m_font;
     int m_symbolLimit;
+    int m_blobHexLimit;
     int m_rowsLimit;
     bool m_imagePreviewEnabled;
 
