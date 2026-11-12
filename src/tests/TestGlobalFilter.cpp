@@ -70,6 +70,28 @@ QStringList executeIssueQuery(const std::vector<QString>& filters)
     return rows;
 }
 
+// Runs the statements in a fresh in-memory database and returns the first column of all rows of the last query,
+// joined by commas
+QString runQuery(const char* setup, const std::string& query)
+{
+    sqlite3* db = nullptr;
+    if(sqlite3_open(":memory:", &db) != SQLITE_OK)
+        qFatal("Could not open the SQLite fixture");
+    if(sqlite3_exec(db, setup, nullptr, nullptr, nullptr) != SQLITE_OK)
+        qFatal("Could not create the SQLite fixture: %s", sqlite3_errmsg(db));
+
+    QStringList rows;
+    const int result = sqlite3_exec(db, query.c_str(), [](void* data, int count, char** values, char**) {
+        if(count > 0 && values[0])
+            static_cast<QStringList*>(data)->push_back(QString::fromUtf8(values[0]));
+        return 0;
+    }, &rows, nullptr);
+    if(result != SQLITE_OK)
+        qFatal("Fixture query failed: %s", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return rows.join(',');
+}
+
 }
 
 void TestGlobalFilter::tokenizes_data()
@@ -138,4 +160,98 @@ void TestGlobalFilter::projectRoundTripPreservesRegexTerm()
     QVERIFY(!reader.hasError());
     QCOMPARE(asStringList(restored), QStringList{"/New York/"});
     QCOMPARE(executeIssueQuery(restored), QStringList{"New York"});
+}
+
+void TestGlobalFilter::exactFilterMatches_data()
+{
+    QTest::addColumn<QString>("setup");
+    QTest::addColumn<QString>("filter");
+    QTest::addColumn<QString>("expected");
+
+    // The result of COUNT(*) has no type affinity, so SQLite never considers it equal to a quoted string (#3608)
+    QTest::newRow("count column")
+        << "CREATE TABLE d(g); INSERT INTO d VALUES (1),(2),(2),(3),(3),(3);"
+           "CREATE VIEW t AS SELECT COUNT(*) AS c FROM d GROUP BY g;"
+        << "=2" << "2";
+    QTest::newRow("count column zero")
+        << "CREATE TABLE d(g); CREATE TABLE e(g); INSERT INTO d VALUES (1),(2),(2);"
+           "INSERT INTO e VALUES (1),(2),(3);"
+           "CREATE VIEW t AS SELECT COUNT(d.g) AS c FROM e LEFT JOIN d ON d.g = e.g GROUP BY e.g;"
+        << "=0" << "0";
+    QTest::newRow("integer column")
+        << "CREATE TABLE t(c INTEGER); INSERT INTO t VALUES (4),(5),(50);"
+        << "=5" << "5";
+    QTest::newRow("negative integer column")
+        << "CREATE TABLE t(c INTEGER); INSERT INTO t VALUES (-3),(3),(-30);"
+        << "=-3" << "-3";
+    QTest::newRow("real column")
+        << "CREATE TABLE t(c REAL); INSERT INTO t VALUES (2.5),(25),(2);"
+        << "=2.5" << "2.5";
+    QTest::newRow("computed real")
+        << "CREATE TABLE d(x); INSERT INTO d VALUES (1),(2);"
+           "CREATE VIEW t AS SELECT x / 2.0 AS c FROM d;"
+        << "=0.5" << "0.5";
+
+    // Text columns must keep matching the text which is stored in them, even if it looks like a number
+    QTest::newRow("text column")
+        << "CREATE TABLE t(c TEXT); INSERT INTO t VALUES ('5'),('50'),('05');"
+        << "=5" << "5";
+    QTest::newRow("text column leading zeros")
+        << "CREATE TABLE t(c TEXT); INSERT INTO t VALUES ('007'),('7'),('70');"
+        << "=007" << "007";
+    QTest::newRow("text column trailing zero")
+        << "CREATE TABLE t(c TEXT); INSERT INTO t VALUES ('9.90'),('9.9'),('9');"
+        << "=9.90" << "9.90";
+    QTest::newRow("text column too long for a number")
+        << "CREATE TABLE t(c TEXT); INSERT INTO t VALUES ('12345678901234567890123'),('1');"
+        << "=12345678901234567890123" << "12345678901234567890123";
+    QTest::newRow("text column word")
+        << "CREATE TABLE t(c TEXT); INSERT INTO t VALUES ('abc'),('abcd');"
+        << "=abc" << "abc";
+}
+
+void TestGlobalFilter::exactFilterMatches()
+{
+    QFETCH(QString, setup);
+    QFETCH(QString, filter);
+    QFETCH(QString, expected);
+
+    const std::string query = "SELECT group_concat(c) FROM (SELECT c FROM t WHERE c " + CondFormat::filterToSqlCondition(filter) + " ORDER BY c)";
+    QCOMPARE(runQuery(setup.toUtf8().constData(), query), expected);
+}
+
+void TestGlobalFilter::exactFilterQuoting_data()
+{
+    QTest::addColumn<QString>("filter");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("integer") << "=2" << "= 2 ";
+    QTest::newRow("zero") << "=0" << "= 0 ";
+    QTest::newRow("negative") << "=-3" << "= -3 ";
+    QTest::newRow("decimal") << "=2.5" << "= 2.5 ";
+    QTest::newRow("small decimal") << "=0.5" << "= 0.5 ";
+    QTest::newRow("largest integer") << "=9223372036854775807" << "= 9223372036854775807 ";
+
+    // These would not be the same value after being converted to a number and back, or are no numbers at all.
+    // They must stay quoted because SQLite would read them differently or not at all, e.g. inf as a column name.
+    QTest::newRow("leading zeros") << "=007" << "= '007' ";
+    QTest::newRow("trailing zero") << "=1.50" << "= '1.50' ";
+    QTest::newRow("exponent") << "=1e5" << "= '1e5' ";
+    QTest::newRow("explicit plus") << "=+5" << "= '+5' ";
+    QTest::newRow("negative zero") << "=-0" << "= '-0' ";
+    QTest::newRow("no integer part") << "=.5" << "= '.5' ";
+    QTest::newRow("no fraction part") << "=5." << "= '5.' ";
+    QTest::newRow("hexadecimal") << "=0x10" << "= '0x10' ";
+    QTest::newRow("infinity") << "=inf" << "= 'inf' ";
+    QTest::newRow("not a number") << "=nan" << "= 'nan' ";
+    QTest::newRow("beyond 64 bit integers") << "=9223372036854775808" << "= '9223372036854775808' ";
+    QTest::newRow("text") << "=abc" << "= 'abc' ";
+    QTest::newRow("null") << "=NULL" << "IS NULL ";
+}
+
+void TestGlobalFilter::exactFilterQuoting()
+{
+    QFETCH(QString, filter);
+    QFETCH(QString, expected);
+    QCOMPARE(QString::fromStdString(CondFormat::filterToSqlCondition(filter)), expected);
 }

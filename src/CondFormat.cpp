@@ -51,6 +51,28 @@ CondFormat::CondFormat(const QString& filter,
     m_font.fromString(model->data(index, Qt::FontRole).toString());
 }
 
+namespace
+{
+
+// Checks whether a string is a number which does not change when it is converted to a number and written out again, i.e.
+// that it is the same number no matter whether it is read as text or as a number. This is not the case for things like
+// 007, 1.50, 1e5 or +5. It also excludes values like inf and nan which SQLite would not read as numbers.
+bool isCanonicalNumber(const QString& str)
+{
+    bool ok = false;
+    if(!str.contains('.'))
+    {
+        const qlonglong integer = str.toLongLong(&ok);
+        return ok && QString::number(integer) == str;
+    }
+
+    // Real numbers are converted to text by SQLite using 15 significant digits
+    const double real = str.toDouble(&ok);
+    return ok && QString::number(real, 'g', 15) == str;
+}
+
+}
+
 std::string CondFormat::filterToSqlCondition(const QString& value, const QString& encoding)
 {
     if(value.isEmpty())
@@ -111,6 +133,11 @@ std::string CondFormat::filterToSqlCondition(const QString& value, const QString
             {
                 // It's not, so just compare normally to the value, whatever it is.
                 op = "=";
+
+                // Don't quote numbers. SQLite never considers a number equal to a quoted string if the column has no type affinity,
+                // e.g. the result of COUNT(*). Numbers which can be written differently, like 007 or 1.50, are kept as text because they
+                // would not match the text stored in a text column anymore.
+                numeric = isCanonicalNumber(val);
             } else {
                 // It is NULL. Override the comparison operator to search for NULL values in this column. Also treat search value (NULL) as number,
                 // in order to avoid putting quotes around it.

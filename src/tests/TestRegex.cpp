@@ -1,12 +1,47 @@
 #include "TestRegex.h"
 #include "../Data.h"
 
+#include <QIODevice>
+#include <QTextStream>
 #include <QtTest/QTest>
 
 using ClipboardRows = std::vector<std::vector<QByteArray>>;
 Q_DECLARE_METATYPE(ClipboardRows)
 
 QTEST_APPLESS_MAIN(TestRegex)
+
+namespace
+{
+
+// A device which behaves like a full disk. It takes the given number of bytes, a write which doesn't fit completely is cut short and
+// returns the number of bytes which were written. After that, writing fails.
+class FullDisk : public QIODevice
+{
+public:
+    explicit FullDisk(qint64 capacity) : m_capacity(capacity) { open(QIODevice::WriteOnly); }
+
+    QByteArray written;
+
+protected:
+    qint64 readData(char*, qint64) override { return -1; }
+    qint64 writeData(const char* data, qint64 size) override
+    {
+        const qint64 room = m_capacity - written.size();
+        if(room <= 0)
+        {
+            setErrorString("No space left on device");
+            return -1;
+        }
+        const qint64 count = qMin(room, size);
+        written.append(data, static_cast<int>(count));
+        return count;
+    }
+
+private:
+    qint64 m_capacity;
+};
+
+}
 
 void TestRegex::clipboardRows_data()
 {
@@ -115,4 +150,58 @@ void TestRegex::sqlQueryComments()
 
     removeCommentsFromQuery(dirtyQuery);
     QCOMPARE(dirtyQuery, clearQuery);
+}
+
+void TestRegex::writeAllWritesEverything()
+{
+    FullDisk device(1000);
+    const QByteArray data(100, 'x');
+    QVERIFY(writeAll(device, data.constData(), data.size()));
+    QCOMPARE(device.written, data);
+
+    // Nothing to write is nothing which can fail
+    FullDisk full(0);
+    QVERIFY(writeAll(full, data.constData(), 0));
+}
+
+void TestRegex::writeAllReportsPartialWrites()
+{
+    const QByteArray data(100, 'x');
+
+    // Only a part of the data fits. The device doesn't report an error for this, its write function returns a smaller number
+    FullDisk partial(10);
+    QVERIFY(!writeAll(partial, data.constData(), data.size()));
+    QCOMPARE(partial.written, data.left(10));
+    // Writing the rest of the data tells what went wrong
+    QCOMPARE(partial.errorString(), QString("No space left on device"));
+
+    FullDisk full(0);
+    QVERIFY(!writeAll(full, data.constData(), data.size()));
+}
+
+void TestRegex::flushStreamWritesEverything()
+{
+    FullDisk device(1000);
+    QTextStream stream(&device);
+    stream << "some text";
+    QVERIFY(flushStream(stream));
+    QCOMPARE(device.written, QByteArray("some text"));
+}
+
+void TestRegex::flushStreamReportsFailureOfLastChunk()
+{
+    // Small amounts of data stay in the buffer of the stream until it is flushed, so that is where writing fails
+    FullDisk device(5);
+    QTextStream stream(&device);
+    stream << "some text which does not fit";
+    QVERIFY(!flushStream(stream));
+}
+
+void TestRegex::flushStreamReportsEarlierFailure()
+{
+    // This is more than the stream buffers, so writing already fails before the stream is flushed
+    FullDisk device(5);
+    QTextStream stream(&device);
+    stream << QString(100000, 'x');
+    QVERIFY(!flushStream(stream));
 }

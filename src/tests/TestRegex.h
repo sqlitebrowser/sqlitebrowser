@@ -14,6 +14,11 @@ private slots:
     void sqlQueryComments_data();
     void clipboardRows();
     void clipboardRows_data();
+    void writeAllReportsPartialWrites();
+    void writeAllWritesEverything();
+    void flushStreamReportsFailureOfLastChunk();
+    void flushStreamReportsEarlierFailure();
+    void flushStreamWritesEverything();
 };
 
 #endif
