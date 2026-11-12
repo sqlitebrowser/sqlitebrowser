@@ -226,10 +226,10 @@ static QString toSuperScript(T number)
 
 QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::FontRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::FontRole && role != Qt::ToolTipRole)
         return QVariant();
 
-    if (orientation == Qt::Vertical && role == Qt::FontRole)
+    if (orientation == Qt::Vertical && (role == Qt::FontRole || role == Qt::ToolTipRole))
         return QVariant();
 
     if (orientation == Qt::Horizontal)
@@ -242,6 +242,11 @@ QVariant SqliteTableModel::headerData(int section, Qt::Orientation orientation, 
             switch (role) {
             case Qt::EditRole:
                 return QString::fromStdString(plainHeader);
+            case Qt::ToolTipRole:
+                // When browsing a table the first header is the hidden row id column, so the sections already are 1-based column numbers there
+                if(m_table_of_query)
+                    return section > 0 ? tr("Column %1: %2").arg(section).arg(QString::fromStdString(plainHeader)) : QVariant();
+                return tr("Column %1: %2").arg(section + 1).arg(QString::fromStdString(plainHeader));
             case Qt::FontRole: {
                 bool is_pk = false;
                 bool is_fk = getForeignKeyClause(column-1) != nullptr;

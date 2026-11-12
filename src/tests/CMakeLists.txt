@@ -110,6 +110,45 @@ if(WIN32)
     set_tests_properties(test-global-filter PROPERTIES ENVIRONMENT "PATH=${TESTGLOBALFILTER_PATH}")
 endif()
 
+# test drop order
+
+set(TESTDROPORDER_SRC
+    TestDropOrder.cpp
+    ../sql/DropOrder.cpp
+    ../sql/ObjectIdentifier.cpp
+)
+
+set(TESTDROPORDER_HDR
+    TestDropOrder.h
+    ../sql/DropOrder.h
+    ../sql/ObjectIdentifier.h
+)
+
+add_executable(test-drop-order ${TESTDROPORDER_HDR} ${TESTDROPORDER_SRC})
+if(QT_MAJOR STREQUAL "Qt6")
+    set_target_properties(test-drop-order PROPERTIES
+        AUTOUIC_OPTIONS "--connections=string"
+    )
+endif()
+target_link_libraries(test-drop-order ${QT_MAJOR}::Test ${LIBSQLITE_NAME})
+add_test(NAME test-drop-order COMMAND $<TARGET_FILE:test-drop-order>)
+set_tests_properties(test-drop-order PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+if(WIN32)
+    set(_do_extra_paths "")
+    foreach(_p IN LISTS CMAKE_PREFIX_PATH)
+        list(APPEND _do_extra_paths "${_p}" "${_p}/bin")
+        # OpenSSL 3 Universal installer layout: bin/x86, bin/x64
+        if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+            list(APPEND _do_extra_paths "${_p}/bin/x64")
+        else()
+            list(APPEND _do_extra_paths "${_p}/bin/x86")
+        endif()
+    endforeach()
+    # SQLite and SQLCipher are built as DLLs in the CMake prefix by the Windows CI jobs.
+    string(REPLACE ";" "\\;" TESTDROPORDER_PATH "${_do_extra_paths};$ENV{PATH}")
+    set_tests_properties(test-drop-order PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=${TESTDROPORDER_PATH}")
+endif()
+
 # test cache
 
 set(TESTCACHE_SRC
