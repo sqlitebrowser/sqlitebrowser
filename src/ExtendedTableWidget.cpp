@@ -28,6 +28,7 @@
 #include <QShortcut>
 #include <QProgressDialog>
 
+#include <algorithm>
 #include <limits>
 
 using BufferRow = std::vector<QByteArray>;
@@ -433,13 +434,32 @@ void ExtendedTableWidget::reloadSettings()
     QFont dataBrowserFont(Settings::getValue("databrowser", "font").toString());
     dataBrowserFont.setPointSize(Settings::getValue("databrowser", "fontsize").toInt());
 
-    // Set new default row height depending on the font size
+    // Set new default row height depending on the font size and the configured padding
     QFontMetrics fontMetrics(dataBrowserFont);
-    verticalHeader()->setDefaultSectionSize(fontMetrics.height()+10);
+    const int padding = std::max(0, Settings::getValue("databrowser", "row_padding").toInt());
+    // Qt doesn't allow the default row height to be lower than the minimum row height and, unless told otherwise, the latter depends on
+    // the font of the row header. So set it to the height of a line of text, otherwise a low padding would not make the rows any smaller.
+    verticalHeader()->setMinimumSectionSize(fontMetrics.height());
+    verticalHeader()->setDefaultSectionSize(fontMetrics.height() + padding);
     if(m_frozen_table_view)
         m_frozen_table_view->reloadSettings();
 
     setWordWrap(Settings::getValue("databrowser", "cell_word_wrap").toBool());
+}
+
+void ExtendedTableWidget::fitColumnsToContents(int max_width)
+{
+    if(!model())
+        return;
+
+    resizeColumnsToContents();
+
+    // Hidden columns have a width of 0 and thus are left alone here
+    for(int col = 0; col < model()->columnCount(); ++col)
+    {
+        if(columnWidth(col) > max_width)
+            setColumnWidth(col, max_width);
+    }
 }
 
 bool ExtendedTableWidget::copyMimeData(const QModelIndexList& fromIndices, QMimeData* mimeData, const bool withHeaders, const bool inSQL)

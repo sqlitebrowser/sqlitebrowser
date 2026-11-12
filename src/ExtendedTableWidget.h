@@ -105,6 +105,9 @@ public:
 
     void setFrozenColumns(size_t count);
 
+    // Resize all visible columns to fit their contents but make sure none of them gets wider than max_width
+    void fitColumnsToContents(int max_width);
+
     void setModel(QAbstractItemModel* item_model) override;
 
     void setEditTriggers(QAbstractItemView::EditTriggers editTriggers);
