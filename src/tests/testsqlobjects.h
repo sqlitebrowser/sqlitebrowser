@@ -47,6 +47,11 @@ private slots:
     void complexExpression();
     void parseIdentifierWithDollar();
 
+    void onConflictAccessors();
+    void onConflictRoundTrip();
+    void onConflictRoundTrip_data();
+    void onConflictSurvivesTableEdits();
+
     void parseTest();
     void parseTest_data();
 };
