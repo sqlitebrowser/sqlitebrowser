@@ -200,6 +200,8 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
             return "UTF-8";
         if(name == "localconventions")
             return false;
+        if(name == "quotedastext")
+            return false;
     }
 
     // exportsql group?
