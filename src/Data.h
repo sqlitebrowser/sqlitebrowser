@@ -5,6 +5,9 @@
 #include <QByteArray>
 #include <vector>
 
+class QIODevice;
+class QTextStream;
+
 // This returns false if the data in the data parameter contains binary data. If it is text only, the function returns
 // true. If the second parameter is specified, it will be used to convert the data from the given encoding to Unicode
 // before doing the check. The third parameter can be used to only check the first couple of bytes which speeds up the
@@ -43,5 +46,15 @@ void removeCommentsFromQuery(QString& query);
 
 // Split tab-separated clipboard data into rows, preserving quoted fields.
 std::vector<std::vector<QByteArray>> parseClipboard(QString clipboard);
+
+// Write all of the data to the device. Returns false if any of it could not be written. QIODevice::write() reports a partial write, which
+// is what happens when the disk is full, only by returning a number smaller than the size and not as an error of the device. Writing the
+// rest of the data then gives the error, so that the device can tell what went wrong.
+bool writeAll(QIODevice& device, const char* data, qint64 size);
+
+// Write the data which is still buffered in the stream to its device. Returns false if this or any earlier write to the stream failed.
+// Without flushing the stream, errors in writing the last part of the data would only show up when the device is closed, after the
+// status of the stream was last checked.
+bool flushStream(QTextStream& stream);
 
 #endif
