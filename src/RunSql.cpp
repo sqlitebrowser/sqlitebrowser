@@ -321,9 +321,33 @@ void RunSql::stopExecution()
     queries_left_to_execute.clear();
 }
 
-RunSql::StatementType RunSql::getQueryType(const QString& query)
+RunSql::StatementType RunSql::getQueryType(const QString& query_with_comments)
 {
     // Helper function for getting the type of a given query
+
+    // The text of a statement as handed out by SQLite includes any comments in front of it. Skip them, otherwise
+    // something like "-- compact\nVACUUM;" isn't recognised as what it is.
+    int start = 0;
+    for(;;)
+    {
+        while(start < query_with_comments.length() && query_with_comments.at(start).isSpace())
+            start++;
+
+        if(query_with_comments.mid(start, 2) == QLatin1String("--"))
+        {
+            start = query_with_comments.indexOf('\n', start);
+            if(start == -1)
+                return OtherStatement;
+        } else if(query_with_comments.mid(start, 2) == QLatin1String("/*")) {
+            start = query_with_comments.indexOf(QLatin1String("*/"), start + 2);
+            if(start == -1)
+                return OtherStatement;
+            start += 2;
+        } else {
+            break;
+        }
+    }
+    const QString query = query_with_comments.mid(start);
 
     if(query.startsWith("SELECT", Qt::CaseInsensitive)) return SelectStatement;
     if(query.startsWith("ALTER", Qt::CaseInsensitive)) return AlterStatement;
