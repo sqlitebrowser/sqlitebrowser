@@ -12,7 +12,8 @@
 SqlUiLexer* SqlTextEdit::sqlLexer = nullptr;
 
 SqlTextEdit::SqlTextEdit(QWidget* parent) :
-    ExtendedScintilla(parent)
+    ExtendedScintilla(parent),
+    commentOnMarginClickApplies(true)
 {
     // Create lexer object if not done yet
     if(sqlLexer == nullptr)
@@ -53,6 +54,12 @@ SqlTextEdit::SqlTextEdit(QWidget* parent) :
     QShortcut* shortcutToggleComment = new QShortcut(QKeySequence(tr("Ctrl+/")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutToggleComment, &QShortcut::activated, this, &SqlTextEdit::toggleBlockComment);
 
+    // Margin 0 is the one with the line numbers. It only emits this signal when it is sensitive to clicks, see updateMarginSensitivity.
+    connect(this, &SqlTextEdit::marginClicked, this, [this](int margin, int line, Qt::KeyboardModifiers) {
+        if(margin == 0)
+            toggleLineComments(line, line);
+    });
+
     // Do rest of initialisation
     reloadSettings();
 }
@@ -71,6 +78,7 @@ void SqlTextEdit::reloadSettings()
     }
     // Set wrap lines
     setWrapMode(static_cast<QsciScintilla::WrapMode>(Settings::getValue("editor", "wrap_lines").toInt()));
+    updateMarginSensitivity();
 
     ExtendedScintilla::reloadSettings();
 
@@ -100,6 +108,18 @@ void SqlTextEdit::reloadSettings()
     setupSyntaxHighlightingFormat(sqlLexer, "identifier", QsciLexerSQL::QuotedIdentifier);
 }
 
+void SqlTextEdit::setReadOnly(bool ro)
+{
+    ExtendedScintilla::setReadOnly(ro);
+    updateMarginSensitivity();
+}
+
+void SqlTextEdit::updateMarginSensitivity()
+{
+    // A click on a line number selects that line. When asked for, comment or uncomment the line instead. A sensitive margin
+    // takes over all the clicks on it, so only do this if there is something to comment. It is off by default.
+    setMarginSensitivity(0, commentOnMarginClickApplies && !isReadOnly() && Settings::getValue("editor", "toggle_comment_on_margin_click").toBool());
+}
 
 void SqlTextEdit::toggleBlockComment()
 {
@@ -121,12 +141,22 @@ void SqlTextEdit::toggleBlockComment()
 
     getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
 
-    bool uncomment = text(lineFrom).contains(QRegularExpression("^[ \t]*--"));
-
     // If the selection ends before the first character of a line, don't
     // take this line into account for un/commenting.
     if (indexTo==0)
         lineTo--;
+
+    toggleLineComments(lineFrom, lineTo);
+}
+
+void SqlTextEdit::toggleLineComments(int lineFrom, int lineTo)
+{
+    lineFrom = qMax(lineFrom, 0);
+    lineTo = qMin(lineTo, lines() - 1);
+    if (lineFrom > lineTo)
+        return;
+
+    bool uncomment = text(lineFrom).contains(QRegularExpression("^[ \t]*--"));
 
     beginUndoAction();
 
@@ -141,7 +171,7 @@ void SqlTextEdit::toggleBlockComment()
         else
             lineText.replace(QRegularExpression("^"), "-- ");
 
-        indexTo = text(line).length();
+        int indexTo = text(line).length();
         if (lineText.endsWith("\r\n"))
             indexTo--;
 

@@ -78,6 +78,17 @@ ExtendedScintilla::ExtendedScintilla(QWidget* parent) :
     QShortcut* shortcutPrint = new QShortcut(QKeySequence(tr("Ctrl+P")), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(shortcutPrint, &QShortcut::activated, this, &ExtendedScintilla::openPrintDialog);
 
+    // QScintilla only binds Ctrl++ and Ctrl+- to zoom. On keyboards where the plus sign needs the Shift key (Ctrl+Shift+= on
+    // a US layout, Ctrl+Shift+; on a Japanese one) the Shift modifier is sent too, so that binding never matches and there
+    // was no way to zoom in. Add the usual alternatives as well as a way back to the normal size. Ctrl+0 would be the
+    // obvious key for the latter but it is already used by the main window to reset the window layout.
+    QShortcut* shortcutZoomInShift = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Plus), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutZoomInShift, &QShortcut::activated, this, [this]() { zoomIn(); });
+    QShortcut* shortcutZoomInEqual = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutZoomInEqual, &QShortcut::activated, this, [this]() { zoomIn(); });
+    QShortcut* shortcutZoomReset = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_0), this, nullptr, nullptr, Qt::WidgetShortcut);
+    connect(shortcutZoomReset, &QShortcut::activated, this, [this]() { zoomTo(0); });
+
     // Prepare for adding the find/replace option to the QScintilla context menu
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &ExtendedScintilla::customContextMenuRequested, this, &ExtendedScintilla::showContextMenu);

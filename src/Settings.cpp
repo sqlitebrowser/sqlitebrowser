@@ -410,6 +410,10 @@ QVariant Settings::getDefaultValue(const std::string& group, const std::string& 
     if(group == "editor" && name == "horizontal_tiling")
         return false;
 
+    // editor/toggle_comment_on_margin_click?
+    if(group == "editor" && name == "toggle_comment_on_margin_click")
+        return false;
+
     // editor/splitter1_sizes?
     if(group == "editor" && name == "splitter1_sizes")
         return QVariant();
