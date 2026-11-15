@@ -1529,6 +1529,15 @@ std::string DBBrowserDB::emptyInsertStmt(const std::string& schemaName, const sq
                     vals.push_back("NULL");
                 }
             }
+        } else if(pk.size() > 1 && !pk_value.isNull() && contains(pk, f.name())) {
+            // Composite primary key of a table without rowid: the given value goes into the last key column and all other key columns get a
+            // neutral value. Because the last column is set to a value which does not exist yet, the combination is always unique.
+            fields.push_back(f.name());
+
+            if(pk.back().name() == f.name())
+                vals.push_back(f.isText()? "'" + pk_value.toStdString() + "'" : pk_value.toStdString());
+            else
+                vals.push_back(f.isInteger()? "0" : "''");
         } else if(f.notnull() && f.defaultValue().length() == 0) {
             fields.push_back(f.name());
 
@@ -1590,10 +1599,18 @@ QString DBBrowserDB::addRecord(const sqlb::ObjectIdentifier& tablename)
         qWarning() << "addRecord: " << lastErrorMessage;
         return QString();
     } else {
-        if(table->withoutRowidTable())
-            return pk_value;
-        else
+        if(!table->withoutRowidTable())
             return QString::number(sqlite3_last_insert_rowid(_db));
+
+        const sqlb::StringVector rowid_columns = table->rowidColumns();
+        if(rowid_columns.size() == 1)
+            return pk_value;
+
+        // For multiple rowid columns the identifier of a row is the composed value built by sqlb_make_single_value (see getRow). Only the
+        // last key column is known to be unique, so we look the new row up by that one.
+        const auto last = sqlb::findField(table, rowid_columns.back());
+        const std::string where = sqlb::escapeIdentifier(rowid_columns.back()) + "=" + (last->isText()? "'" + pk_value.toStdString() + "'" : pk_value.toStdString());
+        return QString::fromUtf8(querySingleValueFromDb("SELECT sqlb_make_single_value(" + sqlb::joinStringVector(sqlb::escapeIdentifier(rowid_columns), ",") + ") FROM " + tablename.toString() + " WHERE " + where));
     }
 }
 

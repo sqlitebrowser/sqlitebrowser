@@ -750,8 +750,26 @@ QModelIndex SqliteTableModel::dittoRecord(int old_row)
     int new_row = rowCount() - 1;
 
     const auto pk = m_table_of_query->primaryKeyColumns();
+
+    // Columns which are part of a UNIQUE constraint can't hold the same value twice, so just like the primary key they are not copied
+    sqlb::StringVector unique_columns;
+    for(const auto& it : m_table_of_query->indexConstraints())
+    {
+        if(!it.second->isPrimaryKey())
+        {
+            for(const auto& c : it.first)
+                unique_columns.push_back(c.name());
+        }
+    }
+    for(const auto& f : m_table_of_query->fields)
+    {
+        if(f.unique())
+            unique_columns.push_back(f.name());
+    }
+
     for (size_t col = 0; col < m_table_of_query->fields.size(); ++col) {
-        if(pk.empty() || !contains(pk, m_table_of_query->fields.at(col).name())) {
+        const std::string& name = m_table_of_query->fields.at(col).name();
+        if((pk.empty() || !contains(pk, name)) && !contains(unique_columns, name)) {
             if (!firstEditedColumn)
                 firstEditedColumn = col + 1;
 
