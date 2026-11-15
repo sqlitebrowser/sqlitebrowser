@@ -8,6 +8,7 @@ class SqlTextEdit;
 class SqliteTableModel;
 class DBBrowserDB;
 class ExtendedTableWidget;
+namespace ExplainTree { class Delegate; }
 
 class QTextEdit;
 
@@ -38,6 +39,10 @@ public:
     ExtendedTableWidget *getTableResult();
     QTextEdit* getStatusEdit();
 
+    // Shows the detail column of the result indented as a tree if the query is an EXPLAIN QUERY PLAN statement
+    // and in the normal way otherwise
+    void updateResultPresentation(const QString& query);
+
     bool inErrorState() const { return error_state; }
 
     // Save window state to settings
@@ -66,6 +71,7 @@ private:
     void find(QString expr, bool forward);
     DBBrowserDB& db;
     SqliteTableModel* model;
+    ExplainTree::Delegate* explainTreeDelegate;
     QString sqlFileName;
     QFileSystemWatcher fileSystemWatch;
     Ui::SqlExecutionArea* ui;
