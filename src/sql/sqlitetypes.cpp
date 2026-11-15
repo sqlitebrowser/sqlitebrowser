@@ -2,6 +2,8 @@
 #include "ObjectIdentifier.h"
 #include "parser/ParserDriver.h"
 
+#include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <iterator>
 #include <numeric>
@@ -533,6 +535,109 @@ void Table::removeKeyFromAllConstraints(const std::string& key)
         match_and_remove(m_foreignKeys, it);
 }
 
+// Replace all references to the column 'from' in the SQL expression 'expr' by the column name 'to'. String literals, comments and function
+// names are left alone. Quoted identifiers keep their quoting style, unquoted ones are replaced by a quoted identifier.
+static std::string renameColumnInExpression(const std::string& expr, const std::string& from, const std::string& to)
+{
+    const auto iequals = [](const std::string& a, const std::string& b) {
+        return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin(), [](char x, char y) {
+            return std::tolower(static_cast<unsigned char>(x)) == std::tolower(static_cast<unsigned char>(y));
+        });
+    };
+    const auto isIdentChar = [](char c) {
+        return std::isalnum(static_cast<unsigned char>(c)) || c == '_' || c == '$' || static_cast<unsigned char>(c) >= 0x80;
+    };
+    const auto duplicate = [](const std::string& str, char c) {
+        std::string result;
+        for(char ch : str)
+        {
+            result += ch;
+            if(ch == c)
+                result += c;
+        }
+        return result;
+    };
+
+    std::string result;
+    const size_t len = expr.size();
+    size_t i = 0;
+    while(i < len)
+    {
+        const char c = expr[i];
+        if(c == '\'' || c == '"' || c == '`')
+        {
+            // Quoted string or identifier. A doubled quote character is an escaped quote character
+            std::string content;
+            size_t j = i + 1;
+            while(j < len)
+            {
+                if(expr[j] == c)
+                {
+                    if(j + 1 < len && expr[j + 1] == c)
+                    {
+                        content += c;
+                        j += 2;
+                        continue;
+                    }
+                    break;
+                }
+                content += expr[j++];
+            }
+            const size_t end = j < len ? j + 1 : len;   // One past the closing quote
+            if(c != '\'' && iequals(content, from))
+                result += c + duplicate(to, c) + c;
+            else
+                result.append(expr, i, end - i);
+            i = end;
+        } else if(c == '[') {
+            // Identifier in square brackets
+            const size_t close = expr.find(']', i + 1);
+            const size_t end = close == std::string::npos ? len : close + 1;
+            if(close != std::string::npos && iequals(expr.substr(i + 1, close - i - 1), from))
+                result += '[' + to + ']';
+            else
+                result.append(expr, i, end - i);
+            i = end;
+        } else if(c == '-' && i + 1 < len && expr[i + 1] == '-') {
+            // Line comment
+            const size_t end = expr.find('\n', i);
+            const size_t stop = end == std::string::npos ? len : end;
+            result.append(expr, i, stop - i);
+            i = stop;
+        } else if(c == '/' && i + 1 < len && expr[i + 1] == '*') {
+            // Block comment
+            const size_t close = expr.find("*/", i + 2);
+            const size_t stop = close == std::string::npos ? len : close + 2;
+            result.append(expr, i, stop - i);
+            i = stop;
+        } else if(isIdentChar(c)) {
+            // Bare word or number
+            size_t j = i;
+            while(j < len && (isIdentChar(expr[j]) || (std::isdigit(static_cast<unsigned char>(c)) && expr[j] == '.')))
+                j++;
+            const std::string word = expr.substr(i, j - i);
+
+            // Skip function names, i.e. words followed by an opening parenthesis, and the prefix of blob literals
+            size_t next = j;
+            while(next < len && std::isspace(static_cast<unsigned char>(expr[next])))
+                next++;
+            const bool is_function = next < len && expr[next] == '(';
+            const bool is_blob = j < len && expr[j] == '\'' && word.size() == 1 && (word[0] == 'x' || word[0] == 'X');
+
+            if(!std::isdigit(static_cast<unsigned char>(c)) && !is_function && !is_blob && iequals(word, from))
+                result += escapeIdentifier(to);
+            else
+                result += word;
+            i = j;
+        } else {
+            result += c;
+            i++;
+        }
+    }
+
+    return result;
+}
+
 void Table::renameKeyInAllConstraints(const std::string& key, const std::string& to)
 {
     // Do nothing if the key hasn't really changed
@@ -570,6 +675,16 @@ void Table::renameKeyInAllConstraints(const std::string& key, const std::string&
 
     for(auto it=m_foreignKeys.begin();it!=m_foreignKeys.end();++it)
         match_and_rename(m_foreignKeys, it, [key, to](const std::string& c) { return c == key ? to : c; });
+
+    // The expressions of check constraints reference columns by name, too. For column constraints we need to set a new constraint object because
+    // the old one might be shared with other copies of this table.
+    for(auto& field : fields)
+    {
+        if(!field.check().empty())
+            field.setCheck(renameColumnInExpression(field.check(), key, to));
+    }
+    for(auto& constraint : m_checkConstraints)
+        constraint->setExpression(renameColumnInExpression(constraint->expression(), key, to));
 }
 
 std::shared_ptr<PrimaryKeyConstraint> Table::primaryKey() const
