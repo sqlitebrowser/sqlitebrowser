@@ -68,7 +68,7 @@ std::vector<QString> tokenize(const QString& value)
 
 void load(std::vector<QString>& filters, QXmlStreamReader& xml)
 {
-    while(xml.readNext() != QXmlStreamReader::EndElement && xml.name() != QT_UNICODE_LITERAL("global_filter"))
+    while(xml.readNext() != QXmlStreamReader::EndElement && !xml.atEnd() && xml.name() != QT_UNICODE_LITERAL("global_filter"))
     {
         if(xml.name() == QT_UNICODE_LITERAL("filter"))
         {

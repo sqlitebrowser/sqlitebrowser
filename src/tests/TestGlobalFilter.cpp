@@ -10,6 +10,10 @@
 #include <QtTest/QtTest>
 #include <sqlite3.h>
 
+#include <atomic>
+#include <memory>
+#include <thread>
+
 QTEST_APPLESS_MAIN(TestGlobalFilter)
 
 namespace
@@ -68,6 +72,52 @@ QStringList executeIssueQuery(const std::vector<QString>& filters)
     if(result != SQLITE_OK)
         qFatal("Issue fixture query failed: %s", qPrintable(errorMessage));
     return rows;
+}
+
+struct LoadOutcome
+{
+    bool returned;          // GlobalFilter::load() came back at all
+    bool hadError;          // the reader ended up in an error state
+    QStringList filters;
+};
+
+// Loads the global filter from a project like the project loader does. This happens on a worker thread which is only given
+// a few seconds to come back, so that a loop which never terminates fails the test instead of blocking it for good. All the
+// data the worker uses is shared with it, so it can't touch anything freed when it never comes back.
+LoadOutcome loadWithTimeout(const QByteArray& document)
+{
+    struct State
+    {
+        QByteArray document;
+        std::vector<QString> filters;
+        std::atomic<bool> hadError{false};
+        std::atomic<bool> returned{false};
+    };
+    const auto state = std::make_shared<State>();
+    state->document = document;
+
+    std::thread([state]() {
+        QXmlStreamReader xml(state->document);
+        while(!xml.atEnd())
+        {
+            xml.readNext();
+            if(xml.isStartElement() && xml.name() == QT_UNICODE_LITERAL("global_filter"))
+                GlobalFilter::load(state->filters, xml);
+        }
+        state->hadError = xml.hasError();
+        state->returned = true;
+    }).detach();
+
+    for(int i = 0; i < 100 && !state->returned; ++i)
+        QThread::msleep(30);
+
+    LoadOutcome outcome{state->returned, false, QStringList()};
+    if(outcome.returned)
+    {
+        outcome.hadError = state->hadError;
+        outcome.filters = asStringList(state->filters);
+    }
+    return outcome;
 }
 
 }
@@ -138,4 +188,50 @@ void TestGlobalFilter::projectRoundTripPreservesRegexTerm()
     QVERIFY(!reader.hasError());
     QCOMPARE(asStringList(restored), QStringList{"/New York/"});
     QCOMPARE(executeIssueQuery(restored), QStringList{"New York"});
+}
+
+void TestGlobalFilter::loadGivesUpOnBrokenDocuments_data()
+{
+    QTest::addColumn<QByteArray>("document");
+    QTest::addColumn<QStringList>("expected");
+    QTest::addColumn<bool>("broken");
+
+    // Project files which are cut off or otherwise broken while the global filter is read must not make the loader spin forever
+    QTest::newRow("complete")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=\"b\"/></global_filter></table>")
+        << QStringList{"a", "b"} << false;
+    QTest::newRow("cut off after a filter")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=\"b\"/>")
+        << QStringList{"a", "b"} << true;
+    QTest::newRow("cut off inside the global filter")
+        << QByteArray("<table><global_filter>")
+        << QStringList() << true;
+    QTest::newRow("cut off inside a filter")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=\"b")
+        << QStringList{"a"} << true;
+    QTest::newRow("mismatched end tag")
+        << QByteArray("<table><global_filter><filter value=\"a\"/></nope></table>")
+        << QStringList{"a"} << true;
+    QTest::newRow("unescaped ampersand")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=\"b & c\"/></global_filter></table>")
+        << QStringList{"a"} << true;
+    QTest::newRow("unquoted attribute")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=b/></global_filter></table>")
+        << QStringList{"a"} << true;
+    QTest::newRow("not closed attribute value")
+        << QByteArray("<table><global_filter><filter value=\"a\"/><filter value=\"b/></global_filter></table>")
+        << QStringList{"a"} << true;
+}
+
+void TestGlobalFilter::loadGivesUpOnBrokenDocuments()
+{
+    QFETCH(QByteArray, document);
+    QFETCH(QStringList, expected);
+    QFETCH(bool, broken);
+
+    const LoadOutcome outcome = loadWithTimeout(document);
+
+    QVERIFY2(outcome.returned, "GlobalFilter::load() did not come back, it loops over the broken document forever");
+    QCOMPARE(outcome.filters, expected);
+    QCOMPARE(outcome.hadError, broken);
 }

@@ -1,6 +1,9 @@
 #include <QDebug>
 #include <QRegularExpression>
 
+#include <algorithm>
+#include <limits>
+
 #include "RowLoader.h"
 #include "sqlite.h"
 
@@ -105,7 +108,12 @@ int RowLoader::countRows() const
         if(sqlite3_prepare_v2(pDb.get(), utf8Query, utf8Query.size(), &stmt, nullptr) == SQLITE_OK)
         {
             if(sqlite3_step(stmt) == SQLITE_ROW)
-                retval = sqlite3_column_int(stmt, 0);
+            {
+                // The row count is passed on as an int. Clamp it instead of reading it as an int because that would wrap
+                // around for tables with more rows than an int can hold, resulting in a negative or just plain wrong count.
+                const sqlite3_int64 count = sqlite3_column_int64(stmt, 0);
+                retval = static_cast<int>(std::min<sqlite3_int64>(count, std::numeric_limits<int>::max()));
+            }
             sqlite3_finalize(stmt);
         } else {
             qWarning() << "Count query failed: " << countQuery;
