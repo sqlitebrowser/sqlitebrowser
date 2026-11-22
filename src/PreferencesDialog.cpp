@@ -167,6 +167,7 @@ void PreferencesDialog::loadSettings()
     ui->checkErrorIndicators->setChecked(Settings::getValue("editor", "error_indicators").toBool());
     ui->checkHorizontalTiling->setChecked(Settings::getValue("editor", "horizontal_tiling").toBool());
     ui->checkCloseButtonOnTabs->setChecked(Settings::getValue("editor", "close_button_on_tabs").toBool());
+    ui->checkToggleCommentOnMarginClick->setChecked(Settings::getValue("editor", "toggle_comment_on_margin_click").toBool());
 
     ui->listExtensions->addItems(Settings::getValue("extensions", "list").toStringList());
     for (int i=0;i<ui->listBuiltinExtensions->count();++i)
@@ -244,6 +245,7 @@ void PreferencesDialog::saveSettings(bool accept)
     Settings::setValue("editor", "error_indicators", ui->checkErrorIndicators->isChecked());
     Settings::setValue("editor", "horizontal_tiling", ui->checkHorizontalTiling->isChecked());
     Settings::setValue("editor", "close_button_on_tabs", ui->checkCloseButtonOnTabs->isChecked());
+    Settings::setValue("editor", "toggle_comment_on_margin_click", ui->checkToggleCommentOnMarginClick->isChecked());
 
     QStringList extList;
     for(int i=0;i<ui->listExtensions->count();++i)
