@@ -31,10 +31,13 @@ if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS_RELWITHDEBINFO "_CONSOLE")
 
     target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc" PROPERTIES
+        OBJECT_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/iconwin.ico")
 elseif(MINGW)
     # resource compilation for MinGW
     add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o"
         COMMAND windres "-I${CMAKE_CURRENT_BINARY_DIR}" "-i${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc" -o "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o" VERBATIM
+        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/winapp.rc" "${CMAKE_CURRENT_BINARY_DIR}/version.h" "${CMAKE_CURRENT_SOURCE_DIR}/src/iconwin.ico"
     )
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-subsystem,windows")
     target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/sqlbicon.o")

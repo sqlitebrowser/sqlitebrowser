@@ -49,13 +49,19 @@ if (GIT_COMMIT_HASH STREQUAL "")
     set(GIT_COMMIT_HASH "Unknown")
 endif()
 
-add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
 if(NOT BUILD_STABLE_VERSION)
-    # BUILD_VERSION is the current date in YYYYMMDD format. It is only
-    # used by the nightly version to add the date of the build.
-    # Default defined in Version.h.in
-    string(TIMESTAMP BUILD_VERSION "%Y%m%d")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE BUILD_VERSION=${BUILD_VERSION})
+    # BUILD_VERSION is the current date in YYYYMMDD format, which winapp.rc adds to the file version strings of every
+    # build that is not a stable one, e.g. the nightly and the development builds. In UTC like the names of the nightly
+    # files, because the time zone of some build machines, e.g. the Windows Arm64 runner, is not UTC.
+    # The Windows CI passes the date of the whole run as -DBUILD_VERSION=YYYYMMDD instead, so that the exe has the same
+    # date as the nightly files, also when the build starts after midnight.
+    if(NOT BUILD_VERSION)
+        string(TIMESTAMP BUILD_VERSION "%Y%m%d" UTC)
+    endif()
+else()
+    # A stable build has no date, also when one is passed as -DBUILD_VERSION, e.g. by the Windows CI. The empty normal
+    # variable hides that cache variable from version.h.in.
+    set(BUILD_VERSION "")
 endif()
 
 include(config/platform.cmake)

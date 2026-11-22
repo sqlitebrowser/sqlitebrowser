@@ -9,6 +9,10 @@ on:
   schedule:
     - cron: "14 22 * * 6"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   analyze:
     name: Analyze
@@ -55,8 +59,8 @@ jobs:
         run: |
           mkdir build && cd build
           cmake -Dsqlcipher=1 -Wno-dev ..
-          make
-          sudo make install
+          make -j"$(nproc)"
+          sudo make install -j"$(nproc)"
 
       # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
       # If this step fails, then you should remove it and run the build manually (see below)

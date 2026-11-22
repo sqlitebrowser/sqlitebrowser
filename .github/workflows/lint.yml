@@ -1,0 +1,68 @@
+name: Lint
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/actionlint.yaml"
+      - ".github/workflows/**"
+      - "**.sh"
+  pull_request:
+    paths:
+      - ".github/actionlint.yaml"
+      - ".github/workflows/**"
+      - "**.sh"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: actionlint and shellcheck
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      ACTIONLINT_VERSION: "1.7.12"
+      ACTIONLINT_SHA256: "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+      SHELLCHECK_VERSION: "0.11.0"
+      SHELLCHECK_SHA256: "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install actionlint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: ${{ runner.temp }}
+        run: |
+          ARCHIVE="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          gh release download "v$ACTIONLINT_VERSION" --repo rhysd/actionlint --pattern "$ARCHIVE"
+          echo "$ACTIONLINT_SHA256  $ARCHIVE" | sha256sum --check
+          mkdir actionlint && tar -xzf "$ARCHIVE" -C actionlint actionlint
+          echo "$RUNNER_TEMP/actionlint" >> "$GITHUB_PATH"
+
+      - name: Install shellcheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: ${{ runner.temp }}
+        run: |
+          ARCHIVE="shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz"
+          gh release download "v$SHELLCHECK_VERSION" --repo koalaman/shellcheck --pattern "$ARCHIVE"
+          echo "$SHELLCHECK_SHA256  $ARCHIVE" | sha256sum --check
+          mkdir shellcheck && tar -xJf "$ARCHIVE" -C shellcheck --strip-components=1 "shellcheck-v$SHELLCHECK_VERSION/shellcheck"
+          echo "$RUNNER_TEMP/shellcheck" >> "$GITHUB_PATH"
+
+      - name: Check the workflows
+        run: |
+          # The format is a Go template, whose $err is not meant to be expanded by the shell.
+          # shellcheck disable=SC2016
+          actionlint -format '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}\n{{end}}'
+
+      - if: ${{ !cancelled() }}
+        name: Check the shell scripts
+        run: git ls-files -z '*.sh' | xargs -0 --no-run-if-empty shellcheck --format=gcc

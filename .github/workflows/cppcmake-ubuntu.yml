@@ -10,6 +10,9 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+      NIGHTLY_DATE:
+        default: ""
+        type: string
       CONSOLIDATE_DEPENDENCY_SUMMARY:
         default: false
         type: boolean
@@ -19,6 +22,7 @@ jobs:
   build:
     name: ${{ matrix.os }} (${{ matrix.bundle }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     permissions:
       contents: read
     strategy:
@@ -27,23 +31,26 @@ jobs:
         bundle: [SQLCipher, SQLite]
         os: [ubuntu-22.04, ubuntu-22.04-arm]
     steps:
+      - if: inputs.NIGHTLY && inputs.NIGHTLY_DATE == ''
+        run: exit 1
+
       - name: Checkout
         uses: actions/checkout@v7
 
       - name: Install and cache dependencies
-        uses: awalsh128/cache-apt-pkgs-action@v1.6.3
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
         with:
-          packages: libfuse2 libicu-dev libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 ninja-build qttools5-dev
+          packages: ccache libfuse2 libicu-dev libqcustomplot-dev libqscintilla2-qt5-dev libqt5svg5 qttools5-dev
           version: ${{ matrix.os }}
 
       - if: matrix.bundle == 'SQLCipher'
         name: Build SQLCipher
         working-directory: ${{ runner.temp }}
         run: |
-          git clone https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout $(git describe --tags --abbrev=0)
+          git clone --filter=blob:none https://github.com/sqlcipher/sqlcipher && cd sqlcipher && git checkout "$(git describe --tags --abbrev=0)"
           LDFLAGS="-lcrypto -Wl,-soname,libsqlcipher.so.0" ./configure --prefix=./prefix --with-tempstore=yes --enable-load-extension --disable-tcl --with-icu-config=pkg-config CFLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_SNAPSHOT=1 -DSQLITE_ENABLE_STAT4 -DSQLITE_HAS_CODEC -DSQLITE_SOUNDEX"
-          make -j2 && sudo make install -j2
-          cp ${GITHUB_WORKSPACE}/tools/linux/sqlcipher_rename.sh .
+          make -j"$(nproc)" && sudo make install
+          cp "$GITHUB_WORKSPACE/tools/linux/sqlcipher_rename.sh" .
           chmod +x sqlcipher_rename.sh && sudo ./sqlcipher_rename.sh
 
       - if: matrix.bundle == 'SQLite'
@@ -51,7 +58,7 @@ jobs:
         run: |
           TARBALL=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 3)
           SHA3=$(curl -s https://sqlite.org/download.html | awk '/<!--/,/-->/ {print}' | grep 'sqlite-autoconf' | cut -d ',' -f 5)
-          curl -LsS -o sqlite.tar.gz https://sqlite.org/${TARBALL}
+          curl -LsS -o sqlite.tar.gz "https://sqlite.org/$TARBALL"
           VERIFY=$(openssl dgst -sha3-256 sqlite.tar.gz | cut -d ' ' -f 2)
           if [ "$SHA3" != "$VERIFY" ]; then
             echo "::error::SQLite tarball checksum mismatch."
@@ -60,7 +67,17 @@ jobs:
           tar -xzf sqlite.tar.gz && cd sqlite-autoconf-*
 
           CPPFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_MAX_VARIABLE_NUMBER=250000 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_MATH_FUNCTIONS=1 -DSQLITE_MAX_ATTACHED=125 -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1 -DSQLITE_ENABLE_SNAPSHOT=1" ./configure --disable-shared --with-icu-config=pkg-config
-          make -j2 && sudo make install -j2
+          make -j"$(nproc)" && sudo make install
+
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@f09c25b45002a07be2955cbe52e8cee55643f89d # v1.2.24
+        with:
+          evict-old-files: job
+          install: "no"
+          job-summary: ""
+          key: ${{ matrix.os }}-${{ matrix.bundle }}
+          max-size: 500M
+          save: ${{ github.event_name != 'pull_request' }}
 
       - name: Configure build
         run: |
@@ -72,7 +89,8 @@ jobs:
           cmake -G Ninja \
                 -DCMAKE_CXX_STANDARD_LIBRARIES="${EXTRA_LIBS}" \
                 -DCMAKE_BUILD_TYPE=Release \
-                -DCMAKE_PREFIX_PATH=$RUNNER_TEMP/sqlcipher/prefix \
+                -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+                -DCMAKE_PREFIX_PATH="$RUNNER_TEMP/sqlcipher/prefix" \
                 -DCMAKE_INSTALL_PREFIX:PATH=../appdir/usr \
                 -DENABLE_TESTING=ON \
                 -DFORCE_INTERNAL_QSCINTILLA=ON \
@@ -87,24 +105,27 @@ jobs:
         run: ninja test
 
       - name: Build AppImage
+        env:
+          NIGHTLY_DATE: ${{ inputs.NIGHTLY_DATE }}
         run: |
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/linuxdeploy-$(uname -m).AppImage"
           wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-$(uname -m).AppImage"
           chmod a+x "linuxdeploy-$(uname -m).AppImage" "linuxdeploy-plugin-qt-$(uname -m).AppImage"
           if [ "${{ inputs.NIGHTLY }}" = "true" ]; then
-            export VERSION=$(date +%Y%m%d)
+            VERSION=$NIGHTLY_DATE
           else
-            export VERSION=$(printf "dev-`git -C . rev-parse --short HEAD`")
+            VERSION="dev-$(git rev-parse --short HEAD)"
           fi
+          export VERSION
+          QT_TRANSLATIONS=$(qmake -query QT_INSTALL_TRANSLATIONS)
+          python3 tools/collect_qt_translations.py --qt-translations "$QT_TRANSLATIONS" --copy-to appdir/usr/translations
           LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib:$RUNNER_TEMP/sqlcipher/prefix/lib" "./linuxdeploy-$(uname -m).AppImage" --appdir=appdir --desktop-file=appdir/usr/share/applications/sqlitebrowser.desktop --plugin qt --output appimage
 
       - name: Rename a file
         run: |
           for i in DB_Browser_for_SQLite*; do mv "$i" "${i//_/.}"; done
           if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
-            export FILE=$(ls DB.Browser.for.SQLite*.AppImage)
-            export FILE=${FILE/SQLite/SQLCipher}
-            mv -v DB.Browser.for.SQLite*.AppImage $FILE
+            for FILE in DB.Browser.for.SQLite*.AppImage; do mv -v "$FILE" "${FILE/SQLite/SQLCipher}"; done
           fi
 
       - if: github.event_name != 'pull_request'
@@ -113,65 +134,42 @@ jobs:
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.AppImage
-          retention-days: 1
+          retention-days: 3
 
-      - name: Summary
+      - if: ${{ !cancelled() }}
+        name: Summary
         run: |
-          QT_VERSION=$(qmake --version | awk '/Using Qt version/ {print $4}')
+          QT_VERSION=$(qmake --version 2> /dev/null | awk '/Using Qt version/ {print $4}') || true
           if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
-              OPENSSL_VERSION=$(openssl version | awk '{print $2}')
-              SQLCIPHER_VERSION=$($RUNNER_TEMP/sqlcipher/prefix/bin/sqlcipher ":memory:" "PRAGMA cipher_version;" | awk '{print $1}')
+              OPENSSL_VERSION=$(openssl version 2> /dev/null | awk '{print $2}') || true
+              SQLCIPHER_VERSION=$("$RUNNER_TEMP/sqlcipher/prefix/bin/sqlcipher" ":memory:" "PRAGMA cipher_version;" 2> /dev/null | awk '{print $1}') || true
               SQLITE_VERSION="Not applicable"
           else
               OPENSSL_VERSION="Not applicable"
               SQLCIPHER_VERSION="Not applicable"
-              SQLITE_VERSION=$(/usr/local/bin/sqlite3 --version | awk '{print $1}')
+              SQLITE_VERSION=$(/usr/local/bin/sqlite3 --version 2> /dev/null | awk '{print $1}') || true
           fi
 
           mkdir -p dependency-summary
-          SUMMARY_ROW="| Build (Ubuntu) | ${{ matrix.os }} / ${{ matrix.bundle }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
+          SUMMARY_ROW="| Build (Ubuntu) | ${{ matrix.os }} / ${{ matrix.bundle }} | ${OPENSSL_VERSION:-N/A} | ${QT_VERSION:-N/A} | ${SQLCIPHER_VERSION:-N/A} | ${SQLITE_VERSION:-N/A} |"
           echo "$SUMMARY_ROW" > "dependency-summary/dependencies-ubuntu-${{ matrix.os }}-${{ matrix.bundle }}.md"
 
-      - name: Upload dependency summary
+      - if: ${{ !cancelled() }}
+        name: Upload dependency summary
         uses: actions/upload-artifact@v7
         with:
           name: dependency-summary-ubuntu-${{ matrix.os }}-${{ matrix.bundle }}
           path: dependency-summary/*.md
-          retention-days: 1
+          retention-days: 3
 
   summarize-dependencies:
     if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
     needs: build
     name: Summarize Dependencies
-    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
-    steps:
-      - name: Download dependency summaries
-        uses: actions/download-artifact@v8
-        continue-on-error: true
-        with:
-          pattern: dependency-summary-*
-          path: dependency-summary
-          merge-multiple: true
-
-      - name: Summary
-        run: |
-          {
-            echo "## Dependencies used"
-            echo ""
-            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
-            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
-            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
-              cat "$file" >> "$GITHUB_STEP_SUMMARY"
-            done
-          else
-            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
-          fi
+    uses: ./.github/workflows/summarize-dependencies.yml
 
   release:
     if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Ubuntu)'

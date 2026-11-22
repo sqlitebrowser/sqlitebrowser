@@ -2,11 +2,16 @@ name: Release Artifacts
 
 on:
   workflow_call:
+    inputs:
+      NIGHTLY_DATE:
+        default: ""
+        type: string
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     permissions:
       actions: read
       contents: write
@@ -15,11 +20,14 @@ jobs:
       cancel-in-progress: false
     env:
       GH_TOKEN: ${{ github.token }}
+      WORKFLOW_REF: ${{ github.workflow_ref }}
     steps:
       - name: Set release tag
         id: release-tag
+        env:
+          NIGHTLY_DATE: ${{ inputs.NIGHTLY_DATE }}
         run: |
-          case "${{ github.workflow_ref }}" in
+          case "$WORKFLOW_REF" in
             "$GITHUB_REPOSITORY/.github/workflows/cppcmake.yml@"*)
               if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.NIGHTLY }}" = "true" ]; then
                 TAG_NAME="nightly"
@@ -36,20 +44,18 @@ jobs:
             "$GITHUB_REPOSITORY/.github/workflows/cppcmake-windows.yml@"*)
               TAG_NAME="${GITHUB_SHA}-windows"
               ;;
-            "$GITHUB_REPOSITORY/.github/workflows/cppcmake-windows_on_arm.yml@"*)
-              TAG_NAME="${GITHUB_SHA}-windows-on-arm"
-              ;;
             *)
-              echo "::error::Unsupported release caller workflow: ${{ github.workflow_ref }}"
+              echo "::error::Unsupported release caller workflow: $WORKFLOW_REF"
               exit 1
               ;;
           esac
 
           echo "tag_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          echo "draft_tag_name=$TAG_NAME-draft-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           if [ "$TAG_NAME" = "continuous" ]; then
             echo "release_name=Continuous (${GITHUB_SHA:0:7})" >> "$GITHUB_OUTPUT"
           elif [ "$TAG_NAME" = "nightly" ]; then
-            echo "release_name=Nightly ($(date -u +'%Y%m%d'))" >> "$GITHUB_OUTPUT"
+            echo "release_name=Nightly (${NIGHTLY_DATE:?The nightly release needs the NIGHTLY_DATE input.})" >> "$GITHUB_OUTPUT"
           else
             echo "release_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
           fi
@@ -68,7 +74,16 @@ jobs:
         run: find target -depth -name '*unsigned*' -exec rm -rfv {} +
 
       - name: Flatten artifacts
-        run: find target -type f -exec mv -v {} release \;
+        run: |
+          DUPLICATES=$(find target -type f -exec basename {} \; | sort | uniq -d)
+          if [ -n "$DUPLICATES" ]; then
+            while IFS= read -r NAME; do
+              echo "::error::More than one artifact contains '$NAME':"
+              find target -type f -name "$NAME"
+            done <<< "$DUPLICATES"
+            exit 1
+          fi
+          find target -type f -exec mv -v {} release \;
 
       - name: Check release files
         run: |
@@ -79,8 +94,10 @@ jobs:
 
       - name: Check if release is still current
         id: publish-guard
+        env:
+          TAG_NAME: ${{ steps.release-tag.outputs.tag_name }}
         run: |
-          case "${{ github.workflow_ref }}" in
+          case "$WORKFLOW_REF" in
             "$GITHUB_REPOSITORY/.github/workflows/cppcmake.yml@"*)
               ;;
             *)
@@ -89,11 +106,36 @@ jobs:
               ;;
           esac
 
-          REMOTE_SHA=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${{ github.ref_name }}" | awk '{print $1}')
+          if [ "$GITHUB_REF" != "refs/heads/master" ]; then
+            echo "::notice::Skipping release because the shared \`$TAG_NAME\` release is only published from master, not from $GITHUB_REF."
+            echo "releasable=false" >> "$GITHUB_OUTPUT"
+            echo "reason=The shared \`$TAG_NAME\` release is only published from master, but this run built \`$GITHUB_REF\`." >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$TAG_NAME" = "nightly" ]; then
+            PUBLISHED_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/nightly" --jq '.object.sha' 2> /dev/null) || PUBLISHED_SHA=""
+            if [ -n "$PUBLISHED_SHA" ]; then
+              STATUS=$(gh api "repos/$GITHUB_REPOSITORY/compare/${GITHUB_SHA}...${PUBLISHED_SHA}" --jq '.status' 2> /dev/null) || STATUS=""
+              if [ "$STATUS" = "ahead" ]; then
+                echo "::notice::Skipping release for ${GITHUB_SHA} because the nightly release already has a newer commit (${PUBLISHED_SHA})."
+                echo "releasable=false" >> "$GITHUB_OUTPUT"
+                echo "reason=The \`nightly\` release already has a newer commit (\`${PUBLISHED_SHA}\`), so it was left untouched." >> "$GITHUB_OUTPUT"
+                exit 0
+              elif [ -z "$STATUS" ]; then
+                echo "::warning::Unable to compare ${GITHUB_SHA} with the commit of the nightly release (${PUBLISHED_SHA}). Publishing anyway."
+              fi
+            fi
+            echo "releasable=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          REMOTE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/${GITHUB_REF#refs/}" --jq '.object.sha' 2> /dev/null) || REMOTE_SHA=""
 
           if [ -z "$REMOTE_SHA" ]; then
-            echo "::warning::Unable to resolve the latest commit for refs/heads/${{ github.ref_name }} right before publishing. Skipping release."
+            echo "::warning::Unable to resolve the latest commit for $GITHUB_REF right before publishing. Skipping release."
             echo "releasable=false" >> "$GITHUB_OUTPUT"
+            echo "reason=The latest commit of \`$GITHUB_REF\` could not be resolved right before publishing, so the shared \`$TAG_NAME\` release was left untouched." >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -102,25 +144,115 @@ jobs:
             exit 0
           fi
 
-          echo "::notice::Skipping release for ${GITHUB_SHA} because a newer commit exists on refs/heads/${{ github.ref_name }} (${REMOTE_SHA}) right before publishing."
+          echo "::notice::Skipping release for ${GITHUB_SHA} because a newer commit exists on $GITHUB_REF (${REMOTE_SHA}) right before publishing."
           echo "releasable=false" >> "$GITHUB_OUTPUT"
+          echo "reason=This run finished building, but a newer commit appeared while preparing artifacts, so the shared \`$TAG_NAME\` release was left untouched." >> "$GITHUB_OUTPUT"
 
       - if: steps.publish-guard.outputs.releasable != 'true'
         name: Summarize skipped publish
+        env:
+          REASON: ${{ steps.publish-guard.outputs.reason }}
         run: |
           echo "## Publish skipped" >> "$GITHUB_STEP_SUMMARY"
-          echo "This run finished building, but a newer commit appeared while preparing artifacts, so the shared \`${{ steps.release-tag.outputs.tag_name }}\` release was left untouched." >> "$GITHUB_STEP_SUMMARY"
+          echo "$REASON" >> "$GITHUB_STEP_SUMMARY"
 
       - if: steps.publish-guard.outputs.releasable == 'true'
-        name: Delete existing tag and release
-        run: gh release delete ${{ steps.release-tag.outputs.tag_name }} --cleanup-tag --yes --repo $GITHUB_REPOSITORY
-        continue-on-error: true
-
-      - if: steps.publish-guard.outputs.releasable == 'true'
-        name: Release
-        uses: softprops/action-gh-release@v3
+        name: Upload to a draft release
+        id: draft
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
+          draft: true
+          fail_on_unmatched_files: true
           files: release/*
           name: ${{ steps.release-tag.outputs.release_name }}
           prerelease: true
-          tag_name: ${{ steps.release-tag.outputs.tag_name }}
+          tag_name: ${{ steps.release-tag.outputs.draft_tag_name }}
+          target_commitish: ${{ github.sha }}
+
+      - if: steps.publish-guard.outputs.releasable == 'true'
+        name: Replace the release
+        env:
+          RELEASE_ID: ${{ steps.draft.outputs.id }}
+          TAG_NAME: ${{ steps.release-tag.outputs.tag_name }}
+        run: |
+          if ! LOOKUP_ERROR=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG_NAME" --silent 2>&1); then
+            if [[ "$LOOKUP_ERROR" != *"(HTTP 404)"* ]]; then
+              echo "::error::Could not check whether the \`$TAG_NAME\` release exists: $LOOKUP_ERROR"
+              exit 1
+            fi
+          else
+            gh release delete "$TAG_NAME" --cleanup-tag --yes --repo "$GITHUB_REPOSITORY"
+          fi
+
+          if REF_ERROR=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG_NAME" --silent 2>&1); then
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$TAG_NAME" --silent
+          elif [[ "$REF_ERROR" != *"(HTTP 404)"* ]]; then
+            echo "::error::Could not check whether the \`$TAG_NAME\` tag exists: $REF_ERROR"
+            exit 1
+          fi
+
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+            -f tag_name="$TAG_NAME" \
+            -f target_commitish="$GITHUB_SHA" \
+            -F draft=false \
+            -F prerelease=true \
+            --silent
+
+      - if: steps.publish-guard.outputs.releasable == 'true'
+        name: Remove stale draft releases
+        continue-on-error: true
+        env:
+          TAG_NAME: ${{ steps.release-tag.outputs.tag_name }}
+        run: |
+          STALE_IDS=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases" \
+            --jq '.[] | select(.draft and (.tag_name | startswith(env.TAG_NAME + "-draft-"))) | .id')
+          for RELEASE_ID in $STALE_IDS; do
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" --silent
+            echo "Removed the stale draft release $RELEASE_ID."
+          done
+
+      - if: (failure() || cancelled()) && steps.release-tag.outputs.draft_tag_name != ''
+        name: Remove or recover the draft release
+        env:
+          DRAFT_OUTCOME: ${{ steps.draft.outcome }}
+          DRAFT_TAG_NAME: ${{ steps.release-tag.outputs.draft_tag_name }}
+          TAG_NAME: ${{ steps.release-tag.outputs.tag_name }}
+        run: |
+          RELEASES=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases" \
+            --jq '.[] | [.id, (.draft | tostring), .tag_name] | @tsv')
+          DRAFT_IDS=$(awk -F '\t' -v tag="$DRAFT_TAG_NAME" '$2 == "true" && $3 == tag { print $1 }' <<< "$RELEASES")
+          PUBLISHED_IDS=$(awk -F '\t' -v tag="$TAG_NAME" '$2 == "false" && $3 == tag { print $1 }' <<< "$RELEASES")
+
+          if [ -z "$DRAFT_IDS" ]; then
+            exit 0
+          fi
+
+          if [ -z "$PUBLISHED_IDS" ] && [ "$DRAFT_OUTCOME" = "success" ]; then
+            RELEASE_ID=$(head -n 1 <<< "$DRAFT_IDS")
+            echo "::warning::No \`$TAG_NAME\` release exists, but the draft release $RELEASE_ID was completely uploaded. Publishing it."
+
+            if REF_ERROR=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG_NAME" --silent 2>&1); then
+              gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$TAG_NAME" --silent
+            elif [[ "$REF_ERROR" != *"(HTTP 404)"* ]]; then
+              echo "::error::Could not check whether the \`$TAG_NAME\` tag exists: $REF_ERROR. The draft release $RELEASE_ID is kept, so that it can be published by hand."
+              exit 1
+            fi
+            if ! gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+              -f tag_name="$TAG_NAME" \
+              -f target_commitish="$GITHUB_SHA" \
+              -F draft=false \
+              -F prerelease=true \
+              --silent; then
+              echo "::error::Could not publish the draft release $RELEASE_ID. It is kept, so that it can be published by hand."
+              exit 1
+            fi
+
+            echo "## Recovered the release" >> "$GITHUB_STEP_SUMMARY"
+            echo "Replacing the \`$TAG_NAME\` release failed after the previous one was deleted, so the draft release $RELEASE_ID was published instead." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          for RELEASE_ID in $DRAFT_IDS; do
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" --silent
+            echo "Removed the draft release $RELEASE_ID ($DRAFT_TAG_NAME)."
+          done

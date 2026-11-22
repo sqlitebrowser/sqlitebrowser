@@ -23,6 +23,10 @@ run-name: >-
       || format('{0} on {1}', github.workflow, github.ref_name)
   }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'schedule' || inputs.NIGHTLY == true) && 'nightly' || 'continuous' }}
+  cancel-in-progress: ${{ github.event_name != 'schedule' && inputs.NIGHTLY != true }}
+
 jobs:
   check-skippable:
     name: Check Skippable
@@ -31,7 +35,12 @@ jobs:
       contents: read
     outputs:
       skip: ${{ steps.set-skippable.outputs.skippable || 'false' }}
+      nightly-date: ${{ steps.nightly-date.outputs.date }}
     steps:
+      - name: Set nightly date
+        id: nightly-date
+        run: echo "date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v7
 
       - name: Check and set skippable
@@ -43,10 +52,10 @@ jobs:
             LAST_COMMIT_HASH=$(git rev-list -n 1 nightly)
             if [ "$(git rev-parse HEAD)" = "$LAST_COMMIT_HASH" ]; then
               echo "::notice::No new commits since last nightly build, skipping this build."
-              echo "skippable=true" >> $GITHUB_OUTPUT
+              echo "skippable=true" >> "$GITHUB_OUTPUT"
             fi
           else
-            echo "skippable=false" >> $GITHUB_OUTPUT
+            echo "skippable=false" >> "$GITHUB_OUTPUT"
           fi
 
   build-macos:
@@ -56,9 +65,17 @@ jobs:
       actions: read
       contents: write
     uses: ./.github/workflows/cppcmake-macos.yml
-    secrets: inherit
+    secrets:
+      MACOS_CODESIGN_APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
+      MACOS_CODESIGN_APPLE_PW: ${{ secrets.MACOS_CODESIGN_APPLE_PW }}
+      MACOS_CODESIGN_DEV_ID: ${{ secrets.MACOS_CODESIGN_DEV_ID }}
+      MACOS_CODESIGN_KEYCHAIN_PW: ${{ secrets.MACOS_CODESIGN_KEYCHAIN_PW }}
+      MACOS_CODESIGN_P12: ${{ secrets.MACOS_CODESIGN_P12 }}
+      MACOS_CODESIGN_P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
+      MACOS_CODESIGN_TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      NIGHTLY_DATE: ${{ needs.check-skippable.outputs.nightly-date }}
       CONSOLIDATE_DEPENDENCY_SUMMARY: true
 
   build-ubuntu:
@@ -70,6 +87,7 @@ jobs:
     uses: ./.github/workflows/cppcmake-ubuntu.yml
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      NIGHTLY_DATE: ${{ needs.check-skippable.outputs.nightly-date }}
       CONSOLIDATE_DEPENDENCY_SUMMARY: true
 
   build-windows:
@@ -79,69 +97,30 @@ jobs:
       actions: read
       contents: write
     uses: ./.github/workflows/cppcmake-windows.yml
-    secrets: inherit
+    secrets:
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+      SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
     with:
       NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
-      CONSOLIDATE_DEPENDENCY_SUMMARY: true
-
-  build-windows_on_arm:
-    needs: check-skippable
-    if: needs.check-skippable.outputs.skip != 'true'
-    permissions:
-      actions: read
-      contents: write
-    uses: ./.github/workflows/cppcmake-windows_on_arm.yml
-    secrets: inherit
-    with:
-      NIGHTLY: ${{ github.event_name == 'schedule' || inputs.NIGHTLY == true }}
+      NIGHTLY_DATE: ${{ needs.check-skippable.outputs.nightly-date }}
       CONSOLIDATE_DEPENDENCY_SUMMARY: true
 
   summarize-dependencies:
-    needs:
-      [
-        check-skippable,
-        build-macos,
-        build-ubuntu,
-        build-windows,
-        build-windows_on_arm,
-      ]
+    needs: [check-skippable, build-macos, build-ubuntu, build-windows]
     if: always() && needs.check-skippable.outputs.skip != 'true' && !cancelled()
     name: Summarize Dependencies
-    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
-    steps:
-      - name: Download dependency summaries
-        uses: actions/download-artifact@v8
-        continue-on-error: true
-        with:
-          pattern: dependency-summary-*
-          path: dependency-summary
-          merge-multiple: true
-
-      - name: Summary
-        run: |
-          {
-            echo "## Dependencies used"
-            echo ""
-            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
-            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
-            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
-              cat "$file" >> "$GITHUB_STEP_SUMMARY"
-            done
-          else
-            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
-          fi
+    uses: ./.github/workflows/summarize-dependencies.yml
 
   release:
     if: github.event_name != 'pull_request'
-    needs: [build-macos, build-ubuntu, build-windows, build-windows_on_arm]
+    needs: [check-skippable, build-macos, build-ubuntu, build-windows]
     name: Release
     permissions:
       actions: read
       contents: write
     uses: ./.github/workflows/release.yml
+    with:
+      NIGHTLY_DATE: ${{ needs.check-skippable.outputs.nightly-date }}

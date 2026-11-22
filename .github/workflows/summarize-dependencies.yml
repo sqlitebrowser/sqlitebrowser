@@ -1,0 +1,38 @@
+name: Summarize Dependencies
+
+on:
+  workflow_call:
+
+jobs:
+  summarize:
+    name: Summarize Dependencies
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Download dependency summaries
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          pattern: dependency-summary-*
+          path: dependency-summary
+          merge-multiple: true
+
+      - name: Summary
+        run: |
+          {
+            echo "## Dependencies used"
+            echo ""
+            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
+            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
+            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
+              cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            done
+          else
+            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
+          fi

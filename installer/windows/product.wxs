@@ -3,7 +3,12 @@
 
     <?include variables.wxi ?>
 
-    <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="$(var.Version)" Language="1033">
+    <!--
+    The product version is the file version of "DB Browser for SQLite.exe", which CMake sets from "project(VERSION)" in
+    CMakeLists.txt through src/winapp.rc. So the version is only maintained in CMakeLists.txt, and the MSI always has the
+    version of the executable it installs. The file version has four fields, and Windows Installer ignores the fourth.
+    -->
+    <Product Id="*" UpgradeCode="124623D9-35D6-4D2E-9474-2ADACC8BABBB" Name="$(var.Name)" Manufacturer="$(var.Team)" Version="!(bind.FileVersion.DB_Browser_for_SQLite.exe)" Language="1033">
 
         <Package Id="*" Compressed="yes" InstallerVersion="405" InstallPrivileges="elevated" InstallScope="perMachine" />
 
@@ -112,13 +117,21 @@
                     <Component><File Source="$(var.QtPath)\bin\Qt5Widgets.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Xml.dll" /></Component>
                     <Component><File Source="$(var.QtPath)\bin\Qt5Svg.dll" /></Component>
-                    <!-- OpenSSL 3.x -->
+                    <!-- OpenSSL 3.x, used by SQLCipher -->
                     <?if $(sys.BUILDARCH)="x64"?>
-                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x64\libcrypto-3-x64.dll" /></Component>
-                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x64\libssl-3-x64.dll" /></Component>
+                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLBinPath)\libcrypto-3-x64.dll" /></Component>
+                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLBinPath)\libssl-3-x64.dll" /></Component>
                     <?elseif $(sys.BUILDARCH)="x86"?>
-                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLPath)\bin\x86\libcrypto-3.dll" /></Component>
-                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLPath)\bin\x86\libssl-3.dll" /></Component>
+                        <Component><File Id="libcrypto.dll" Source="$(var.OpenSSLBinPath)\libcrypto-3.dll" /></Component>
+                        <Component><File Id="libssl.dll" Source="$(var.OpenSSLBinPath)\libssl-3.dll" /></Component>
+                    <?endif?>
+                    <!-- OpenSSL 1.1.1, which Qt 5.15.2 loads at runtime for TLS, because it only looks for these file names -->
+                    <?if $(sys.BUILDARCH)="x64"?>
+                        <Component><File Id="libcrypto_1_1.dll" Source="$(var.OpenSSL1BinPath)\libcrypto-1_1-x64.dll" /></Component>
+                        <Component><File Id="libssl_1_1.dll" Source="$(var.OpenSSL1BinPath)\libssl-1_1-x64.dll" /></Component>
+                    <?elseif $(sys.BUILDARCH)="x86"?>
+                        <Component><File Id="libcrypto_1_1.dll" Source="$(var.OpenSSL1BinPath)\libcrypto-1_1.dll" /></Component>
+                        <Component><File Id="libssl_1_1.dll" Source="$(var.OpenSSL1BinPath)\libssl-1_1.dll" /></Component>
                     <?endif?>
                     <!-- ICU -->
                     <Component><File Id="icudt.dll" Source="$(var.ICUPath)\bin\icudt$(var.ICUMajorVersion).dll" /></Component>
@@ -126,7 +139,8 @@
                     <Component><File Id="icuuc.dll" Source="$(var.ICUPath)\bin\icuuc$(var.ICUMajorVersion).dll" /></Component>
                     <Component><File Source="$(var.SQLCipherPath)\sqlcipher.dll" /></Component>
                     <Component><File Source="$(var.SQLitePath)\sqlite3.dll" /></Component>
-                    <Component><File Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
+                    <!-- The Id is the one WiX would generate. It is set, because the product version is bound to it. -->
+                    <Component><File Id="DB_Browser_for_SQLite.exe" Source="$(var.SQLiteExePath)\DB Browser for SQLite.exe" Checksum="yes" /></Component>
                     <Component><File Source="$(var.SQLCipherExePath)\DB Browser for SQLCipher.exe" Checksum="yes" /></Component>
                 </Directory>
             </Directory>
@@ -233,6 +247,8 @@
             <!-- OpenSSL -->
             <ComponentRef Id="libcrypto.dll" />
             <ComponentRef Id="libssl.dll" />
+            <ComponentRef Id="libcrypto_1_1.dll" />
+            <ComponentRef Id="libssl_1_1.dll" />
             <!-- ICU -->
             <ComponentRef Id="icudt.dll" />
             <ComponentRef Id="icuin.dll" />

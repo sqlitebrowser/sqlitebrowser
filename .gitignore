@@ -37,3 +37,6 @@ libs/*/*/*.a
 
 # Ignore .DS_Store files on OSX
 .DS_Store
+
+installer/windows/translations.wxs
+installer/windows_on_arm/translations.wxs

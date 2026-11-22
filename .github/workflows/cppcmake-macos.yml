@@ -6,15 +6,34 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+      NIGHTLY_DATE:
+        default: ""
+        type: string
       CONSOLIDATE_DEPENDENCY_SUMMARY:
         default: false
         type: boolean
+    secrets:
+      MACOS_CODESIGN_APPLE_ID:
+        required: false
+      MACOS_CODESIGN_APPLE_PW:
+        required: false
+      MACOS_CODESIGN_DEV_ID:
+        required: false
+      MACOS_CODESIGN_KEYCHAIN_PW:
+        required: false
+      MACOS_CODESIGN_P12:
+        required: false
+      MACOS_CODESIGN_P12_PW:
+        required: false
+      MACOS_CODESIGN_TEAM_ID:
+        required: false
   workflow_dispatch:
 
 jobs:
   build:
     name: ${{ matrix.os }} (${{ matrix.bundle }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     permissions:
       contents: read
     strategy:
@@ -23,8 +42,14 @@ jobs:
         bundle: [SQLCipher, SQLite]
         os: [macos-26]
     env:
+      CODESIGN: ${{ github.event_name != 'pull_request' }}
+      # TODO: When we move to Xcode 27 in the future, we will need to change this to 12.0.
+      # For reference, see the https://developer.apple.com/xcode/system-requirements page.
       MACOSX_DEPLOYMENT_TARGET: 10.13
     steps:
+      - if: inputs.NIGHTLY && inputs.NIGHTLY_DATE == ''
+        run: exit 1
+
       - name: Checkout
         uses: actions/checkout@v7
 
@@ -32,8 +57,17 @@ jobs:
         run: |
           brew tap sqlitebrowser/tap
           brew trust sqlitebrowser/tap
-          brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite sqlb-icu4c ninja
+          brew install sqlb-qt@5 sqlb-sqlcipher sqlb-sqlite sqlb-icu4c
           npm install -g appdmg
+
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@f09c25b45002a07be2955cbe52e8cee55643f89d # v1.2.24
+        with:
+          evict-old-files: job
+          job-summary: ""
+          key: ${{ matrix.os }}-${{ matrix.bundle }}
+          max-size: 500M
+          save: ${{ github.event_name != 'pull_request' }}
 
       - name: Configure build
         run: |
@@ -45,15 +79,16 @@ jobs:
             fi
           else
             if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLCipher-dev-'"$(git rev-parse --short --verify HEAD)"'"/' config/platform_apple.cmake
             else
-                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'$(git rev-parse --short --verify HEAD)'"/' config/platform_apple.cmake
+                sed -i "" 's/"DB Browser for SQLite"/"DB Browser for SQLite-dev-'"$(git rev-parse --short --verify HEAD)"'"/' config/platform_apple.cmake
             fi
           fi
 
           mkdir -v build && cd build
           cmake -G Ninja \
                 -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
                 -DCMAKE_CXX_STANDARD=14 \
                 -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
                 -DcustomTap=1 \
@@ -68,12 +103,8 @@ jobs:
         working-directory: ./build
         run: ninja test
 
-      - name: Build Extension
-        run: clang -I /opt/homebrew/opt/sqlb-sqlite/include -L /opt/homebrew/opt/sqlb-sqlite/lib -fno-common -dynamiclib src/extensions/extension-formats.c
-
-      - if: github.event_name != 'pull_request'
-        name: Notarization
-        id: notarization
+      - name: ${{ env.CODESIGN == 'true' && 'Package, sign and notarize' || 'Package without signing' }}
+        id: package
         run: chmod +x ./installer/macos/notarize.sh && ./installer/macos/notarize.sh
         env:
           APPLE_ID: ${{ secrets.MACOS_CODESIGN_APPLE_ID }}
@@ -84,12 +115,13 @@ jobs:
           P12: ${{ secrets.MACOS_CODESIGN_P12 }}
           P12_PW: ${{ secrets.MACOS_CODESIGN_P12_PW }}
           NIGHTLY: ${{ inputs.NIGHTLY || false }}
+          NIGHTLY_DATE: ${{ inputs.NIGHTLY_DATE }}
           SQLCIPHER: ${{ matrix.bundle == 'SQLCipher'}}
           TEAM_ID: ${{ secrets.MACOS_CODESIGN_TEAM_ID }}
 
-      - if: always() && steps.notarization.conclusion != 'skipped'
+      - if: always() && env.CODESIGN == 'true' && steps.package.conclusion != 'skipped'
         name: Clear Keychain
-        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+        run: security delete-keychain "$RUNNER_TEMP/app-signing.keychain-db"
         continue-on-error: true
 
       - if: github.event_name != 'pull_request'
@@ -98,65 +130,42 @@ jobs:
         with:
           name: build-artifacts-${{ matrix.os }}-${{ matrix.bundle }}
           path: DB.Browser.for.*.dmg
-          retention-days: 1
+          retention-days: 3
 
-      - name: Summary
+      - if: ${{ !cancelled() }}
+        name: Summary
         run: |
-          QT_VERSION=$($(brew --prefix sqlb-qt@5)/bin/qmake --version | awk '/Using Qt version/ {print $4}')
+          QT_VERSION=$("$(brew --prefix sqlb-qt@5)/bin/qmake" --version 2> /dev/null | awk '/Using Qt version/ {print $4}') || true
           if [ "${{ matrix.bundle }}" = "SQLCipher" ]; then
-              OPENSSL_VERSION=$($(brew --prefix sqlb-openssl@3)/bin/openssl version | awk '{print $2}')
-              SQLCIPHER_VERSION=$($(brew --prefix sqlb-sqlcipher)/bin/sqlcipher ":memory:" "PRAGMA cipher_version;" | awk '{print $1}')
+              OPENSSL_VERSION=$("$(brew --prefix sqlb-openssl@3)/bin/openssl" version 2> /dev/null | awk '{print $2}') || true
+              SQLCIPHER_VERSION=$("$(brew --prefix sqlb-sqlcipher)/bin/sqlcipher" ":memory:" "PRAGMA cipher_version;" 2> /dev/null | awk '{print $1}') || true
               SQLITE_VERSION="Not applicable"
           else
               OPENSSL_VERSION="Not applicable"
               SQLCIPHER_VERSION="Not applicable"
-              SQLITE_VERSION=$($(brew --prefix sqlb-sqlite)/bin/sqlite3 --version | awk '{print $1}')
+              SQLITE_VERSION=$("$(brew --prefix sqlb-sqlite)/bin/sqlite3" --version 2> /dev/null | awk '{print $1}') || true
           fi
 
           mkdir -p dependency-summary
-          SUMMARY_ROW="| Build (macOS) | ${{ matrix.os }} / ${{ matrix.bundle }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
+          SUMMARY_ROW="| Build (macOS) | ${{ matrix.os }} / ${{ matrix.bundle }} | ${OPENSSL_VERSION:-N/A} | ${QT_VERSION:-N/A} | ${SQLCIPHER_VERSION:-N/A} | ${SQLITE_VERSION:-N/A} |"
           echo "$SUMMARY_ROW" > "dependency-summary/dependencies-macos-${{ matrix.os }}-${{ matrix.bundle }}.md"
 
-      - name: Upload dependency summary
+      - if: ${{ !cancelled() }}
+        name: Upload dependency summary
         uses: actions/upload-artifact@v7
         with:
           name: dependency-summary-macos-${{ matrix.os }}-${{ matrix.bundle }}
           path: dependency-summary/*.md
-          retention-days: 1
+          retention-days: 3
 
   summarize-dependencies:
     if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
     needs: build
     name: Summarize Dependencies
-    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
-    steps:
-      - name: Download dependency summaries
-        uses: actions/download-artifact@v8
-        continue-on-error: true
-        with:
-          pattern: dependency-summary-*
-          path: dependency-summary
-          merge-multiple: true
-
-      - name: Summary
-        run: |
-          {
-            echo "## Dependencies used"
-            echo ""
-            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
-            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
-            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
-              cat "$file" >> "$GITHUB_STEP_SUMMARY"
-            done
-          else
-            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
-          fi
+    uses: ./.github/workflows/summarize-dependencies.yml
 
   release:
     if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (macOS)'

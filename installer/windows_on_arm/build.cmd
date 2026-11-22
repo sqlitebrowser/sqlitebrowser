@@ -1,28 +1,15 @@
 @echo off
+:: Builds the ARM64 MSI from the files of this directory. Run it in this directory.
+:: The steps are shared with :: installer\windows in ..\build_msi.cmd.
 
-set "WIX=C:\Program Files (x86)\WiX Toolset v3.14\bin"
+if "%1"=="" (
+    echo ERROR: You must select a build type, which is "arm64"
+    exit /b 1
+)
+if not "%1"=="arm64" (
+    echo ERROR: Unknown build type="%1"
+    exit /b 1
+)
 
-:: Output file name
-set MSI=DB.Browser.for.SQLite-%1
-
-set ARCH=arm64
-
-:: Suppress some ICE checks
-:: - 61 (major upgrade)
-:: - 03 & 82 (merge module)
-:: - 38 & 43 & 57 (non-advertised shortcuts)
-set ICE=-sice:ICE03 -sice:ICE82 -sice:ICE61 -sice:ICE38 -sice:ICE43 -sice:ICE57
-
-:: Suppress 'light.exe' warning
-:: - 1104 (vcredist merge module installer version)
-set LIGHT=-sw1104
-
-:: Compile & Link
-"%WIX%\candle.exe" -nologo -pedantic -arch %ARCH% product.wxs translations.wxs ui.wxs
-"%WIX%\light.exe" -sval -nologo -pedantic %LIGHT% %ICE% -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -loc strings.wxl product.wixobj translations.wixobj ui.wixobj -out %MSI%.msi
-
-:: Cleanup
-del product.wixobj
-del translations.wixobj
-del ui.wixobj
-del %MSI%.wixpdb
+call ..\build_msi.cmd %1
+exit /b %errorlevel%

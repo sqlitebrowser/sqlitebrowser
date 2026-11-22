@@ -7,7 +7,9 @@
 
 #define APP_VERSION "@PROJECT_VERSION@"
 
-// If it is defined by the compiler, then it is a nightly build, and in the YYYYMMDD format.
+#define GIT_COMMIT_HASH "@GIT_COMMIT_HASH@"
+
+#cmakedefine BUILD_VERSION "@BUILD_VERSION@"
 #ifndef BUILD_VERSION
     #define BUILD_VERSION "0"
 #endif

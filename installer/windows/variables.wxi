@@ -3,7 +3,7 @@
 
     <?define Name="DB Browser for SQLite" ?>
     <?define Team="$(var.Name) Team" ?>
-    <?define Version="3.13.99" ?>
+    <!-- There is no "Version" here. product.wxs takes it from the executable, see the comment on its "Product" element. -->
 
     <!--
     =============================================== Add/Remove Programs ================================================
@@ -37,9 +37,10 @@
 
     VCRedistPath
         The directory containing the Visual C++ runtime DLLs, usually
-        "[VS]\VC\Redist\MSVC\[VERSION]\[ARCH]\Microsoft.VC143.CRT". The prebuilt ICU libraries are built with Visual
-        Studio 2022, so VC143 (version 14.3) is used even though the application itself is built with Visual Studio
-        2019. TODO: We also need to update this when migrating to Qt6 later.
+        "[VS]\VC\Redist\MSVC\[VERSION]\[ARCH]\Microsoft.VC[TOOLSET].CRT". The CI resolves it from "VCToolsRedistDir" of
+        the toolset that compiled the application, because an app-local runtime must be the same as or newer than the
+        newest toolset used to build any of the binaries, including the prebuilt ICU libraries built with Visual
+        Studio 2022.
     -->
 
     <?define VCRedistPath="$(env.VCRedistPath)" ?>
@@ -53,7 +54,12 @@
     <?define QtPath="$(env.QT_ROOT_DIR)" ?>
     <?define SQLitePath="$(env.SQLitePath)" ?>
     <?define SQLCipherPath="$(env.SQLCipherPath)" ?>
-    <?define OpenSSLPath="$(env.OpenSSLPath)" ?>
+    <?define OpenSSLBinPath="$(env.OpenSSLBinPath)" ?>
+    <!--
+    The directory containing the OpenSSL 1.1.1 DLLs of the target architecture, e.g. "C:\dev\OpenSSL-1.1".
+    Qt 5.15.2 only loads OpenSSL 1.1 at runtime, while SQLCipher needs OpenSSL 3, so both are deployed.
+    -->
+    <?define OpenSSL1BinPath="$(env.OpenSSL1BinPath)" ?>
     <?define SqleanPath="$(env.SqleanPath)" ?>
     <?define ICUPath="$(env.ICUPath)" ?>
     <?define ICUMajorVersion="$(env.ICUMajorVersion)" ?>

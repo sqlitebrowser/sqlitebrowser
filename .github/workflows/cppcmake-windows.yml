@@ -6,85 +6,196 @@ on:
       NIGHTLY:
         default: false
         type: boolean
+      NIGHTLY_DATE:
+        default: ""
+        type: string
       CONSOLIDATE_DEPENDENCY_SUMMARY:
         default: false
         type: boolean
+    secrets:
+      SIGNPATH_API_TOKEN:
+        required: false
+      SIGNPATH_ORGANIZATION_ID:
+        required: false
   workflow_dispatch:
 
 jobs:
   build:
     name: ${{ matrix.os }}-${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: ${{ matrix.timeout }}
     permissions:
       actions: read
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86, x64]
-        os: [windows-2022]
+        include:
+          - arch: x86
+            icu-arch: Win32
+            installer: windows
+            msvc-arch: amd64_x86
+            openssl-arch: x86,Win32
+            openssl1-bits: 32
+            os: windows-2022
+            qt-arch: win32_msvc2019
+            qt-major: Qt5
+            qt-modules: ""
+            qt-version: 5.15.2
+            timeout: 60
+          - arch: x64
+            icu-arch: Win64
+            installer: windows
+            msvc-arch: amd64
+            openssl-arch: x64,Win64A
+            openssl1-bits: 64
+            os: windows-2022
+            qt-arch: win64_msvc2019_64
+            qt-major: Qt5
+            qt-modules: ""
+            qt-version: 5.15.2
+            timeout: 60
+          - arch: arm64
+            icu-arch: WinARM64
+            installer: windows_on_arm
+            msvc-arch: arm64
+            openssl-arch: arm64,ARM64
+            os: windows-11-vs2026-arm
+            qt-arch: win64_msvc2022_arm64
+            qt-major: Qt6
+            qt-modules: qt5compat qtimageformats
+            qt-version: 6.8.3
+            timeout: 90
+    defaults:
+      run:
+        # The default pwsh shell only stops at a failing cmdlet. A failing native command, e.g. choco, nmake or
+        # build.cmd, went unnoticed unless it was the last command of the step, so this stops at those as well.
+        # The runner still adds "$ErrorActionPreference = 'stop'" and the exit code check to every script.
+        shell: pwsh -command "$PSNativeCommandUseErrorActionPreference = $true; . '{0}'"
     env:
+      CCACHE_BASEDIR: ${{ github.workspace }}
       GH_TOKEN: ${{ github.token }}
       ICU_VERSION: "78.3"
+      NIGHTLY_DATE: ${{ inputs.NIGHTLY_DATE }}
+      # TODO: Unpin commit hash.
       OPENSSL_INCLUDE_DIR: C:\dev\OpenSSL\include
+      SQLEAN_ARM64_COMMIT: 315178b95aee90b90a1dc25d18d117bfacb9133e
+      WIX_ZIP_SHA256: 6ac824e1642d6f7277d0ed7ea09411a508f6116ba6fae0aa5f2c7daa2ff43d31
+      WIX_ZIP_URL: https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip
     steps:
+      - if: inputs.NIGHTLY && inputs.NIGHTLY_DATE == ''
+        run: exit 1
+
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: "pip"
+          cache-dependency-path: tools/windows/requirements/download_latest_openssl.txt
+
+      - name: Restore WiX
+        id: wix-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: C:\dev\WiX
+          key: wix-${{ env.WIX_ZIP_SHA256 }}
+
       - name: Install dependencies
         run: |
-          choco install --no-progress ninja
-
-          cd $env:GITHUB_WORKSPACE/tools/windows/
-          python -m pip install --disable-pip-version-check -r requirements/download_latest_openssl3.txt
-          $OpenSSLInstallerFileName = (python download_latest_openssl3.py).Trim()
-          Start-Process -FilePath ".\$OpenSSLInstallerFileName" -ArgumentList '/ALLUSERS /verysilent /dir="C:\dev\OpenSSL"' -Wait
-
-      - name: Resolve OpenSSL library directory
-        run: |
-          if ("${{ matrix.arch }}" -eq "x86") {
-            $OpenSSLLibCandidates = @("x86", "Win32")
-          } elseif ("${{ matrix.arch }}" -eq "x64") {
-            $OpenSSLLibCandidates = @("x64", "Win64A")
-          } else {
-            $OpenSSLLibCandidates = @("${{ matrix.arch }}")
-          }
-
-          $OpenSSLLibArch = $null
-          foreach ($Candidate in $OpenSSLLibCandidates) {
-            if ((Test-Path "C:\dev\OpenSSL\lib\VC\$Candidate\MD\libcrypto.lib") -and (Test-Path "C:\dev\OpenSSL\lib\VC\$Candidate\MD\libssl.lib")) {
-              $OpenSSLLibArch = $Candidate
-              break
+          # WiX Toolset
+          if ("${{ steps.wix-cache.outputs.cache-hit }}" -ne "true") {
+            $WixZip = Join-Path $env:RUNNER_TEMP "wix314-binaries.zip"
+            Invoke-WebRequest -Uri $env:WIX_ZIP_URL -OutFile $WixZip -MaximumRetryCount 3 -RetryIntervalSec 10
+            if ((Get-FileHash -Path $WixZip -Algorithm SHA256).Hash -ne $env:WIX_ZIP_SHA256) {
+              throw "The checksum of $env:WIX_ZIP_URL does not match."
             }
+            Expand-Archive -Path $WixZip -DestinationPath "C:\dev\WiX\bin"
+          }
+          "WIX=C:\dev\WiX" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+          # OpenSSL 3.x
+          cd $env:GITHUB_WORKSPACE/tools/windows/
+          python -m pip install --disable-pip-version-check -r requirements/download_latest_openssl.txt
+          $OpenSSLInstallerFileName = (python download_latest_openssl.py).Trim()
+          $Installer = Start-Process -FilePath ".\$OpenSSLInstallerFileName" -ArgumentList '/ALLUSERS /verysilent /dir="C:\dev\OpenSSL"' -Wait -PassThru
+          if ($Installer.ExitCode -ne 0) {
+            throw "The OpenSSL installer failed with exit code $($Installer.ExitCode)."
           }
 
-          if ($null -eq $OpenSSLLibArch) {
-            throw "Could not locate OpenSSL libraries for architecture '${{ matrix.arch }}'"
+      - if: steps.wix-cache.outputs.cache-hit != 'true' && github.event_name != 'pull_request'
+        name: Save WiX
+        uses: actions/cache/save@v6
+        with:
+          path: C:\dev\WiX
+          key: ${{ steps.wix-cache.outputs.cache-primary-key }}
+
+      # Qt 5.15.2 loads OpenSSL at runtime for TLS, e.g. for the update check, and only looks for the OpenSSL 1.1 DLLs
+      # (libssl-1_1(-x64).dll and libcrypto-1_1(-x64).dll), while SQLCipher 4.7.0 and later requires OpenSSL 3.
+      # So the Qt 5 builds also ship the OpenSSL 1.1.1 DLLs, which only Qt Network uses. Remove this step when the
+      # x86/x64 builds move to Qt 6, which loads OpenSSL 3 like the ARM64 build.
+      - if: matrix.qt-major == 'Qt5'
+        name: Install OpenSSL 1.1.1 for Qt5 Network
+        run: |
+          cd $env:GITHUB_WORKSPACE/tools/windows/
+          $OpenSSL1InstallerFileName = (python download_latest_openssl.py --version-prefix 1.1. --arch INTEL --bits ${{ matrix.openssl1-bits }} --light).Trim()
+          $Installer = Start-Process -FilePath ".\$OpenSSL1InstallerFileName" -ArgumentList '/ALLUSERS /verysilent /dir="C:\dev\OpenSSL-1.1"' -Wait -PassThru
+          if ($Installer.ExitCode -ne 0) {
+            throw "The OpenSSL 1.1.1 installer failed with exit code $($Installer.ExitCode)."
           }
 
-          "OPENSSL_LIB_ARCH=$OpenSSLLibArch" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $Suffix = if ("${{ matrix.arch }}" -eq "x64") { "-x64" } else { "" }
+          $RequiredFiles = @("libcrypto-1_1$Suffix.dll", "libssl-1_1$Suffix.dll")
+          $BinDir = @("C:\dev\OpenSSL-1.1", "C:\dev\OpenSSL-1.1\bin") | Where-Object {
+            $Directory = $_
+            @($RequiredFiles | Where-Object { -not (Test-Path (Join-Path $Directory $_)) }).Count -eq 0
+          } | Select-Object -First 1
+          if (-not $BinDir) {
+            throw "Could not locate $($RequiredFiles -join ', ') in C:\dev\OpenSSL-1.1 or its bin directory."
+          }
+          "OPENSSL1_BIN_DIR=$BinDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Resolve OpenSSL directories
+        run: |
+          $Candidates = "${{ matrix.openssl-arch }}".Split(",")
+          function Find-OpenSSLDirectory([string] $Pattern, [string[]] $RequiredFiles) {
+            foreach ($Candidate in $Candidates) {
+              $Directory = $Pattern -f $Candidate
+              $Missing = @($RequiredFiles | Where-Object { -not (Test-Path (Join-Path $Directory $_)) })
+              if ((Test-Path $Directory) -and $Missing.Count -eq 0) {
+                return $Directory
+              }
+            }
+            throw "Could not locate '$Pattern' for architecture '${{ matrix.arch }}' (tried: $($Candidates -join ', '))"
+          }
+
+          $LibDir = Find-OpenSSLDirectory "C:\dev\OpenSSL\lib\VC\{0}\MD" @("libcrypto.lib", "libssl.lib")
+          $IncludeDir = Find-OpenSSLDirectory "C:\dev\OpenSSL\include\{0}" @()
+          $BinDir = Find-OpenSSLDirectory "C:\dev\OpenSSL\bin\{0}" @("openssl.exe")
+          "OPENSSL_LIB_DIR=$LibDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "OPENSSL_ARCH_INCLUDE_DIR=$IncludeDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "OPENSSL_BIN_DIR=$BinDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
-          arch: ${{ matrix.arch == 'x86' && 'win32_msvc2019' || matrix.arch == 'x64' && 'win64_msvc2019_64'}}
+          arch: ${{ matrix.qt-arch }}
           cache: true
           cache-key-prefix: "cache"
-          version: 5.15.2
+          modules: ${{ matrix.qt-modules }}
+          version: ${{ matrix.qt-version }}
 
-      - name: Install VS2019
-        run: choco install visualstudio2019community --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.Windows10SDK.19041"
-
+      # The Qt 5 binaries for MSVC2019 are binary compatible with the VS2022 toolset.
       - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+        uses: TheMrMilchmann/setup-msvc-dev@368ef7d1ee4d1171b31d4a7f67f4d954f903f5a9 # v4.1.0
         with:
-          arch: ${{ matrix.arch == 'x86' && 'amd64_x86' || matrix.arch == 'x64' && 'amd64'}}
-          vsversion: 2019
+          arch: ${{ matrix.msvc-arch }}
 
       - name: Download ICU
         run: |
-          $ICUArch = if ("${{ matrix.arch }}" -eq "x86") { "Win32" } else { "Win64" }
-          $ICUArchiveFileName = "icu4c-$env:ICU_VERSION-$ICUArch-MSVC2022.zip"
+          $ICUArchiveFileName = "icu4c-$env:ICU_VERSION-${{ matrix.icu-arch }}-MSVC2022.zip"
           gh release download "release-$env:ICU_VERSION" --pattern $ICUArchiveFileName --pattern "SHASUM512.txt" --repo "unicode-org/icu"
           $ExpectedHash = ((Select-String -Path SHASUM512.txt -Pattern "\*$([regex]::Escape($ICUArchiveFileName))$").Line -split '\s+')[0]
           if (-not $ExpectedHash -or (Get-FileHash -Algorithm SHA512 $ICUArchiveFileName).Hash -ne $ExpectedHash) {
@@ -92,7 +203,7 @@ jobs:
           }
 
           Expand-Archive -Path $ICUArchiveFileName -DestinationPath C:\dev\ICU
-          # Normalize the architecture-specific directory names (e.g. bin64, lib64) to bin and lib.
+          # Normalize the architecture-specific directory names (e.g. bin64, libARM64) to bin and lib.
           Get-ChildItem C:\dev\ICU -Directory -Filter "bin*" | Where-Object Name -ne "bin" | Rename-Item -NewName bin
           Get-ChildItem C:\dev\ICU -Directory -Filter "lib*" | Where-Object Name -ne "lib" | Rename-Item -NewName lib
           "C:\dev\ICU\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
@@ -100,14 +211,15 @@ jobs:
 
       - name: Build SQLite
         run: |
-          Set-Location "${{ github.workspace }}\tools\windows"
+          Set-Location "$env:GITHUB_WORKSPACE\tools\windows"
           $SQLiteArchiveFileName = (python download_latest_sqlite.py).Trim()
           Expand-Archive -Path $SQLiteArchiveFileName -DestinationPath C:\dev\
           Move-Item -Path C:\dev\sqlite-amalgamation-* C:\dev\SQLite\
           cd C:\dev\SQLite
-          cl sqlite3.c -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_SOUNDEX -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_ICU -DSQLITE_MAX_ATTACHED=125 -DSQLITE_API="__declspec(dllexport)" -IC:\dev\ICU\include -link -dll -out:sqlite3.dll /LIBPATH:C:\dev\ICU\lib icuuc.lib icuin.lib
+          cl sqlite3.c /O2 -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_STAT4 -DSQLITE_SOUNDEX -DSQLITE_ENABLE_JSON1 -DSQLITE_ENABLE_GEOPOLY -DSQLITE_ENABLE_RTREE -DSQLITE_ENABLE_MATH_FUNCTIONS -DSQLITE_ENABLE_ICU -DSQLITE_MAX_ATTACHED=125 -DSQLITE_API="__declspec(dllexport)" -IC:\dev\ICU\include -link -dll -out:sqlite3.dll /LIBPATH:C:\dev\ICU\lib icuuc.lib icuin.lib
 
-      - name: Download SQLean extension
+      - if: matrix.arch != 'arm64'
+        name: Download SQLean extension
         run: |
           if ("${{ matrix.arch }}" -eq "x86") {
             # sqlean has discontinued x86 support starting from v0.28.0
@@ -118,32 +230,103 @@ jobs:
             Expand-Archive -Path sqlean-win-x64.zip -DestinationPath .\sqlean
           }
 
+      # TODO
+      - if: matrix.arch == 'arm64'
+        name: Restore SQLean extension
+        id: sqlean-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: C:\dev\sqlean\dist\arm64
+          key: sqlean-arm64-v1-${{ env.SQLEAN_ARM64_COMMIT }}-${{ hashFiles('tools/windows/add_sqlean_arm64_target.patch') }}
+
+      - if: matrix.arch == 'arm64' && steps.sqlean-cache.outputs.cache-hit != 'true'
+        name: Setup MSYS2
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # v2.33.0
+        with:
+          msystem: CLANGARM64
+          release: false
+          update: true
+          install: >-
+            curl
+            git
+            make
+            mingw-w64-clang-aarch64-clang
+            unzip
+
+      - if: matrix.arch == 'arm64' && steps.sqlean-cache.outputs.cache-hit != 'true'
+        name: Build SQLean extension
+        shell: msys2 {0}
+        run: |
+          git clone --filter=blob:none https://www.github.com/nalgeon/sqlean /c/dev/sqlean
+          cd /c/dev/sqlean
+          git checkout "$SQLEAN_ARM64_COMMIT"
+          cp "$(cygpath -u "$GITHUB_WORKSPACE")/tools/windows/add_sqlean_arm64_target.patch" .
+          git apply --ignore-space-change --ignore-whitespace add_sqlean_arm64_target.patch
+          make prepare-dist
+          make download-sqlite
+          make download-external
+          make compile-windows-arm64
+
+      - if: matrix.arch == 'arm64' && steps.sqlean-cache.outputs.cache-hit != 'true' && github.event_name != 'pull_request'
+        name: Save SQLean extension
+        uses: actions/cache/save@v6
+        with:
+          path: C:\dev\sqlean\dist\arm64
+          key: ${{ steps.sqlean-cache.outputs.cache-primary-key }}
+
       - name: Build 'formats' Extensions
         run: |
-          cp .\src\extensions\extension-formats.c C:\dev\SQLite\
-          cp .\src\extensions\extension-formats.def C:\dev\SQLite\
+          cp $env:GITHUB_WORKSPACE\src\extensions\extension-formats.c C:\dev\SQLite\
+          cp $env:GITHUB_WORKSPACE\src\extensions\extension-formats.def C:\dev\SQLite\
           cd C:\dev\SQLite
-          cl /MD extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
+          cl /MD /O2 extension-formats.c -link -dll -def:extension-formats.def -out:formats.dll
+
+      - name: Clone SQLCipher
+        run: |
+          git clone --filter=blob:none https://www.github.com/sqlcipher/sqlcipher C:\dev\SQLCipher
+          cd C:\dev\SQLCipher
+          git checkout $(git describe --tags --abbrev=0)
+
+      - if: matrix.arch == 'arm64'
+        name: Setup MSVC for the x64 SQLCipher build tools to be used on ARM64
+        uses: TheMrMilchmann/setup-msvc-dev@368ef7d1ee4d1171b31d4a7f67f4d954f903f5a9 # v4.1.0
+        with:
+          arch: x64
+
+      - if: matrix.arch == 'arm64'
+        name: Build the x64 SQLCipher build tools to be used on ARM64
+        run: |
+          cd C:\dev\SQLCipher
+          nmake /f Makefile.msc lemon.exe mkkeywordhash.exe mksourceid.exe src-verify.exe USE_AMALGAMATION=1 NO_TCL=1 SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe OPT_FEATURE_FLAGS="-DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125"
+
+      - if: matrix.arch == 'arm64'
+        name: Setup MSVC for ARM64 again
+        uses: TheMrMilchmann/setup-msvc-dev@368ef7d1ee4d1171b31d4a7f67f4d954f903f5a9 # v4.1.0
+        with:
+          arch: ${{ matrix.msvc-arch }}
 
       - name: Build SQLCipher
         run: |
-          git clone https://www.github.com/sqlcipher/sqlcipher C:\dev\SQLCipher
           cd C:\dev\SQLCipher
-          git checkout $(git describe --tags --abbrev=0)
-          if ("${{ matrix.arch }}" -eq "x86") {
-            nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 USE_ICU=1 ICUDIR=C:\dev\ICU SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL\lib\VC\x86\MD\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL\include\x86"
-          } else {
-            nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 USE_ICU=1 ICUDIR=C:\dev\ICU SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="C:\dev\OpenSSL\lib\VC\x64\MD\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -IC:\dev\OpenSSL\include\x64"
-          }
+          nmake /f Makefile.msc sqlcipher.dll USE_AMALGAMATION=1 NO_TCL=1 USE_ICU=1 ICUDIR=C:\dev\ICU SQLITE3DLL=sqlcipher.dll SQLITE3LIB=sqlcipher.lib SQLITE3EXE=sqlcipher.exe LTLINKOPTS="$env:OPENSSL_LIB_DIR\libcrypto.lib" OPT_FEATURE_FLAGS="-DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLITE_TEMP_STORE=2 -DSQLITE_HAS_CODEC=1 -DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_FTS5=1 -DSQLITE_ENABLE_FTS3_PARENTHESIS=1 -DSQLITE_ENABLE_STAT4=1 -DSQLITE_SOUNDEX=1 -DSQLITE_ENABLE_JSON1=1 -DSQLITE_ENABLE_GEOPOLY=1 -DSQLITE_ENABLE_RTREE=1 -DSQLCIPHER_CRYPTO_OPENSSL=1 -DSQLITE_MAX_ATTACHED=125 -I$env:OPENSSL_ARCH_INCLUDE_DIR"
           mkdir sqlcipher
           copy sqlite3.h sqlcipher
           # Avoid the C2059 error.
           mv VERSION VERSION.txt
 
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@f09c25b45002a07be2955cbe52e8cee55643f89d # v1.2.24
+        with:
+          evict-old-files: job
+          job-summary: ""
+          key: ${{ matrix.os }}-${{ matrix.arch }}
+          max-size: 1G
+          save: ${{ github.event_name != 'pull_request' }}
+
       - name: Configure build (SQLite)
         run: |
           mkdir release-sqlite && cd release-sqlite
-          cmake -G "Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLite" -DOPENSSL_INCLUDE_DIR="$env:OPENSSL_INCLUDE_DIR" -DOPENSSL_CRYPTO_LIBRARY="C:\dev\OpenSSL\lib\VC\$env:OPENSSL_LIB_ARCH\MD\libcrypto.lib" -DOPENSSL_SSL_LIBRARY="C:\dev\OpenSSL\lib\VC\$env:OPENSSL_LIB_ARCH\MD\libssl.lib" -DENABLE_TESTING=ON ..\
+          cmake -G "Ninja Multi-Config" -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLite" -DOPENSSL_INCLUDE_DIR="$env:OPENSSL_INCLUDE_DIR" -DOPENSSL_CRYPTO_LIBRARY="$env:OPENSSL_LIB_DIR\libcrypto.lib" -DOPENSSL_SSL_LIBRARY="$env:OPENSSL_LIB_DIR\libssl.lib" -DENABLE_TESTING=ON -DQT_MAJOR=${{ matrix.qt-major }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DBUILD_VERSION="$env:NIGHTLY_DATE" ..\
 
       - name: Build (SQLite)
         run: |
@@ -158,7 +341,7 @@ jobs:
       - name: Configure build (SQLCipher)
         run: |
           mkdir release-sqlcipher && cd release-sqlcipher
-          cmake -G "Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLCipher" -DOPENSSL_INCLUDE_DIR="$env:OPENSSL_INCLUDE_DIR" -DOPENSSL_CRYPTO_LIBRARY="C:\dev\OpenSSL\lib\VC\$env:OPENSSL_LIB_ARCH\MD\libcrypto.lib" -DOPENSSL_SSL_LIBRARY="C:\dev\OpenSSL\lib\VC\$env:OPENSSL_LIB_ARCH\MD\libssl.lib" -DENABLE_TESTING=ON ..\
+          cmake -G "Ninja Multi-Config" -Dsqlcipher=1 -DCMAKE_PREFIX_PATH="C:\dev\OpenSSL;C:\dev\SQLCipher" -DOPENSSL_INCLUDE_DIR="$env:OPENSSL_INCLUDE_DIR" -DOPENSSL_CRYPTO_LIBRARY="$env:OPENSSL_LIB_DIR\libcrypto.lib" -DOPENSSL_SSL_LIBRARY="$env:OPENSSL_LIB_DIR\libssl.lib" -DENABLE_TESTING=ON -DQT_MAJOR=${{ matrix.qt-major }} -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DBUILD_VERSION="$env:NIGHTLY_DATE" ..\
 
       - name: Build (SQLCipher)
         run: |
@@ -170,34 +353,60 @@ jobs:
           cd release-sqlcipher
           ctest -C Release --output-on-failure
 
-      # The prebuilt ICU binaries are built with Visual Studio 2022, so they need the VC143 runtime or newer.
-      - if: github.event_name != 'pull_request'
-        name: Resolve VC++ runtime DLLs
+      - name: Resolve VC++ runtime DLLs
         run: |
-          $VSPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -version "[17.0,18.0)" -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          $CRTDir = Get-ChildItem "$VSPath\VC\Redist\MSVC\*\${{ matrix.arch }}\Microsoft.VC143.CRT" -Directory -ErrorAction SilentlyContinue | Sort-Object FullName | Select-Object -Last 1
+          if (-not $env:VCToolsRedistDir) {
+            throw "VCToolsRedistDir is not set. Set up MSVC with setup-msvc-dev first."
+          }
+          $CRTDir = Get-ChildItem (Join-Path $env:VCToolsRedistDir "${{ matrix.arch }}") -Directory -Filter "Microsoft.VC*.CRT" -ErrorAction SilentlyContinue | Sort-Object Name | Select-Object -Last 1
           if ($null -eq $CRTDir) {
-            throw "Could not locate the VC143 CRT DLLs for architecture '${{ matrix.arch }}'"
+            throw "Could not locate the Visual C++ runtime DLLs for architecture '${{ matrix.arch }}' under '$env:VCToolsRedistDir'"
+          }
+          foreach ($DLL in @("msvcp140.dll", "vcruntime140.dll")) {
+            if (-not (Test-Path (Join-Path $CRTDir.FullName $DLL))) {
+              throw "'$DLL' is missing from '$($CRTDir.FullName)'"
+            }
           }
           "VCRedistPath=$($CRTDir.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-      - if: github.event_name != 'pull_request'
-        name: Create MSI
+      - name: Create MSI
         env:
           ExePath: ${{ github.workspace }}
           ICUPath: C:\dev\ICU
-          OpenSSLPath: C:\dev\OpenSSL
+          OpenSSLBinPath: ${{ env.OPENSSL_BIN_DIR }}
+          OpenSSL1BinPath: ${{ env.OPENSSL1_BIN_DIR }}
           SQLCipherPath: C:\dev\SQLCipher
-          SqleanPath: ${{ github.workspace }}\sqlean
+          SqleanPath: ${{ matrix.arch == 'arm64' && 'C:\dev\sqlean' || format('{0}\sqlean', github.workspace) }}
           SQLitePath: C:\dev\SQLite
         run: |
-          cd installer/windows
+          cd installer\${{ matrix.installer }}
           ./build.cmd ${{ matrix.arch }}
-          $DATE=$(Get-Date -Format "yyyyMMdd")
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$DATE-win-${{ matrix.arch }}.msi"
+            mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-$env:NIGHTLY_DATE-win-${{ matrix.arch }}.msi"
           } else {
             mv DB.Browser.for.SQLite-*.msi "DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-${{ matrix.arch }}.msi"
+          }
+
+      - name: Validate MSI
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $false
+          $Smoke = "$env:WIX\bin\smoke.exe"
+          if (-not $env:WIX -or -not (Test-Path $Smoke)) {
+            throw "Could not find smoke.exe of the WiX Toolset v3 in the bin directory of WIX ('$env:WIX')."
+          }
+          $Msi = (Get-ChildItem "installer\${{ matrix.installer }}\DB.Browser.for.SQLite-*.msi").FullName
+          $Output = & $Smoke -nologo -sice:ICE38 -sice:ICE43 -sice:ICE57 -sice:ICE61 $Msi 2>&1
+          $ExitCode = $LASTEXITCODE
+          foreach ($Line in $Output) {
+            Write-Output "$Line"
+            # e.g. "<file> : warning SMOK1076 : ICE60: ..." or "<file> : error SMOK0204 : ICE30: ..."
+            if ("$Line" -match " : (warning|error) [A-Z]+\d{4} : (.+)$") {
+              $Message = $Matches[2] -replace "%", "%25" -replace "`r", "%0D" -replace "`n", "%0A"
+              Write-Output "::$($Matches[1]) title=ICE validation (${{ matrix.arch }})::$Message"
+            }
+          }
+          if ($ExitCode -ne 0) {
+            throw "ICE validation failed with exit code $ExitCode."
           }
 
       - if: github.event_name != 'pull_request'
@@ -206,102 +415,92 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: build-artifacts-${{ matrix.os }}-win-${{ matrix.arch }}-unsigned
-          path: installer\windows\DB.Browser.for.SQLite-*.msi
-          retention-days: 1
+          path: installer\${{ matrix.installer }}\DB.Browser.for.SQLite-*.msi
+          retention-days: 3
 
       # Change the signing-policy-slug when you release an RC, RTM or stable release.
       - if: github.event_name != 'pull_request'
         name: Code signing with SignPath
-        uses: signpath/github-action-submit-signing-request@v3
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092 # v3.0
         with:
           api-token: "${{ secrets.SIGNPATH_API_TOKEN }}"
           github-artifact-id: "${{ steps.unsigned-artifacts.outputs.artifact-id }}"
           organization-id: "${{ secrets.SIGNPATH_ORGANIZATION_ID }}"
-          output-artifact-directory: .\installer\windows
+          output-artifact-directory: .\installer\${{ matrix.installer }}
           project-slug: "sqlitebrowser"
           signing-policy-slug: "test-signing"
           wait-for-completion: true
 
-      - if: github.event_name != 'pull_request'
-        name: Create ZIP
+      - name: Create ZIP
         run: |
-          $DATE=$(Get-Date -Format "yyyyMMdd")
           if ("${{ inputs.NIGHTLY }}" -eq "true") {
-            $FILENAME_FORMAT="DB.Browser.for.SQLite-$DATE-win-${{ matrix.arch }}.zip"
+            $FILENAME_FORMAT="DB.Browser.for.SQLite-$env:NIGHTLY_DATE-win-${{ matrix.arch }}.zip"
           } else {
             $FILENAME_FORMAT="DB.Browser.for.SQLite-dev-$(git rev-parse --short HEAD)-win-${{ matrix.arch }}.zip"
           }
-          Start-Process msiexec.exe -ArgumentList "/a $(dir installer\windows\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait
+          $Msiexec = Start-Process msiexec.exe -ArgumentList "/a $(dir installer\${{ matrix.installer }}\DB.Browser.for.SQLite-*.msi) /q TARGETDIR=$PWD\target\" -Wait -PassThru
+          if ($Msiexec.ExitCode -ne 0) {
+            throw "The administrative installation of the MSI failed with exit code $($Msiexec.ExitCode)."
+          }
           Compress-Archive -Path "target\DB Browser for SQLite\*" -DestinationPath $FILENAME_FORMAT
 
       - if: github.event_name != 'pull_request'
         name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: build-artifacts-win-${{ matrix.arch }}
+          name: build-artifacts-${{ matrix.os }}-win-${{ matrix.arch }}
           path: |
-            installer\windows\DB.Browser.for.SQLite-*.msi
+            installer\${{ matrix.installer }}\DB.Browser.for.SQLite-*.msi
             DB.Browser.for.SQLite-*.zip
-          retention-days: 1
+          retention-days: 3
 
-      - name: Summary
+      - if: ${{ !cancelled() }}
+        name: Summary
         run: |
-          if ("${{ matrix.arch }}" -eq "x86") {
-            $OPENSSL_VERSION=(C:\dev\OpenSSL\bin\x86\openssl version) -replace "OpenSSL ([\d\.]+[a-z]+) .*", '$1'
-          } else {
-            $OPENSSL_VERSION=(C:\dev\OpenSSL\bin\x64\openssl version) -replace "OpenSSL ([\d\.]+[a-z]+) .*", '$1'
+          function Get-Version([scriptblock] $Lookup) {
+            try {
+              $Version = & $Lookup
+            } catch {
+              $Version = $null
+            }
+            $global:LASTEXITCODE = 0
+            if ($Version) { "$Version" } else { "N/A" }
           }
-          $QT_VERSION = & "$env:QT_ROOT_DIR\bin\qmake.exe" --version | Select-String "Using Qt version" | ForEach-Object { $_.ToString().Split()[3] }
-          $SQLCIPHER_VERSION=(Get-Item "C:\dev\SQLCipher\sqlcipher.dll").VersionInfo.FileVersion
-          Select-String -Path "C:\dev\SQLite\sqlite3.h" -Pattern '#define SQLITE_VERSION\s+"([\d\.]+)"' | ForEach-Object {
-            ($_ -match '"([\d\.]+)"') | Out-Null
-            $SQLITE_VERSION=$matches[1]
+
+          $OPENSSL_VERSION = Get-Version { ((& "$env:OPENSSL_BIN_DIR\openssl.exe" version) -split '\s+')[1] }
+          if ("${{ matrix.qt-major }}" -eq "Qt5") {
+            $Suffix = if ("${{ matrix.arch }}" -eq "x64") { "-x64" } else { "" }
+            $OPENSSL1_VERSION = Get-Version { (Get-Item "$env:OPENSSL1_BIN_DIR\libcrypto-1_1$Suffix.dll" -ErrorAction Stop).VersionInfo.ProductVersion }
+            $OPENSSL_VERSION = "$OPENSSL_VERSION (SQLCipher), $OPENSSL1_VERSION (Qt)"
+          }
+          $QT_VERSION = Get-Version { & "$env:QT_ROOT_DIR\bin\qmake.exe" --version | Select-String "Using Qt version" | ForEach-Object { $_.ToString().Split()[3] } }
+          $SQLCIPHER_VERSION = Get-Version {
+            if ((Get-Content "C:\dev\SQLCipher\src\sqlcipher.c" -Raw -ErrorAction Stop) -match '#define CIPHER_VERSION_NUMBER\s+([\d\.]+)') { $Matches[1] }
+          }
+          $SQLITE_VERSION = Get-Version {
+            if ((Get-Content "C:\dev\SQLite\sqlite3.h" -Raw -ErrorAction Stop) -match '#define SQLITE_VERSION\s+"([\d\.]+)"') { $Matches[1] }
           }
 
           New-Item -ItemType Directory -Force -Path dependency-summary | Out-Null
           $SUMMARY_ROW = "| Build (Windows) | ${{ matrix.os }} / ${{ matrix.arch }} | $OPENSSL_VERSION | $QT_VERSION | $SQLCIPHER_VERSION | $SQLITE_VERSION |"
           Set-Content -Path "dependency-summary/dependencies-windows-${{ matrix.os }}-${{ matrix.arch }}.md" -Value $SUMMARY_ROW
 
-      - name: Upload dependency summary
+      - if: ${{ !cancelled() }}
+        name: Upload dependency summary
         uses: actions/upload-artifact@v7
         with:
           name: dependency-summary-windows-${{ matrix.os }}-${{ matrix.arch }}
           path: dependency-summary/*.md
-          retention-days: 1
+          retention-days: 3
 
   summarize-dependencies:
     if: always() && inputs.CONSOLIDATE_DEPENDENCY_SUMMARY != true && !cancelled()
     needs: build
     name: Summarize Dependencies
-    runs-on: ubuntu-24.04
     permissions:
       actions: read
       contents: read
-    steps:
-      - name: Download dependency summaries
-        uses: actions/download-artifact@v8
-        continue-on-error: true
-        with:
-          pattern: dependency-summary-*
-          path: dependency-summary
-          merge-multiple: true
-
-      - name: Summary
-        run: |
-          {
-            echo "## Dependencies used"
-            echo ""
-            echo "| Workflow | Target | OpenSSL | Qt | SQLCipher | SQLite |"
-            echo "| :---: | :---: | :---: | :---: | :---: | :---: |"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          if [ -d dependency-summary ] && find dependency-summary -type f -name '*.md' | grep -q .; then
-            find dependency-summary -type f -name '*.md' -print | sort | while IFS= read -r file; do
-              cat "$file" >> "$GITHUB_STEP_SUMMARY"
-            done
-          else
-            echo "| Not available | No dependency summaries were uploaded. | - | - | - | - |" >> "$GITHUB_STEP_SUMMARY"
-          fi
+    uses: ./.github/workflows/summarize-dependencies.yml
 
   release:
     if: github.event_name == 'workflow_dispatch' && github.workflow == 'Build (Windows)'
