@@ -7,6 +7,8 @@
 #include <QTextCodec>
 #include <QFile>
 #include <QRegularExpression>
+#include <QIODevice>
+#include <QTextStream>
 
 #include <algorithm>
 
@@ -306,4 +308,25 @@ std::vector<BufferRow> parseClipboard(QString clipboard)
     }
 
     return result;
+}
+
+bool writeAll(QIODevice& device, const char* data, qint64 size)
+{
+    while(size > 0)
+    {
+        const qint64 written = device.write(data, size);
+        if(written <= 0)
+            return false;
+
+        data += written;
+        size -= written;
+    }
+
+    return true;
+}
+
+bool flushStream(QTextStream& stream)
+{
+    stream.flush();
+    return stream.status() == QTextStream::Ok;
 }
