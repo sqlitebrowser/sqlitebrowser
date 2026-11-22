@@ -416,6 +416,23 @@
        </property>
       </widget>
      </item>
+     <item row="14" column="1">
+      <widget class="QCheckBox" name="checkQuotedAsText">
+       <property name="toolTip">
+        <string>Import values enclosed in quote characters as text, even if they look like numbers, e.g. "007". When creating a new table, columns containing such values get the TEXT data type.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="14" column="0">
+      <widget class="QLabel" name="labelQuotedAsText">
+       <property name="text">
+        <string>Treat quoted values as text</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkQuotedAsText</cstring>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -528,6 +545,7 @@
   <tabstop>checkNoTypeDetection</tabstop>
   <tabstop>checkLocalConventions</tabstop>
   <tabstop>checkFailOnMissing</tabstop>
+  <tabstop>checkQuotedAsText</tabstop>
   <tabstop>comboOnConflictStrategy</tabstop>
   <tabstop>filePicker</tabstop>
   <tabstop>toggleSelected</tabstop>
