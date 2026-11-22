@@ -595,7 +595,9 @@ void PlotDock::updatePlot(SqliteTableModel* model, BrowseDataTableSettings* sett
     // Warn user if not all data has been fetched and hint about the button for loading all the data
     if (model && (model->rowCountAvailable() != SqliteTableModel::RowCount::Complete || !model->isCacheComplete())) {
         ui->buttonLoadAllData->setEnabled(true);
-        ui->buttonLoadAllData->setStyleSheet("QToolButton {color: white; background-color: rgb(255, 102, 102)}");
+        // The style sheet needs to set a border, too. Otherwise the button is still drawn by the style of the application, and some
+        // of them (e.g. the ones from certain platform themes) don't use the background colour of the style sheet in that case.
+        ui->buttonLoadAllData->setStyleSheet("QToolButton {color: white; background-color: rgb(255, 102, 102); border: 1px solid rgb(204, 51, 51); border-radius: 3px; padding: 2px}");
         ui->buttonLoadAllData->setToolTip(tr("Load all data and redraw plot.\n"
                                              "Warning: not all data has been fetched from the table yet due to the partial fetch mechanism."));
     } else {
