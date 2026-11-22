@@ -109,6 +109,7 @@ target_sources(${PROJECT_NAME}
     src/sql/sqlitetypes.h
     src/sql/Query.h
     src/sql/ObjectIdentifier.h
+    src/sql/DropOrder.h
     src/csvparser.h
     src/sqlite.h
     src/Data.h
@@ -191,6 +192,7 @@ target_sources(${PROJECT_NAME}
     src/sql/sqlitetypes.cpp
     src/sql/Query.cpp
     src/sql/ObjectIdentifier.cpp
+    src/sql/DropOrder.cpp
     src/sqltextedit.cpp
     src/docktextedit.cpp
     src/csvparser.cpp
