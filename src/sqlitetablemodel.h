@@ -247,6 +247,7 @@ private:
     int m_symbolLimit;
     int m_rowsLimit;
     bool m_imagePreviewEnabled;
+    bool m_localeNumbers;
 
     /**
      * @brief m_chunkSize Size of the next chunk fetch more will try to fetch.

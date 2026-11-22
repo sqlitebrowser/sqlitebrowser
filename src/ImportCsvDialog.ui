@@ -30,7 +30,28 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="editName"/>
+      <layout class="QHBoxLayout" name="horizontalLayoutName">
+       <item>
+        <widget class="QLineEdit" name="editName"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelSchema">
+         <property name="text">
+          <string>Schema</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboSchema</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboSchema">
+         <property name="toolTip">
+          <string>The schema in which the table is created or, if it exists already, looked up. Choose 'temp' for a temporary table or the name of an attached database.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="labelHeader">
@@ -399,6 +420,23 @@
        </property>
       </widget>
      </item>
+     <item row="15" column="1">
+      <widget class="QCheckBox" name="checkMatchColumnsByName">
+       <property name="toolTip">
+        <string>When importing into an existing table, import each column of the file into the table column with the same name instead of relying on the order of the columns. The names are compared ignoring the case. Columns of the file which have no match are skipped and columns of the table which are not in the file get their default value. This requires the column names to be in the first line.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="15" column="0">
+      <widget class="QLabel" name="labelMatchColumnsByName">
+       <property name="text">
+        <string>Match columns by name</string>
+       </property>
+       <property name="buddy">
+        <cstring>checkMatchColumnsByName</cstring>
+       </property>
+      </widget>
+     </item>
      <item row="13" column="1">
       <widget class="QCheckBox" name="checkReplaceNonAlnum">
        <property name="toolTip">
@@ -514,6 +552,7 @@
  </widget>
  <tabstops>
   <tabstop>editName</tabstop>
+  <tabstop>comboSchema</tabstop>
   <tabstop>checkboxHeader</tabstop>
   <tabstop>comboSeparator</tabstop>
   <tabstop>editCustomSeparator</tabstop>
@@ -529,6 +568,7 @@
   <tabstop>checkLocalConventions</tabstop>
   <tabstop>checkFailOnMissing</tabstop>
   <tabstop>comboOnConflictStrategy</tabstop>
+  <tabstop>checkMatchColumnsByName</tabstop>
   <tabstop>filePicker</tabstop>
   <tabstop>toggleSelected</tabstop>
   <tabstop>matchSimilar</tabstop>
