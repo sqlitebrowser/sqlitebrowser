@@ -277,6 +277,9 @@ void RowLoader::process (Task & t)
             else
                 emit rowCountComplete(t.token, static_cast<int>(row-t.row_begin));
         }
+    } else if(!t.cancel) {
+        // The statement could not be prepared, e.g. because the table doesn't exist anymore or the database is locked
+        emit error(t.token, QString::fromUtf8(sqlite3_errmsg(pDb.get())));
     }
 
     emit fetched(t.token, t.row_begin, row);
